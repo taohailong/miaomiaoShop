@@ -14,4 +14,5 @@
     IBOutlet UITextField* _contentField;
 }
 -(void)setTextField:(NSString*)fieldStr;
+-(void)setFieldKeyboardStyle:(UIKeyboardType)style;
 @end

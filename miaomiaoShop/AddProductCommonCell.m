@@ -14,19 +14,12 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
 //    self.textLabel.text = @"条形码:";
     self.textLabel.font = [UIFont systemFontOfSize:14];
-    //
-    //
     
-    //
-    //
-    //
-    _contentField = [[UITextField alloc]initWithFrame:CGRectMake(63, 15, 190, 30)];
+   _contentField = [[UITextField alloc]initWithFrame:CGRectMake(63, 15, 190, 30)];
     _contentField.center = CGPointMake(SCREENWIDTH/2, 30);
     NSLog(@"center is %@",NSStringFromCGPoint(_contentField.center));
     _contentField.borderStyle = UITextBorderStyleRoundedRect;
     [self.contentView addSubview:_contentField];
-    
-//    _contentField.keyboardType = UIKeyboardTypeNumberPad;
     _contentField.returnKeyType = UIReturnKeyDone;
     //
     //    _contentField = [[UITextField alloc]init];
@@ -44,5 +37,11 @@
 {
     _contentField.text  = fieldStr;
 }
+-(void)setFieldKeyboardStyle:(UIKeyboardType)style
+{
+    _contentField.keyboardType = style;
+}
+
+-(void)
 
 @end

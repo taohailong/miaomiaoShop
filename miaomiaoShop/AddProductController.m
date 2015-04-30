@@ -272,6 +272,9 @@
    [self postUpImageWithImage:thumbImage];
     
     
+    
+    
+    
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
     [request shopAddProductInfoToServeWith:_productData WithBk:^(id backDic, NSError *error) {
         NSLog(@"%@",backDic);
