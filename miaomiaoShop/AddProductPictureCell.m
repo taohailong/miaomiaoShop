@@ -7,7 +7,7 @@
 //
 
 #import "AddProductPictureCell.h"
-
+#import "UIImageView+WebCache.h"
 @implementation AddProductPictureCell
 
 -(void)setPhotoBlock:(setUpPhotoGraph)photoGraphBlock
@@ -42,9 +42,19 @@
     _pImageView.image = image;
 
 }
+
+-(UIImage*)getProductImage
+{
+    return _pImageView.image;
+}
 -(void)setUpPhoto:(UIButton*)bt
 {
     _photoGraphBlock();
+}
+
+-(void)setProductImageWithUrl:(NSString *)url
+{
+    [_pImageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:DEFAULTIMAGE]];
 }
 
 @end

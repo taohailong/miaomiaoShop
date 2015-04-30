@@ -10,11 +10,14 @@
 #import "ASIHTTPRequest.h"
 #import "ShopCategoryData.h"
 #import "ShopProductData.h"
+#import "UserManager.h"
+#import "ASIFormDataRequest.h"
 
 #define HTTPHOST @"www.mbianli.com"
 @interface NetWorkRequest()
 {
     ASIHTTPRequest* _asi;
+    ASIFormDataRequest* _postAsi;
 }
 @end;
 @implementation NetWorkRequest
@@ -24,6 +27,172 @@
 //    _asi = req;
 //    return self;
 //}
+
+-(void)shopCateDeleteWithCategoryID:(NSString *)cateID WithBk:(NetCallback)completeBk
+{
+    UserManager* manager = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/cate/del?category_id=%@&shop_id=%@&ver=%@",HTTPHOST,cateID,manager.shopID,VERSION];
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+        
+        if ([sourceDic[@"code"] intValue] ==0)
+        {
+            completeBk(sourceDic,nil);
+            
+        }
+        else
+        {
+            completeBk(nil,err);
+        }
+        
+    }];
+}
+
+-(void)shopCategoryAddWithName:(NSString *)name WithBk:(NetCallback)completeBk
+{
+    UserManager* manager = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/cate/add?categoryId=0&shopId=%@&scorce=0&categoryName=%@&ver=%@",HTTPHOST,name,manager.shopID,VERSION];
+    url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+        
+        if ([sourceDic[@"code"] intValue] ==0)
+        {
+            completeBk(sourceDic,nil);
+            
+        }
+        else
+        {
+            completeBk(nil,err);
+        }
+        
+    }];
+}
+
+
+
+
+
+
+-(void)shopProductDeleteProductWithProductID:(NSString *)pID WithBk:(NetCallback)completeBk
+{
+    UserManager* manager = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/del?itemId=%@&shop_id=%@&ver=%@",HTTPHOST,pID,manager.shopID,VERSION];
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+        
+        if ([sourceDic[@"code"] intValue] ==0)
+        {
+            completeBk(sourceDic,nil);
+            
+        }
+        else
+        {
+            completeBk(nil,err);
+        }
+        
+    }];
+}
+
+
+
+-(void)shopProductUpdateWithProduct:(ShopProductData *)data WithBk:(NetCallback)completeBk
+{
+    UserManager* manager = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/update?itemId=%@&itemName=%@&serialNo=%@&category_id=%@&count=1000&score=0&price=%d&saleStatus=%d&shop_id=%@&ver=%@",HTTPHOST,data.pID,data.pName,data.scanNu,data.categoryID,(int)data.price*100,data.status,manager.shopID,VERSION];
+    
+    url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+        
+        if ([sourceDic[@"code"] intValue] ==0)
+        {
+            completeBk(sourceDic,nil);
+            
+        }
+        else
+        {
+            completeBk(nil,err);
+        }
+        
+    }];
+
+
+}
+
+
+-(void)shopProductImagePostWithImage:(NSData *)data WithScanNu:(NSString *)nu WithBk:(NetCallback)completeBk
+{
+   NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/ul_pic",HTTPHOST];
+   UserManager* manager = [UserManager shareUserManager];
+    _postAsi = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:url]];
+    _postAsi.delegate = self;
+    __weak ASIFormDataRequest* wPost = _postAsi;
+    [_postAsi setPostValue:manager.shopID forKey:@"shop_id"];
+    [_postAsi setPostValue:nu forKey:@"serialNo"];
+    [_postAsi addData:data withFileName:@"text.jpg" andContentType:@"image/jpeg" forKey:@"pic"];
+    [_postAsi setFailedBlock:^{
+        completeBk(nil,wPost.error);
+    }];
+    [_postAsi setCompletionBlock:^{
+        
+           NSDictionary* dataDic = [NSJSONSerialization JSONObjectWithData:wPost.responseData options:NSJSONReadingMutableContainers error:NULL];
+        completeBk(dataDic,nil);
+       
+    }];
+    [_postAsi startAsynchronous];
+}
+
+-(void)shopAddProductInfoToServeWith:(ShopProductData*)data WithBk:(NetCallback)completeBk
+{
+    UserManager* manager = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/addItem?serialNo=%@&name=%@&categoryId=%@&count=100&score=0&price=%f&saleStatus=%d&shop_id=%@&ver=%@",HTTPHOST,data.scanNu,data.pName,data.categoryID,data.price*100,data.status,manager.shopID,VERSION];
+    
+    url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+        
+        if ([sourceDic[@"code"] intValue] ==0)
+        {
+            completeBk(sourceDic,nil);
+            
+        }
+        else
+        {
+            completeBk(nil,err);
+        }
+        
+    }];
+
+}
+
+
+
+
+
+
+
+-(void)shopScanProductWithSerial:(NSString*)serialNu WithBk:(NetCallback)completeBk
+{
+
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/product/get?serialNo=%@&ver=%@",HTTPHOST,serialNu,VERSION];
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+        
+        if ([sourceDic[@"code"] intValue] ==0)
+        {
+            NSDictionary* pDic = sourceDic[@"data"][@"product"];
+            ShopProductData* product = [[ShopProductData alloc]init];
+            product.pID = pDic[@"id"];
+            product.pName = pDic[@"name"];
+            product.pUrl = pDic[@"pic_url"];
+            product.price = [pDic[@"price"] intValue]/100.0;
+            product.scanNu =pDic[@"serialNo"];
+            completeBk(product,nil);
+            
+        }
+        else
+        {
+            completeBk(nil,err);
+        }
+        
+    }];
+
+}
 
 
 -(void)shopGetCategoryWith:(NSString*)shopID WithCallBack:(NetCallback)back
@@ -68,7 +237,8 @@
             {
                 ShopProductData* product = [[ShopProductData alloc]init];
                 product.pUrl = dic[@"pic_url"];
-                product.price = [dic[@"price"] stringValue];
+                product.categoryID = dic[@"category_id"];
+                product.price = [dic[@"price"] floatValue]/100;
                 product.pName = dic[@"name"];
                 product.status = [dic[@"status"] intValue];
                 product.pID = dic[@"id"];
@@ -105,19 +275,6 @@
        
                 back(sourceDic,err);
     }];
-//    ASIHTTPRequest* asi = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:logUrl]];
-//    __weak ASIHTTPRequest* bAsi = asi;
-//    [asi setCompletionBlock:^{
-//        
-//        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData: bAsi.responseData options:NSJSONReadingAllowFragments error:nil];
-//        back(dict,nil);
-//       
-//    }];
-//    [asi setFailedBlock:^{
-//        back(nil,bAsi.error);
-//    }];
-//    
-//    return  [[self  alloc]initWithAsi:asi];
 }
 
 
@@ -141,8 +298,6 @@
     }];
     
 }
-
-
 
 
 -(void)startAsynchronous

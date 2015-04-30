@@ -40,5 +40,9 @@
     
     return self;
 }
+-(void)setTextField:(NSString*)fieldStr
+{
+    _contentField.text  = fieldStr;
+}
 
 @end

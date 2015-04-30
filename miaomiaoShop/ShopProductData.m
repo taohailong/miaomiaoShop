@@ -10,5 +10,5 @@
 #import "ShopProductData.h"
 
 @implementation ShopProductData
-@synthesize pName,price,pUrl,count,status,pID;
+@synthesize pName,price,pUrl,count,status,pID,scanNu,categoryName,categoryID;
 @end

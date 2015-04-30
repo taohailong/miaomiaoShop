@@ -15,7 +15,9 @@ typedef void (^setUpPhotoGraph)();
     UIButton* _pBt;
     setUpPhotoGraph _photoGraphBlock;
 }
+-(UIImage*)getProductImage;
 -(void)setProductImage:(UIImage*)image;
 //-(void)setPhotoBlock:(void(^)())upSetPhotoGraph;
 -(void)setPhotoBlock:(setUpPhotoGraph)photoGraphBlock;
+-(void)setProductImageWithUrl:(NSString *)url;
 @end

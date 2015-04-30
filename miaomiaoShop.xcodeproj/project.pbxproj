@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C71842DD1AF20CFA00140237 /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C71842DC1AF20CFA00140237 /* ScanViewController.m */; };
 		C725BB391AEB6E7800F344CB /* AddProductFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C725BB381AEB6E7800F344CB /* AddProductFirstCell.m */; };
 		C725BB3C1AEB6F4200F344CB /* AddProductCommonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C725BB3B1AEB6F4200F344CB /* AddProductCommonCell.m */; };
 		C725BB3F1AEB6FAA00F344CB /* AddProductSwithCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C725BB3E1AEB6FAA00F344CB /* AddProductSwithCell.m */; };
@@ -71,6 +72,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C71842DB1AF20CFA00140237 /* ScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanViewController.h; sourceTree = "<group>"; };
+		C71842DC1AF20CFA00140237 /* ScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanViewController.m; sourceTree = "<group>"; };
 		C725BB371AEB6E7800F344CB /* AddProductFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProductFirstCell.h; sourceTree = "<group>"; };
 		C725BB381AEB6E7800F344CB /* AddProductFirstCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProductFirstCell.m; sourceTree = "<group>"; };
 		C725BB3A1AEB6F4200F344CB /* AddProductCommonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProductCommonCell.h; sourceTree = "<group>"; };
@@ -297,12 +300,14 @@
 		C753C1641AE78E3700562EF6 /* ThirdPart */ = {
 			isa = PBXGroup;
 			children = (
+				C71842DB1AF20CFA00140237 /* ScanViewController.h */,
+				C71842DC1AF20CFA00140237 /* ScanViewController.m */,
 				C74136AB1AE90B0C00B08CBD /* LastViewOnTable.h */,
 				C74136AC1AE90B0C00B08CBD /* LastViewOnTable.m */,
-				C753C1851AE78E5800562EF6 /* SDWebImage */,
-				C753C1651AE78E4E00562EF6 /* ASI */,
 				C725BB431AEBBB1A00F344CB /* UIImage+ZoomImage.h */,
 				C725BB441AEBBB1A00F344CB /* UIImage+ZoomImage.m */,
+				C753C1851AE78E5800562EF6 /* SDWebImage */,
+				C753C1651AE78E4E00562EF6 /* ASI */,
 			);
 			name = ThirdPart;
 			sourceTree = "<group>";
@@ -473,6 +478,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C753C17D1AE78E4E00562EF6 /* ASIDataCompressor.m in Sources */,
+				C71842DD1AF20CFA00140237 /* ScanViewController.m in Sources */,
 				C753BEB11AE7460800562EF6 /* ViewController.m in Sources */,
 				C74136AA1AE8F48E00B08CBD /* ProductCell.m in Sources */,
 				C753C1AF1AE78E5800562EF6 /* UIImage+WebP.m in Sources */,

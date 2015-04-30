@@ -44,9 +44,14 @@
     return self;
 }
 
+-(void)setTextField:(NSString*)fieldStr
+{
+    _contentField.text  = fieldStr;
+}
+
+
 -(void)btAction
 {
-    [_contentField resignFirstResponder];
     _bk();
 }
 @end

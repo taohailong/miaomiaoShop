@@ -15,4 +15,5 @@ typedef void (^switchActionBack)();
     switchActionBack _block;
 }
 -(void)setSwitchBlock:(switchActionBack)bk;
+-(void)setSWitchStatue:(int)statue;
 @end

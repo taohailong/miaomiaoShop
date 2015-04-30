@@ -13,4 +13,5 @@
     IBOutlet UILabel* _titleL;
     IBOutlet UITextField* _contentField;
 }
+-(void)setTextField:(NSString*)fieldStr;
 @end

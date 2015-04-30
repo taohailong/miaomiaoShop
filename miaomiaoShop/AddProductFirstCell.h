@@ -21,5 +21,5 @@ typedef void  (^CellBtBlock)();
 }
 
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier WithBlock:(CellBtBlock)bk;
-
+-(void)setTextField:(NSString*)fieldStr;
 @end

@@ -19,7 +19,7 @@
 -(id)initWithString:(NSString*)str;
 -(id)initWithFailView;
 -(void)show;
-
+-(id)initActivityViewWithSuperView:(UIView*)superView;
 
 -(id)initViewOnWindow;
 -(void)loadViewAddOnWindow;

@@ -105,7 +105,15 @@
 -(id)initActivityView
 {
     self = [self initLoadingWithStr:@"请稍后..."];
+    return self;
+}
+
+-(id)initActivityViewWithSuperView:(UIView*)superView
+{
+    self = [self initLoadingWithStr:@"请稍后..."];
     
+    self.center = superView.center;
+    [superView addSubview:self];
     return self;
 
 }

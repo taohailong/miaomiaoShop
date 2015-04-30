@@ -31,4 +31,15 @@
 {
     _block();
 }
+-(void)setSWitchStatue:(int)statue
+{
+    if (statue) {
+        _contentSwitch.on = YES;
+    }
+    else
+    {
+        _contentSwitch.on = NO;
+    }
+   
+}
 @end

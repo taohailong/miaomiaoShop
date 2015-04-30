@@ -10,6 +10,9 @@
 #define miaomiaoShop_miaomiao_Prefix_pch
 
 
+
+
+#define DEFAULTIMAGE @"defaultImage"
 #define VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
