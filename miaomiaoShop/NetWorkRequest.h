@@ -11,6 +11,9 @@
 typedef void (^NetCallback)(id backDic,NSError* error);
 @interface NetWorkRequest : NSObject
 
+-(void)shopGetOrderWithStatue:(NSString *)statue WithIndex:(int)index WithBk:(NetCallback)completeBk;
+
+
 
 
 -(void)shopProductDeleteProductWithProductID:(NSString*)pID WithBk:(NetCallback)completeBk;
@@ -24,7 +27,7 @@ typedef void (^NetCallback)(id backDic,NSError* error);
 
 
 
--(void)shopGetCategoryWith:(NSString*)shopID WithCallBack:(NetCallback)back
+-(void)shopGetCategoryWithCallBack:(NetCallback)back
 ;
 -(void)shopGetProductWithShopID:(NSString*)shopID withCategory:(NSString*)category fromIndex:(int)nu WithCallBack:(NetCallback)back;
 

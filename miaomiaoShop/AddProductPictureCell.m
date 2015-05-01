@@ -32,7 +32,8 @@
     _pImageView.center = CGPointMake(SCREENWIDTH/2, 60);
     _pImageView.backgroundColor = [UIColor redColor];
     
-    
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+
     return self;
 
 }

@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
+typedef void (^TextFieldBk)(NSString*text);
 @interface AddProductCommonCell : UITableViewCell
 {
     IBOutlet UILabel* _titleL;
     IBOutlet UITextField* _contentField;
+    TextFieldBk _fieldBk;
 }
 -(void)setTextField:(NSString*)fieldStr;
 -(void)setFieldKeyboardStyle:(UIKeyboardType)style;
+-(void)setTextTitleLabel:(NSString*)text;
+-(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier WithFieldBk:(TextFieldBk)bk;
 @end

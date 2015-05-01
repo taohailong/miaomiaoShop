@@ -11,15 +11,16 @@
 
 @protocol ShopCategoryProtocol <NSObject>
 
--(void)didSelectCategoryIndexWith:(NSString*)categoryID;
+-(void)didSelectCategoryIndexWith:(NSString*)categoryID WithName:(NSString*)name;
 
 @end
-@interface ShopCategoryListView : UIView<UITableViewDataSource,UITableViewDelegate>
+@interface ShopCategoryListView : UIView<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
      UITableView* _table;
-    NSArray* _dataArr;
+    NSMutableArray* _dataArr;
 }
 @property(nonatomic,weak)IBOutlet id<ShopCategoryProtocol>delegate;
 //@property(nonatomic,strong)NSMutableArray* dataArr;
--(void)setDataArr:(NSArray *)dataArr;
+-(void)setDataArrAndSelectOneRow:(NSMutableArray *)dataArr;
+-(void)initNetData;
 @end

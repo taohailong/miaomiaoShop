@@ -7,7 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "AddProductFirstCell.h"
+#import "AddProductSwithCell.h"
+#import "AddProductCommonCell.h"
+#import "AddProductPictureCell.h"
+@class ShopProductData;
+typedef void (^AddEditProduct)(void);
 @interface AddProductController : UIViewController
+{
+    AddEditProduct _completeBk;
+    ShopProductData* _productData;
 
+}
+-(void)setCompleteBk:(AddEditProduct)bk;
+-(void)commitCompleteBack;
+-(void)setUpPhoto;
 @end

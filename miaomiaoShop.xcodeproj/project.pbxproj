@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C717DFE71AF3973C0057DD72 /* DateFormateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C717DFE61AF3973C0057DD72 /* DateFormateManager.m */; };
+		C717DFEA1AF3A41B0057DD72 /* OrderData.m in Sources */ = {isa = PBXBuildFile; fileRef = C717DFE91AF3A41B0057DD72 /* OrderData.m */; };
+		C717DFEE1AF3B61D0057DD72 /* OrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C717DFED1AF3B61D0057DD72 /* OrderListViewController.m */; };
 		C71842DD1AF20CFA00140237 /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C71842DC1AF20CFA00140237 /* ScanViewController.m */; };
 		C725BB391AEB6E7800F344CB /* AddProductFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C725BB381AEB6E7800F344CB /* AddProductFirstCell.m */; };
 		C725BB3C1AEB6F4200F344CB /* AddProductCommonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C725BB3B1AEB6F4200F344CB /* AddProductCommonCell.m */; };
@@ -21,6 +24,8 @@
 		C74136A71AE8E0A000B08CBD /* ShopProductData.m in Sources */ = {isa = PBXBuildFile; fileRef = C74136A61AE8E0A000B08CBD /* ShopProductData.m */; };
 		C74136AA1AE8F48E00B08CBD /* ProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C74136A91AE8F48E00B08CBD /* ProductCell.m */; };
 		C74136AD1AE90B0C00B08CBD /* LastViewOnTable.m in Sources */ = {isa = PBXBuildFile; fileRef = C74136AC1AE90B0C00B08CBD /* LastViewOnTable.m */; };
+		C74278901AF27181008E17BA /* CategorySelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C742788F1AF27181008E17BA /* CategorySelectController.m */; };
+		C74278931AF27BDB008E17BA /* ProductEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = C74278921AF27BDB008E17BA /* ProductEditController.m */; };
 		C753BEAB1AE7460800562EF6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C753BEAA1AE7460800562EF6 /* main.m */; };
 		C753BEAE1AE7460800562EF6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C753BEAD1AE7460800562EF6 /* AppDelegate.m */; };
 		C753BEB11AE7460800562EF6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C753BEB01AE7460800562EF6 /* ViewController.m */; };
@@ -72,6 +77,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C717DFE51AF3973C0057DD72 /* DateFormateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateFormateManager.h; sourceTree = "<group>"; };
+		C717DFE61AF3973C0057DD72 /* DateFormateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateFormateManager.m; sourceTree = "<group>"; };
+		C717DFE81AF3A41B0057DD72 /* OrderData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderData.h; sourceTree = "<group>"; };
+		C717DFE91AF3A41B0057DD72 /* OrderData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderData.m; sourceTree = "<group>"; };
+		C717DFEC1AF3B61D0057DD72 /* OrderListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderListViewController.h; sourceTree = "<group>"; };
+		C717DFED1AF3B61D0057DD72 /* OrderListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderListViewController.m; sourceTree = "<group>"; };
 		C71842DB1AF20CFA00140237 /* ScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanViewController.h; sourceTree = "<group>"; };
 		C71842DC1AF20CFA00140237 /* ScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanViewController.m; sourceTree = "<group>"; };
 		C725BB371AEB6E7800F344CB /* AddProductFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProductFirstCell.h; sourceTree = "<group>"; };
@@ -101,6 +112,10 @@
 		C74136A91AE8F48E00B08CBD /* ProductCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductCell.m; sourceTree = "<group>"; };
 		C74136AB1AE90B0C00B08CBD /* LastViewOnTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LastViewOnTable.h; sourceTree = "<group>"; };
 		C74136AC1AE90B0C00B08CBD /* LastViewOnTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LastViewOnTable.m; sourceTree = "<group>"; };
+		C742788E1AF27181008E17BA /* CategorySelectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategorySelectController.h; sourceTree = "<group>"; };
+		C742788F1AF27181008E17BA /* CategorySelectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategorySelectController.m; sourceTree = "<group>"; };
+		C74278911AF27BDB008E17BA /* ProductEditController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductEditController.h; sourceTree = "<group>"; };
+		C74278921AF27BDB008E17BA /* ProductEditController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductEditController.m; sourceTree = "<group>"; };
 		C753BEA51AE7460800562EF6 /* miaomiaoShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = miaomiaoShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C753BEA91AE7460800562EF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C753BEAA1AE7460800562EF6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -201,6 +216,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C717DFEB1AF3B5BE0057DD72 /* shop */ = {
+			isa = PBXGroup;
+			children = (
+				C74136991AE8C1DE00B08CBD /* ShopProductListView.h */,
+				C741369A1AE8C1DE00B08CBD /* ShopProductListView.m */,
+				C74136A81AE8F48E00B08CBD /* ProductCell.h */,
+				C74136A91AE8F48E00B08CBD /* ProductCell.m */,
+				C741369C1AE8C65200B08CBD /* ShopCategoryListView.h */,
+				C741369D1AE8C65200B08CBD /* ShopCategoryListView.m */,
+				C74136931AE8C00300B08CBD /* ShopInfoController.h */,
+				C74136941AE8C00300B08CBD /* ShopInfoController.m */,
+				C742788E1AF27181008E17BA /* CategorySelectController.h */,
+				C742788F1AF27181008E17BA /* CategorySelectController.m */,
+				C7777CD11AEA657000A9BDC3 /* AddProductController.h */,
+				C7777CD21AEA657000A9BDC3 /* AddProductController.m */,
+				C74278911AF27BDB008E17BA /* ProductEditController.h */,
+				C74278921AF27BDB008E17BA /* ProductEditController.m */,
+				C725BB371AEB6E7800F344CB /* AddProductFirstCell.h */,
+				C725BB381AEB6E7800F344CB /* AddProductFirstCell.m */,
+				C725BB3A1AEB6F4200F344CB /* AddProductCommonCell.h */,
+				C725BB3B1AEB6F4200F344CB /* AddProductCommonCell.m */,
+				C725BB3D1AEB6FAA00F344CB /* AddProductSwithCell.h */,
+				C725BB3E1AEB6FAA00F344CB /* AddProductSwithCell.m */,
+				C725BB401AEBAA3E00F344CB /* AddProductPictureCell.h */,
+				C725BB411AEBAA3E00F344CB /* AddProductPictureCell.m */,
+			);
+			name = shop;
+			sourceTree = "<group>";
+		};
 		C753BE9C1AE7460800562EF6 = {
 			isa = PBXGroup;
 			children = (
@@ -222,13 +266,14 @@
 		C753BEA71AE7460800562EF6 /* miaomiaoShop */ = {
 			isa = PBXGroup;
 			children = (
-				C741368C1AE8933200B08CBD /* THActivityView.h */,
-				C741368D1AE8933200B08CBD /* THActivityView.m */,
+				C753C1641AE78E3700562EF6 /* ThirdPart */,
+				C717DFEB1AF3B5BE0057DD72 /* shop */,
 				C74136A21AE8DFA900B08CBD /* ShopCategoryData.h */,
 				C74136A31AE8DFA900B08CBD /* ShopCategoryData.m */,
 				C74136A51AE8E0A000B08CBD /* ShopProductData.h */,
 				C74136A61AE8E0A000B08CBD /* ShopProductData.m */,
-				C753C1641AE78E3700562EF6 /* ThirdPart */,
+				C717DFE81AF3A41B0057DD72 /* OrderData.h */,
+				C717DFE91AF3A41B0057DD72 /* OrderData.m */,
 				C753BEAC1AE7460800562EF6 /* AppDelegate.h */,
 				C753BEAD1AE7460800562EF6 /* AppDelegate.m */,
 				C753BEAF1AE7460800562EF6 /* ViewController.h */,
@@ -241,24 +286,8 @@
 				C753C1BE1AE7A25400562EF6 /* LogViewController.m */,
 				C753C1C01AE7A8B500562EF6 /* RootTabBarViewController.h */,
 				C753C1C11AE7A8B500562EF6 /* RootTabBarViewController.m */,
-				C74136991AE8C1DE00B08CBD /* ShopProductListView.h */,
-				C741369A1AE8C1DE00B08CBD /* ShopProductListView.m */,
-				C74136A81AE8F48E00B08CBD /* ProductCell.h */,
-				C74136A91AE8F48E00B08CBD /* ProductCell.m */,
-				C741369C1AE8C65200B08CBD /* ShopCategoryListView.h */,
-				C741369D1AE8C65200B08CBD /* ShopCategoryListView.m */,
-				C74136931AE8C00300B08CBD /* ShopInfoController.h */,
-				C74136941AE8C00300B08CBD /* ShopInfoController.m */,
-				C7777CD11AEA657000A9BDC3 /* AddProductController.h */,
-				C7777CD21AEA657000A9BDC3 /* AddProductController.m */,
-				C725BB371AEB6E7800F344CB /* AddProductFirstCell.h */,
-				C725BB381AEB6E7800F344CB /* AddProductFirstCell.m */,
-				C725BB3A1AEB6F4200F344CB /* AddProductCommonCell.h */,
-				C725BB3B1AEB6F4200F344CB /* AddProductCommonCell.m */,
-				C725BB3D1AEB6FAA00F344CB /* AddProductSwithCell.h */,
-				C725BB3E1AEB6FAA00F344CB /* AddProductSwithCell.m */,
-				C725BB401AEBAA3E00F344CB /* AddProductPictureCell.h */,
-				C725BB411AEBAA3E00F344CB /* AddProductPictureCell.m */,
+				C717DFEC1AF3B61D0057DD72 /* OrderListViewController.h */,
+				C717DFED1AF3B61D0057DD72 /* OrderListViewController.m */,
 				C753BEB21AE7460800562EF6 /* Main.storyboard */,
 				C753BEB51AE7460800562EF6 /* Images.xcassets */,
 				C753BEB71AE7460800562EF6 /* LaunchScreen.xib */,
@@ -300,12 +329,16 @@
 		C753C1641AE78E3700562EF6 /* ThirdPart */ = {
 			isa = PBXGroup;
 			children = (
+				C741368C1AE8933200B08CBD /* THActivityView.h */,
+				C741368D1AE8933200B08CBD /* THActivityView.m */,
 				C71842DB1AF20CFA00140237 /* ScanViewController.h */,
 				C71842DC1AF20CFA00140237 /* ScanViewController.m */,
 				C74136AB1AE90B0C00B08CBD /* LastViewOnTable.h */,
 				C74136AC1AE90B0C00B08CBD /* LastViewOnTable.m */,
 				C725BB431AEBBB1A00F344CB /* UIImage+ZoomImage.h */,
 				C725BB441AEBBB1A00F344CB /* UIImage+ZoomImage.m */,
+				C717DFE51AF3973C0057DD72 /* DateFormateManager.h */,
+				C717DFE61AF3973C0057DD72 /* DateFormateManager.m */,
 				C753C1851AE78E5800562EF6 /* SDWebImage */,
 				C753C1651AE78E4E00562EF6 /* ASI */,
 			);
@@ -483,6 +516,8 @@
 				C74136AA1AE8F48E00B08CBD /* ProductCell.m in Sources */,
 				C753C1AF1AE78E5800562EF6 /* UIImage+WebP.m in Sources */,
 				C753C1811AE78E4E00562EF6 /* ASIHTTPRequest.m in Sources */,
+				C717DFE71AF3973C0057DD72 /* DateFormateManager.m in Sources */,
+				C74278901AF27181008E17BA /* CategorySelectController.m in Sources */,
 				C753C1AC1AE78E5800562EF6 /* UIButton+WebCache.m in Sources */,
 				C741368E1AE8933200B08CBD /* THActivityView.m in Sources */,
 				C753C1A91AE78E5800562EF6 /* SDWebImageDownloaderOperation.m in Sources */,
@@ -508,13 +543,16 @@
 				C725BB421AEBAA3E00F344CB /* AddProductPictureCell.m in Sources */,
 				C725BB3F1AEB6FAA00F344CB /* AddProductSwithCell.m in Sources */,
 				C753C1AD1AE78E5800562EF6 /* UIImage+GIF.m in Sources */,
+				C717DFEE1AF3B61D0057DD72 /* OrderListViewController.m in Sources */,
 				C753C1AE1AE78E5800562EF6 /* UIImage+MultiFormat.m in Sources */,
 				C753C17E1AE78E4E00562EF6 /* ASIDataDecompressor.m in Sources */,
 				C753C1AB1AE78E5800562EF6 /* SDWebImagePrefetcher.m in Sources */,
 				C753C1A31AE78E5800562EF6 /* MKAnnotationView+WebCache.m in Sources */,
 				C753C1A41AE78E5800562EF6 /* NSData+GIF.m in Sources */,
 				C74136A71AE8E0A000B08CBD /* ShopProductData.m in Sources */,
+				C717DFEA1AF3A41B0057DD72 /* OrderData.m in Sources */,
 				C7777CD31AEA657000A9BDC3 /* AddProductController.m in Sources */,
+				C74278931AF27BDB008E17BA /* ProductEditController.m in Sources */,
 				C753C1AA1AE78E5800562EF6 /* SDWebImageManager.m in Sources */,
 				C753C1C21AE7A8B500562EF6 /* RootTabBarViewController.m in Sources */,
 				C741369B1AE8C1DE00B08CBD /* ShopProductListView.m in Sources */,

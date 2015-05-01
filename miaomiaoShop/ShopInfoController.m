@@ -11,12 +11,13 @@
 #import "UserManager.h"
 #import "ShopCategoryData.h"
 #import "AddProductController.h"
-
+#import "ProductEditController.h"
 @interface ShopInfoController ()<ShopCategoryProtocol,ShopProductListProtocol>
 {
     NSMutableDictionary* _allProductDic;
-    NSString* _currentCategoryID;
-     
+//    NSString* _currentCategoryID;
+    ShopCategoryData* _currentCategory;
+    
 }
 @end
 @implementation ShopInfoController
@@ -31,7 +32,13 @@
 
 -(void)addProductAction
 {
-    AddProductController* addProduct = [self.storyboard instantiateViewControllerWithIdentifier:@"AddProductController"];
+    __weak ShopProductListView* wProductV = _productView;
+    __weak NSString* wCategoryID = _currentCategory.categoryID;
+//    AddProductController* addProduct = [self.storyboard instantiateViewControllerWithIdentifier:@"AddProductController"];
+    AddProductController* addProduct = [[AddProductController alloc]init];
+    [addProduct setCompleteBk:^{
+        [wProductV  setCategoryIDToGetData:wCategoryID];
+    }];
     addProduct.hidesBottomBarWhenPushed = YES;
     
     
@@ -41,15 +48,14 @@
 
 -(void)initNetData
 {
-    UserManager* manager = [UserManager shareUserManager];
-    
     NetWorkRequest* categoryReq = [[NetWorkRequest alloc]init];
-    [categoryReq shopGetCategoryWith:manager.shopID WithCallBack:^(NSMutableArray* backDic, NSError *error) {
+    [categoryReq shopGetCategoryWithCallBack:^(NSMutableArray* backDic, NSError *error) {
         
-        [_categoryView setDataArr:backDic];
+        [_categoryView setDataArrAndSelectOneRow :backDic];
         
         if (backDic.count) {
             ShopCategoryData* firstData = backDic[0];
+            _currentCategory = firstData;
             [_productView setCategoryIDToGetData:firstData.categoryID];
         }
     }];
@@ -58,14 +64,25 @@
 }
 
 
--(void)didSelectCategoryIndexWith:(NSString *)categoryID
+-(void)didSelectCategoryIndexWith:(NSString *)categoryID WithName:(NSString *)name
 {
-    _currentCategoryID = categoryID;
+    _currentCategory.categoryID = categoryID;
+    _currentCategory.categoryName = name;
     [_productView setCategoryIDToGetData:categoryID];
 }
 
--(void)didSelectProductIndex:(NSString *)productID
+-(void)didSelectProductIndex:(ShopProductData*)product
 {
+    __weak ShopProductListView* wProductV = _productView;
+    __weak NSString* wCategoryID = _currentCategory.categoryID;
+    
+    product.categoryName = _currentCategory.categoryName;
+    ProductEditController* editController = [[ProductEditController alloc]initWithProductData:product];
+    editController.hidesBottomBarWhenPushed = YES;
+    [editController setCompleteBk:^{
+        [wProductV  setCategoryIDToGetData:wCategoryID];
 
+    }];
+    [self.navigationController pushViewController:editController animated:YES];
 }
 @end

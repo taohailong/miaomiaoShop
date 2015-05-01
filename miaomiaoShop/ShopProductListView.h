@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ShopProductListView;
+@class ShopProductListView,ShopProductData;
 @protocol ShopProductListProtocol <NSObject>
 
--(void)didSelectProductIndex:(NSString*)productID;
+-(void)didSelectProductIndex:(ShopProductData*)product;
 //-(void)loadMoreProductDataWithIndex:(int)nu;
 
 @end

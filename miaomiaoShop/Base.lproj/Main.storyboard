@@ -117,7 +117,7 @@
         <!--订单-->
         <scene sceneID="sT6-Ys-sNQ">
             <objects>
-                <viewController id="Kli-0N-nRk" sceneMemberID="viewController">
+                <viewController id="Kli-0N-nRk" customClass="OrderListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yGq-lj-Cjf"/>
                         <viewControllerLayoutGuide type="bottom" id="DHR-rz-lIh"/>
@@ -125,13 +125,45 @@
                     <view key="view" contentMode="scaleToFill" id="xOX-gy-Shw">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="wcE-q4-gtQ">
+                                <rect key="frame" x="0.0" y="122" width="600" height="429"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fmX-hR-CS8">
+                                <rect key="frame" x="27" y="79" width="546" height="29"/>
+                                <segments>
+                                    <segment title="新订单"/>
+                                    <segment title="配送中"/>
+                                    <segment title="已完成"/>
+                                    <segment title="已取消"/>
+                                </segments>
+                                <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="segViewChange:" destination="Kli-0N-nRk" eventType="valueChanged" id="aoi-xM-JwC"/>
+                                </connections>
+                            </segmentedControl>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="DHR-rz-lIh" firstAttribute="top" secondItem="wcE-q4-gtQ" secondAttribute="bottom" id="3Zw-T5-mGa"/>
+                            <constraint firstItem="fmX-hR-CS8" firstAttribute="top" secondItem="yGq-lj-Cjf" secondAttribute="bottom" constant="15" id="40d-TD-wwY"/>
+                            <constraint firstItem="wcE-q4-gtQ" firstAttribute="top" secondItem="fmX-hR-CS8" secondAttribute="bottom" constant="15" id="Ej6-3o-Sn9"/>
+                            <constraint firstAttribute="trailing" secondItem="fmX-hR-CS8" secondAttribute="trailing" constant="27" id="WbC-S4-QGf"/>
+                            <constraint firstItem="fmX-hR-CS8" firstAttribute="leading" secondItem="xOX-gy-Shw" secondAttribute="leading" constant="27" id="ZVG-zP-qEE"/>
+                            <constraint firstItem="wcE-q4-gtQ" firstAttribute="leading" secondItem="xOX-gy-Shw" secondAttribute="leading" id="ebw-RO-CW2"/>
+                            <constraint firstAttribute="trailing" secondItem="wcE-q4-gtQ" secondAttribute="trailing" id="ewB-Ls-jdP"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="订单" id="iav-BE-m0s"/>
+                    <connections>
+                        <outlet property="_seg" destination="fmX-hR-CS8" id="plo-mV-FpD"/>
+                        <outlet property="_table" destination="wcE-q4-gtQ" id="YNF-IG-Rf8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E09-aH-Oig" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1368" y="891"/>
+            <point key="canvasLocation" x="-1286" y="849"/>
         </scene>
         <!--Log View Controller-->
         <scene sceneID="XgQ-K1-vjC">
@@ -188,7 +220,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xkF-oC-qf2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-551" y="875"/>
+            <point key="canvasLocation" x="-245" y="739"/>
         </scene>
         <!--商品-->
         <scene sceneID="zzA-AP-Om7">
@@ -391,7 +423,6 @@
         <!--首页-->
         <scene sceneID="bfn-kJ-WeT">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="d72-E4-CHN" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="ijD-c2-Lbh" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SBE-pF-Gsf"/>
@@ -404,6 +435,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="首页" id="f1D-aB-onV"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d72-E4-CHN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-572" y="-1389"/>
         </scene>
