@@ -25,5 +25,5 @@
 @property(nonatomic,assign)float discountMoney;
 -(void)setOrderInfoString:(NSString*)string;
 -(void)setOrderStatueWithString:(NSString *)orderStatue;
-
+-(NSString*)getPayMethod;
 @end

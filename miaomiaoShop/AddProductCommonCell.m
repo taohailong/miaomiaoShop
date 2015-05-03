@@ -27,16 +27,16 @@
     [self.contentView addSubview:_textLabel];
     _textLabel.font= [UIFont systemFontOfSize:14];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-14-[_textLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_textLabel)]];
-    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-14-[_textLabel(20)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_textLabel)]];
+
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_textLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
     
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-4-[_textLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_textLabel)]];
+
 
     
-//   _contentField = [[UITextField alloc]initWithFrame:CGRectMake(63, 15, 190, 30)];
-//    _contentField.center = CGPointMake(SCREENWIDTH/2, 30);
-//    NSLog(@"center is %@",NSStringFromCGPoint(_contentField.center));
+   _contentField = [[UITextField alloc]initWithFrame:CGRectMake(63, 15, 190, 30)];
+    _contentField.center = CGPointMake(SCREENWIDTH/2, 30);
+    NSLog(@"center is %@",NSStringFromCGPoint(_contentField.center));
     _contentField.borderStyle = UITextBorderStyleRoundedRect;
     [self.contentView addSubview:_contentField];
     

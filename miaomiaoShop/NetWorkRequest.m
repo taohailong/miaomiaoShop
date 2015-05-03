@@ -14,7 +14,7 @@
 #import "ASIFormDataRequest.h"
 #import "OrderData.h"
 #import "DateFormateManager.h"
-
+#import "ShopInfoData.h"
 #define HTTPHOST @"www.mbianli.com"
 @interface NetWorkRequest()
 {
@@ -29,6 +29,53 @@
 //    _asi = req;
 //    return self;
 //}
+
+-(void)getShopInfoWitbBk:(NetCallback)completeBk
+{
+    UserManager* manager = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopinfo/del?category_id=%@&shop_id=%@&ver=%@",HTTPHOST,manager.shopID,VERSION];
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+        
+        if ([sourceDic[@"code"] intValue] ==0)
+        {
+            completeBk(sourceDic,nil);
+            
+        }
+        else
+        {
+            completeBk(nil,err);
+        }
+        
+    }];
+
+}
+
+-(void)shopInfoUpdateWithShopInfoData:(ShopInfoData*)data WithBk:(NetCallback)completeBk
+{
+    UserManager* manager = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shop/updateShopInfo?shop_id=%@&name=%@&tel=%@&shop_address=%@&owner_phone=%@&base_price=%d&shopInfo=%@&status=%d&ver=%@",HTTPHOST,manager.shopID,data.shopName,data.telPhoneNu,data.shopAddress,data.mobilePhoneNu,(int)data.minPrice,data.serveArea,data.shopStatue,VERSION];
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+        
+        if ([sourceDic[@"code"] intValue] ==0)
+        {
+            completeBk(sourceDic,nil);
+            
+        }
+        else
+        {
+            completeBk(nil,err);
+        }
+        
+    }];
+
+}
+//http://www.mbianli.com:8088/console/api/order/summary?shop_id=10033&beginDate=&endDate=&ver=6
+//李龙春  14:37:00
+//http://www.mbianli.com:8088/console/api/order/dailySummary?shop_id=10033&ver=6
+//http://www.mbianli.com:8088/console/api/order/dailySummaryDetail?shop_id=10033&from=0&offset=20&date=&type=nosettle&ver=6
+//-(void)getOrder
+
+
 #pragma mark-------------order-------------------
 
 -(void)shopGetOrderWithStatue:(NSString *)statue WithIndex:(int)index WithBk:(NetCallback)completeBk
@@ -41,7 +88,7 @@
         {
             NSArray* sourceArr = sourceDic[@"data"][@"orderls"];
             DateFormateManager* manager = [DateFormateManager shareDateFormateManager];
-            
+            [manager  setDateStyleString:@"YY-MM-dd HH:ss"];
            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 NSMutableArray* todayArr = [NSMutableArray array];
                 NSMutableArray* notTodayArr = [NSMutableArray array];
@@ -50,18 +97,20 @@
                    OrderData* order = [[OrderData alloc]init];
                    order.orderAddress = dic[@"address"];
                    order.orderID = dic[@"id"];
-                   
-                   order.orderTime = [manager  formateTimeToDate:dic[@"create_time"]] ;
+                    double timeLength = [dic[@"create_time"] doubleValue]/1000;
+                   order.orderTime = [manager  formateFloatTimeValueToString:timeLength] ;
                    order.orderNu = dic[@"order_id"];
-                   //                order.payWay = dic[@""];
+                   order.payWay = dic[@"act"];
+                    order.discountMoney = [dic[@"dprice"] floatValue];
                    order.telPhone = dic[@"phone"];
                    
                    order.discountMoney = [dic[@"dprice"] floatValue];
-                   order.totalMoney = dic[@"price"];
+                   order.totalMoney = [NSString stringWithFormat:@"%.1f",[dic[@"price"] floatValue]/100] ;
                    order.messageStr = dic[@"msg"];
                    [order setOrderStatueWithString:dic[@"order_status"]];
                    [order setOrderInfoString:dic[@"info"]];
-                   if ([manager   isTodayWithTimeString:dic[@"create_time"]])
+                   
+                   if ([manager  isTodayWithTimeFloatValue:timeLength])
                    {
                        [todayArr addObject:order];
                    }
@@ -75,7 +124,10 @@
                NSMutableArray* backArr = [NSMutableArray array];
                [backArr addObject:todayArr];
                [backArr addObject: notTodayArr];
-               completeBk(backArr,nil);
+               dispatch_async(dispatch_get_main_queue(), ^{
+                  completeBk(backArr,nil); 
+               });
+               
            });
             
         }

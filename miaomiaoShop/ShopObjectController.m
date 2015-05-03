@@ -6,13 +6,13 @@
 //  Copyright (c) 2015年 miaomiao. All rights reserved.
 //
 
-#import "ShopInfoController.h"
+#import "ShopObjectController.h"
 #import "NetWorkRequest.h"
 #import "UserManager.h"
 #import "ShopCategoryData.h"
 #import "AddProductController.h"
 #import "ProductEditController.h"
-@interface ShopInfoController ()<ShopCategoryProtocol,ShopProductListProtocol>
+@interface ShopObjectController ()<ShopCategoryProtocol,ShopProductListProtocol>
 {
     NSMutableDictionary* _allProductDic;
 //    NSString* _currentCategoryID;
@@ -20,7 +20,7 @@
     
 }
 @end
-@implementation ShopInfoController
+@implementation ShopObjectController
 -(void)viewDidLoad
 {
     [super viewDidLoad];
@@ -28,6 +28,8 @@
     
     UIBarButtonItem* rightBar = [[UIBarButtonItem alloc]initWithTitle:@"添加商品" style:UIBarButtonItemStylePlain target:self action:@selector(addProductAction)];
     self.navigationItem.rightBarButtonItem = rightBar;
+    
+    
 }
 
 -(void)addProductAction

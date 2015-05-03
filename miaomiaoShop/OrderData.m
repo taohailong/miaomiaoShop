@@ -11,6 +11,24 @@
 @implementation OrderData
 @synthesize orderAddress,orderID,orderStatue,orderTime,telPhone,messageStr,mobilePhone,payWay,productArr,shopName,discountMoney,totalMoney,countOfProduct,orderNu;
 
+-(NSString*)getPayMethod
+{
+    if ([self.payWay isEqualToString:@"wx"])
+    {
+        if (self.discountMoney) {
+            return [NSString stringWithFormat:@"微信支付(代金券%.1f)",self.discountMoney];
+        }
+        else
+        {
+           return @"微信支付";
+        }
+    }
+    else
+    {
+      return @"货到付款";
+    }
+}
+
 -(void)setOrderInfoString:(NSString *)string
 {
     NSData* data = [string dataUsingEncoding:NSUTF8StringEncoding];
@@ -24,7 +42,7 @@
         self.countOfProduct += product.count;
         product.pName = dic[@"name"];
         product.pUrl = dic[@"pic_url"];
-        product.price = [dic[@"price"] floatValue];
+        product.price = [dic[@"price"] floatValue]/100;
         [pArr addObject:product];
     }
     
@@ -32,9 +50,9 @@
 }
 
 
--(void)setOrderStatueWithString:(NSString *)orderStatue
+-(void)setOrderStatueWithString:(NSString *)statue
 {
-    switch ([orderStatue intValue]) {
+    switch ([statue intValue]) {
         case 0:
             self.orderStatue = @"订单确认";
             break;
@@ -57,6 +75,7 @@
         default:
             break;
     }
+    NSLog(@"self.orderStatue %@",self.orderStatue);
 
 }
 

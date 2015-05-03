@@ -10,7 +10,10 @@
 
 @interface DateFormateManager : NSObject
 +(id)shareDateFormateManager;
-
--(BOOL)isTodayWithTimeString:(NSString*)time;
--(NSString*)formateTimeToDate:(NSString*)timeString;
+-(void)setDateStyleString:(NSString*)style;
+//-(BOOL)isTodayWithTimeString:(NSString*)time;
+//-(NSString*)formateTimeToDate:(NSString*)timeString;
+-(NSString*)formateFloatTimeValueToString:(double)time;
+-(BOOL)isTodayWithTimeFloatValue:(double)time;
+-(NSString*)formateDateToString:(NSDate*)date;
 @end

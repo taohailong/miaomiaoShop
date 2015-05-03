@@ -216,8 +216,8 @@
         if (cell4==nil) {
            cell4 = [[AddProductSwithCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"4"];
             
-            [cell4 setSwitchBlock:^{
-                
+            [cell4 setSwitchBlock:^(BOOL statue) {
+                wData.status =statue;
             }];
         }
         [cell4 setSWitchStatue:_productData.status];

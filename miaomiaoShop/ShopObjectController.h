@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ShopProductListView.h"
 #import "ShopCategoryListView.h"
-@interface ShopInfoController : UIViewController
+@interface ShopObjectController : UIViewController
 {
     IBOutlet ShopCategoryListView* _categoryView;
     IBOutlet ShopProductListView* _productView;

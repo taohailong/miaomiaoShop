@@ -9,6 +9,7 @@
 #import "UserManager.h"
 #import "NetWorkRequest.h"
 #define UTOKEN @"userToken"
+#define USHOPID @"shop_id"
 @interface UserManager()
 {
     NSString* _token;
@@ -71,14 +72,16 @@
 {
     NSUserDefaults* def = [NSUserDefaults standardUserDefaults];
     self.token= [def objectForKey:UTOKEN];
+    self.shopID = [def objectForKey:USHOPID];
     NSLog(@"self.token %@",self.token);
     return self.token ;
 }
 
--(void)setTokenToDish:(NSString*)t
+-(void)setTokenToDish:(NSString*)t WithShopID:(NSString*)shopID
 {
     NSUserDefaults* def = [NSUserDefaults standardUserDefaults];
     [def setObject:t  forKey:UTOKEN];
+    [def setObject:shopID forKey:USHOPID];
      NSLog(@"self.token %@",self.token);
     [def synchronize];
 
@@ -99,7 +102,7 @@
             bSelf.shopID = backDic[@"data"][@"shop"][0][@"id"];
             bSelf.shopAddress = backDic[@"data"][@"shop"][0][@"shop_address"];
             bSelf.phoneNumber = backDic[@"data"][@"shop"][0][@"tel"];
-            [bSelf setTokenToDish:bSelf.token];
+            [bSelf setTokenToDish:bSelf.token WithShopID:bSelf.shopID];
              blockBack(YES,nil);
         }
         else if(error)

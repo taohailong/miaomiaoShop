@@ -30,7 +30,10 @@
 
 -(void)switchAction
 {
-    _block();
+    if (_block) {
+         _block(_contentSwitch.on);
+    }
+   
 }
 -(void)setSWitchStatue:(int)statue
 {

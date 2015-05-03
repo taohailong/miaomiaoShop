@@ -7,12 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-@class ShopProductData,ShopCategoryData;
+@class ShopProductData,ShopCategoryData,ShopInfoData;
 typedef void (^NetCallback)(id backDic,NSError* error);
 @interface NetWorkRequest : NSObject
 
--(void)shopGetOrderWithStatue:(NSString *)statue WithIndex:(int)index WithBk:(NetCallback)completeBk;
 
+
+-(void)getShopInfoWitbBk:(NetCallback)completeBk;
+
+-(void)shopGetOrderWithStatue:(NSString *)statue WithIndex:(int)index WithBk:(NetCallback)completeBk;
+-(void)shopInfoUpdateWithShopInfoData:(ShopInfoData*)data WithBk:(NetCallback)completeBk;
 
 
 
