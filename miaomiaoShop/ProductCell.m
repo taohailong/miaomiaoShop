@@ -35,7 +35,7 @@
 -(void)creatSubViews
 {
     _productImageView = [[UIImageView alloc]init];
-    _productImageView.backgroundColor = [UIColor redColor];
+//    _productImageView.backgroundColor = [UIColor redColor];
     _productImageView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_productImageView];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-2-[_productImageView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productImageView)]];
@@ -66,7 +66,7 @@
 
 -(void)setPicUrl:(NSString *)url
 {
-    [_productImageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:nil];
+    [_productImageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:DEFAULTIMAGE];
 }
 
 -(void)setTitleStr:(NSString *)title

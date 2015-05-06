@@ -10,7 +10,7 @@
 #import "NetWorkRequest.h"
 #import "ShopProductData.h"
 #import "THActivityView.h"
-
+#import "CategorySelectController.h"
 @interface ProductEditController ()
 {
 //    ShopProductData* _productData;
@@ -163,6 +163,27 @@
     return cell;
 }
 
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row ==3) {
+        
+        __weak ProductEditController* wSelf = self;
+        CategorySelectController* cateView = [[CategorySelectController alloc]initWithCompleteBk:^(NSString *categoryID, NSString *categoryName) {
+            [wSelf  setCategoryWithID:categoryID WithName:categoryName];
+        }];
+        [self.navigationController pushViewController:cateView animated:YES];
+    }
+}
+
+-(void)setCategoryWithID:(NSString*)cateID WithName:(NSString*)name
+{
+    NSIndexPath* path = [NSIndexPath indexPathForRow:3 inSection:0];
+    UITableViewCell* cell = [_table cellForRowAtIndexPath:path];
+    cell.textLabel.text = [NSString stringWithFormat:@"分类：%@",name];
+    _productData.categoryID = cateID;
+    _productData.categoryName = name;
+}
 
 
 //- (void)viewDidLoad {

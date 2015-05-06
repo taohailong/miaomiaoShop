@@ -4,20 +4,49 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>miaomiaoClient.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>miaomiaoEnterprise.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>miaomiaoShop.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>C732E2A01AF9ACB1005B03A8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C732E2B81AF9ACB1005B03A8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>C753BEA41AE7460800562EF6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>C753BEBD1AE7460800562EF6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C784433A1AF9E3A0009B4C2D</key>
 		<dict>
 			<key>primary</key>
 			<true/>

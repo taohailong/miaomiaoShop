@@ -10,7 +10,9 @@
 @class ShopProductData,ShopCategoryData,ShopInfoData;
 typedef void (^NetCallback)(id backDic,NSError* error);
 @interface NetWorkRequest : NSObject
-
+//数据
+-(void)getDailyOrderSummaryWithBk:(NetCallback)completeBk;
+-(void)getBusinessOrderInfoWithDate:(NSString*)date WithType:(NSString*)type  withIndex:(int)index WithBk:(NetCallback)completeBk;
 
 
 -(void)getShopInfoWitbBk:(NetCallback)completeBk;
@@ -35,9 +37,14 @@ typedef void (^NetCallback)(id backDic,NSError* error);
 ;
 -(void)shopGetProductWithShopID:(NSString*)shopID withCategory:(NSString*)category fromIndex:(int)nu WithCallBack:(NetCallback)back;
 
+
+
+-(void)requestRemoveUserAccount:(NSString*)account WithPushKey:(NSString*)pushKey WithToken:(NSString*)token Bk:(NetCallback)completeBk;
 -(void)shopLoginWithPhone:(NSString*)phone password:(NSString*)pw withCallBack:(NetCallback)back;
 
 -(void)verifyTokenToServer:(NSString*)token WithCallBack:(NetCallback)back;
+
+-(void)registePushToken:(NSString*)token WithAccount:(NSString*)account WithBk:(NetCallback)completeBk;
 
 
 

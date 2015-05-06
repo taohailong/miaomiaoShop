@@ -35,7 +35,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    self.title = @"订单详情";
     _table = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
     //    _table
     [self.view addSubview:_table];
@@ -46,10 +46,23 @@
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
 
-    
+    [self setExtraCellLineHidden:_table];
     // Do any additional setup after loading the view.
 }
 
+- (void)setExtraCellLineHidden: (UITableView *)tableView
+{
+    UIView *view =[ [UIView alloc]init];
+    view.backgroundColor = [UIColor clearColor];
+    [tableView setTableFooterView:view];
+}
+
+
+-(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return [NSString stringWithFormat:@"订单时间：%@",_orderData.orderTime];
+
+}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 2+_orderData.productArr.count;
@@ -59,9 +72,9 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row==0) {
-          return 100;
+          return 110;
     }
-    return 60;
+    return 50;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -74,7 +87,8 @@
         }
         [cell setTelPhoneText:_orderData.telPhone];
         [cell setAddressText:_orderData.orderAddress];
-        [cell setPayWayText:_orderData.orderStatue];
+        [cell setPayWayText:[_orderData getPayMethod]];
+        [cell setOrderMessage:_orderData.messageStr];
         return cell;
 
     }
@@ -85,7 +99,7 @@
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
             cell.textLabel.font = [UIFont systemFontOfSize:15];
         }
-        cell.textLabel.text = [NSString stringWithFormat:@"共%d件 ¥%@",_orderData.countOfProduct,_orderData.totalMoney];
+        cell.textLabel.text = [NSString stringWithFormat:@"共%d件 ¥ %@",_orderData.countOfProduct,_orderData.totalMoney];
         return cell;
     }
     else
@@ -99,7 +113,7 @@
         
         [cell setTitleText:product.pName];
         [cell setProductUrl:product.pUrl];
-        [cell setTotalMoney:[NSString stringWithFormat:@"%d件 X ¥%.1f",product.count,product.price]];
+        [cell setTotalMoney:[NSString stringWithFormat:@"%d件 X ¥ %.1f",product.count,product.price]];
         return cell;
 
         

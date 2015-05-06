@@ -48,6 +48,14 @@
     
     return  [_formate stringFromDate:date];
 }
+
+-(NSDate*)getDateFromString:(NSString *)string
+{
+    NSDate* inputDate = [_formate dateFromString:string];
+    return inputDate;
+}
+
+
 //-(NSString*)formateTimeToDate:(NSString*)timeString
 //{
 //    double time = [timeString doubleValue];

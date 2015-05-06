@@ -7,7 +7,7 @@
 //
 
 #import "THActivityView.h"
-
+#import "YFGIFImageView.h"
 @implementation THActivityView
 
 - (id)initWithFrame:(CGRect)frame
@@ -40,35 +40,6 @@
 
 #pragma mark-------------------------
 
--(id)initWithRose
-{
-
-//    self = [super initWithFrame:[UIScreen mainScreen].bounds];
-//    if (self)
-//    {
-//        NSArray* frameArr = @[@"{{20,47},{90,110}}",@"{{125,0},{90,110}}",@"{{230,52},{90,110}}",@"{{118,100},{90,110}}",@"{{15,155},{90,110}}",@"{{224,155},{90,110}}",@"{{115,205},{90,110}}",@"{{230,257},{90,110}}",@"{{15,257},{90,110}}",@"{{125,291},{90,110}}",@"{{224,349},{90,110}}",@"{{77,361},{90,110}}"];
-//        
-//        for (NSString* frameStr in frameArr)
-//        {
-//            UIImageView* subImage = [[UIImageView alloc]initWithFrame:CGRectFromString(frameStr)];
-//            subImage.image = [UIImage imageNamed:@"living_roseOnwindow.png"];
-//            [self addSubview:subImage];
-//        }
-//        
-//    }
-    self=[super initWithFrame:[UIScreen mainScreen].bounds];
-    if (self)
-    {
-        UIImageView *roseImageView=[[UIImageView alloc]init];
-        roseImageView.image=[UIImage imageNamed:@"living_roseOnwindow.png"];
-        roseImageView.bounds=CGRectMake(self.center.x, self.center.y, 90, 112);
-        roseImageView.center=CGPointMake(self.center.x, self.center.y);
-        [self addSubview:roseImageView];
-    }
-
-    return self;
-
-}
 
 //-(void)activityRoseOnWindow
 //{
@@ -110,6 +81,8 @@
 
 -(id)initActivityViewWithSuperView:(UIView*)superView
 {
+//    self = [self initWithLoadGif];
+    
     self = [self initLoadingWithStr:@"请稍后..."];
     
     self.center = superView.center;
@@ -117,6 +90,23 @@
     return self;
 
 }
+
+
+#pragma mark---------------fullLoadingView-----------------
+-(id)initFullViewTransparentWithSuperView:(UIView *)superView
+{
+    self = [super init];
+//    self.backgroundColor = [UIColor redColor];
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+    [superView addSubview:self];
+    
+    [superView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[self]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(self)]];
+    [superView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[self]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(self)]];
+
+    return self;
+
+}
+
 
 //-(void)layoutSubviews
 //{
@@ -127,8 +117,7 @@
 //}
 -(id)initLoadingWithStr:(NSString*)str
 {
-      self = [super initWithFrame:CGRectMake(0, 0, 100, 100)];
-//    self = [super init];
+    self = [super initWithFrame:CGRectMake(0, 0, 100, 100)];
     
     if (self)
     {
@@ -149,9 +138,83 @@
         [self addSubview:titleLabel];
     }
     return self;
+}
 
+-(id)initWithLoadGif
+{
+    self = [super initWithFrame:CGRectMake(0, 0, 190, 140)];
+    
+    if (self)
+    {
+        YFGIFImageView* imageV = [[YFGIFImageView alloc]initWithFrame:self.frame];
+        imageV.gifPath = [[NSBundle mainBundle] pathForResource:@"LoadingGif" ofType:@"gif"];
+        [imageV startGIF];
+        [self addSubview:imageV];
+    }
+    return self;
 
 }
+
+
+-(id)initWithNetErrorWithSuperView:(UIView*)su
+{
+    self = [super init];
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+    [su addSubview:self];
+    self.backgroundColor = [UIColor whiteColor];
+    [su addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[self]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(self)]];
+    
+    [su addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[self]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(self)]];
+    
+    
+    
+    UIImageView* imageV = [[UIImageView alloc]init];
+    imageV.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:imageV];
+    
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:imageV attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:imageV attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    
+    imageV.image = [UIImage imageNamed:@"LoadingErr"];
+    
+    
+    
+    UIButton* bt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    bt.translatesAutoresizingMaskIntoConstraints = NO;
+    bt.layer.borderWidth = 1.0;
+    bt.layer.masksToBounds = YES;
+    bt.layer.cornerRadius = 6;
+    [self addSubview:bt];
+    [bt addTarget:self action:@selector(performReloadAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[imageV]-20-[bt]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(imageV,bt)]];
+    
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[bt(150)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(bt)]];
+    
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:bt attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    
+    [bt setTitle:@"重新加载" forState:UIControlStateNormal];
+    return self;
+}
+
+-(void)setErrorBk:(void(^)(void))completeBk
+{
+    _errorBk = completeBk;
+}
+
+-(void)performReloadAction
+{
+    [self removeFromSuperview];
+
+    if (_errorBk) {
+       _errorBk();
+        _errorBk = nil;
+    }
+    
+}
+
+
 
 -(id)initWithFailView
 {

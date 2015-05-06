@@ -7,47 +7,95 @@
 //
 
 #import "AppDelegate.h"
+#import "MobClick.h"
+#import "UMessage.h"
 #import "UserManager.h"
-#import "LogViewController.h"
-#import "THActivityView.h"
+#import <AudioToolbox/AudioToolbox.h>
 
+static SystemSoundID shake_sound_male_id = 0;
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
 
--(void)checkUserLogState
-{
-    UserManager* manage = [UserManager shareUserManager];
-    
-    if ([manage isLogin]) {
-        return;
-    }
-    
-    __weak UIViewController* wSelf = self.window.rootViewController;
-    if ([manage verifyTokenOnNet:^(BOOL success, NSError *error) {
-        
-        if (success==NO)
-        {
-            THActivityView* alter = [[THActivityView alloc]initWithString:@"登录验证失效"];
-            [alter show];
-            LogViewController* log = [wSelf.storyboard instantiateViewControllerWithIdentifier:@"LogViewController"];
-            [wSelf presentViewController:log animated:YES completion:^{}];
-        }
-        
-    }]==NO)
-        
-    {
-        
-        LogViewController* log = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"LogViewController"];
-        [self.window.rootViewController presentViewController:log animated:YES completion:^{}];
-    }
-}
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    [self checkUserLogState];
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+#if ENTERPRISE
+    
+    [MobClick startWithAppkey:@"5549bc1767e58e30d8000431" reportPolicy:BATCH   channelId:@"App Store"];
+    [MobClick setLogEnabled:NO];
+    [MobClick checkUpdate];
+    
+    
+    [UMessage startWithAppkey:@"5549bc1767e58e30d8000431" launchOptions:launchOptions];
+
+    
+#else
+    [MobClick startWithAppkey:@"54cb1576fd98c52cbe0004a5" reportPolicy:BATCH   channelId:@"App Store"];
+    [MobClick setLogEnabled:NO];
+    [MobClick checkUpdate];
+    
+    
+    [UMessage startWithAppkey:@"54cb1576fd98c52cbe0004a5" launchOptions:launchOptions];
+
+#endif
+    //register remoteNotification types
+    
+    //register remoteNotification types (iOS 8.0以下)
+    [UMessage setLogEnabled:NO];
+    
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)])
+    {
+        UIMutableUserNotificationAction *action1 = [[UIMutableUserNotificationAction alloc] init];
+        action1.identifier = @"action1_identifier";
+        action1.title=@"Accept";
+        action1.activationMode = UIUserNotificationActivationModeForeground;//当点击的时候启动程序
+        
+        UIMutableUserNotificationAction *action2 = [[UIMutableUserNotificationAction alloc] init];  //第二按钮
+        action2.identifier = @"action2_identifier";
+        action2.title=@"Reject";
+        action2.activationMode = UIUserNotificationActivationModeBackground;//当点击的时候不启动程序，在后台处理
+        action2.authenticationRequired = YES;//需要解锁才能处理，如果action.activationMode = UIUserNotificationActivationModeForeground;则这个属性被忽略；
+        action2.destructive = YES;
+        
+        UIMutableUserNotificationCategory *categorys = [[UIMutableUserNotificationCategory alloc] init];
+        categorys.identifier = @"category1";//这组动作的唯一标示
+        [categorys setActions:@[action1,action2] forContext:(UIUserNotificationActionContextDefault)];
+        
+        UIUserNotificationSettings *userSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert
+                                                                                     categories:[NSSet setWithObject:categorys]];
+        [UMessage registerRemoteNotificationAndUserNotificationSettings:userSettings];
+    }
+    else
+    {
+       
+
+        [UMessage registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge
+         |UIRemoteNotificationTypeSound
+         |UIRemoteNotificationTypeAlert];
+
+    
+    }
+    
+//    register remoteNotification types （iOS 8.0及其以上版本）
+    
+    
+    
+    
+    
+//    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+//        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert categories:nil];
+//        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+//    }  else {
+//        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+//        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+//    }
+//
+//    self.window.tintColor = [UIColor colorWithRed:51.0/255.0 green:205/255.0 blue:95/255.0 alpha:1.0];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     return YES;
 }
 
@@ -71,6 +119,45 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+
+    [UMessage registerDeviceToken:deviceToken];
+    
+    NSString* app = [NSString stringWithFormat:@"%@",deviceToken];
+    
+    app = [app substringWithRange:NSMakeRange(1, app.length-2)];
+    
+    app = [app stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    UserManager* user = [UserManager shareUserManager];
+    [user savePushToken:app];
+    //af6563c57fa9a7706d425a3790ac297442e41ce607bda23f2d992ff63a4c202a
+    NSLog(@"My token is: %@", app);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    [UMessage didReceiveRemoteNotification:userInfo];
+    [self playSound];
+}
+
+-(void) playSound
+
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"miaomiao" ofType:@"mp3"];
+    if (path) {
+        //注册声音到系统
+        AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&shake_sound_male_id);
+        AudioServicesPlaySystemSound(shake_sound_male_id);
+        //        AudioServicesPlaySystemSound(shake_sound_male_id);//如果无法再下面播放，可以尝试在此播放
+    }
+    
+    AudioServicesPlaySystemSound(shake_sound_male_id);   //播放注册的声音，（此句代码，可以在本类中的任意位置调用，不限于本方法中）
+    
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);   //让手机震动
 }
 
 @end

@@ -13,6 +13,8 @@
 -(void)setDateStyleString:(NSString*)style;
 //-(BOOL)isTodayWithTimeString:(NSString*)time;
 //-(NSString*)formateTimeToDate:(NSString*)timeString;
+
+-(NSDate*)getDateFromString:(NSString*)string;
 -(NSString*)formateFloatTimeValueToString:(double)time;
 -(BOOL)isTodayWithTimeFloatValue:(double)time;
 -(NSString*)formateDateToString:(NSDate*)date;

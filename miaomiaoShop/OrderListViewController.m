@@ -23,7 +23,7 @@
     NSString* _currentStatue;
     NSMutableArray* _todayArr;
     NSMutableArray* _notTodayArr;
-    
+//    BOOL _isLoading;
     EGORefreshTableHeaderView* refreshView;
 }
 @end
@@ -57,16 +57,18 @@
         default:
             break;
     }
+    [refreshView  egoRefreshScrollViewDataSourceDidBeginLoading:_table];
    [self getDataFromNetWithStatue:_currentStatue];
 }
 
 
 -(void)getDataFromNetWithStatue:(NSString*)statue
 {
-    THActivityView* loadView = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
+//    _isLoading = YES;
+    THActivityView* loadView = [[THActivityView alloc]initFullViewTransparentWithSuperView:self.view];
     __weak OrderListViewController* wSelf = self;
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
-    [req shopGetOrderWithStatue:statue WithIndex:_todayArr.count+_notTodayArr.count WithBk:^(NSArray* backDic, NSError *error) {
+    [req shopGetOrderWithStatue:statue WithIndex:0 WithBk:^(NSArray* backDic, NSError *error) {
         
         if (backDic) {
             
@@ -83,6 +85,7 @@
 -(void)loadMoreData
 {
     __weak OrderListViewController* wSelf = self;
+    THActivityView* loadView = [[THActivityView alloc]initFullViewTransparentWithSuperView:self.view];
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
     [req shopGetOrderWithStatue:_currentStatue WithIndex:_todayArr.count+_notTodayArr.count WithBk:^(NSArray* backDic, NSError *error) {
         
@@ -95,6 +98,7 @@
             [_table reloadData];
             [wSelf addLoadMoreViewWithCount: todayArr.count+ notTodayArr.count];
         }
+        [loadView removeFromSuperview];
     }];
     [req startAsynchronous];
 
@@ -102,8 +106,11 @@
 
 -(void)addLoadMoreViewWithCount:(int)count
 {
+
     if (count<20) {
-        _table.tableFooterView = nil;
+        UIView *view =[ [UIView alloc]init];
+        view.backgroundColor = [UIColor clearColor];
+        _table.tableFooterView = view;
     }
     else
     {
@@ -149,8 +156,15 @@
     [refreshView egoRefreshScrollViewDidEndDragging:scrollView];
 }
 
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [refreshView egoRefreshScrollViewDidScroll:scrollView];
+}
 
-
+//-(BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView *)view
+//{
+//    return _isLoading;
+//}
 
 
 
@@ -291,8 +305,6 @@
     }
     
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

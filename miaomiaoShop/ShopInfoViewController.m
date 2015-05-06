@@ -31,18 +31,88 @@
     [super viewDidLoad];
     
     _table = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    //    _table
+    
     [self.view addSubview:_table];
     _table.delegate = self;
     _table.dataSource = self;
     
     _table.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_table]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
+    
+     NSLayoutConstraint* bottom = [NSLayoutConstraint constraintWithItem:_table attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
+    [self.view addConstraint:bottom];
+    
     UIBarButtonItem* rigtBar = [[UIBarButtonItem alloc]initWithTitle:@"提交" style:UIBarButtonItemStyleDone target:self action:@selector(updateShopInfo)];
     self.navigationItem.rightBarButtonItem = rigtBar;
+    
+    if (_shopData.openTime) {
+        [self creatTableFootView];
+    }
+    [self registeNotificationCenter];
     // Do any additional setup after loading the view.
 }
+
+-(void)registeNotificationCenter
+{
+    /*注册成功后  重新链接服务器*/
+    
+    NSNotificationCenter *def = [NSNotificationCenter defaultCenter];
+    
+    /* 注册键盘的显示/隐藏事件 */
+    [def addObserver:self selector:@selector(keyboardShown:)
+                name:UIKeyboardWillShowNotification
+											   object:nil];
+    
+    
+    [def addObserver:self selector:@selector(keyboardHidden:)name:UIKeyboardWillHideNotification
+											   object:nil];
+    
+}
+
+
+- (void)keyboardShown:(NSNotification *)aNotification
+{
+    
+    NSDictionary *info = [aNotification userInfo];
+    NSValue *aValue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    
+    CGSize keyboardSize = [aValue CGRectValue].size;
+    [self accessViewAnimate:-keyboardSize.height];
+    
+}
+
+
+- (void)keyboardHidden:(NSNotification *)aNotification
+{
+    [self accessViewAnimate:0.0];
+}
+
+-(void)accessViewAnimate:(float)height
+{
+    
+    [UIView animateWithDuration:.2 delay:0 options:0 animations:^{
+        
+        
+        for (NSLayoutConstraint * constranint in self.view.constraints) {
+            
+            
+            if (constranint.firstItem==_table&&constranint.firstAttribute==NSLayoutAttributeBottom) {
+                constranint.constant = height;
+            }
+            
+        }
+
+       
+        [self.view layoutIfNeeded];
+        
+    } completion:^(BOOL finished) {
+        
+    }];
+    
+}
+
+
 
 -(void)updateShopInfo
 {
@@ -90,7 +160,7 @@
         AddProductCommonCell* cell2 = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
         if (cell2==nil) {
             cell2 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2" WithFieldBk:^(NSString *text) {
-                wShopData.shopName = text;
+                wShopData.shopAddress = text;
             }];
             [cell2 setTextTitleLabel:@"店地址"];
             [cell2 setTextField:wShopData.shopAddress];
@@ -101,7 +171,7 @@
         AddProductCommonCell* cell3 = [tableView dequeueReusableCellWithIdentifier:@"cell3"];
         if (cell3==nil) {
             cell3 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell3" WithFieldBk:^(NSString *text) {
-                wShopData.shopName = text;
+                wShopData.minPrice = [text floatValue];
             }];
             [cell3 setTextTitleLabel:@"起送价格¥"];
             [cell3 setTextField:[NSString stringWithFormat:@"%.1f",wShopData.minPrice]];
@@ -112,7 +182,7 @@
         AddProductCommonCell* cell4 = [tableView dequeueReusableCellWithIdentifier:@"cell4"];
         if (cell4==nil) {
             cell4 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell4" WithFieldBk:^(NSString *text) {
-                wShopData.shopName = text;
+                wShopData.serveArea = text;
             }];
             [cell4 setTextTitleLabel:@"服务范围"];
             [cell4 setTextField:wShopData.serveArea];
@@ -124,7 +194,7 @@
         AddProductCommonCell* cell5 = [tableView dequeueReusableCellWithIdentifier:@"cell5"];
         if (cell5==nil) {
             cell5 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell5" WithFieldBk:^(NSString *text) {
-                wShopData.shopName = text;
+                wShopData.telPhoneNu = text;
             }];
             [cell5 setTextTitleLabel:@"店铺座机"];
             [cell5 setTextField:wShopData.telPhoneNu];
@@ -135,7 +205,7 @@
         AddProductCommonCell* cell6 = [tableView dequeueReusableCellWithIdentifier:@"cell6"];
         if (cell6==nil) {
             cell6 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell6" WithFieldBk:^(NSString *text) {
-                wShopData.shopName = text;
+                wShopData.mobilePhoneNu = text;
             }];
             [cell6 setTextTitleLabel:@"老板电话"];
             [cell6 setTextField:wShopData.mobilePhoneNu];
@@ -173,7 +243,7 @@
             }
             else
             {
-                [cell8 setSWitchStatue:1];
+                [cell8 setSWitchStatue:0];
             }
         }
         return cell8;
@@ -256,12 +326,14 @@
 {
     __weak ShopInfoData* wData = _shopData;
     DatePickerView* picker = [[DatePickerView alloc]initWithDateSelectComplete:^(NSString *dateStr) {
-        [bt setTitle:dateStr forState:UIControlStateNormal];
+        
         if (bt.tag) {
-            wData.openTime = dateStr;
+            [bt setTitle:[NSString stringWithFormat:@"开门时间: %@",dateStr] forState:UIControlStateNormal];
+            wData.openTime =  dateStr;
         }
         else
         {
+            [bt setTitle:[NSString stringWithFormat:@"关门时间: %@",dateStr] forState:UIControlStateNormal];
             wData.closeTime = dateStr;
         }
         

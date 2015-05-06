@@ -56,10 +56,12 @@ typedef enum {
     
 }
 
-@property(nonatomic,assign) id <EGORefreshTableHeaderDelegate> delegate;
+@property(nonatomic,weak) id <EGORefreshTableHeaderDelegate> delegate;
 @property(nonatomic,assign)UIEdgeInsets scrollEdge;
 -(void)setRefreshStyle:(RefreshStyle)style;
 - (void)refreshLastUpdatedDate;
+
+-(void)egoRefreshScrollViewDataSourceDidBeginLoading:(UIScrollView *)scrollView;
 - (void)egoRefreshScrollViewDidScroll:(UIScrollView *)scrollView;
 - (void)egoRefreshScrollViewDidEndDragging:(UIScrollView *)scrollView;
 - (void)egoRefreshScrollViewDataSourceDidFinishedLoading:(UIScrollView *)scrollView;

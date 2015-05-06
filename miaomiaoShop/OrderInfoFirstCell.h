@@ -15,4 +15,5 @@
 ;
 -(void)setPayWayText:(NSString*)str
 ;
+-(void)setOrderMessage:(NSString*)str;
 @end

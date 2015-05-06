@@ -50,6 +50,7 @@
 
 -(void)initNetData
 {
+    
     NetWorkRequest* categoryReq = [[NetWorkRequest alloc]init];
     [categoryReq shopGetCategoryWithCallBack:^(NSMutableArray* backDic, NSError *error) {
         

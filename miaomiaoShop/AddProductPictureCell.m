@@ -55,7 +55,7 @@
 
 -(void)setProductImageWithUrl:(NSString *)url
 {
-    [_pImageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:DEFAULTIMAGE]];
+    [_pImageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:DEFAULTIMAGE];
 }
 
 @end

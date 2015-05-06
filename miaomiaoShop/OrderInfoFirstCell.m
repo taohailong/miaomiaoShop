@@ -11,6 +11,7 @@
 {
     UILabel* _addressLabel;
     UILabel* _payWayLabel;
+    UILabel* _messageLabel;
     UIButton* _telBt;
 }
 @end
@@ -51,7 +52,7 @@
     
     _telBt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     _telBt.translatesAutoresizingMaskIntoConstraints = NO;
-    _telBt.backgroundColor = [UIColor redColor];
+//    _telBt.backgroundColor = [UIColor redColor];
     [self.contentView addSubview:_telBt];
     [_telBt addTarget:self action:@selector(makeTelphone) forControlEvents:UIControlEventTouchUpInside];
     _telBt.titleLabel.font = [UIFont systemFontOfSize:15];
@@ -59,6 +60,16 @@
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[textBtL]-5-[_telBt]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(textBtL,_telBt)]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_telBt attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:textBtL attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    
+    _messageLabel = [[UILabel alloc]init];
+    _messageLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    _messageLabel.font = [UIFont systemFontOfSize:15];
+    [self.contentView addSubview:_messageLabel];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-14-[_messageLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_messageLabel)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[textBtL]-8-[_messageLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(textBtL,_messageLabel)]];
+
+    
     
     return self;
 }
@@ -72,13 +83,19 @@
 
 -(void)setAddressText:(NSString*)str
 {
-    _addressLabel.text = [NSString stringWithFormat:@"送货地址:%@",str];
+    _addressLabel.text = [NSString stringWithFormat:@"送货地址: %@",str];
 }
 
 
 -(void)setPayWayText:(NSString*)str
 {
-    _payWayLabel.text = [NSString stringWithFormat:@"订单状态:%@",str] ;
+    _payWayLabel.text = [NSString stringWithFormat:@"支付方式: %@",str] ;
+}
+
+
+-(void)setOrderMessage:(NSString*)str
+{
+    _messageLabel.text = [NSString stringWithFormat:@"买家留言: %@",str] ;
 }
 
 
@@ -88,6 +105,9 @@
     [alert show];
     
 }
+
+
+
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {

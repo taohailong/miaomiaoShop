@@ -9,29 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "miaomiaoShop/UserManager.m"
-            timestampString = "451465363.521729"
+            filePath = "ASI/ASIHTTPRequest.m"
+            timestampString = "452603279.169771"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
-            landmarkName = "-checkTokenExsit"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "miaomiaoShop/ShopInfoViewController.m"
-            timestampString = "452353735.870467"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "121"
-            endingLineNumber = "121"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            startingLineNumber = "1970"
+            endingLineNumber = "1970"
+            landmarkName = "-reportFailure"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

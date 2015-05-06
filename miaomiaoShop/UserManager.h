@@ -17,6 +17,10 @@ typedef void (^logCallBack)(BOOL success,NSError* err) ;
 @property(nonatomic,strong)NSString* shopID;
 @property(nonatomic,strong)NSString* shopAddress;
 
+-(void)savePushToken:(NSString*)push;
+-(void)registePushKey;
+-(void)removeUserAccountWithBk:(logCallBack)complete;
+
 -(BOOL)isLogin;
 //@property(nonatomic,assign)
 //-(void)logInWithPhone:(NSString*)phone Pass:(NSString*)ps;

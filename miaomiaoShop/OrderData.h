@@ -21,6 +21,7 @@
 @property(nonatomic,strong)NSString* totalMoney;
 @property(nonatomic,strong)NSString* messageStr;
 @property(nonatomic,strong)NSString* orderNu;
+@property(nonatomic,strong)NSString* orderTakeOver;
 @property(nonatomic,assign)int countOfProduct;
 @property(nonatomic,assign)float discountMoney;
 -(void)setOrderInfoString:(NSString*)string;

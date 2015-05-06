@@ -10,8 +10,11 @@
 #import "NetWorkRequest.h"
 #import "ShopInfoData.h"
 #import "ShopInfoViewController.h"
+#import "UserManager.h"
+#import "LogViewController.h"
+#import "THActivityView.h"
 
-@interface RootViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface RootViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
     UITableView* _table;
     ShopInfoData* _shopData;
@@ -20,8 +23,35 @@
 
 @implementation RootViewController
 
+-(void)checkUserLogState
+{
+    UserManager* manage = [UserManager shareUserManager];
+    
+    if ([manage isLogin]) {
+        return;
+    }
+    
+    __weak RootViewController* wSelf = self;
+    if ([manage verifyTokenOnNet:^(BOOL success, NSError *error) {
+        
+        if (success==NO)
+        {
+            THActivityView* alter = [[THActivityView alloc]initWithString:@"登录验证失效"];
+            [alter show];
+            [wSelf  showLogView];
+        }
+        
+    }]==NO)
+        
+    {
+        [self showLogView];
+    }
+}
+
+
 -(void)viewDidAppear:(BOOL)animated
 {
+    [self checkUserLogState];
     [self netShopInfoFromNet];
 }
 - (void)viewDidLoad {
@@ -37,16 +67,66 @@
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
 
+//    UIBarButtonItem* rightBar = [[UIBarButtonItem alloc]initWithTitle:@"注销" style:UIBarButtonItemStylePlain target:self action:@selector(registeUserAccount)];
+//    self.navigationItem.rightBarButtonItem = rightBar;
+//    
+    
     // Do any additional setup after loading the view.
 }
 
+
+-(void)registeUserAccount
+{
+    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您确定要退出吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alert show];
+}
+
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.cancelButtonIndex==buttonIndex) {
+        return;
+    }
+    __weak RootViewController* wSelf = self;
+    THActivityView* loadView = [[THActivityView alloc]initViewOnWindow];
+    [loadView loadViewAddOnWindow];
+    UserManager* manager = [UserManager shareUserManager];
+    [manager removeUserAccountWithBk:^(BOOL success, NSError *err) {
+        if (success) {
+            [wSelf showLogView];
+        }
+        else
+        {
+           THActivityView* alert = [[THActivityView alloc]initWithString:@"退出失败!"];
+            [alert show];
+        }
+        [loadView removeFromSuperview];
+    }];
+}
+
+
+-(void)showLogView
+{
+    LogViewController* log = [self.storyboard instantiateViewControllerWithIdentifier:@"LogViewController"];
+    [self presentViewController:log animated:YES completion:^{}];
+}
+
+
 -(void)netShopInfoFromNet
 {
+    __weak RootViewController* wSelf = self;
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
     [request getShopInfoWitbBk:^(ShopInfoData* backDic, NSError *error) {
         if (backDic) {
             _shopData =backDic;
             [_table reloadData];
+        }
+        else{
+            THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wSelf.view];
+            
+            [loadView setErrorBk:^{
+                [wSelf netShopInfoFromNet];
+            }];
         }
     }];
     [request startAsynchronous];
@@ -61,22 +141,28 @@
     else if (section==1)
     {
       return @"商品";
+    } else if (section==2)
+    {
+      return @"订单";
     }
     else
     {
-      return @"订单";
+        return  nil;
     }
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (section==3) {
+        return 1;
+    }
     return 2;
 }
 
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 4;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -87,6 +173,7 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:str];
         UILabel* label = [[UILabel alloc]init];
         cell.accessoryView = label;
+        
         cell.textLabel.font  = [UIFont systemFontOfSize:15];
     }
     
@@ -127,7 +214,7 @@
         }
 
     }
-    else
+    else if(indexPath.section==2)
     {
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (indexPath.row)
@@ -145,17 +232,33 @@
         }
 
     }
+    else
+    {
+    
+        titleStr = @"退出登录";
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    }
+    
+    
     cell.imageView.image = titleImage;
     cell.textLabel.text = titleStr;
+    [accessLabel sizeToFit];
     return cell;
 
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ShopInfoViewController * shopInfo = [[ShopInfoViewController alloc]initWithShopInfoData:_shopData];
-    shopInfo.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:shopInfo animated:YES];
+    if (indexPath.row==1&&indexPath.section==0) {
+        ShopInfoViewController * shopInfo = [[ShopInfoViewController alloc]initWithShopInfoData:_shopData];
+        shopInfo.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:shopInfo animated:YES]; 
+    }
+    else if (indexPath.section==3)
+    {
+        [self registeUserAccount];
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 

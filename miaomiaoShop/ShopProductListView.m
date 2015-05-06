@@ -53,6 +53,10 @@
 {
     __weak ShopProductListView* wSelf = self;
     self.isLoading = NO;
+    
+    THActivityView* fullView = [[THActivityView alloc]initFullViewTransparentWithSuperView:self.superview];
+    
+    THActivityView* loadView = [[THActivityView alloc]initActivityViewWithSuperView:self.superview];
     UserManager* manager = [UserManager shareUserManager];
     NetWorkRequest* productReq = [[NetWorkRequest alloc]init];
     _currentCategoryID = categoryID;
@@ -61,7 +65,8 @@
         if (backDic) {
            [wSelf setDataArrReloadTable:backDic];
         }
-        
+        [loadView removeFromSuperview];
+        [fullView removeFromSuperview];
     }];
     [productReq startAsynchronous];
 
@@ -75,6 +80,8 @@
     }
     self.isLoading = YES;
     
+    
+    THActivityView* fullView = [[THActivityView alloc]initFullViewTransparentWithSuperView:self.superview];
     UserManager* manager = [UserManager shareUserManager];
     NetWorkRequest* productReq = [[NetWorkRequest alloc]init];
     __weak ShopProductListView* wSelf = self;
@@ -83,7 +90,7 @@
         if (backDic) {
            [wSelf addDataArr:backDic];
         }
-        
+        [fullView removeFromSuperview];
     }];
     [productReq startAsynchronous];
 
@@ -106,8 +113,6 @@
     {
         _table.tableFooterView = [[LastViewOnTable alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH*0.71, 50)];
     }
-
-    
 }
 
 

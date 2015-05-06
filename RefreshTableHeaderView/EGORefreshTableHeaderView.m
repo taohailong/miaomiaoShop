@@ -60,7 +60,7 @@
             break;
         case RefreshInsetNormal:
             OFFY = 0;
-            PUSHLENTH =-75.0;
+            PUSHLENTH =-65.0;
             break;
         default:
             break;
@@ -69,30 +69,6 @@
 
 -(void)setDelegate:(id<EGORefreshTableHeaderDelegate>)delegate
 {
-    
-//    if ([delegate respondsToSelector:@selector(setEdgesForExtendedLayout:)])
-//    {
-//        UIViewController* controll = (UIViewController*)delegate;
-//        if (controll.edgesForExtendedLayout == UIRectEdgeNone)
-//        {
-//            OFFY = 0;
-//            PUSHLENTH =-75.0;
-//        }
-//        else
-//        {
-//           OFFY = 64.0;
-//           PUSHLENTH =-139.0;
-//        }
-//        
-//        
-//    }
-//    else
-//    {
-//        OFFY = 0.0;
-//        PUSHLENTH =-75.0;
-//    }
-
-    
     
     _delegate = delegate;
 }
@@ -107,7 +83,7 @@
     if (self = [super initWithFrame:frame]) {
 		
         OFFY = 0.0;
-        PUSHLENTH =-75.0;
+        PUSHLENTH =-65.0;
 		self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		self.backgroundColor = [UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1.0];
 
@@ -154,8 +130,6 @@
 		[self addSubview:view];
 		_activityView = view;
 		
-		
-		
 		[self setState:EGOOPullRefreshNormal];
 		
     }
@@ -179,7 +153,9 @@
 		[formatter setAMSymbol:@"AM"];
 		[formatter setPMSymbol:@"PM"];
 		[formatter setDateFormat:@"yyyy/MM/dd hh:mm:ss"];
-		_lastUpdatedLabel.text = [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"Last Updated", nil),[formatter stringFromDate:date]];
+//		_lastUpdatedLabel.text = [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"Last Updated", nil),[formatter stringFromDate:date]];
+        _lastUpdatedLabel.text = [NSString stringWithFormat:@"上次更新时间:%@",[formatter stringFromDate:date]];
+        
 		[[NSUserDefaults standardUserDefaults] setObject:_lastUpdatedLabel.text forKey:@"EGORefreshTableView_LastRefresh"];
 		[[NSUserDefaults standardUserDefaults] synchronize];
 		
@@ -192,7 +168,7 @@
 		[formatter setAMSymbol:@"AM"];
 		[formatter setPMSymbol:@"PM"];
 		[formatter setDateFormat:@"yyyy/MM/dd hh:mm:ss"];
-		_lastUpdatedLabel.text = [NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"Last Updated", nil),[formatter stringFromDate:date]];
+		_lastUpdatedLabel.text = [NSString stringWithFormat:@"上次更新时间:%@",[formatter stringFromDate:date]];
 		[[NSUserDefaults standardUserDefaults] setObject:_lastUpdatedLabel.text forKey:@"EGORefreshTableView_LastRefresh"];
 		[[NSUserDefaults standardUserDefaults] synchronize];
 		
@@ -205,7 +181,8 @@
 	switch (aState) {
 		case EGOOPullRefreshPulling:
 			
-			_statusLabel.text = NSLocalizedString(@"Release to refresh...",nil);
+//			_statusLabel.text = NSLocalizedString(@"Release to refresh...",nil);
+            _statusLabel.text = @"释放加载...";
 			[CATransaction begin];
 			[CATransaction setAnimationDuration:FLIP_ANIMATION_DURATION];
 			_arrowImage.transform = CATransform3DMakeRotation((M_PI / 180.0) * 180.0f, 0.0f, 0.0f, 1.0f);
@@ -221,7 +198,8 @@
 				[CATransaction commit];
 			}
 			
-			_statusLabel.text = NSLocalizedString(@"Pull down to refresh...", nil);
+//			_statusLabel.text = NSLocalizedString(@"Pull down to refresh...", nil);
+            _statusLabel.text = @"下拉刷新...";
 			[_activityView stopAnimating];
 			[CATransaction begin];
 			[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions]; 
@@ -235,7 +213,8 @@
 		case EGOOPullRefreshLoading:
 			
             
-			_statusLabel.text = NSLocalizedString(@"Loading...", @"加载...");
+//			_statusLabel.text = NSLocalizedString(@"Loading...", @"加载...");
+            _statusLabel.text = @"加载...";
 			[_activityView startAnimating];
 			[CATransaction begin];
 			[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions]; 
@@ -277,11 +256,10 @@
 			[self setState:EGOOPullRefreshPulling];
 		}
 		
-		if (scrollView.contentInset.top != 0) {
-//            scrollView.contentInset = UIEdgeInsetsMake(OFFY, 0.0f, 48.0f, 0.0f);
-            scrollView.contentInset = UIEdgeInsetsMake(self.scrollEdge.top, scrollView.contentInset.left, scrollView.contentInset.bottom, scrollView.contentInset.right);
-//			scrollView.contentInset = UIEdgeInsetsZero;
-		}
+//		if (scrollView.contentInset.top != 0) {
+//            scrollView.contentInset = UIEdgeInsetsMake(self.scrollEdge.top, scrollView.contentInset.left, scrollView.contentInset.bottom, scrollView.contentInset.right);
+//
+//		}
 		
 	}
 	
@@ -293,7 +271,7 @@
 	if ([_delegate respondsToSelector:@selector(egoRefreshTableHeaderDataSourceIsLoading:)]) {
 		_loading = [_delegate egoRefreshTableHeaderDataSourceIsLoading:self];
 	}
-	
+    NSLog(@"y %f %f",scrollView.contentOffset.y,PUSHLENTH);
 	if (scrollView.contentOffset.y <= PUSHLENTH && !_loading)
     {
 		
@@ -302,8 +280,9 @@
 			[_delegate egoRefreshTableHeaderDidTriggerRefresh:self];
 		}
 		
-		[self setState:EGOOPullRefreshLoading];
+		
 		[UIView beginAnimations:nil context:NULL];
+        [self setState:EGOOPullRefreshLoading];
 		[UIView setAnimationDuration:.2];
 
         
@@ -312,6 +291,19 @@
 		
 	}
 	
+}
+
+
+-(void)egoRefreshScrollViewDataSourceDidBeginLoading:(UIScrollView *)scrollView
+{
+    [self setState:EGOOPullRefreshLoading];//放在动画前面
+    [UIView animateWithDuration:.2 animations:^{
+        scrollView.contentInset = UIEdgeInsetsMake(-PUSHLENTH, 0, 0, 0);
+        [scrollView setContentOffset:CGPointMake(-0.0f, PUSHLENTH)];
+    } completion:^(BOOL finished) {
+        
+    }];
+    
 }
 
 - (void)egoRefreshScrollViewDataSourceDidFinishedLoading:(UIScrollView *)scrollView {	
