@@ -36,6 +36,12 @@
     [self addSubview:_table];
     _table.delegate = self;
     _table.dataSource = self;
+    
+    UIView *view =[ [UIView alloc]init];
+    view.backgroundColor = [UIColor clearColor];
+    _table.tableFooterView = view;
+
+    
     if ([_table respondsToSelector:@selector(setSeparatorInset:)]) {
         [_table setSeparatorInset:UIEdgeInsetsZero];
     }
@@ -82,7 +88,7 @@
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-        cell.backgroundColor = [UIColor lightGrayColor];
+        cell.backgroundColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];
         cell.selectedBackgroundView = [self  tableSelectView];
     }
     if (indexPath.row==_dataArr.count) {
@@ -209,23 +215,23 @@
 -(UIView*)tableSelectView
 {
     UIView* selectView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
-//    selectView.backgroundColor = [UIColor redColor];
-    UIView* headView = [[UIView alloc]init];
-    headView.backgroundColor = [UIColor whiteColor];
-    headView.translatesAutoresizingMaskIntoConstraints = NO;
-    [selectView addSubview:headView];
-    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-13-[headView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(headView)]];
-    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[headView(1)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(headView)]];
-
-    
-    
-    
-    UIView* bottomView = [[UIView alloc]init];
-    bottomView.backgroundColor = [UIColor whiteColor];
-    bottomView.translatesAutoresizingMaskIntoConstraints = NO;
-    [selectView addSubview:bottomView];
-    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-13-[bottomView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(bottomView)]];
-    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView(1)]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(bottomView)]];
+    selectView.backgroundColor = [UIColor whiteColor];
+//    UIView* headView = [[UIView alloc]init];
+//    headView.backgroundColor = [UIColor whiteColor];
+//    headView.translatesAutoresizingMaskIntoConstraints = NO;
+//    [selectView addSubview:headView];
+//    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-13-[headView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(headView)]];
+//    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[headView(1)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(headView)]];
+//
+//    
+//    
+//    
+//    UIView* bottomView = [[UIView alloc]init];
+//    bottomView.backgroundColor = [UIColor whiteColor];
+//    bottomView.translatesAutoresizingMaskIntoConstraints = NO;
+//    [selectView addSubview:bottomView];
+//    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-13-[bottomView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(bottomView)]];
+//    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView(1)]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(bottomView)]];
 
     
     
@@ -234,7 +240,7 @@
     colorView.translatesAutoresizingMaskIntoConstraints = NO;
     [selectView addSubview:colorView];
     
-    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-1-[colorView(10)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(colorView)]];
+    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-1-[colorView(7)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(colorView)]];
     [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-2-[colorView]-2-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(colorView)]];
     return selectView;
 }

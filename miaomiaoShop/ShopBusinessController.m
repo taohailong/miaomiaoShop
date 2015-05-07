@@ -18,6 +18,8 @@
     IBOutlet UILabel* _totalMoney;
     IBOutlet UIView* _backView;
     NSMutableArray* _settleOrderS;
+    IBOutlet UISegmentedControl*_seg;
+    
 //    {
 //        "date": "2015-05-04",
 //        "orderCount": 0,
@@ -66,10 +68,21 @@
     __weak ShopBusinessController* wSelf = self;
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
     [request getDailyOrderSummaryWithBk:^(NSDictionary* backDic, NSError *error) {
+        
+        [loadView removeFromSuperview];
+        if (error) {
+            THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wSelf.view];
+            
+            [loadView setErrorBk:^{
+                [wSelf getOrderSummary];
+            }];
+            return ;
+        }
+
         if (backDic) {
             [wSelf fillDataToViewWith:backDic];
         }
-        [loadView removeFromSuperview];
+        
     }];
     [request startAsynchronous];
 }

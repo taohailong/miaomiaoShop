@@ -70,14 +70,23 @@
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
     [req shopGetOrderWithStatue:statue WithIndex:0 WithBk:^(NSArray* backDic, NSError *error) {
         
-        if (backDic) {
+        [loadView removeFromSuperview];
+        if (error) {
+            THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wSelf.view];
             
+            [loadView setErrorBk:^{
+                [wSelf getDataFromNetWithStatue:statue];
+            }];
+            return ;
+        }
+
+        if (backDic) {
             _notTodayArr = backDic[1];
             _todayArr = backDic[0];
             [_table reloadData];
             [wSelf addLoadMoreViewWithCount:_todayArr.count+_notTodayArr.count];
         }
-        [loadView removeFromSuperview];
+        
     }];
     [req startAsynchronous];
 }
@@ -89,6 +98,7 @@
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
     [req shopGetOrderWithStatue:_currentStatue WithIndex:_todayArr.count+_notTodayArr.count WithBk:^(NSArray* backDic, NSError *error) {
         
+         [loadView removeFromSuperview];
         if (backDic) {
             
             NSArray* notTodayArr = backDic[1];
@@ -98,7 +108,7 @@
             [_table reloadData];
             [wSelf addLoadMoreViewWithCount: todayArr.count+ notTodayArr.count];
         }
-        [loadView removeFromSuperview];
+       
     }];
     [req startAsynchronous];
 

@@ -21,9 +21,10 @@
 
     _bk =bk;
     _fieldBk = fieldBk;
-    _scanBt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _scanBt = [UIButton buttonWithType:UIButtonTypeCustom];
     _scanBt.frame = CGRectMake(0, 0, 45, 45) ;
-    [_scanBt setTitle:@"扫一扫" forState:UIControlStateNormal];
+//    [_scanBt setTitle:@"扫一扫" forState:UIControlStateNormal];
+    [_scanBt setImage:[UIImage imageNamed:@"ProductEditScan"] forState:UIControlStateNormal];
     _scanBt.titleLabel.font = [UIFont systemFontOfSize:14];
     [_scanBt addTarget:self action:@selector(btAction) forControlEvents:UIControlEventTouchUpInside];
     self.accessoryView = _scanBt;

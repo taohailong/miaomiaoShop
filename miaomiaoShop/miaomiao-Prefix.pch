@@ -11,7 +11,7 @@
 
 #define DEFAULTIMAGE [UIImage imageNamed:@"DefaultImage"]
 
-
+#define DEFAULTNAVCOLOR [UIColor colorWithRed:232.0/225.0 green:47.0/255.0 blue:45.0/255.0 alpha:1.0]  
 //#define DEFAULTIMAGE @"defaultImage"
 #define VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width

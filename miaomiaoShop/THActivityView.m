@@ -174,9 +174,21 @@
     
     [self addConstraint:[NSLayoutConstraint constraintWithItem:imageV attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
     
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:imageV attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:imageV attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:10]];
     
     imageV.image = [UIImage imageNamed:@"LoadingErr"];
+//    imageV.backgroundColor = [UIColor redColor];
+    
+    UILabel* nameL = [[UILabel alloc]init];
+    nameL.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [self addSubview:nameL];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:nameL attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:60]];
+    
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:nameL attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:-50]];
+    nameL.text = @"没有网络...";
+//    nameL.backgroundColor = [UIColor greenColor];
+    nameL.textColor = DEFAULTNAVCOLOR;
     
     
     
@@ -185,6 +197,7 @@
     bt.layer.borderWidth = 1.0;
     bt.layer.masksToBounds = YES;
     bt.layer.cornerRadius = 6;
+    bt.layer.borderColor = DEFAULTNAVCOLOR.CGColor;
     [self addSubview:bt];
     [bt addTarget:self action:@selector(performReloadAction) forControlEvents:UIControlEventTouchUpInside];
     
@@ -193,7 +206,7 @@
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[bt(150)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(bt)]];
     
     [self addConstraint:[NSLayoutConstraint constraintWithItem:bt attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
-    
+    [bt setTitleColor:DEFAULTNAVCOLOR forState:UIControlStateNormal];
     [bt setTitle:@"重新加载" forState:UIControlStateNormal];
     return self;
 }

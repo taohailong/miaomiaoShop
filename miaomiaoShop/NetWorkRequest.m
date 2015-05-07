@@ -82,8 +82,9 @@
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
         
-        if ([sourceDic[@"code"] intValue] ==0)
+        if (sourceDic)
         {
+//            [sourceDic[@"code"] intValue] ==0
             completeBk(sourceDic,nil);
             
         }
@@ -108,8 +109,9 @@
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/dailySummary?shop_id=%@&ver=%@",HTTPHOST,manager.shopID,VERSION];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
         
-        if ([sourceDic[@"code"] intValue] ==0)
+        if (sourceDic)
         {
+//            [sourceDic[@"code"] intValue] ==0
             completeBk(sourceDic,nil);
             
         }
@@ -127,8 +129,9 @@
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/dailySummaryDetail?shop_id=%@&from=%d&offset=%d&date=%@&type=%@&ver=%@",HTTPHOST,manager.shopID,index,index+20,date,type,VERSION];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
         
-        if ([sourceDic[@"code"] intValue] ==0)
+        if (sourceDic)
         {
+//            [sourceDic[@"code"] intValue] ==0
             NSArray* sourceArr = sourceDic[@"data"][@"orders"];
             DateFormateManager* manager = [DateFormateManager shareDateFormateManager];
             [manager  setDateStyleString:@"YY-MM-dd HH:ss"];
@@ -188,8 +191,9 @@
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/listbyType?shop_id=%@&from=%d&offset=%d&order_status=%@&ver=%@",HTTPHOST,manager.shopID,index,index+20,statue,VERSION];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
         
-        if ([sourceDic[@"code"] intValue] ==0)
+        if (sourceDic)
         {
+//            [sourceDic[@"code"] intValue] ==0
             NSArray* sourceArr = sourceDic[@"data"][@"orderls"];
             DateFormateManager* manager = [DateFormateManager shareDateFormateManager];
             [manager  setDateStyleString:@"YY-MM-dd HH:ss"];
@@ -251,8 +255,9 @@
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/cate/del?category_id=%@&shop_id=%@&ver=%@",HTTPHOST,cateID,manager.shopID,VERSION];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
         
-        if ([sourceDic[@"code"] intValue] ==0)
+        if (sourceDic)
         {
+//            [sourceDic[@"code"] intValue] ==0
             completeBk(sourceDic,nil);
             
         }
@@ -271,8 +276,9 @@
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
         
-        if ([sourceDic[@"code"] intValue] ==0)
+        if (sourceDic)
         {
+//            [sourceDic[@"code"] intValue] ==0
             completeBk(sourceDic,nil);
             
         }
@@ -295,8 +301,9 @@
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/del?itemId=%@&shop_id=%@&ver=%@",HTTPHOST,pID,manager.shopID,VERSION];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
         
-        if ([sourceDic[@"code"] intValue] ==0)
+        if (sourceDic)
         {
+//            [sourceDic[@"code"] intValue] ==0
             completeBk(sourceDic,nil);
             
         }
@@ -318,8 +325,9 @@
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
         
-        if ([sourceDic[@"code"] intValue] ==0)
+        if (sourceDic)
         {
+//            [sourceDic[@"code"] intValue] ==0
             completeBk(sourceDic,nil);
             
         }
@@ -364,7 +372,7 @@
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
         
-        if ([sourceDic[@"code"] intValue] ==0)
+        if (sourceDic)
         {
             completeBk(sourceDic,nil);
             
@@ -390,7 +398,7 @@
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/product/get?serialNo=%@&ver=%@",HTTPHOST,serialNu,VERSION];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
         
-        if ([sourceDic[@"code"] intValue] ==0)
+        if (sourceDic)
         {
             NSDictionary* pDic = sourceDic[@"data"][@"product"];
             ShopProductData* product = [[ShopProductData alloc]init];
@@ -418,7 +426,7 @@
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shop/category/get?shop_id=%@&ver=%@",HTTPHOST,manager.shopID,VERSION];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
         
-        if ([sourceDic[@"code"] intValue] ==0)
+        if (sourceDic)
         {
             NSMutableArray* arr = [NSMutableArray array];
             NSArray* cateArr = sourceDic[@"data"][@"categoryls"];
@@ -447,8 +455,9 @@
 {
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shop/getitems?shop_id=%@&category_id=%@&from=%d&offset=%d&ver=%@",HTTPHOST,shopID,category,nu,nu+20,VERSION];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err) {
-        if ([sourceDic[@"code"] intValue]==0)
+        if (sourceDic)
         {
+//            [sourceDic[@"code"] intValue]==0
             NSMutableArray* arr = [NSMutableArray array];
             NSArray* products = sourceDic[@"data"][@"itemls"];
             for (NSDictionary* dic in products)
@@ -546,6 +555,7 @@
     [_asi setCompletionBlock:^{
         
         NSDictionary* dataDic = [NSJSONSerialization JSONObjectWithData:bkAsi.responseData options:NSJSONReadingMutableContainers error:NULL];
+
         block(dataDic,nil);
         
     }];

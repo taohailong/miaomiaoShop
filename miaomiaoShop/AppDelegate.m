@@ -25,7 +25,7 @@ static SystemSoundID shake_sound_male_id = 0;
 {
 #if ENTERPRISE
     
-    [MobClick startWithAppkey:@"5549bc1767e58e30d8000431" reportPolicy:BATCH   channelId:@"App Store"];
+    [MobClick startWithAppkey:@"5549bc1767e58e30d8000431" reportPolicy:BATCH   channelId:@"My Store"];
     [MobClick setLogEnabled:NO];
     [MobClick checkUpdate];
     

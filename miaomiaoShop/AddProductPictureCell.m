@@ -21,9 +21,11 @@
     self.textLabel.font = [UIFont systemFontOfSize:14];
     
     
-    _pBt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _pBt = [UIButton buttonWithType:UIButtonTypeCustom];
     _pBt.frame = CGRectMake(0, 0, 45, 60);
-    [_pBt setTitle:@"拍照" forState:UIControlStateNormal];
+//    [_pBt setTitle:@"拍照" forState:UIControlStateNormal];
+    [_pBt setImage:[UIImage imageNamed:@"ProductEditPhoto"] forState:UIControlStateNormal];
+
     [_pBt addTarget:self action:@selector(setUpPhoto:) forControlEvents:UIControlEventTouchUpInside];
     self.accessoryView = _pBt;
     

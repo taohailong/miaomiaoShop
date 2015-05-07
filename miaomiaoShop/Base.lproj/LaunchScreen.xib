@@ -12,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchTop" translatesAutoresizingMaskIntoConstraints="NO" id="LM3-30-Jgu">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="LaunchTop" translatesAutoresizingMaskIntoConstraints="NO" id="LM3-30-Jgu">
                     <rect key="frame" x="197" y="122" width="85" height="80"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchBottom" translatesAutoresizingMaskIntoConstraints="NO" id="OqE-W3-t7c">

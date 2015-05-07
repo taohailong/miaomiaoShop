@@ -12,6 +12,7 @@
 #import "ShopCategoryData.h"
 #import "AddProductController.h"
 #import "ProductEditController.h"
+#import "THActivityView.h"
 @interface ShopObjectController ()<ShopCategoryProtocol,ShopProductListProtocol>
 {
     NSMutableDictionary* _allProductDic;
@@ -50,9 +51,20 @@
 
 -(void)initNetData
 {
-    
+    __weak ShopObjectController* wself = self;
+    THActivityView* loadV = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
     NetWorkRequest* categoryReq = [[NetWorkRequest alloc]init];
     [categoryReq shopGetCategoryWithCallBack:^(NSMutableArray* backDic, NSError *error) {
+        
+        [loadV removeFromSuperview];
+        if (error) {
+            THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wself.view];
+            
+            [loadView setErrorBk:^{
+                [wself initNetData];
+            }];
+            return ;
+        }
         
         [_categoryView setDataArrAndSelectOneRow :backDic];
         

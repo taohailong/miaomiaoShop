@@ -22,7 +22,7 @@
                         <color key="selectedImageTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="selectedImageTintColor">
-                                <color key="value" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="value" red="0.20000000000000001" green="0.80392156862745101" blue="0.37254901960784315" alpha="1" colorSpace="calibratedRGB"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </tabBar>
@@ -41,13 +41,7 @@
         <scene sceneID="PDW-dc-NB9">
             <objects>
                 <navigationController id="AKr-Rd-4BU" customClass="NavigationBaseController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="首页" id="jQT-Ae-ntL">
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="color" keyPath="NSForegroundColorAttributeName">
-                                <color key="value" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="首页" image="TabbarFirst" id="jQT-Ae-ntL"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="0Ua-0e-EuW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -65,7 +59,7 @@
         <scene sceneID="jNL-Pf-zZR">
             <objects>
                 <navigationController id="06H-VS-14E" customClass="NavigationBaseController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="商品" id="BRS-UT-SgW"/>
+                    <tabBarItem key="tabBarItem" title="商品" image="tabbarSecond" id="BRS-UT-SgW"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kpV-oZ-ykn">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -83,7 +77,7 @@
         <scene sceneID="wmF-nz-dpw">
             <objects>
                 <navigationController id="VAP-Dx-zsx" customClass="NavigationBaseController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="数据" id="iqx-7R-gSL"/>
+                    <tabBarItem key="tabBarItem" title="数据" image="tabbarFourth" id="iqx-7R-gSL"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="c2k-Ik-MWA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -174,7 +168,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="GXd-EW-lbg" firstAttribute="leading" secondItem="GQV-K0-eIg" secondAttribute="leading" constant="16" id="3kj-kJ-aTM"/>
                                     <constraint firstItem="R4K-dy-Dhm" firstAttribute="top" secondItem="GQV-K0-eIg" secondAttribute="top" constant="10" id="67u-8O-cRM"/>
@@ -207,7 +201,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l7z-wl-bQz">
                                                     <rect key="frame" x="18" y="4" width="279" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="订单数" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z3a-Bg-18P">
@@ -284,7 +278,7 @@
         <scene sceneID="SYt-NO-kNa">
             <objects>
                 <navigationController id="Bgt-wn-QKG" customClass="NavigationBaseController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="订单" id="mzu-gZ-629"/>
+                    <tabBarItem key="tabBarItem" title="订单" image="tabbarThird" id="mzu-gZ-629"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="e5D-UL-CBL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -360,19 +354,19 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UvA-1E-T08">
                                                     <rect key="frame" x="41" y="8" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14.5"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CTY-aS-61p">
                                                     <rect key="frame" x="41" y="37" width="542" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14.5"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4fb-LX-0Wr">
                                                     <rect key="frame" x="41" y="66" width="542" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14.5"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RsY-eC-7pe">
@@ -381,25 +375,25 @@
                                                         <constraint firstAttribute="height" constant="21" id="E1U-hm-aev"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14.5"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVx-jf-rKl">
                                                     <rect key="frame" x="41" y="124" width="542" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14.5"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uXP-dM-uAw">
                                                     <rect key="frame" x="41" y="153" width="542" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14.5"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Okv-Ya-AJn">
                                                     <rect key="frame" x="41" y="182" width="542" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14.5"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -666,7 +660,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="商品名称：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H5R-fU-mpF">
                                                     <rect key="frame" x="8" y="22" width="66" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BGS-DR-8IB">
@@ -690,7 +684,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="销售状态:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpd-KE-3PF">
                                                     <rect key="frame" x="18" y="22" width="66" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F9M-ev-fCz">
@@ -712,7 +706,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="分类:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NWX-Np-BX5">
                                                     <rect key="frame" x="20" y="22" width="39" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -764,6 +758,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="TabbarFirst" width="23" height="23"/>
         <image name="order_Nu" width="15" height="18"/>
         <image name="order_RedTime" width="12" height="12"/>
         <image name="order_address" width="15" height="15"/>
@@ -771,5 +766,8 @@
         <image name="order_payWay" width="15" height="10"/>
         <image name="order_statue" width="13" height="14"/>
         <image name="order_tel" width="15" height="15"/>
+        <image name="tabbarFourth" width="23" height="23"/>
+        <image name="tabbarSecond" width="23" height="23"/>
+        <image name="tabbarThird" width="23" height="23"/>
     </resources>
 </document>
