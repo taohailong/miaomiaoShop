@@ -92,6 +92,10 @@
 		C75680CD1AF769D200F0A990 /* BusinessCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C75680CC1AF769D200F0A990 /* BusinessCell.m */; };
 		C75680D01AF77BFC00F0A990 /* ShopBusinessInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = C75680CF1AF77BFC00F0A990 /* ShopBusinessInfoController.m */; };
 		C75680D31AF7807300F0A990 /* BusinessInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C75680D21AF7807300F0A990 /* BusinessInfoCell.m */; };
+		C76ADB711AFCAA73008DF9A4 /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C76ADB701AFCAA73008DF9A4 /* line@2x.png */; };
+		C76ADB721AFCAA73008DF9A4 /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C76ADB701AFCAA73008DF9A4 /* line@2x.png */; };
+		C76ADB741AFCAA77008DF9A4 /* pick_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C76ADB731AFCAA77008DF9A4 /* pick_bg@2x.png */; };
+		C76ADB751AFCAA77008DF9A4 /* pick_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C76ADB731AFCAA77008DF9A4 /* pick_bg@2x.png */; };
 		C7777CD31AEA657000A9BDC3 /* AddProductController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7777CD21AEA657000A9BDC3 /* AddProductController.m */; };
 		C784433C1AF9E3A0009B4C2D /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = C753C16A1AE78E4E00562EF6 /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C784433D1AF9E3A0009B4C2D /* ShopBusinessController.m in Sources */ = {isa = PBXBuildFile; fileRef = C75680C91AF762F900F0A990 /* ShopBusinessController.m */; };
@@ -377,6 +381,8 @@
 		C75680CF1AF77BFC00F0A990 /* ShopBusinessInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopBusinessInfoController.m; sourceTree = "<group>"; };
 		C75680D11AF7807300F0A990 /* BusinessInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessInfoCell.h; sourceTree = "<group>"; };
 		C75680D21AF7807300F0A990 /* BusinessInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessInfoCell.m; sourceTree = "<group>"; };
+		C76ADB701AFCAA73008DF9A4 /* line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line@2x.png"; sourceTree = "<group>"; };
+		C76ADB731AFCAA77008DF9A4 /* pick_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pick_bg@2x.png"; sourceTree = "<group>"; };
 		C7777CD11AEA657000A9BDC3 /* AddProductController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProductController.h; sourceTree = "<group>"; };
 		C7777CD21AEA657000A9BDC3 /* AddProductController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProductController.m; sourceTree = "<group>"; };
 		C78443921AF9E3A0009B4C2D /* miaomiaoShop copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "miaomiaoShop copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -758,6 +764,8 @@
 			children = (
 				C78444191AFA1EB3009B4C2D /* LoadingGif.gif */,
 				C784441A1AFA1EB3009B4C2D /* miaomiao.mp3 */,
+				C76ADB701AFCAA73008DF9A4 /* line@2x.png */,
+				C76ADB731AFCAA77008DF9A4 /* pick_bg@2x.png */,
 			);
 			path = Source;
 			sourceTree = SOURCE_ROOT;
@@ -949,6 +957,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C753BEB41AE7460800562EF6 /* Main.storyboard in Resources */,
+				C76ADB711AFCAA73008DF9A4 /* line@2x.png in Resources */,
 				C713A2471AF488D1000EC646 /* blackArrow.png in Resources */,
 				C753BEB91AE7460800562EF6 /* LaunchScreen.xib in Resources */,
 				C784441B1AFA1EB3009B4C2D /* LoadingGif.gif in Resources */,
@@ -957,6 +966,7 @@
 				C7B86CD31AF8A7B800FCF5BE /* house.plist in Resources */,
 				C713A24A1AF488D1000EC646 /* blueArrow@2x.png in Resources */,
 				C784441D1AFA1EB3009B4C2D /* miaomiao.mp3 in Resources */,
+				C76ADB741AFCAA77008DF9A4 /* pick_bg@2x.png in Resources */,
 				C713A2491AF488D1000EC646 /* blueArrow.png in Resources */,
 				C713A2481AF488D1000EC646 /* blackArrow@2x.png in Resources */,
 				C713A24E1AF488D1000EC646 /* whiteArrow.png in Resources */,
@@ -977,6 +987,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C78443831AF9E3A0009B4C2D /* Main.storyboard in Resources */,
+				C76ADB721AFCAA73008DF9A4 /* line@2x.png in Resources */,
 				C78443841AF9E3A0009B4C2D /* blackArrow.png in Resources */,
 				C78443851AF9E3A0009B4C2D /* LaunchScreen.xib in Resources */,
 				C784441C1AFA1EB3009B4C2D /* LoadingGif.gif in Resources */,
@@ -985,6 +996,7 @@
 				C78443881AF9E3A0009B4C2D /* house.plist in Resources */,
 				C78443891AF9E3A0009B4C2D /* blueArrow@2x.png in Resources */,
 				C784441E1AFA1EB3009B4C2D /* miaomiao.mp3 in Resources */,
+				C76ADB751AFCAA77008DF9A4 /* pick_bg@2x.png in Resources */,
 				C784438A1AF9E3A0009B4C2D /* blueArrow.png in Resources */,
 				C784438B1AF9E3A0009B4C2D /* blackArrow@2x.png in Resources */,
 				C784438C1AF9E3A0009B4C2D /* whiteArrow.png in Resources */,

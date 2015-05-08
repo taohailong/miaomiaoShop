@@ -114,8 +114,9 @@
         
         return;
     }
-    
+   
     ShopCategoryData* data = _dataArr[indexPath.row];
+    
     if ([self.delegate respondsToSelector:@selector(didSelectCategoryIndexWith:WithName:)]) {
         [self.delegate didSelectCategoryIndexWith: data.categoryID WithName:data.categoryName];
     }

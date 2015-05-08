@@ -112,10 +112,38 @@
     
 }
 
+-(void)checkDataAndFill
+{
+    NSIndexPath* path = [NSIndexPath indexPathForRow:0 inSection:0];
+   
+    AddProductCommonCell* cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
+    [cell registeFirstRespond];
+    _shopData.shopName = [cell getTextFieldString];
+    
+    
+    path = [NSIndexPath indexPathForRow:1 inSection:0];
+    cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
+    _shopData.shopAddress = [cell getTextFieldString];
+    [cell registeFirstRespond];
+    
+    path = [NSIndexPath indexPathForRow:2 inSection:0];
+    cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
+    _shopData.minPrice = [[cell getTextFieldString] floatValue];
+    [cell registeFirstRespond];
+    
+    path = [NSIndexPath indexPathForRow:3 inSection:0];
+    cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
+    _shopData.serveArea = [cell getTextFieldString];
+   [cell registeFirstRespond];
+   
+}
+
+
 
 
 -(void)updateShopInfo
 {
+    [self checkDataAndFill];
     THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
     [request shopInfoUpdateWithShopInfoData:_shopData WithBk:^(id backDic, NSError *error) {
@@ -196,6 +224,7 @@
             cell5 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell5" WithFieldBk:^(NSString *text) {
                 wShopData.telPhoneNu = text;
             }];
+            [cell5 setFieldKeyboardStyle:UIKeyboardTypeNumberPad];
             [cell5 setTextTitleLabel:@"店铺座机"];
             [cell5 setTextField:wShopData.telPhoneNu];
         }
@@ -207,6 +236,7 @@
             cell6 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell6" WithFieldBk:^(NSString *text) {
                 wShopData.mobilePhoneNu = text;
             }];
+            [cell6 setFieldKeyboardStyle:UIKeyboardTypeNumberPad];
             [cell6 setTextTitleLabel:@"老板电话"];
             [cell6 setTextField:wShopData.mobilePhoneNu];
         }
@@ -216,11 +246,29 @@
         AddProductSwithCell* cell7 = [tableView dequeueReusableCellWithIdentifier:@"cell7"];
         if (cell7==nil) {
             cell7 = [[AddProductSwithCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell7"];
+            __weak AddProductSwithCell* wCell = cell7;
             [cell7 setSwitchBlock:^(BOOL statue) {
+                
+                if (statue) {
+                   wCell.textLabel.text = @"营业管理:营业中";
+                }
+                else
+                {
+                   wCell.textLabel.text = @"营业管理:打烊";
+                }
                 wShopData.shopStatue = statue;
             }];
             [cell7 setSWitchStatue:wShopData.shopStatue];
-            cell7.textLabel.text = @"营业管理";
+            
+            if (wShopData.shopStatue) {
+                cell7.textLabel.text = @"营业管理:营业中";
+            }
+            else
+            {
+                cell7.textLabel.text = @"营业管理:打烊";
+            }
+
+
         }
         return cell7;
     }
@@ -239,11 +287,11 @@
                 }
             }];
             if (_shopData.openTime) {
-                [cell8 setSWitchStatue:1];
+                [cell8 setSWitchStatue:0];
             }
             else
             {
-                [cell8 setSWitchStatue:0];
+                [cell8 setSWitchStatue:1];
             }
         }
         return cell8;

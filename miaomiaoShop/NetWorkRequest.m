@@ -320,14 +320,13 @@
 -(void)shopProductUpdateWithProduct:(ShopProductData *)data WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/update?itemId=%@&itemName=%@&serialNo=%@&category_id=%@&count=1000&score=0&price=%d&saleStatus=%d&shop_id=%@&ver=%@",HTTPHOST,data.pID,data.pName,data.scanNu,data.categoryID,(int)data.price*100,data.status,manager.shopID,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/update?itemId=%@&itemName=%@&serialNo=%@&category_id=%@&count=1000&score=0&price=%d&saleStatus=%d&shop_id=%@&pic_url=%@&ver=%@",HTTPHOST,data.pID,data.pName,data.scanNu,data.categoryID,(int)data.price*100,data.status,manager.shopID,data.pUrl,VERSION];
     
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
         
         if (sourceDic)
         {
-//            [sourceDic[@"code"] intValue] ==0
             completeBk(sourceDic,nil);
             
         }
@@ -367,7 +366,7 @@
 -(void)shopAddProductInfoToServeWith:(ShopProductData*)data WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/addItem?serialNo=%@&name=%@&categoryId=%@&count=100&score=0&price=%d&saleStatus=%d&shop_id=%@&ver=%@",HTTPHOST,data.scanNu,data.pName,data.categoryID,(int)data.price*100,data.status,manager.shopID,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/addItem?serialNo=%@&name=%@&categoryId=%@&count=100&score=0&price=%d&saleStatus=%d&shop_id=%@&pic_ur=%@&ver=%@",HTTPHOST,data.scanNu,data.pName,data.categoryID,(int)data.price*100,data.status,manager.shopID,data.pUrl,VERSION];
     
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
@@ -389,17 +388,16 @@
 
 
 
-
-
-
 -(void)shopScanProductWithSerial:(NSString*)serialNu WithBk:(NetCallback)completeBk
 {
+
 
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/product/get?serialNo=%@&ver=%@",HTTPHOST,serialNu,VERSION];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
         
         if (sourceDic)
         {
+            
             NSDictionary* pDic = sourceDic[@"data"][@"product"];
             ShopProductData* product = [[ShopProductData alloc]init];
             product.pID = pDic[@"id"];
@@ -467,7 +465,7 @@
                 product.categoryID = dic[@"category_id"];
                 product.price = [dic[@"price"] floatValue]/100;
                 product.pName = dic[@"name"];
-                product.status = [dic[@"status"] intValue];
+                product.status = [dic[@"onsell"] intValue];
                 product.pID = dic[@"id"];
                 product.count = [dic[@"count"] intValue];
                 [arr addObject:product];

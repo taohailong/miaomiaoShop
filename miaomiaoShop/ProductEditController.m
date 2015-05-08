@@ -11,10 +11,11 @@
 #import "ShopProductData.h"
 #import "THActivityView.h"
 #import "CategorySelectController.h"
+#import "UIImage+ZoomImage.h"
 @interface ProductEditController ()
 {
 //    ShopProductData* _productData;
-    UITableView* _table;
+//    UITableView* _table;
 }
 @end
 
@@ -38,36 +39,20 @@
 
 -(void)commitProductInfo
 {
-    [self networkRequestApi];
+    [super commitProductInfo];
 }
 
--(void)networkRequestApi
+-(void)checkDifference
 {
-    __weak AddProductController* wSelf = self;
-    THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
-    NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request shopProductUpdateWithProduct:_productData WithBk:^(id backDic, NSError *error) {
-        NSString* str = nil;
-        if (backDic) {
-            str = @"添加成功！";
-            [wSelf commitCompleteBack];
-        }
-        else
-        {
-            str = @"添加失败！";
-        }
-        THActivityView* show = [[THActivityView alloc]initWithString:str];
-        [show show];
-        [activeV removeFromSuperview];
-        
-    }];
-    [request startAsynchronous];
+    NSIndexPath* path = [NSIndexPath indexPathForRow:0 inSection:0];
+    AddProductCommonCell* cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
+    _productData.pName = [cell getTextFieldString];
     
-}
-
--(void)commitCompleteBack
-{
-    [super commitCompleteBack];
+    
+    path = [NSIndexPath indexPathForRow:1 inSection:0];
+    cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
+    _productData.price = [[cell getTextFieldString] floatValue];
+    
 }
 
 
@@ -98,7 +83,7 @@
         AddProductCommonCell* cell2= [tableView dequeueReusableCellWithIdentifier:@"2"];
         if (cell2==nil) {
             cell2 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"2" WithFieldBk:^(NSString *text) {
-                wData.pName = text;
+                wSelf.infoChange = YES;
             }];
         }
         [cell2 setTextField:_productData.pName];
@@ -110,7 +95,7 @@
         AddProductCommonCell* cell3 = [tableView dequeueReusableCellWithIdentifier:@"3"];
         if (cell3==nil) {
             cell3 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"3" WithFieldBk:^(NSString *text) {
-                wData.price = [text floatValue];
+                 wSelf.infoChange = YES;
             }];
         }
         [cell3 setTextTitleLabel:@"价格:"]  ;
@@ -125,6 +110,7 @@
             
             [cell4 setSwitchBlock:^(BOOL statue) {
                 wData.status = statue;
+                 wSelf.infoChange = YES;
             }];
         }
         [cell4 setSWitchStatue:_productData.status];
@@ -178,6 +164,7 @@
 
 -(void)setCategoryWithID:(NSString*)cateID WithName:(NSString*)name
 {
+    self.infoChange = YES;
     NSIndexPath* path = [NSIndexPath indexPathForRow:3 inSection:0];
     UITableViewCell* cell = [_table cellForRowAtIndexPath:path];
     cell.textLabel.text = [NSString stringWithFormat:@"分类：%@",name];
@@ -186,10 +173,26 @@
 }
 
 
-//- (void)viewDidLoad {
-//    [super viewDidLoad];
-//    // Do any additional setup after loading the view.
-//}
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+    self.infoChange = YES;
+    UIImage* image=[info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        _thumbImage = [UIImage imageByScalingAndCroppingForSize:CGSizeMake(200, 200) and:image];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSIndexPath* path = [NSIndexPath indexPathForRow:4 inSection:0];
+            AddProductPictureCell* cell = (AddProductPictureCell*)[_table cellForRowAtIndexPath:path];
+            
+            [cell setProductImage:_thumbImage];
+        });
+    });
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

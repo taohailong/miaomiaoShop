@@ -13,13 +13,19 @@
 #import "AddProductPictureCell.h"
 @class ShopProductData;
 typedef void (^AddEditProduct)(void);
-@interface AddProductController : UIViewController
+@interface AddProductController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     AddEditProduct _completeBk;
     ShopProductData* _productData;
-
+    UITableView* _table;
+    UIImage* _thumbImage;
 }
+
+@property(nonatomic,assign)BOOL infoChange;
+-(void)commitProductInfo;
 -(void)setCompleteBk:(AddEditProduct)bk;
--(void)commitCompleteBack;
+//-(void)commitCompleteBack;
 -(void)setUpPhoto;
+-(void)postUpImageWithImage:(UIImage*)image WithBk:(void(^)(NSString * url))complete;
+-(void)checkDifference;
 @end

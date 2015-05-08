@@ -20,6 +20,7 @@
 }
 @property(nonatomic,weak)IBOutlet id<ShopProductListProtocol>delegate;
 -(void)setCategoryIDToGetData:(NSString*)categoryID;
+-(void)reloadTable;
 //-(void)setDataArrReloadTable:(NSMutableArray *)dataArr;
 //-(void)addDataArr:(NSMutableArray*)da;
 @end

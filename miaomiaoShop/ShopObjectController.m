@@ -16,8 +16,9 @@
 @interface ShopObjectController ()<ShopCategoryProtocol,ShopProductListProtocol>
 {
     NSMutableDictionary* _allProductDic;
-//    NSString* _currentCategoryID;
-    ShopCategoryData* _currentCategory;
+    NSString* _currentCategoryID;
+    NSString* _currentCateName;
+//    ShopCategoryData* _currentCategory;
     
 }
 @end
@@ -36,7 +37,7 @@
 -(void)addProductAction
 {
     __weak ShopProductListView* wProductV = _productView;
-    __weak NSString* wCategoryID = _currentCategory.categoryID;
+    __weak NSString* wCategoryID = _currentCategoryID;
 //    AddProductController* addProduct = [self.storyboard instantiateViewControllerWithIdentifier:@"AddProductController"];
     AddProductController* addProduct = [[AddProductController alloc]init];
     [addProduct setCompleteBk:^{
@@ -70,7 +71,8 @@
         
         if (backDic.count) {
             ShopCategoryData* firstData = backDic[0];
-            _currentCategory = firstData;
+            _currentCateName = firstData.categoryName;
+            _currentCategoryID = firstData.categoryID;
             [_productView setCategoryIDToGetData:firstData.categoryID];
         }
     }];
@@ -81,21 +83,21 @@
 
 -(void)didSelectCategoryIndexWith:(NSString *)categoryID WithName:(NSString *)name
 {
-    _currentCategory.categoryID = categoryID;
-    _currentCategory.categoryName = name;
+    _currentCategoryID = categoryID;
+    _currentCateName = name;
     [_productView setCategoryIDToGetData:categoryID];
 }
 
 -(void)didSelectProductIndex:(ShopProductData*)product
 {
     __weak ShopProductListView* wProductV = _productView;
-    __weak NSString* wCategoryID = _currentCategory.categoryID;
     
-    product.categoryName = _currentCategory.categoryName;
+    
+    product.categoryName = _currentCateName;
     ProductEditController* editController = [[ProductEditController alloc]initWithProductData:product];
     editController.hidesBottomBarWhenPushed = YES;
     [editController setCompleteBk:^{
-        [wProductV  setCategoryIDToGetData:wCategoryID];
+        [wProductV  reloadTable];
 
     }];
     [self.navigationController pushViewController:editController animated:YES];

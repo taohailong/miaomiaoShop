@@ -14,8 +14,10 @@ typedef void (^TextFieldBk)(NSString*text);
     IBOutlet UITextField* _contentField;
     TextFieldBk _fieldBk;
 }
+-(void)registeFirstRespond;
 -(void)setTextField:(NSString*)fieldStr;
 -(void)setFieldKeyboardStyle:(UIKeyboardType)style;
 -(void)setTextTitleLabel:(NSString*)text;
+-(NSString*)getTextFieldString;
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier WithFieldBk:(TextFieldBk)bk;
 @end

@@ -16,32 +16,16 @@
 #import "CategorySelectController.h"
 
 
-@interface AddProductController()<UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ScanProtocol>
+@interface AddProductController()<ScanProtocol,UIAlertViewDelegate>
 {
 //    IBOutlet UIScrollView* _scroll;
-    IBOutlet NSLayoutConstraint* _bottomLay;
-    IBOutlet    UITableView*_table;
+//    BOOL _isChange;
     NetWorkRequest* _postAsi;
 }
 
 @end
 @implementation AddProductController
-
-//-(id)initWithProductData:(ShopProductData*)data
-//{
-//    self = [super init];
-//    
-//    
-//    return self;
-//}
-
-//-(id)initWithProductData:(ShopProductData*)data
-//{
-//    self = [super init];
-//
-//
-//    return self;
-//}
+@synthesize infoChange;
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -55,13 +39,15 @@
 {
     self= [super init];
     _productData = [[ShopProductData alloc]init];
+    _productData.status = 1;
     return self;
 }
 
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-
+    self.infoChange = NO;
+    self.view.backgroundColor = [UIColor whiteColor];
     _table = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
     
     [self.view addSubview:_table];
@@ -70,15 +56,60 @@
     
     _table.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
     
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_table attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_table attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
+
     
     [self registeNotificationCenter];
     [self setExtraCellLineHidden:_table];
-//    self.title = @"商品";
+
     UIBarButtonItem* rightBar = [[UIBarButtonItem alloc]initWithTitle:@"提交" style:UIBarButtonItemStyleDone target:self action:@selector(commitProductInfo)];
-    self.navigationItem.rightBarButtonItem = rightBar;
+    
+    UIButton* bt = [UIButton buttonWithType:UIButtonTypeCustom] ;
+    bt.frame = CGRectMake(0, 0, 25, 25);
+    [bt  addTarget:self action:@selector(setUpScanViewController) forControlEvents:UIControlEventTouchUpInside];
+    [bt setImage:[UIImage imageNamed:@"ProductEditScan"] forState:UIControlStateNormal];
+    
+    
+    UIBarButtonItem* rightBar1 = [[UIBarButtonItem alloc]initWithCustomView:bt];
+    
+    self.navigationItem.rightBarButtonItems = @[rightBar,rightBar1];
+    
+    
+    
+    UIBarButtonItem* leftBar = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:@selector(manualBack)];
+    self.navigationItem.leftBarButtonItem = leftBar;
+
 }
+
+
+
+-(void)manualBack
+{
+    
+    if (self.infoChange) {
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"需要提交信息吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alert show];
+    }
+    else
+    {
+       [self.navigationController popViewControllerAnimated:YES];
+    }
+ }
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==alertView.cancelButtonIndex) {
+        [self.navigationController popViewControllerAnimated:YES];
+        return ;
+    }
+    
+    [self commitProductInfo];
+}
+
+
 
 -(void)setCompleteBk:(AddEditProduct)bk
 {
@@ -125,11 +156,14 @@
     
     [UIView animateWithDuration:.2 delay:0 options:0 animations:^{
         
-        [self.view removeConstraint: _bottomLay];
-        NSLayoutConstraint* bottom = [NSLayoutConstraint constraintWithItem:_table attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:height];
-        _bottomLay = bottom;
-        [self.view addConstraint:_bottomLay];
-        [self.view layoutIfNeeded];
+        for (NSLayoutConstraint * constranint in self.view.constraints) {
+        
+            if (constranint.firstItem==_table&&constranint.firstAttribute==NSLayoutAttributeBottom) {
+    
+                constranint.constant = height;
+            }
+            
+        }
         
     } completion:^(BOOL finished) {
         
@@ -168,7 +202,7 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
     UITableViewCell* cell = nil;
     __weak AddProductController* wSelf = self;
     __weak ShopProductData* wData = _productData;
@@ -178,9 +212,10 @@
         if (cell1==nil)
         {
             cell1 = [[AddProductFirstCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"1" WithBlock:^{
-                [wSelf setUpScanViewController];
+                [wSelf manualFillScanNu];
             } WithFieldBk:^(NSString *text) {
                 wData.scanNu = text;
+                wSelf.infoChange = YES;
             }];
         }
         [cell1 setTextField:_productData.scanNu];
@@ -191,7 +226,8 @@
         AddProductCommonCell* cell2= [tableView dequeueReusableCellWithIdentifier:@"2"];
         if (cell2==nil) {
             cell2 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"2" WithFieldBk:^(NSString *text) {
-                wData.pName = text;
+//                wData.pName = text;
+                wSelf.infoChange = YES;
             }];
         }
         [cell2 setTextField:_productData.pName];
@@ -203,7 +239,8 @@
        AddProductCommonCell* cell3 = [tableView dequeueReusableCellWithIdentifier:@"3"];
        if (cell3==nil) {
            cell3 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"3" WithFieldBk:^(NSString *text) {
-               wData.price = [text floatValue];
+//               wData.price = [text floatValue];
+               wSelf.infoChange = YES;
            }];
        }
           [cell3 setTextTitleLabel:@"价格:"]  ;
@@ -218,6 +255,7 @@
             
             [cell4 setSwitchBlock:^(BOOL statue) {
                 wData.status =statue;
+                wSelf.infoChange = YES;
             }];
         }
         [cell4 setSWitchStatue:_productData.status];
@@ -262,6 +300,7 @@
         
         __weak AddProductController* wSelf = self;
         CategorySelectController* cateView = [[CategorySelectController alloc]initWithCompleteBk:^(NSString *categoryID, NSString *categoryName) {
+            
             [wSelf  setCategoryWithID:categoryID WithName:categoryName];
         }];
         [self.navigationController pushViewController:cateView animated:YES];
@@ -269,8 +308,19 @@
 }
 
 
+-(void)manualFillScanNu
+{
+    if (_productData.scanNu.length) {
+        [self getProductDataThroughScanNu:_productData.scanNu];
+    }
+    
+}
+
+
+
 -(void)setCategoryWithID:(NSString*)cateID WithName:(NSString*)name
 {
+    self.infoChange = YES;
     NSIndexPath* path = [NSIndexPath indexPathForRow:4 inSection:0];
     UITableViewCell* cell = [_table cellForRowAtIndexPath:path];
     cell.textLabel.text = [NSString stringWithFormat:@"分类：%@",name];
@@ -296,17 +346,18 @@
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
-    
+    self.infoChange = YES;
+
     UIImage* image=[info objectForKey:UIImagePickerControllerOriginalImage];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        UIImage* thumbImage = [UIImage imageByScalingAndCroppingForSize:CGSizeMake(200, 200) and:image];
+        _thumbImage = [UIImage imageByScalingAndCroppingForSize:CGSizeMake(200, 200) and:image];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             NSIndexPath* path = [NSIndexPath indexPathForRow:5 inSection:0];
             AddProductPictureCell* cell = (AddProductPictureCell*)[_table cellForRowAtIndexPath:path];
             
-            [cell setProductImage:thumbImage];
+            [cell setProductImage:_thumbImage];
         });
     });
     
@@ -327,6 +378,7 @@
 
 }
 
+#pragma mark------------scanDelegate---------------
 -(void)scanActionCompleteWithResult:(NSString *)string
 {
     [self getProductDataThroughScanNu:string];
@@ -336,16 +388,53 @@
 
 -(void)commitProductInfo
 {
-    NSIndexPath* path = [NSIndexPath indexPathForRow:5 inSection:0];
-    AddProductPictureCell* cell = (AddProductPictureCell*)[_table cellForRowAtIndexPath:path];
-    UIImage* thumbImage = [cell getProductImage];
-   [self postUpImageWithImage:thumbImage];
-    [self networkRequestApi];
+    if (_productData.categoryID==nil) {
+        
+        THActivityView* alert = [[THActivityView alloc]initWithString:@"请选择分类"];
+        [alert show];
+        
+        return;
+    }
+    
+    
+    __weak AddProductController* wself = self;
+    __weak ShopProductData* wPdata = _productData;
+    
+    if (_thumbImage==nil) {
+        
+        [self checkDifference];
+        [self networkRequestApi];
+
+        return;
+    }
+    
+    THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
+   [self postUpImageWithImage:_thumbImage WithBk:^(NSString *url) {
+       wPdata.pUrl = url;
+       [wself checkDifference];
+       [activeV removeFromSuperview];
+   }];
+    
  }
+
+-(void)checkDifference
+{
+
+    NSIndexPath* path = [NSIndexPath indexPathForRow:1 inSection:0];
+    AddProductCommonCell* cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
+    _productData.pName = [cell getTextFieldString];
+    
+    
+    path = [NSIndexPath indexPathForRow:2 inSection:0];
+    cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
+    _productData.price = [[cell getTextFieldString] floatValue];
+}
+
 
 
 -(void)networkRequestApi
 {
+    
     __weak AddProductController* wSelf = self;
     THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
@@ -380,10 +469,14 @@
 
 
 
--(void)postUpImageWithImage:(UIImage*)image
+-(void)postUpImageWithImage:(UIImage*)image WithBk:(void(^)(NSString * url))complete
 {
     _postAsi = [[NetWorkRequest alloc]init];
-    [_postAsi shopProductImagePostWithImage:UIImageJPEGRepresentation(image, 1.0) WithScanNu:_productData.scanNu WithBk:^(id backDic, NSError *error) {
+    [_postAsi shopProductImagePostWithImage:UIImageJPEGRepresentation(image, 1.0) WithScanNu:_productData.scanNu WithBk:^(NSDictionary* backDic, NSError *error) {
+        if (backDic[@"data"][@"url"]&&complete) {
+            
+            complete(backDic[@"data"][@"url"]);
+        }
         NSLog(@"%@",backDic);
     }];
 }

@@ -51,6 +51,12 @@
     return self;
 }
 
+
+-(void)reloadTable
+{
+    [_table reloadData];
+}
+
 -(void)setCategoryIDToGetData:(NSString *)categoryID
 {
     __weak ShopProductListView* wSelf = self;
