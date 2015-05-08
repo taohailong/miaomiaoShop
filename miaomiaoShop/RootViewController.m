@@ -188,6 +188,9 @@
             titleImage = [UIImage imageNamed:@"shopInfoIcon"];
             titleStr = _shopData.shopName;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            accessLabel.text = [NSString stringWithFormat:@"版本号:%@",VERSION];
+            accessLabel.font = [UIFont systemFontOfSize:15];
+            accessLabel.textColor = [UIColor lightGrayColor];
         }
         else
         {

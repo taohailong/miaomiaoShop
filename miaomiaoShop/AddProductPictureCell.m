@@ -32,7 +32,7 @@
     _pImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
     [self.contentView addSubview:_pImageView];
     _pImageView.center = CGPointMake(SCREENWIDTH/2, 60);
-    _pImageView.backgroundColor = [UIColor redColor];
+//    _pImageView.backgroundColor = [UIColor redColor];
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 

@@ -254,7 +254,7 @@
 -(void)creatTableFootView
 {
     UIView* footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50)];
-    footView.backgroundColor = [UIColor redColor];
+    footView.backgroundColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240/255.0 alpha:1.0];
     
     UIButton* closeBt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     

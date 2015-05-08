@@ -24,6 +24,7 @@
     UIView* headView = [[UIView alloc]init];
     headView.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:headView];
+    headView.backgroundColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];
     
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[headView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(headView)]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[headView(35)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(headView)]];
