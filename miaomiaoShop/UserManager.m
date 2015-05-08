@@ -174,6 +174,13 @@
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
      [req shopLoginWithPhone:phone password:ps withCallBack:^(NSDictionary *backDic, NSError *error) {
         
+         
+         if (backDic==nil||[backDic[@"code"] intValue]!=0) {
+            blockBack(NO,error);
+             return ;
+         }
+         
+         
         if (backDic) {
             bSelf.token = backDic[@"data"][@"token"];
             bSelf.shopName = backDic[@"data"][@"shop"][0][@"name"];

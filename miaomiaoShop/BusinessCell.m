@@ -12,10 +12,14 @@
     IBOutlet UILabel* _titleLabel;
     IBOutlet UILabel* _countOrder;
     IBOutlet UILabel* _totalMoney;
+    
+    IBOutlet UIImageView* _payStatueImageV;
+//    IBOutlet UILabel* _payStatueLabel;
 }
+
 @end
 @implementation BusinessCell
-
+@synthesize payStatueLabel;
 -(void)setTitleLabelText:(NSString*)str
 {
     _titleLabel.text = str;
@@ -32,6 +36,18 @@
 {
     _totalMoney.text = str;
 }
+
+//-(void)setPayStatueStr:(NSString*)str
+//{
+//    _payStatueLabel.text = str;
+//}
+
+-(void)setPayStatueImage:(UIImage*)image
+{
+    _payStatueImageV.image = image;
+}
+
+
 - (void)awakeFromNib {
     // Initialization code
 }

@@ -18,7 +18,7 @@
     IBOutlet UILabel* _totalMoney;
     IBOutlet UIView* _backView;
     NSMutableArray* _settleOrderS;
-    IBOutlet UISegmentedControl*_seg;
+    
     
 //    {
 //        "date": "2015-05-04",
@@ -49,7 +49,19 @@
     
     _table.delegate = self;
     _table.dataSource = self;
-
+    if ([_table respondsToSelector:@selector(setSeparatorInset:)]) {
+        
+        [_table setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    
+    if ([_table respondsToSelector:@selector(setLayoutMargins:)]) {
+        
+        [_table setLayoutMargins:UIEdgeInsetsZero];
+        
+    }
+    
+    
     UITapGestureRecognizer* tap  = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapViewToInfo)];
     [_backView addGestureRecognizer:tap];
     
@@ -107,23 +119,49 @@
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BusinessCell* cell = [tableView dequeueReusableCellWithIdentifier:@"BusinessCell"];
+//    cell.separatorInset = UIEdgeInsetsZero;
+    
     
     NSDictionary* temp = _settleOrderS[indexPath.row];
     
-    NSString* titleStr = nil;
+    
     if ([temp[@"payStatus"] intValue]==0) {
-        titleStr = [NSString stringWithFormat:@"%@  未打款",temp[@"date"]];
+
+        cell.payStatueLabel.text = @"未打款";
+        cell.payStatueLabel.textColor = DEFAULTNAVCOLOR;
+        [cell setPayStatueImage:[UIImage imageNamed:@"businessNotPay"]];
     }
     else
     {
-       titleStr = [NSString stringWithFormat:@"%@  已打款",temp[@"date"]];
+        cell.payStatueLabel.text = @"已打款";
+        cell.payStatueLabel.textColor = DEFAULTGREENCOLOR;
+        [cell setPayStatueImage:[UIImage imageNamed:@"businessPayed"]];
+        [cell setTitleLabelText:temp[@"date"]];
+       
     }
-    [cell setTitleLabelText:titleStr];
+    [cell setTitleLabelText:temp[@"date"]];
     [cell setCountOrderStr:[NSString stringWithFormat:@"%@单",[temp[@"orderCount"] stringValue]]];
     float money = [temp[@"orderPrice"] floatValue]/100;
     [cell setTotalMoney:[NSString stringWithFormat:@"¥%.2f",money]];
     
     return cell;
+}
+
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+        
+    }
+
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

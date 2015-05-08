@@ -314,6 +314,11 @@
 
 -(void)setUpScanViewController
 {
+    if (!IOS_VERSION_5_OR_ABOVE) {
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"ios7以下暂时不能使用该功能" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+        return;
+    }
     ScanViewController* scan = [[ScanViewController alloc]init];
     scan.delegate = self;
     [self presentViewController:scan animated:YES completion:^{
