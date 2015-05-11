@@ -14,13 +14,14 @@
 #import "OrderInfoController.h"
 #import "DateFormateManager.h"
 #import "LastViewOnTable.h"
-@interface ShopBusinessInfoController ()<UITableViewDataSource,UITableViewDelegate>
+@interface ShopBusinessInfoController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
     BOOL _isLoading;
     NSString* _orderDate;
     NSString* _orderType;
     UITableView* _table;
     NSMutableArray*_orderArr;
+    NSString* _orderID;
 }
 @end
 
@@ -35,6 +36,15 @@
 {
     _orderType = type;
 }
+
+-(id)initWithOrderID:(NSString*)orderID
+{
+    self = [super init];
+    
+    _orderID = orderID;
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -96,10 +106,16 @@
 
 -(void)setTableViewFootWithDataCount:(int)count
 {
-    if (count<20) {
-        UIView *view =[ [UIView alloc]init];
-        view.backgroundColor = [UIColor clearColor];
-        _table.tableFooterView = view;
+    if (count<20)
+    {
+        if(_orderID)
+        {
+            _table.tableFooterView = [self creatOrderConfirmFootView];
+        }
+        else
+        {
+            _table.tableFooterView = [self setExtraCellLineHidden];
+        }
     }
     else
     {
@@ -185,13 +201,121 @@
 
 }
 
-- (void)setExtraCellLineHidden: (UITableView *)tableView
+- (UIView*)setExtraCellLineHidden
 {
     UIView *view =[ [UIView alloc]init];
     view.backgroundColor = [UIColor clearColor];
-    [tableView setTableFooterView:view];
+     return  view;
 }
 
+-(UIView*)creatOrderConfirmFootView
+{
+    UIView* footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 55)];
+    
+    UIButton* cancelBt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    cancelBt.tag = 0;
+    cancelBt.layer.borderWidth = 1;
+    cancelBt.layer.borderColor= DEFAULTNAVCOLOR.CGColor;
+    cancelBt.layer.masksToBounds = YES;
+    cancelBt.layer.cornerRadius = 6;
+
+    
+    [cancelBt setTitle:@"取消配送" forState:UIControlStateNormal];
+    cancelBt.translatesAutoresizingMaskIntoConstraints = NO;
+    [footView addSubview:cancelBt];
+    [cancelBt addTarget:self action:@selector(performOrderConfirmAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [footView addConstraint:[NSLayoutConstraint constraintWithItem:cancelBt attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:footView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    
+    [footView addConstraint:[NSLayoutConstraint constraintWithItem:cancelBt attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:footView attribute:NSLayoutAttributeCenterX multiplier:1.5 constant:0]];
+    
+    
+    UIButton * confirmBt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    confirmBt.tag = 1;
+    confirmBt.translatesAutoresizingMaskIntoConstraints  = NO;
+    confirmBt.layer.borderWidth = 1;
+    confirmBt.layer.borderColor= DEFAULTNAVCOLOR.CGColor;
+    confirmBt.layer.masksToBounds = YES;
+    confirmBt.layer.cornerRadius = 6;
+    
+    [confirmBt setTitle:@"确认配送" forState:UIControlStateNormal];
+    [footView addSubview:confirmBt];
+    [confirmBt addTarget:self action:@selector(performOrderConfirmAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [footView addConstraint:[NSLayoutConstraint constraintWithItem:confirmBt attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:footView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    
+    [footView addConstraint:[NSLayoutConstraint constraintWithItem:confirmBt attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:footView attribute:NSLayoutAttributeCenterX multiplier:.5 constant:0]];
+
+    return footView;
+
+}
+
+-(void)performOrderConfirmAction:(UIButton*)bu
+{
+    if (bu.tag) {
+        
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确认要配送吗？" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
+        alert.tag = bu.tag;
+        [alert show];
+    }
+    else
+    {
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确认无法配送吗" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
+        alert.tag = bu.tag;
+        [alert show];
+
+    }
+   
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.cancelButtonIndex==buttonIndex) {
+        return;
+    }
+    
+    THActivityView* fullView = [[THActivityView alloc]initViewOnWindow];
+    [fullView loadViewAddOnWindow];
+    
+    NetWorkRequest* request = [[NetWorkRequest alloc]init];
+    if (alertView.tag) {
+        
+       [request shopOrderConfirmDeliverWithOrderID:_orderID WithBk:^(id backDic, NSError *error) {
+           
+           [fullView removeFromSuperview];
+           if (backDic) {
+               THActivityView* showStr = [[THActivityView alloc]initWithString:@"提交成功"];
+               [showStr show];
+           }
+           else
+           {
+               THActivityView* showStr = [[THActivityView alloc]initWithString:@"提交成功"];
+               [showStr show];
+           }
+
+       }];
+        [request startAsynchronous];
+    }
+    else
+    {
+        [request shopOrderCancelDeliverWithOrderID:_orderID WithBk:^(id backDic, NSError *error) {
+            
+            [fullView removeFromSuperview];
+            if (backDic) {
+                THActivityView* showStr = [[THActivityView alloc]initWithString:@"提交成功"];
+                [showStr show];
+            }
+            else
+            {
+                THActivityView* showStr = [[THActivityView alloc]initWithString:@"提交成功"];
+                [showStr show];
+            }
+            
+        }];
+        [request startAsynchronous];
+
+    }
+}
 
 
 - (void)didReceiveMemoryWarning {

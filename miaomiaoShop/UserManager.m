@@ -12,7 +12,7 @@
 #define USHOPID @"shop_id"
 #define UACCOUNT @"user_account"
 #define PUSHTOKEN @"push_token"
-#define PUSHOK @"isPush"
+//#define PUSHOK @"isPush"
 @interface UserManager()
 {
     NSString* _token;
@@ -126,7 +126,7 @@
     NSUserDefaults* def = [NSUserDefaults standardUserDefaults];
     [def removeObjectForKey: UTOKEN];
     [def removeObjectForKey:USHOPID];
-    [def removeObjectForKey:PUSHOK];
+//    [def removeObjectForKey:PUSHOK];
     [def removeObjectForKey:UACCOUNT];
     [def synchronize];
     self.token = nil;
@@ -136,9 +136,9 @@
 -(void)registePushKey
 {
     NSUserDefaults* def = [NSUserDefaults standardUserDefaults];
-    if ([def objectForKey:PUSHOK]) {
-        return;
-    }
+//    if ([def objectForKey:PUSHOK]) {
+//        return;
+//    }
     
     NSString* account = [def objectForKey:UACCOUNT];
     NSString * pushKey = [def objectForKey:PUSHTOKEN];
@@ -152,7 +152,7 @@
         
         if (backDic) {
             
-            [def setObject:@"YES" forKey:PUSHOK];
+//            [def setObject:@"YES" forKey:PUSHOK];
         }
         else
         {

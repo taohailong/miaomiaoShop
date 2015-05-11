@@ -14,6 +14,9 @@ typedef void (^NetCallback)(id backDic,NSError* error);
 -(void)getDailyOrderSummaryWithBk:(NetCallback)completeBk;
 -(void)getBusinessOrderInfoWithDate:(NSString*)date WithType:(NSString*)type  withIndex:(int)index WithBk:(NetCallback)completeBk;
 
+-(void)shopOrderConfirmDeliverWithOrderID:(NSString*)orderID WithBk:(NetCallback)completeBk;
+-(void)shopOrderCancelDeliverWithOrderID:(NSString*)orderID WithBk:(NetCallback)completeBk;
+
 
 -(void)getShopInfoWitbBk:(NetCallback)completeBk;
 

@@ -16,7 +16,7 @@
     if ([self.payWay isEqualToString:@"wx"])
     {
         if (self.discountMoney) {
-            return [NSString stringWithFormat:@"微信支付(代金券%.1f)",self.discountMoney];
+            return [NSString stringWithFormat:@"微信支付(代金券%.1f)",self.discountMoney/100];
         }
         else
         {

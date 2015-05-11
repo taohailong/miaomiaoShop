@@ -16,10 +16,11 @@
 {
     UITableView* _table;
 }
+@property(nonatomic,assign)BOOL isInfoChanged;
 @end
 
 @implementation ShopInfoViewController
-
+@synthesize isInfoChanged;
 -(id)initWithShopInfoData:(ShopInfoData*)data
 {
     self = [super init];
@@ -46,12 +47,46 @@
     UIBarButtonItem* rigtBar = [[UIBarButtonItem alloc]initWithTitle:@"提交" style:UIBarButtonItemStyleDone target:self action:@selector(updateShopInfo)];
     self.navigationItem.rightBarButtonItem = rigtBar;
     
+    UIBarButtonItem* leftBar = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:@selector(manualBack)];
+    self.navigationItem.leftBarButtonItem = leftBar;
+
+    
+    
     if (_shopData.openTime) {
         [self creatTableFootView];
     }
     [self registeNotificationCenter];
     // Do any additional setup after loading the view.
 }
+
+
+-(void)manualBack
+{
+    
+    if (self.isInfoChanged) {
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"需要提交信息吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alert show];
+    }
+    else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==alertView.cancelButtonIndex) {
+        [self.navigationController popViewControllerAnimated:YES];
+        return ;
+    }
+    
+    [self updateShopInfo];
+}
+
+
+
+
+
 
 -(void)registeNotificationCenter
 {
@@ -144,11 +179,15 @@
 -(void)updateShopInfo
 {
     [self checkDataAndFill];
+    __weak ShopInfoViewController* wself = self;
     THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
     [request shopInfoUpdateWithShopInfoData:_shopData WithBk:^(id backDic, NSError *error) {
+        
         NSString* str = nil;
         if (backDic) {
+            
+            [wself.navigationController popViewControllerAnimated:YES];
             str = @"添加成功！";
         }
         else
@@ -177,6 +216,7 @@
         AddProductCommonCell* cell1 = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
         if (cell1==nil) {
             cell1 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1" WithFieldBk:^(NSString *text) {
+                wSelf.isInfoChanged = YES;
                 wShopData.shopName = text;
             }];
             [cell1 setTextTitleLabel:@"店名"];
@@ -188,6 +228,7 @@
         AddProductCommonCell* cell2 = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
         if (cell2==nil) {
             cell2 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2" WithFieldBk:^(NSString *text) {
+                 wSelf.isInfoChanged = YES;
                 wShopData.shopAddress = text;
             }];
             [cell2 setTextTitleLabel:@"店地址"];
@@ -199,6 +240,7 @@
         AddProductCommonCell* cell3 = [tableView dequeueReusableCellWithIdentifier:@"cell3"];
         if (cell3==nil) {
             cell3 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell3" WithFieldBk:^(NSString *text) {
+                 wSelf.isInfoChanged = YES;
                 wShopData.minPrice = [text floatValue];
             }];
             [cell3 setTextTitleLabel:@"起送价格¥"];
@@ -210,6 +252,7 @@
         AddProductCommonCell* cell4 = [tableView dequeueReusableCellWithIdentifier:@"cell4"];
         if (cell4==nil) {
             cell4 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell4" WithFieldBk:^(NSString *text) {
+                 wSelf.isInfoChanged = YES;
                 wShopData.serveArea = text;
             }];
             [cell4 setTextTitleLabel:@"服务范围"];
@@ -222,6 +265,7 @@
         AddProductCommonCell* cell5 = [tableView dequeueReusableCellWithIdentifier:@"cell5"];
         if (cell5==nil) {
             cell5 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell5" WithFieldBk:^(NSString *text) {
+                 wSelf.isInfoChanged = YES;
                 wShopData.telPhoneNu = text;
             }];
             [cell5 setFieldKeyboardStyle:UIKeyboardTypeNumberPad];
@@ -234,6 +278,7 @@
         AddProductCommonCell* cell6 = [tableView dequeueReusableCellWithIdentifier:@"cell6"];
         if (cell6==nil) {
             cell6 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell6" WithFieldBk:^(NSString *text) {
+                 wSelf.isInfoChanged = YES;
                 wShopData.mobilePhoneNu = text;
             }];
             [cell6 setFieldKeyboardStyle:UIKeyboardTypeNumberPad];
@@ -256,6 +301,7 @@
                 {
                    wCell.textLabel.text = @"营业管理:打烊";
                 }
+                 wSelf.isInfoChanged = YES;
                 wShopData.shopStatue = statue;
             }];
             [cell7 setSWitchStatue:wShopData.shopStatue];
@@ -285,6 +331,7 @@
                 {
                     [wSelf removeTableFootView];
                 }
+                 wSelf.isInfoChanged = YES;
             }];
             if (_shopData.openTime) {
                 [cell8 setSWitchStatue:0];
@@ -372,6 +419,7 @@
 
 -(void)creatPickerView:(UIButton*)bt
 {
+     self.isInfoChanged = YES;
     __weak ShopInfoData* wData = _shopData;
     DatePickerView* picker = [[DatePickerView alloc]initWithDateSelectComplete:^(NSString *dateStr) {
         

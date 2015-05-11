@@ -15,7 +15,14 @@
 #import "OrderData.h"
 #import "DateFormateManager.h"
 #import "ShopInfoData.h"
+
+
+#if 1
 #define HTTPHOST @"www.mbianli.com"
+#else
+#define HTTPHOST @"www.mbianli.com:8088"
+#endif
+
 @interface NetWorkRequest()
 {
     ASIHTTPRequest* _asi;
@@ -23,12 +30,6 @@
 }
 @end;
 @implementation NetWorkRequest
-//-(id)initWithAsi:(ASIHTTPRequest*)req
-//{
-//    self = [super init];
-//    _asi = req;
-//    return self;
-//}
 
 -(void)getShopInfoWitbBk:(NetCallback)completeBk
 {
@@ -214,7 +215,7 @@
                    
                    order.discountMoney = [dic[@"dprice"] floatValue];
                    order.totalMoney = [NSString stringWithFormat:@"%.1f",[dic[@"price"] floatValue]/100] ;
-                   order.messageStr = dic[@"msg"];
+                   order.messageStr = dic[@"remarks"];
                    [order setOrderStatueWithString:dic[@"order_status"]];
                    [order setOrderInfoString:dic[@"info"]];
                    
@@ -477,6 +478,44 @@
            back(sourceDic,err);
         }
        
+    }];
+
+}
+
+-(void)shopOrderConfirmDeliverWithOrderID:(NSString*)orderID WithBk:(NetCallback)completeBk
+{
+    UserManager* manager = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/order_confirm?shop_id=%@&order_id=%@&confirm=done&ver=%@",HTTPHOST,manager.shopID,orderID,VERSION];
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+        
+        if (sourceDic)
+        {
+            completeBk(nil,err);
+        }
+        else
+        {
+            completeBk(nil,err);
+        }
+        
+    }];
+
+}
+
+-(void)shopOrderCancelDeliverWithOrderID:(NSString*)orderID WithBk:(NetCallback)completeBk
+{
+    UserManager* manager = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shop/category/get?shop_id=%@&ver=%@",HTTPHOST,manager.shopID,VERSION];
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+        
+        if (sourceDic)
+        {
+            completeBk(nil,err);
+        }
+        else
+        {
+            completeBk(nil,err);
+        }
+        
     }];
 
 }

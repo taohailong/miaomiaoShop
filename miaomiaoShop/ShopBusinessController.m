@@ -36,9 +36,12 @@
 //        "payStatus": 0
 //    },
 }
+@property(nonatomic,weak)THActivityView* errorView;
 @end
 
 @implementation ShopBusinessController
+@synthesize errorView;
+
 -(void)viewDidAppear:(BOOL)animated
 {
    [self getOrderSummary];
@@ -81,10 +84,11 @@
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
     [request getDailyOrderSummaryWithBk:^(NSDictionary* backDic, NSError *error) {
         
+        [wSelf.errorView removeFromSuperview];
         [loadView removeFromSuperview];
         if (error) {
             THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wSelf.view];
-            
+            wSelf.errorView = loadView;
             [loadView setErrorBk:^{
                 [wSelf getOrderSummary];
             }];

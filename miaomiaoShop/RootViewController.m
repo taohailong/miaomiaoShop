@@ -19,10 +19,11 @@
     UITableView* _table;
     ShopInfoData* _shopData;
 }
+@property(nonatomic,weak)THActivityView* errView;
 @end
 
 @implementation RootViewController
-
+@synthesize errView;
 -(void)checkUserLogState
 {
     UserManager* manage = [UserManager shareUserManager];
@@ -117,13 +118,16 @@
     __weak RootViewController* wSelf = self;
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
     [request getShopInfoWitbBk:^(ShopInfoData* backDic, NSError *error) {
+        
+//        防止多次错误 时errView重叠
+        [wSelf.errView removeFromSuperview];
         if (backDic) {
             _shopData =backDic;
             [_table reloadData];
         }
         else{
             THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wSelf.view];
-            
+            wSelf.errView = loadView;
             [loadView setErrorBk:^{
                 [wSelf netShopInfoFromNet];
             }];
@@ -186,7 +190,7 @@
         if (indexPath.row==0)
         {
             titleImage = [UIImage imageNamed:@"shopInfoIcon"];
-            titleStr = _shopData.shopName;
+            titleStr = [NSString stringWithFormat:@"%@(%@)",_shopData.shopName,_shopData.shopStatue?@"营业中":@"打烊"];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             accessLabel.text = [NSString stringWithFormat:@"版本号:%@",VERSION];
             accessLabel.font = [UIFont systemFontOfSize:15];

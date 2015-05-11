@@ -141,6 +141,11 @@ static SystemSoundID shake_sound_male_id = 0;
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     [UMessage didReceiveRemoteNotification:userInfo];
+    
+    
+    UITabBarController* tabBar = (UITabBarController*)self.window.rootViewController;
+    UITabBarItem* item = tabBar.tabBar.items[2];
+    item.badgeValue = [NSString stringWithFormat:@"新"];
     [self playSound];
 }
 

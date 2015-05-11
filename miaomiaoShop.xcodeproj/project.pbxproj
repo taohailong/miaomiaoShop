@@ -467,7 +467,7 @@
 			path = RefreshTableHeaderView;
 			sourceTree = SOURCE_ROOT;
 		};
-		C717DFEB1AF3B5BE0057DD72 /* shop */ = {
+		C717DFEB1AF3B5BE0057DD72 /* shopObject */ = {
 			isa = PBXGroup;
 			children = (
 				C74136991AE8C1DE00B08CBD /* ShopProductListView.h */,
@@ -493,7 +493,7 @@
 				C725BB401AEBAA3E00F344CB /* AddProductPictureCell.h */,
 				C725BB411AEBAA3E00F344CB /* AddProductPictureCell.m */,
 			);
-			name = shop;
+			name = shopObject;
 			sourceTree = "<group>";
 		};
 		C732E2A21AF9ACB1005B03A8 /* miaomiaoClient */ = {
@@ -537,6 +537,53 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		C74837C31B005CD20090A679 /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				C717DFE81AF3A41B0057DD72 /* OrderData.h */,
+				C717DFE91AF3A41B0057DD72 /* OrderData.m */,
+				C717DFEC1AF3B61D0057DD72 /* OrderListViewController.h */,
+				C717DFED1AF3B61D0057DD72 /* OrderListViewController.m */,
+				C713A2391AF45F63000EC646 /* OrderListCell.h */,
+				C713A23A1AF45F64000EC646 /* OrderListCell.m */,
+				C713A2501AF48E57000EC646 /* OrderInfoController.h */,
+				C713A2511AF48E57000EC646 /* OrderInfoController.m */,
+				C713A2531AF4A48C000EC646 /* OrderInfoSecondCell.h */,
+				C713A2541AF4A48C000EC646 /* OrderInfoSecondCell.m */,
+				C713A2561AF4A4A5000EC646 /* OrderInfoFirstCell.h */,
+				C713A2571AF4A4A5000EC646 /* OrderInfoFirstCell.m */,
+			);
+			name = Order;
+			sourceTree = "<group>";
+		};
+		C74837C51B005D7D0090A679 /* Business */ = {
+			isa = PBXGroup;
+			children = (
+				C75680C81AF762F900F0A990 /* ShopBusinessController.h */,
+				C75680C91AF762F900F0A990 /* ShopBusinessController.m */,
+				C75680CB1AF769D200F0A990 /* BusinessCell.h */,
+				C75680CC1AF769D200F0A990 /* BusinessCell.m */,
+				C75680CE1AF77BFC00F0A990 /* ShopBusinessInfoController.h */,
+				C75680CF1AF77BFC00F0A990 /* ShopBusinessInfoController.m */,
+				C75680D11AF7807300F0A990 /* BusinessInfoCell.h */,
+				C75680D21AF7807300F0A990 /* BusinessInfoCell.m */,
+			);
+			name = Business;
+			sourceTree = "<group>";
+		};
+		C74837C61B005DB00090A679 /* ShopInfo */ = {
+			isa = PBXGroup;
+			children = (
+				C7241F7A1AF4EFB3000474B4 /* ShopInfoData.h */,
+				C7241F7B1AF4EFB3000474B4 /* ShopInfoData.m */,
+				C7241F7D1AF4F514000474B4 /* ShopInfoViewController.h */,
+				C7241F7E1AF4F514000474B4 /* ShopInfoViewController.m */,
+				C7241F771AF4E197000474B4 /* RootViewController.h */,
+				C7241F781AF4E197000474B4 /* RootViewController.m */,
+			);
+			name = ShopInfo;
+			sourceTree = "<group>";
+		};
 		C753BE9C1AE7460800562EF6 = {
 			isa = PBXGroup;
 			children = (
@@ -567,15 +614,11 @@
 				C78444181AFA1EB3009B4C2D /* Source */,
 				C75680C01AF7118F00F0A990 /* Base */,
 				C753C1641AE78E3700562EF6 /* ThirdPart */,
-				C717DFEB1AF3B5BE0057DD72 /* shop */,
+				C717DFEB1AF3B5BE0057DD72 /* shopObject */,
 				C74136A21AE8DFA900B08CBD /* ShopCategoryData.h */,
 				C74136A31AE8DFA900B08CBD /* ShopCategoryData.m */,
 				C74136A51AE8E0A000B08CBD /* ShopProductData.h */,
 				C74136A61AE8E0A000B08CBD /* ShopProductData.m */,
-				C717DFE81AF3A41B0057DD72 /* OrderData.h */,
-				C717DFE91AF3A41B0057DD72 /* OrderData.m */,
-				C7241F7A1AF4EFB3000474B4 /* ShopInfoData.h */,
-				C7241F7B1AF4EFB3000474B4 /* ShopInfoData.m */,
 				C753BEAC1AE7460800562EF6 /* AppDelegate.h */,
 				C753BEAD1AE7460800562EF6 /* AppDelegate.m */,
 				C753BEAF1AE7460800562EF6 /* ViewController.h */,
@@ -588,30 +631,11 @@
 				C753C1BE1AE7A25400562EF6 /* LogViewController.m */,
 				C753C1C01AE7A8B500562EF6 /* RootTabBarViewController.h */,
 				C753C1C11AE7A8B500562EF6 /* RootTabBarViewController.m */,
-				C7241F771AF4E197000474B4 /* RootViewController.h */,
-				C7241F781AF4E197000474B4 /* RootViewController.m */,
-				C7241F7D1AF4F514000474B4 /* ShopInfoViewController.h */,
-				C7241F7E1AF4F514000474B4 /* ShopInfoViewController.m */,
-				C717DFEC1AF3B61D0057DD72 /* OrderListViewController.h */,
-				C717DFED1AF3B61D0057DD72 /* OrderListViewController.m */,
-				C75680C81AF762F900F0A990 /* ShopBusinessController.h */,
-				C75680C91AF762F900F0A990 /* ShopBusinessController.m */,
-				C75680CB1AF769D200F0A990 /* BusinessCell.h */,
-				C75680CC1AF769D200F0A990 /* BusinessCell.m */,
-				C75680CE1AF77BFC00F0A990 /* ShopBusinessInfoController.h */,
-				C75680CF1AF77BFC00F0A990 /* ShopBusinessInfoController.m */,
-				C75680D11AF7807300F0A990 /* BusinessInfoCell.h */,
-				C75680D21AF7807300F0A990 /* BusinessInfoCell.m */,
-				C713A2391AF45F63000EC646 /* OrderListCell.h */,
-				C713A23A1AF45F64000EC646 /* OrderListCell.m */,
-				C713A2501AF48E57000EC646 /* OrderInfoController.h */,
-				C713A2511AF48E57000EC646 /* OrderInfoController.m */,
-				C713A2531AF4A48C000EC646 /* OrderInfoSecondCell.h */,
-				C713A2541AF4A48C000EC646 /* OrderInfoSecondCell.m */,
-				C713A2561AF4A4A5000EC646 /* OrderInfoFirstCell.h */,
-				C713A2571AF4A4A5000EC646 /* OrderInfoFirstCell.m */,
 				C71F470D1AF592EF00D14972 /* DatePickerView.h */,
 				C71F470E1AF592EF00D14972 /* DatePickerView.m */,
+				C74837C31B005CD20090A679 /* Order */,
+				C74837C51B005D7D0090A679 /* Business */,
+				C74837C61B005DB00090A679 /* ShopInfo */,
 				C753BEB21AE7460800562EF6 /* Main.storyboard */,
 				C753BEB51AE7460800562EF6 /* Images.xcassets */,
 				C753BEB71AE7460800562EF6 /* LaunchScreen.xib */,

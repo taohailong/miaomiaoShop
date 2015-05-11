@@ -30,13 +30,26 @@
 
 @implementation OrderListViewController
 
+-(void)setTabBarBadge:(NSString*)str
+{
+    UITabBarItem* item = self.tabBarController.tabBar.items[2];
+    item.badgeValue = str;
+
+//    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self segViewChange:_seg];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     _table.dataSource = self;
     _table.delegate = self;
     [self addRefreshTableHead];
-    [self segViewChange:_seg];
+   
 }
 
 -(IBAction)segViewChange:(UISegmentedControl*)seg
@@ -64,7 +77,7 @@
 
 -(void)getDataFromNetWithStatue:(NSString*)statue
 {
-//    _isLoading = YES;
+
     THActivityView* loadView = [[THActivityView alloc]initFullViewTransparentWithSuperView:self.view];
     __weak OrderListViewController* wSelf = self;
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
@@ -72,11 +85,8 @@
         
         [loadView removeFromSuperview];
         if (error) {
-            THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wSelf.view];
-            
-            [loadView setErrorBk:^{
-                [wSelf getDataFromNetWithStatue:statue];
-            }];
+            THActivityView* alert = [[THActivityView alloc]initWithString:@"连接失败！"];
+            [alert show];
             return ;
         }
 
@@ -85,6 +95,9 @@
             _todayArr = backDic[0];
             [_table reloadData];
             [wSelf addLoadMoreViewWithCount:_todayArr.count+_notTodayArr.count];
+        }
+        if ([statue isEqualToString:@"0"]) {
+            [wSelf setTabBarBadge:nil];
         }
         
     }];
@@ -96,7 +109,7 @@
     __weak OrderListViewController* wSelf = self;
     THActivityView* loadView = [[THActivityView alloc]initFullViewTransparentWithSuperView:self.view];
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
-    [req shopGetOrderWithStatue:_currentStatue WithIndex:_todayArr.count+_notTodayArr.count WithBk:^(NSArray* backDic, NSError *error) {
+    [req shopGetOrderWithStatue:_currentStatue WithIndex:_todayArr.count+ _notTodayArr.count WithBk:^(NSArray* backDic, NSError *error) {
         
          [loadView removeFromSuperview];
         if (backDic) {
