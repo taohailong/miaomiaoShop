@@ -19,7 +19,8 @@
     _contentSwitch = [[UISwitch alloc]initWithFrame:CGRectMake(0, 0, 45, 30)];
     [_contentSwitch addTarget:self action:@selector(switchAction) forControlEvents:UIControlEventValueChanged];
     self.accessoryView = _contentSwitch;
-       //
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+
        return self;
 }
 -(void)setSwitchBlock:(switchActionBack)bk
@@ -29,7 +30,10 @@
 
 -(void)switchAction
 {
-    _block();
+    if (_block) {
+         _block(_contentSwitch.on);
+    }
+   
 }
 -(void)setSWitchStatue:(int)statue
 {

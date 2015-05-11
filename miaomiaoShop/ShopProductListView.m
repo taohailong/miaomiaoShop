@@ -12,6 +12,7 @@
 #import "LastViewOnTable.h"
 #import "NetWorkRequest.h"
 #import "UserManager.h"
+#import "THActivityView.h"
 @interface ShopProductListView()
 {
     NSMutableArray* _dataArr;
@@ -33,6 +34,8 @@
     [self addSubview:_table];
     _table.delegate = self;
     _table.dataSource = self;
+    
+    [self addLoadMoreViewWithCount:0];
     if ([_table respondsToSelector:@selector(setSeparatorInset:)]) {
         [_table setSeparatorInset:UIEdgeInsetsZero];
     }
@@ -48,19 +51,40 @@
     return self;
 }
 
+
+-(void)reloadTable
+{
+    [_table reloadData];
+}
+
 -(void)setCategoryIDToGetData:(NSString *)categoryID
 {
     __weak ShopProductListView* wSelf = self;
     self.isLoading = NO;
+    
+    THActivityView* fullView = [[THActivityView alloc]initFullViewTransparentWithSuperView:self.superview];
+    
+    THActivityView* loadView = [[THActivityView alloc]initActivityViewWithSuperView:self.superview];
+    
     UserManager* manager = [UserManager shareUserManager];
     NetWorkRequest* productReq = [[NetWorkRequest alloc]init];
     _currentCategoryID = categoryID;
     [productReq shopGetProductWithShopID:manager.shopID withCategory:categoryID fromIndex:0 WithCallBack:^(id backDic, NSError *error) {
         
+        if (error) {
+            THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wSelf.superview];
+            
+            [loadView setErrorBk:^{
+                [wSelf setCategoryIDToGetData:categoryID];
+            }];
+            return ;
+        }
+
         if (backDic) {
            [wSelf setDataArrReloadTable:backDic];
         }
-        
+        [loadView removeFromSuperview];
+        [fullView removeFromSuperview];
     }];
     [productReq startAsynchronous];
 
@@ -74,15 +98,19 @@
     }
     self.isLoading = YES;
     
+    
+    THActivityView* fullView = [[THActivityView alloc]initFullViewTransparentWithSuperView:self.superview];
     UserManager* manager = [UserManager shareUserManager];
     NetWorkRequest* productReq = [[NetWorkRequest alloc]init];
     __weak ShopProductListView* wSelf = self;
-    [productReq shopGetProductWithShopID:manager.shopID withCategory:_currentCategoryID fromIndex:_dataArr.count+1 WithCallBack:^(id backDic, NSError *error) {
+    [productReq shopGetProductWithShopID:manager.shopID withCategory:_currentCategoryID fromIndex:_dataArr.count WithCallBack:^(id backDic, NSError *error) {
         wSelf.isLoading = NO;
+        
+        
         if (backDic) {
            [wSelf addDataArr:backDic];
         }
-        
+        [fullView removeFromSuperview];
     }];
     [productReq startAsynchronous];
 
@@ -92,15 +120,12 @@
 -(void)setDataArrReloadTable:(NSMutableArray *)dataArr
 {
     _dataArr = dataArr;
-    if (dataArr.count<20) {
-        _table.tableFooterView = nil;
-    }
-    else
-    {
-        _table.tableFooterView = [[LastViewOnTable alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH*0.71, 50)];
-    }
-
     [_table reloadData];
+    
+    if (_dataArr.count) {
+       [_table scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:YES];
+    }
+    [self addLoadMoreViewWithCount:dataArr.count];
 }
 
 
@@ -108,17 +133,24 @@
 {
     
     [_dataArr addObjectsFromArray:da];
+    [_table reloadData];
     
-    if (da.count<20) {
-        _table.tableFooterView = nil;
+    [self addLoadMoreViewWithCount:da.count];
+}
+
+-(void)addLoadMoreViewWithCount:(int)count
+{
+    
+    if (count<20) {
+        UIView *view =[ [UIView alloc]init];
+        view.backgroundColor = [UIColor clearColor];
+        _table.tableFooterView = view;
     }
     else
     {
         _table.tableFooterView = [[LastViewOnTable alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH*0.71, 50)];
     }
-     [_table reloadData];
-}
-
+ }
 
 
 
@@ -143,7 +175,7 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     ShopProductData* data = _dataArr[indexPath.row];
-    
+    [cell setProductOnOff:data.status?YES:NO];
     [cell setPriceStr:[NSString stringWithFormat:@"%.1f", data.price]];
     [cell setTitleStr:data.pName];
     [cell setPicUrl:data.pUrl];
@@ -154,9 +186,49 @@
 {
     if ([self.delegate respondsToSelector:@selector(didSelectProductIndex:)]) {
          ShopProductData* data = _dataArr[indexPath.row];
-        [self.delegate didSelectProductIndex:data.pID];
+        [self.delegate didSelectProductIndex:data];
     }
 }
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.superview];
+        __weak ShopProductListView* wSelf = self;
+        ShopProductData* data = _dataArr[indexPath.row];
+        NetWorkRequest* request = [[NetWorkRequest alloc]init];
+        [request shopProductDeleteProductWithProductID:data.pID WithBk:^(id backDic, NSError *error) {
+            NSString* str = nil;
+            if (backDic) {
+                str = @"删除成功！";
+                [wSelf deleteCategoryReloadTableWithIndex:indexPath];
+            }
+            else
+            {
+                str = @"删除失败！";
+            }
+            THActivityView* show = [[THActivityView alloc]initWithString:str];
+            [show show];
+            [activeV removeFromSuperview];
+            
+        }];
+        [request startAsynchronous];
+    }
+}
+
+
+-(void)deleteCategoryReloadTableWithIndex:(NSIndexPath*)path
+{
+    [_dataArr removeObjectAtIndex:[path row]];
+    NSLog(@"path %d %d",path.row,path.section);
+    [_table deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+
+
+
 
 -(void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {

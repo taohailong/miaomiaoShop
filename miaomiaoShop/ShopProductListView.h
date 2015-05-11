@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ShopProductListView;
+@class ShopProductListView,ShopProductData;
 @protocol ShopProductListProtocol <NSObject>
 
--(void)didSelectProductIndex:(NSString*)productID;
+-(void)didSelectProductIndex:(ShopProductData*)product;
 //-(void)loadMoreProductDataWithIndex:(int)nu;
 
 @end
@@ -20,6 +20,7 @@
 }
 @property(nonatomic,weak)IBOutlet id<ShopProductListProtocol>delegate;
 -(void)setCategoryIDToGetData:(NSString*)categoryID;
+-(void)reloadTable;
 //-(void)setDataArrReloadTable:(NSMutableArray *)dataArr;
 //-(void)addDataArr:(NSMutableArray*)da;
 @end

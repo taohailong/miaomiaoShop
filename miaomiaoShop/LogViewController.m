@@ -13,6 +13,8 @@
 {
     IBOutlet UITextField* phoneField;
     IBOutlet UITextField* pwField;
+    IBOutlet UIButton* _logBt;
+    IBOutlet UIView* _backView;
 }
 @end
 
@@ -20,8 +22,95 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    phoneField.leftViewMode =UITextFieldViewModeAlways;
+    UIImageView* phoneLeftV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30, 20)];
+    phoneLeftV.contentMode = UIViewContentModeScaleAspectFit;
+    phoneLeftV.image = [UIImage imageNamed:@"login_photo"];
+    phoneField.leftView = phoneLeftV;
+    
+    
+    pwField.leftViewMode =UITextFieldViewModeAlways;
+    UIImageView* pwLeftV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30, 20)];
+    pwLeftV.image = [UIImage imageNamed:@"login_pw"];
+    pwLeftV.contentMode = UIViewContentModeScaleAspectFit;
+    pwField.leftView = pwLeftV;
+
+    
+    _logBt.layer.masksToBounds = YES;
+    _logBt.layer.cornerRadius = 6;
+    _logBt.layer.borderWidth = 1;
+    _logBt.layer.borderColor = [UIColor whiteColor].CGColor;
+    
+    [self registeNotificationCenter];
     // Do any additional setup after loading the view.
 }
+
+
+-(void)registeNotificationCenter
+{
+    /*注册成功后  重新链接服务器*/
+    
+    NSNotificationCenter *def = [NSNotificationCenter defaultCenter];
+    
+    /* 注册键盘的显示/隐藏事件 */
+    [def addObserver:self selector:@selector(keyboardShown:)
+                name:UIKeyboardWillShowNotification
+											   object:nil];
+    
+    
+    [def addObserver:self selector:@selector(keyboardHidden:)name:UIKeyboardWillHideNotification
+											   object:nil];
+    
+}
+
+
+- (void)keyboardShown:(NSNotification *)aNotification
+{
+    
+//    NSDictionary *info = [aNotification userInfo];
+//    NSValue *aValue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    
+//    CGSize keyboardSize = [aValue CGRectValue].size;
+    [self accessViewAnimate:80];
+    
+}
+
+
+- (void)keyboardHidden:(NSNotification *)aNotification
+{
+    [self accessViewAnimate:0.0];
+}
+
+-(void)accessViewAnimate:(float)height
+{
+    
+    [UIView animateWithDuration:.2 delay:0 options:0 animations:^{
+        
+        
+        for (NSLayoutConstraint * constranint in self.view.constraints) {
+            
+            
+            if (constranint.secondItem==_backView&&constranint.firstAttribute==NSLayoutAttributeCenterY) {
+                NSLog(@"%@ ",constranint);
+//                [self.view removeConstraint:constranint];
+                constranint.constant = height;
+//                [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_backView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:height]];
+            }
+            
+        }
+        
+        
+        [self.view layoutIfNeeded];
+        
+    } completion:^(BOOL finished) {
+        
+    }];
+    
+}
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -36,6 +125,9 @@
         [alter show];
         return;
     }
+    
+    [phoneField resignFirstResponder];
+    [pwField resignFirstResponder];
     
     THActivityView* loading = [[THActivityView alloc]initActivityView];
     loading.center = self.view.center;

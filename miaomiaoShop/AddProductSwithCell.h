@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-typedef void (^switchActionBack)();
+typedef void (^switchActionBack)(BOOL statue);
 @interface AddProductSwithCell : UITableViewCell
 {
     IBOutlet UILabel* _titleL;

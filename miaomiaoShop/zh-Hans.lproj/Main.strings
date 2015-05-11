@@ -1,0 +1,81 @@
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "4fb-LX-0Wr"; */
+"4fb-LX-0Wr.text" = "Label";
+
+/* Class = "UINavigationItem"; title = "商品"; ObjectID = "7Id-6S-D6h"; */
+"7Id-6S-D6h.title" = "商品";
+
+/* Class = "UITabBarItem"; title = "商品"; ObjectID = "BRS-UT-SgW"; */
+"BRS-UT-SgW.title" = "商品";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "CTY-aS-61p"; */
+"CTY-aS-61p.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "登录"; ObjectID = "GAo-Zg-sON"; */
+"GAo-Zg-sON.normalTitle" = "登录";
+
+/* Class = "UILabel"; text = "商品名称："; ObjectID = "H5R-fU-mpF"; */
+"H5R-fU-mpF.text" = "商品名称：";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "JVx-jf-rKl"; */
+"JVx-jf-rKl.text" = "Label";
+
+/* Class = "UILabel"; text = "分类:"; ObjectID = "NWX-Np-BX5"; */
+"NWX-Np-BX5.text" = "分类:";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Okv-Ya-AJn"; */
+"Okv-Ya-AJn.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "RsY-eC-7pe"; */
+"RsY-eC-7pe.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "扫码"; ObjectID = "Sso-zh-4Fz"; */
+"Sso-zh-4Fz.normalTitle" = "扫码";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "UvA-1E-T08"; */
+"UvA-1E-T08.text" = "Label";
+
+/* Class = "UILabel"; text = "条形码："; ObjectID = "alP-K4-7Kr"; */
+"alP-K4-7Kr.text" = "条形码：";
+
+/* Class = "UINavigationItem"; title = "首页"; ObjectID = "f1D-aB-onV"; */
+"f1D-aB-onV.title" = "首页";
+
+/* Class = "UISegmentedControl"; fmX-hR-CS8.segmentTitles[0] = "新订单"; ObjectID = "fmX-hR-CS8"; */
+"fmX-hR-CS8.segmentTitles[0]" = "新订单";
+
+/* Class = "UISegmentedControl"; fmX-hR-CS8.segmentTitles[1] = "配送中"; ObjectID = "fmX-hR-CS8"; */
+"fmX-hR-CS8.segmentTitles[1]" = "配送中";
+
+/* Class = "UISegmentedControl"; fmX-hR-CS8.segmentTitles[2] = "已完成"; ObjectID = "fmX-hR-CS8"; */
+"fmX-hR-CS8.segmentTitles[2]" = "已完成";
+
+/* Class = "UISegmentedControl"; fmX-hR-CS8.segmentTitles[3] = "已取消"; ObjectID = "fmX-hR-CS8"; */
+"fmX-hR-CS8.segmentTitles[3]" = "已取消";
+
+/* Class = "UINavigationItem"; title = "订单"; ObjectID = "iav-BE-m0s"; */
+"iav-BE-m0s.title" = "订单";
+
+/* Class = "UITabBarItem"; title = "数据"; ObjectID = "iqx-7R-gSL"; */
+"iqx-7R-gSL.title" = "数据";
+
+/* Class = "UITabBarItem"; title = "首页"; ObjectID = "jQT-Ae-ntL"; */
+"jQT-Ae-ntL.title" = "首页";
+
+/* Class = "UILabel"; text = "销售状态:"; ObjectID = "mpd-KE-3PF"; */
+"mpd-KE-3PF.text" = "销售状态:";
+
+/* Class = "UITabBarItem"; title = "订单"; ObjectID = "mzu-gZ-629"; */
+"mzu-gZ-629.title" = "订单";
+
+/* Class = "UITextField"; placeholder = "请输入电话号码"; ObjectID = "ofP-tq-LHJ"; */
+"ofP-tq-LHJ.placeholder" = "请输入电话号码";
+
+/* Class = "UITextField"; placeholder = "请输入密码"; ObjectID = "rj1-gt-oPL"; */
+"rj1-gt-oPL.placeholder" = "请输入密码";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "uXP-dM-uAw"; */
+"uXP-dM-uAw.text" = "Label";
+
+/* Class = "UINavigationItem"; title = "数据"; ObjectID = "wJG-sO-Ubj"; */
+"wJG-sO-Ubj.title" = "数据";

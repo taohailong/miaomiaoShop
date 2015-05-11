@@ -21,18 +21,21 @@
     self.textLabel.font = [UIFont systemFontOfSize:14];
     
     
-    _pBt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _pBt = [UIButton buttonWithType:UIButtonTypeCustom];
     _pBt.frame = CGRectMake(0, 0, 45, 60);
-    [_pBt setTitle:@"拍照" forState:UIControlStateNormal];
+//    [_pBt setTitle:@"拍照" forState:UIControlStateNormal];
+    [_pBt setImage:[UIImage imageNamed:@"ProductEditPhoto"] forState:UIControlStateNormal];
+
     [_pBt addTarget:self action:@selector(setUpPhoto:) forControlEvents:UIControlEventTouchUpInside];
     self.accessoryView = _pBt;
     
     _pImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
     [self.contentView addSubview:_pImageView];
     _pImageView.center = CGPointMake(SCREENWIDTH/2, 60);
-    _pImageView.backgroundColor = [UIColor redColor];
+//    _pImageView.backgroundColor = [UIColor redColor];
     
-    
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+
     return self;
 
 }
@@ -54,7 +57,7 @@
 
 -(void)setProductImageWithUrl:(NSString *)url
 {
-    [_pImageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:DEFAULTIMAGE]];
+    [_pImageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:DEFAULTIMAGE];
 }
 
 @end

@@ -9,14 +9,19 @@
 #ifndef miaomiaoShop_miaomiao_Prefix_pch
 #define miaomiaoShop_miaomiao_Prefix_pch
 
+#define DEFAULTIMAGE [UIImage imageNamed:@"DefaultImage"]
 
+#define DEFAULTNAVCOLOR [UIColor colorWithRed:232.0/225.0 green:47.0/255.0 blue:45.0/255.0 alpha:1.0]  
 
+#define DEFAULTGREENCOLOR [UIColor colorWithRed:51.0/225.0 green:205.0/255.0 blue:95.0/255.0 alpha:1.0]
 
-#define DEFAULTIMAGE @"defaultImage"
+//#define DEFAULTIMAGE @"defaultImage"
 #define VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 
+
+#define IOS_VERSION_5_OR_ABOVE (([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)? (YES):(NO))
 
 #ifdef DEBUG
 

@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+typedef void (^LoadErrorBk)(void);
 @interface THActivityView : UIView
 {
 //    UIView *view4;
 //    UILabel *label3;
+     LoadErrorBk _errorBk ;
     UILabel *labelTitle;
     UIActivityIndicatorView *activityView;
 }
@@ -25,7 +27,12 @@
 -(void)loadViewAddOnWindow;
 
 
--(id)initWithRose;
-//-(void)activityRoseOnWindow;
+
+-(id)initWithNetErrorWithSuperView:(UIView*)su;
+-(void)setErrorBk:(void(^)(void))completeBk;
+
+
+
+-(id)initFullViewTransparentWithSuperView:(UIView*)superView;
 - (void)popOutsideWithDuration:(NSTimeInterval)duration;
 @end

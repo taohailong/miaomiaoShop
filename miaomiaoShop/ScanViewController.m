@@ -28,34 +28,58 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor grayColor];
-	UIButton * scanButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [scanButton setTitle:@"取消" forState:UIControlStateNormal];
-    scanButton.frame = CGRectMake(100, 420, 120, 40);
-    [scanButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:scanButton];
     
-    UILabel * labIntroudction= [[UILabel alloc] initWithFrame:CGRectMake(15, 40, 290, 50)];
+    
+    
+    UILabel * labIntroudction= [[UILabel alloc] init];
     labIntroudction.backgroundColor = [UIColor clearColor];
-    labIntroudction.numberOfLines=2;
+    labIntroudction.translatesAutoresizingMaskIntoConstraints = NO;
+    labIntroudction.numberOfLines=0;
     labIntroudction.textColor=[UIColor whiteColor];
     labIntroudction.text=@"将二维码图像置于矩形方框内，离手机摄像头10CM左右，系统会自动识别。";
     [self.view addSubview:labIntroudction];
     
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[labIntroudction]-20-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(labIntroudction)]];
     
-    UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 100, 300, 300)];
-    imageView.image = [UIImage imageNamed:@"pick_bg"];
-    [self.view addSubview:imageView];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-40-[labIntroudction]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(labIntroudction)]];
     
-    upOrdown = NO;
-    num =0;
-    _line = [[UIImageView alloc] initWithFrame:CGRectMake(50, 110, 220, 2)];
-    _line.image = [UIImage imageNamed:@"line.png"];
-    [self.view addSubview:_line];
     
-    timer = [NSTimer scheduledTimerWithTimeInterval:.02 target:self selector:@selector(animation1) userInfo:nil repeats:YES];
+    
+//    UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 100, 300, 300)];
+//    imageView.image = [UIImage imageNamed:@"pick_bg"];
+//    [self.view addSubview:imageView];
+    
+    
+    UIButton * scanButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [scanButton setTitle:@"取消" forState:UIControlStateNormal];
+    [scanButton setTitleColor:DEFAULTGREENCOLOR forState:UIControlStateNormal];
+    [scanButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:scanButton];
+    
+    scanButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-60-[scanButton]-60-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(scanButton)]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:scanButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[scanButton(45)]-30-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(scanButton)]];
+    
+    scanButton.layer.masksToBounds = YES;
+    scanButton.layer.borderColor = DEFAULTGREENCOLOR.CGColor;
+    scanButton.layer.borderWidth = 1;
+    scanButton.layer.cornerRadius = 6;
+
+    
+    
+//    upOrdown = NO;
+//    num =0;
+//    _line = [[UIImageView alloc] initWithFrame:CGRectMake(50, 110, 220, 2)];
+//    _line.image = [UIImage imageNamed:@"line.png"];
+//    [self.view addSubview:_line];
+//    
+//    timer = [NSTimer scheduledTimerWithTimeInterval:.02 target:self selector:@selector(animation1) userInfo:nil repeats:YES];
     
    
-
+   
 
 }
 -(void)animation1
@@ -122,7 +146,7 @@
     // Preview
     _preview =[AVCaptureVideoPreviewLayer layerWithSession:self.session];
     _preview.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    _preview.frame =CGRectMake(20,110,280,280);
+    _preview.frame =CGRectMake((SCREENWIDTH-280)/2,(SCREENHEIGHT-280)/2,280,280);
     [self.view.layer insertSublayer:self.preview atIndex:0];
     
 
