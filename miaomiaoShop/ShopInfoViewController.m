@@ -312,6 +312,7 @@
                 }
                  wSelf.isInfoChanged = YES;
                 wShopData.shopStatue = statue;
+                
             }];
             [cell7 setSWitchStatue:wShopData.shopStatue];
             
@@ -333,7 +334,7 @@
             cell8 = [[AddProductSwithCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell8" ];
             cell8.textLabel.text = @"营业时间24小时" ;
             [cell8 setSwitchBlock:^(BOOL statue) {
-                if (statue) {
+                if (!statue) {
                     [wSelf creatTableFootView];
                 }
                 else

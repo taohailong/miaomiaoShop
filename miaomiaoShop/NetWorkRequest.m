@@ -17,7 +17,7 @@
 #import "ShopInfoData.h"
 
 
-#if DEBUGE
+#if DEBUG
 #define HTTPHOST @"www.mbianli.com:8088"
 #else
 #define HTTPHOST @"www.mbianli.com"
@@ -489,9 +489,9 @@
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/order_confirm?shop_id=%@&order_id=%@&confirm=done&ver=%@",HTTPHOST,manager.shopID,orderID,VERSION];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
         
-        if (sourceDic)
+        if (sourceDic&&[sourceDic[@"code"] intValue]==0)
         {
-            completeBk(nil,err);
+            completeBk(sourceDic,err);
         }
         else
         {
@@ -505,12 +505,12 @@
 -(void)shopOrderCancelDeliverWithOrderID:(NSString*)orderID WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shop/category/get?shop_id=%@&ver=%@",HTTPHOST,manager.shopID,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/order_cancel?shop_id=%@&order_id=%@&confirm=done&ver=%@",HTTPHOST,manager.shopID,orderID,VERSION];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
         
-        if (sourceDic)
+        if (sourceDic&&[sourceDic[@"code"] intValue]==0)
         {
-            completeBk(nil,err);
+            completeBk(sourceDic,err);
         }
         else
         {
