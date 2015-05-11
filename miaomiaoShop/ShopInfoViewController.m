@@ -15,6 +15,7 @@
 @interface ShopInfoViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView* _table;
+    __weak UITextField* _currentField;
 }
 @property(nonatomic,assign)BOOL isInfoChanged;
 @end
@@ -103,6 +104,7 @@
     [def addObserver:self selector:@selector(keyboardHidden:)name:UIKeyboardWillHideNotification
 											   object:nil];
     
+    [def addObserver:self selector:@selector(textFieldBeginChange:) name:UITextFieldTextDidBeginEditingNotification object:nil];
 }
 
 
@@ -117,6 +119,11 @@
     
 }
 
+-(void)textFieldBeginChange:(NSNotification*)notic
+{
+    _currentField = (UITextField*)notic.object;
+//    NSLog(@"notic %@",notic.object);
+}
 
 - (void)keyboardHidden:(NSNotification *)aNotification
 {
@@ -144,33 +151,35 @@
     } completion:^(BOOL finished) {
         
     }];
-    
 }
+
+#pragma mark----------Noticfic－－－－－－－
 
 -(void)checkDataAndFill
 {
-    NSIndexPath* path = [NSIndexPath indexPathForRow:0 inSection:0];
-   
-    AddProductCommonCell* cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
-    [cell registeFirstRespond];
-    _shopData.shopName = [cell getTextFieldString];
-    
-    
-    path = [NSIndexPath indexPathForRow:1 inSection:0];
-    cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
-    _shopData.shopAddress = [cell getTextFieldString];
-    [cell registeFirstRespond];
-    
-    path = [NSIndexPath indexPathForRow:2 inSection:0];
-    cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
-    _shopData.minPrice = [[cell getTextFieldString] floatValue];
-    [cell registeFirstRespond];
-    
-    path = [NSIndexPath indexPathForRow:3 inSection:0];
-    cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
-    _shopData.serveArea = [cell getTextFieldString];
-   [cell registeFirstRespond];
-   
+    [_currentField resignFirstResponder];
+//    NSIndexPath* path = [NSIndexPath indexPathForRow:0 inSection:0];
+//   
+//    AddProductCommonCell* cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
+//    [cell registeFirstRespond];
+////    _shopData.shopName = [cell getTextFieldString];
+//    
+//    
+//    path = [NSIndexPath indexPathForRow:1 inSection:0];
+//    cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
+////    _shopData.shopAddress = [cell getTextFieldString];
+//    [cell registeFirstRespond];
+//    
+//    path = [NSIndexPath indexPathForRow:2 inSection:0];
+//    cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
+////    _shopData.minPrice = [[cell getTextFieldString] floatValue];
+//    [cell registeFirstRespond];
+//    
+//    path = [NSIndexPath indexPathForRow:3 inSection:0];
+//    cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
+////    _shopData.serveArea = [cell getTextFieldString];
+//   [cell registeFirstRespond];
+//   
 }
 
 

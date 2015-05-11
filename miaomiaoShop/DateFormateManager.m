@@ -79,9 +79,9 @@
     *calendar = [NSCalendar currentCalendar];//日历
     NSDateComponents
     *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:date toDate:[NSDate date] options:0];
-    int year = [components year];
-    int month = [components month];
-    int day = [components day];
+    int year = (int)[components year];
+    int month = (int)[components month];
+    int day = (int)[components day];
     //三天以内更改显示格式
     if (year == 0 && month == 0 && day == 0)
     {

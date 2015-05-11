@@ -68,6 +68,8 @@
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
 
+    
+    
 //    UIBarButtonItem* rightBar = [[UIBarButtonItem alloc]initWithTitle:@"注销" style:UIBarButtonItemStylePlain target:self action:@selector(registeUserAccount)];
 //    self.navigationItem.rightBarButtonItem = rightBar;
 //    
@@ -190,7 +192,7 @@
         if (indexPath.row==0)
         {
             titleImage = [UIImage imageNamed:@"shopInfoIcon"];
-            titleStr = [NSString stringWithFormat:@"%@(%@)",_shopData.shopName,_shopData.shopStatue?@"营业中":@"打烊"];
+            titleStr = [NSString stringWithFormat:@"%@(%@)",_shopData.shopName?_shopData.shopName:@"",_shopData.shopStatue?@"营业中":@"打烊"];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             accessLabel.text = [NSString stringWithFormat:@"版本号:%@",VERSION];
             accessLabel.font = [UIFont systemFontOfSize:15];

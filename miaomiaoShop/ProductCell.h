@@ -12,4 +12,5 @@
 -(void)setPicUrl:(NSString*)url;
 -(void)setTitleStr:(NSString*)title;
 -(void)setPriceStr:(NSString*)price;
+-(void)setProductOnOff:(BOOL)flag;
 @end

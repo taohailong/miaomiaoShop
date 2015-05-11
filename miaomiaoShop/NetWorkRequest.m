@@ -17,10 +17,10 @@
 #import "ShopInfoData.h"
 
 
-#if 1
-#define HTTPHOST @"www.mbianli.com"
-#else
+#if DEBUGE
 #define HTTPHOST @"www.mbianli.com:8088"
+#else
+#define HTTPHOST @"www.mbianli.com"
 #endif
 
 @interface NetWorkRequest()
@@ -469,6 +469,7 @@
                 product.status = [dic[@"onsell"] intValue];
                 product.pID = dic[@"id"];
                 product.count = [dic[@"count"] intValue];
+                product.scanNu = dic[@"serialNo"] ;
                 [arr addObject:product];
             }
              back(arr,err);

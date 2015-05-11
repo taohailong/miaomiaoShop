@@ -157,12 +157,9 @@
     [UIView animateWithDuration:.2 delay:0 options:0 animations:^{
         
         for (NSLayoutConstraint * constranint in self.view.constraints) {
-        
             if (constranint.firstItem==_table&&constranint.firstAttribute==NSLayoutAttributeBottom) {
-    
                 constranint.constant = height;
             }
-            
         }
         
     } completion:^(BOOL finished) {
@@ -196,7 +193,6 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 6;
-
 }
 
 
@@ -226,7 +222,8 @@
         AddProductCommonCell* cell2= [tableView dequeueReusableCellWithIdentifier:@"2"];
         if (cell2==nil) {
             cell2 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"2" WithFieldBk:^(NSString *text) {
-//                wData.pName = text;
+                wData.pName = text;
+                NSLog(@"pNmae %@ wdata %@",wData.pName,wData);
                 wSelf.infoChange = YES;
             }];
         }
@@ -239,11 +236,11 @@
        AddProductCommonCell* cell3 = [tableView dequeueReusableCellWithIdentifier:@"3"];
        if (cell3==nil) {
            cell3 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"3" WithFieldBk:^(NSString *text) {
-//               wData.price = [text floatValue];
+               wData.price = [text floatValue];
                wSelf.infoChange = YES;
            }];
        }
-          [cell3 setTextTitleLabel:@"价格:"]  ;
+        [cell3 setTextTitleLabel:@"价格:"]  ;
         [cell3 setTextField:[NSString stringWithFormat:@"%.1f", _productData.price]];
        cell = cell3;
     }
@@ -270,6 +267,7 @@
         }
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         if (_productData.categoryName) {
+            
             cell.textLabel.text = [NSString stringWithFormat:@"分类:%@",_productData.categoryName];
         }
         else
@@ -396,39 +394,35 @@
         return;
     }
     
-    
-    __weak AddProductController* wself = self;
     __weak ShopProductData* wPdata = _productData;
-    
+    __weak AddProductController* wself = self;
     if (_thumbImage==nil) {
         
-        [self checkDifference];
+//        [self checkDifference];
         [self networkRequestApi];
-
         return;
     }
     
     THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
    [self postUpImageWithImage:_thumbImage WithBk:^(NSString *url) {
        wPdata.pUrl = url;
-       [wself checkDifference];
+       [wself networkRequestApi];
        [activeV removeFromSuperview];
    }];
     
  }
 
--(void)checkDifference
-{
-
-    NSIndexPath* path = [NSIndexPath indexPathForRow:1 inSection:0];
-    AddProductCommonCell* cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
-    _productData.pName = [cell getTextFieldString];
-    
-    
-    path = [NSIndexPath indexPathForRow:2 inSection:0];
-    cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
-    _productData.price = [[cell getTextFieldString] floatValue];
-}
+//-(void)checkDifference
+//{
+//    NSIndexPath* path = [NSIndexPath indexPathForRow:1 inSection:0];
+//    AddProductCommonCell* cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
+//    _productData.pName = [cell getTextFieldString];
+//    
+//    
+//    path = [NSIndexPath indexPathForRow:2 inSection:0];
+//    cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
+//    _productData.price = [[cell getTextFieldString] floatValue];
+//}
 
 
 
@@ -489,7 +483,16 @@
     NetWorkRequest* requ = [[NetWorkRequest alloc]init];
     [requ shopScanProductWithSerial:string WithBk:^(ShopProductData* backDic, NSError *error) {
         if (backDic) {
-            _productData = backDic;
+            _productData.pName = backDic.pName;
+            _productData.pID = backDic.pID;
+//            _productData.categoryID = backDic.categoryID;
+//            _productData.categoryName = backDic.categoryName;
+            _productData.pUrl = backDic.pUrl;
+            _productData.count = backDic.count;
+            _productData.price = backDic.price;
+//            _productData.status = backDic.status;
+            _productData.scanNu = backDic.scanNu;
+//            _productData = backDic;
             [_table reloadData];
         }
         [alert removeFromSuperview];

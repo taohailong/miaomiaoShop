@@ -13,6 +13,7 @@
     UIImageView* _productImageView;
     UILabel* _titleL;
     UILabel* _priceL;
+    UILabel* _statueLabel;
 }
 
 @end
@@ -60,9 +61,25 @@
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_productImageView]-5-[_priceL]-5-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productImageView,_priceL)]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_priceL]-3-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_priceL)]];
+    
+    _statueLabel = [[UILabel alloc]init];
+    _statueLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:_statueLabel];
+    _statueLabel.backgroundColor = DEFAULTNAVCOLOR;
+    _statueLabel.textColor = [UIColor whiteColor];
+    _statueLabel.text = @"下架";
+    _statueLabel.font = [UIFont boldSystemFontOfSize:10.0];
+    _statueLabel.transform = CGAffineTransformMakeRotation(M_PI_4);
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_statueLabel(25)]-1-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_statueLabel)]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_statueLabel(15)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_statueLabel)]];
+    
+
+ }
+
+-(void)setProductOnOff:(BOOL)flag
+{
+    _statueLabel.hidden = flag;
 }
-
-
 
 -(void)setPicUrl:(NSString *)url
 {

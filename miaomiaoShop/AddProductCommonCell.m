@@ -7,7 +7,7 @@
 //
 
 #import "AddProductCommonCell.h"
-@interface AddProductCommonCell()<UITextFieldDelegate>
+@interface AddProductCommonCell()
 {
     UILabel* _textLabel;
 
@@ -34,19 +34,16 @@
 
 
     
-//   _contentField = [[UITextField alloc]initWithFrame:CGRectMake(63, 15, 190, 30)];
-//    _contentField.center = CGPointMake(SCREENWIDTH/2, 30);
-//    NSLog(@"center is %@",NSStringFromCGPoint(_contentField.center));
-//    _contentField.borderStyle = UITextBorderStyleRoundedRect;
-//    [self.contentView addSubview:_contentField];
-//    
     
     _contentField = [[UITextField alloc]init];
     _contentField.font = [UIFont systemFontOfSize:14.0];
     _contentField.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextFieldTextDidChangeNotification object:_contentField];
+    
     _contentField.borderStyle = UITextBorderStyleRoundedRect;
     _contentField.returnKeyType = UIReturnKeyDone;
-    _contentField.delegate = self;
+    
     [self.contentView addSubview:_contentField];
     //
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_textLabel]-5-[_contentField]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_textLabel,_contentField)]];
@@ -95,6 +92,26 @@
 {
     [_contentField resignFirstResponder];
 }
+
+
+-(void)textChanged:(NSNotification*)notic
+{
+    if (notic.object!=_contentField) {
+        return;
+    }
+    if (_fieldBk) {
+        
+        _fieldBk(_contentField.text);
+    }
+
+   NSLog(@"field is %@ ",_contentField.text);
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 //-(void)textFieldDidEndEditing:(UITextField *)textField
 //{
 //    NSLog(@"text %@",textField.text);

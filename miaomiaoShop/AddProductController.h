@@ -24,8 +24,8 @@ typedef void (^AddEditProduct)(void);
 @property(nonatomic,assign)BOOL infoChange;
 -(void)commitProductInfo;
 -(void)setCompleteBk:(AddEditProduct)bk;
-//-(void)commitCompleteBack;
+-(void)commitCompleteBack;
 -(void)setUpPhoto;
 -(void)postUpImageWithImage:(UIImage*)image WithBk:(void(^)(NSString * url))complete;
--(void)checkDifference;
+//-(void)checkDifference;
 @end

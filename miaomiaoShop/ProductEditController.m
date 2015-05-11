@@ -33,8 +33,7 @@
 {
     [super viewDidLoad];
     [_table reloadData];
-    NSLog(@"_productData %@ name %@",_productData,_productData.pName);
-
+   
 }
 
 -(void)commitProductInfo
@@ -42,18 +41,45 @@
     [super commitProductInfo];
 }
 
--(void)checkDifference
+//-(void)checkDifference
+//{
+//    NSIndexPath* path = [NSIndexPath indexPathForRow:0 inSection:0];
+//    AddProductCommonCell* cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
+//    _productData.pName = [cell getTextFieldString];
+//    
+//    
+//    path = [NSIndexPath indexPathForRow:1 inSection:0];
+//    cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
+//    _productData.price = [[cell getTextFieldString] floatValue];
+//    
+//}
+//
+
+-(void)networkRequestApi
 {
-    NSIndexPath* path = [NSIndexPath indexPathForRow:0 inSection:0];
-    AddProductCommonCell* cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
-    _productData.pName = [cell getTextFieldString];
     
-    
-    path = [NSIndexPath indexPathForRow:1 inSection:0];
-    cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
-    _productData.price = [[cell getTextFieldString] floatValue];
+    __weak AddProductController* wSelf = self;
+    THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
+    NetWorkRequest* request = [[NetWorkRequest alloc]init];
+    [request shopProductUpdateWithProduct:_productData WithBk:^(id backDic, NSError *error) {
+        NSString* str = nil;
+        if (backDic) {
+            str = @"添加成功！";
+            [wSelf commitCompleteBack];
+        }
+        else
+        {
+            str = @"添加失败！";
+        }
+        THActivityView* show = [[THActivityView alloc]initWithString:str];
+        [show show];
+        [activeV removeFromSuperview];
+        
+    }];
+    [request startAsynchronous];
     
 }
+
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -83,6 +109,7 @@
         AddProductCommonCell* cell2= [tableView dequeueReusableCellWithIdentifier:@"2"];
         if (cell2==nil) {
             cell2 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"2" WithFieldBk:^(NSString *text) {
+                wData.pName = text;
                 wSelf.infoChange = YES;
             }];
         }
@@ -96,6 +123,7 @@
         if (cell3==nil) {
             cell3 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"3" WithFieldBk:^(NSString *text) {
                  wSelf.infoChange = YES;
+                wData.price = [text floatValue];
             }];
         }
         [cell3 setTextTitleLabel:@"价格:"]  ;
