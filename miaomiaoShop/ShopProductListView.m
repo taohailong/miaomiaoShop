@@ -104,12 +104,10 @@
     NetWorkRequest* productReq = [[NetWorkRequest alloc]init];
     __weak ShopProductListView* wSelf = self;
     [productReq shopGetProductWithShopID:manager.shopID withCategory:_currentCategoryID fromIndex:_dataArr.count WithCallBack:^(id backDic, NSError *error) {
+       
         wSelf.isLoading = NO;
-        
-        
-        if (backDic) {
-           [wSelf addDataArr:backDic];
-        }
+    
+        [wSelf addDataArr:backDic];
         [fullView removeFromSuperview];
     }];
     [productReq startAsynchronous];
@@ -131,9 +129,10 @@
 
 -(void)addDataArr:(NSMutableArray*)da
 {
-    
-    [_dataArr addObjectsFromArray:da];
-    [_table reloadData];
+    if (da) {
+        [_dataArr addObjectsFromArray:da];
+        [_table reloadData];
+    }
     
     [self addLoadMoreViewWithCount:da.count];
 }
@@ -142,9 +141,10 @@
 {
     
     if (count<20) {
-        UIView *view =[ [UIView alloc]init];
-        view.backgroundColor = [UIColor clearColor];
-        _table.tableFooterView = view;
+//        UIView *view =[ [UIView alloc]init];
+//        view.backgroundColor = [UIColor clearColor];
+//        _table.tableFooterView = view;
+        _table.tableFooterView = nil;
     }
     else
     {

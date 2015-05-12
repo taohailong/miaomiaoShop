@@ -138,6 +138,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
         THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.superview];
+        
         __weak ShopCategoryListView* wSelf = self;
         ShopCategoryData* data = _dataArr[indexPath.row];
         NetWorkRequest* request = [[NetWorkRequest alloc]init];

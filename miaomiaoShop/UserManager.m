@@ -88,6 +88,7 @@
     [def setObject:account forKey:UACCOUNT];
      NSLog(@"self.token %@",self.token);
     [def synchronize];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SHOPIDCHANGED object:nil];
 }
 
 -(void)removeUserAccountWithBk:(logCallBack)complete

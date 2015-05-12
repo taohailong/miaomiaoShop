@@ -31,14 +31,14 @@
     UIBarButtonItem* rightBar = [[UIBarButtonItem alloc]initWithTitle:@"添加商品" style:UIBarButtonItemStylePlain target:self action:@selector(addProductAction)];
     self.navigationItem.rightBarButtonItem = rightBar;
     
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initNetData) name:SHOPIDCHANGED object:nil];
 }
 
 -(void)addProductAction
 {
     __weak ShopProductListView* wProductV = _productView;
     __weak NSString* wCategoryID = _currentCategoryID;
-//    AddProductController* addProduct = [self.storyboard instantiateViewControllerWithIdentifier:@"AddProductController"];
+
     AddProductController* addProduct = [[AddProductController alloc]init];
     [addProduct setCompleteBk:^{
         [wProductV  setCategoryIDToGetData:wCategoryID];
@@ -91,7 +91,6 @@
 -(void)didSelectProductIndex:(ShopProductData*)product
 {
     __weak ShopProductListView* wProductV = _productView;
-    
     
     product.categoryName = _currentCateName;
     ProductEditController* editController = [[ProductEditController alloc]initWithProductData:product];

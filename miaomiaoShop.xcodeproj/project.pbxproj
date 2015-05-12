@@ -49,6 +49,8 @@
 		C74136AD1AE90B0C00B08CBD /* LastViewOnTable.m in Sources */ = {isa = PBXBuildFile; fileRef = C74136AC1AE90B0C00B08CBD /* LastViewOnTable.m */; };
 		C74278901AF27181008E17BA /* CategorySelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C742788F1AF27181008E17BA /* CategorySelectController.m */; };
 		C74278931AF27BDB008E17BA /* ProductEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = C74278921AF27BDB008E17BA /* ProductEditController.m */; };
+		C7428BDE1B019C5A00F63ADB /* ShopSelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7428BDD1B019C5A00F63ADB /* ShopSelectController.m */; };
+		C7428BDF1B019C5A00F63ADB /* ShopSelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7428BDD1B019C5A00F63ADB /* ShopSelectController.m */; };
 		C753BEAB1AE7460800562EF6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C753BEAA1AE7460800562EF6 /* main.m */; };
 		C753BEAE1AE7460800562EF6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C753BEAD1AE7460800562EF6 /* AppDelegate.m */; };
 		C753BEB11AE7460800562EF6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C753BEB01AE7460800562EF6 /* ViewController.m */; };
@@ -292,6 +294,8 @@
 		C742788F1AF27181008E17BA /* CategorySelectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategorySelectController.m; sourceTree = "<group>"; };
 		C74278911AF27BDB008E17BA /* ProductEditController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductEditController.h; sourceTree = "<group>"; };
 		C74278921AF27BDB008E17BA /* ProductEditController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductEditController.m; sourceTree = "<group>"; };
+		C7428BDC1B019C5A00F63ADB /* ShopSelectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopSelectController.h; sourceTree = "<group>"; };
+		C7428BDD1B019C5A00F63ADB /* ShopSelectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopSelectController.m; sourceTree = "<group>"; };
 		C753BEA51AE7460800562EF6 /* miaomiaoShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = miaomiaoShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C753BEA91AE7460800562EF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C753BEAA1AE7460800562EF6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -580,6 +584,8 @@
 				C7241F7E1AF4F514000474B4 /* ShopInfoViewController.m */,
 				C7241F771AF4E197000474B4 /* RootViewController.h */,
 				C7241F781AF4E197000474B4 /* RootViewController.m */,
+				C7428BDC1B019C5A00F63ADB /* ShopSelectController.h */,
+				C7428BDD1B019C5A00F63ADB /* ShopSelectController.m */,
 			);
 			name = ShopInfo;
 			sourceTree = "<group>";
@@ -1115,6 +1121,7 @@
 				C753C1C21AE7A8B500562EF6 /* RootTabBarViewController.m in Sources */,
 				C7241F791AF4E197000474B4 /* RootViewController.m in Sources */,
 				C741369B1AE8C1DE00B08CBD /* ShopProductListView.m in Sources */,
+				C7428BDE1B019C5A00F63ADB /* ShopSelectController.m in Sources */,
 				C753C1841AE78E4E00562EF6 /* Reachability.m in Sources */,
 				C753C1BC1AE7992F00562EF6 /* NetWorkRequest.m in Sources */,
 				C725BB451AEBBB1A00F344CB /* UIImage+ZoomImage.m in Sources */,
@@ -1196,6 +1203,7 @@
 				C78443741AF9E3A0009B4C2D /* RootTabBarViewController.m in Sources */,
 				C78443751AF9E3A0009B4C2D /* RootViewController.m in Sources */,
 				C78443761AF9E3A0009B4C2D /* ShopProductListView.m in Sources */,
+				C7428BDF1B019C5A00F63ADB /* ShopSelectController.m in Sources */,
 				C78443771AF9E3A0009B4C2D /* Reachability.m in Sources */,
 				C78443781AF9E3A0009B4C2D /* NetWorkRequest.m in Sources */,
 				C78443791AF9E3A0009B4C2D /* UIImage+ZoomImage.m in Sources */,

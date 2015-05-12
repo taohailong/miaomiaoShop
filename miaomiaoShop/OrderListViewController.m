@@ -87,6 +87,7 @@
         if (error) {
             THActivityView* alert = [[THActivityView alloc]initWithString:@"连接失败！"];
             [alert show];
+            [wSelf refreshTableOver];
             return ;
         }
 
@@ -99,7 +100,7 @@
         if ([statue isEqualToString:@"0"]) {
             [wSelf setTabBarBadge:nil];
         }
-        
+        [wSelf refreshTableOver];
     }];
     [req startAsynchronous];
 }
@@ -108,6 +109,7 @@
 {
     __weak OrderListViewController* wSelf = self;
     THActivityView* loadView = [[THActivityView alloc]initFullViewTransparentWithSuperView:self.view];
+    
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
     [req shopGetOrderWithStatue:_currentStatue WithIndex:_todayArr.count+ _notTodayArr.count WithBk:^(NSArray* backDic, NSError *error) {
         
@@ -121,7 +123,7 @@
             [_table reloadData];
             [wSelf addLoadMoreViewWithCount: todayArr.count+ notTodayArr.count];
         }
-       
+        
     }];
     [req startAsynchronous];
 
@@ -131,17 +133,22 @@
 {
 
     if (count<20) {
-        UIView *view =[ [UIView alloc]init];
-        view.backgroundColor = [UIColor clearColor];
-        _table.tableFooterView = view;
+//        UIView *view =[ [UIView alloc]init];
+//        view.backgroundColor = [UIColor clearColor];
+//        _table.tableFooterView = view;
+        _table.tableFooterView = nil;
     }
     else
     {
         _table.tableFooterView = [[LastViewOnTable alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50)];
     }
-    [refreshView egoRefreshScrollViewDataSourceDidFinishedLoading:_table];
-
 }
+
+-(void)refreshTableOver
+{
+    [refreshView egoRefreshScrollViewDataSourceDidFinishedLoading:_table];
+}
+
 
 #pragma mark---------------Refresh------------------
 

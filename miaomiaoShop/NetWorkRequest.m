@@ -18,6 +18,7 @@
 
 
 #if DEBUG
+//#if 0
 #define HTTPHOST @"www.mbianli.com:8088"
 #else
 #define HTTPHOST @"www.mbianli.com"
@@ -33,8 +34,14 @@
 
 -(void)getShopInfoWitbBk:(NetCallback)completeBk
 {
-    DateFormateManager* formate = [DateFormateManager shareDateFormateManager];
+    
     UserManager* manager = [UserManager shareUserManager];
+    if (!manager.shopID) {
+        return;
+    }
+    
+    DateFormateManager* formate = [DateFormateManager shareDateFormateManager];
+    
     [formate setDateStyleString:@"HH:mm"];
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/summary?shop_id=%@&beginDate=&endDate=&ver=%@",HTTPHOST,manager.shopID,VERSION];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
@@ -51,14 +58,18 @@
             data.shopAddress = sourceDic[@"data"][@"shop"][@"shop_address"];
             data.serveArea = sourceDic[@"data"][@"shop"][@"shop_info"];
             
-            double openT = [sourceDic[@"data"][@"shop"][@"open_time"] doubleValue]/1000;
-            data.openTime =  [formate formateFloatTimeValueToString:openT];
+            if (sourceDic[@"data"][@"shop"][@"open_time"]) {
+                
+                double openT = [sourceDic[@"data"][@"shop"][@"open_time"] doubleValue]/1000;
+                data.openTime =  [formate formateFloatTimeValueToString:openT];
+                
+                double closeT = [sourceDic[@"data"][@"shop"][@"close_time"] doubleValue]/1000;
+                data.closeTime = [formate formateFloatTimeValueToString:closeT];
+            }
             
-            double closeT = [sourceDic[@"data"][@"shop"][@"close_time"] doubleValue]/1000;
-            data.closeTime = [formate formateFloatTimeValueToString:closeT];
             
             data.mobilePhoneNu = sourceDic[@"data"][@"shop"][@"owner_phone"];
-            data.shopStatue = [sourceDic[@"data"][@"shop"][@"status"] intValue];
+            data.shopStatue = ![sourceDic[@"data"][@"shop"][@"status"] intValue];//0 营业中,1 打烊
             data.minPrice = [sourceDic[@"data"][@"shop"][@"base_price"] floatValue];
             data.telPhoneNu  = sourceDic[@"data"][@"shop"][@"tel"];
             completeBk(data,nil);
