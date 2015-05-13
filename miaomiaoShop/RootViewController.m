@@ -13,7 +13,7 @@
 #import "UserManager.h"
 #import "LogViewController.h"
 #import "THActivityView.h"
-
+#import "ShopSelectController.h"
 @interface RootViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
     UITableView* _table;
@@ -69,12 +69,15 @@
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
 
     
-    
-//    UIBarButtonItem* rightBar = [[UIBarButtonItem alloc]initWithTitle:@"注销" style:UIBarButtonItemStylePlain target:self action:@selector(registeUserAccount)];
-//    self.navigationItem.rightBarButtonItem = rightBar;
-//    
-    
-    // Do any additional setup after loading the view.
+}
+
+
+
+-(void)selectShopAction
+{
+    ShopSelectController* selectView = [[ShopSelectController alloc]init];
+    selectView.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:selectView animated:YES];
 }
 
 
@@ -193,7 +196,6 @@
         {
             titleImage = [UIImage imageNamed:@"shopInfoIcon"];
             titleStr = [NSString stringWithFormat:@"%@(%@)",_shopData.shopName?_shopData.shopName:@"",_shopData.shopStatue?@"营业中":@"打烊"];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             accessLabel.text = [NSString stringWithFormat:@"版本号:%@",VERSION];
             accessLabel.font = [UIFont systemFontOfSize:15];
             accessLabel.textColor = [UIColor lightGrayColor];
@@ -258,6 +260,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     if (indexPath.row==1&&indexPath.section==0) {
         ShopInfoViewController * shopInfo = [[ShopInfoViewController alloc]initWithShopInfoData:_shopData];
         shopInfo.hidesBottomBarWhenPushed = YES;
@@ -267,6 +270,11 @@
     {
         [self registeUserAccount];
     }
+    else  if (indexPath.row==0&&indexPath.section==0) {
+        [self selectShopAction];
+    }
+
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

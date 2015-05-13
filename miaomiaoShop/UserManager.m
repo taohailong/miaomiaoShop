@@ -35,6 +35,7 @@
     return shareUser;
 }
 
+
 -(BOOL)verifyTokenOnNet:(void(^)(BOOL success, NSError *error))completeBlock
 {
     NSString* t = [self checkTokenExsit];
@@ -183,6 +184,12 @@
          
          
         if (backDic) {
+            
+            NSString* shopDirectory = [NSHomeDirectory()
+                                            stringByAppendingFormat:@"/Documents/%@",@"shopArr"];
+            NSArray* shopArr = backDic[@"data"][@"shop"];
+            [shopArr writeToFile:shopDirectory atomically:YES];
+            
             bSelf.token = backDic[@"data"][@"token"];
             bSelf.shopName = backDic[@"data"][@"shop"][0][@"name"];
             bSelf.shopID = backDic[@"data"][@"shop"][0][@"id"];

@@ -1429,7 +1429,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Weiyuan Huang (62Z3L937NL)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Weiyuan Huang (QJZJLZ48TX)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/taohailong/Desktop/miaomiaoShop/miaomiaoShop/miaomiao-Prefix.pch";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/miaomiaoShop/miaomiao-Prefix.pch";
 				INFOPLIST_FILE = miaomiaoShop/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1450,7 +1450,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Wuxi Chestnut Company Limited (F86GF7VY4V)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Wuxi Chestnut Company Limited (F86GF7VY4V)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/taohailong/Desktop/miaomiaoShop/miaomiaoShop/miaomiao-Prefix.pch";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/miaomiaoShop/miaomiao-Prefix.pch";
 				INFOPLIST_FILE = miaomiaoShop/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
