@@ -10,5 +10,6 @@
 
 @implementation ShopInfoData
 @synthesize countCategory,countOrder,closeTime,countProducts,shopAddress,serveArea,shopName,shopStatue,minPrice;
+@synthesize openTime,telPhoneNu,mobilePhoneNu,totalMoney;
 
 @end

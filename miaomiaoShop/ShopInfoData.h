@@ -22,4 +22,6 @@
 @property(nonatomic,strong)NSString* openTime;
 @property(nonatomic,strong)NSString* closeTime;
 @property(nonatomic,assign)float minPrice;
+
+
 @end

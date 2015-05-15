@@ -70,7 +70,8 @@
     NetWorkRequest* productReq = [[NetWorkRequest alloc]init];
     _currentCategoryID = categoryID;
     [productReq shopGetProductWithShopID:manager.shopID withCategory:categoryID fromIndex:0 WithCallBack:^(id backDic, NSError *error) {
-        
+        [loadView removeFromSuperview];
+        [fullView removeFromSuperview];
         if (error) {
             THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wSelf.superview];
             
@@ -83,8 +84,7 @@
         if (backDic) {
            [wSelf setDataArrReloadTable:backDic];
         }
-        [loadView removeFromSuperview];
-        [fullView removeFromSuperview];
+        
     }];
     [productReq startAsynchronous];
 
