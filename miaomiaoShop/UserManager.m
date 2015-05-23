@@ -49,6 +49,10 @@
     [req verifyTokenToServer:t WithCallBack:^(NSDictionary *backDic, NSError *error) {
        
         if ([backDic[@"code"] intValue] ==0&&backDic) {
+            
+            NSArray* shopArr = backDic[@"data"][@"shop"];
+            [self saveAllShopArr:shopArr];
+
             bSelf.token = backDic[@"token"];
             bSelf.shopName = backDic[@"data"][@"shop"][0][@"name"];
             bSelf.shopID = backDic[@"data"][@"shop"][0][@"id"];
@@ -185,10 +189,8 @@
          
         if (backDic) {
             
-            NSString* shopDirectory = [NSHomeDirectory()
-                                            stringByAppendingFormat:@"/Documents/%@",@"shopArr"];
             NSArray* shopArr = backDic[@"data"][@"shop"];
-            [shopArr writeToFile:shopDirectory atomically:YES];
+            [self saveAllShopArr:shopArr];
             
             bSelf.token = backDic[@"data"][@"token"];
             bSelf.shopName = backDic[@"data"][@"shop"][0][@"name"];
@@ -209,4 +211,14 @@
     [req startAsynchronous];
 
 }
+
+
+-(void)saveAllShopArr:(NSArray*)arr
+{
+    NSString* shopDirectory = [NSHomeDirectory()
+                               stringByAppendingFormat:@"/Documents/%@",@"shopArr"];
+    
+    [arr writeToFile:shopDirectory atomically:YES];
+}
+
 @end

@@ -63,7 +63,6 @@
 
 -(void)setProductUrl:(NSString*)url
 {
-    ;
     [_productImageV setImageWithURL:[NSURL URLWithString:url] placeholderImage:DEFAULTIMAGE];
 
 }

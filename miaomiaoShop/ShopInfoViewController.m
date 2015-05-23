@@ -12,7 +12,10 @@
 #import "DatePickerView.h"
 #import "NetWorkRequest.h"
 #import "THActivityView.h"
-@interface ShopInfoViewController ()<UITableViewDataSource,UITableViewDelegate>
+#import "NSString+ZhengZe.h"
+
+
+@interface ShopInfoViewController ()<UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
 {
     UITableView* _table;
     __weak UITextField* _currentField;
@@ -45,20 +48,52 @@
      NSLayoutConstraint* bottom = [NSLayoutConstraint constraintWithItem:_table attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
     [self.view addConstraint:bottom];
     
+    
+    
     UIBarButtonItem* rigtBar = [[UIBarButtonItem alloc]initWithTitle:@"提交" style:UIBarButtonItemStyleDone target:self action:@selector(updateShopInfo)];
     self.navigationItem.rightBarButtonItem = rigtBar;
     
     UIBarButtonItem* leftBar = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:@selector(manualBack)];
+//    self.navigationItem.backBarButtonItem = nil;
     self.navigationItem.leftBarButtonItem = leftBar;
-
+//    [self.navigationItem.backBarButtonItem add]
     
     
     if (_shopData.openTime) {
         [self creatTableFootView];
     }
     [self registeNotificationCenter];
+    
+    
+    
+//    NSLog(@"%d",self.navigationController.interactivePopGestureRecognizer.enabled);
+//     self.navigationController.interactivePopGestureRecognizer.delegate = self;
+//    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+//    
     // Do any additional setup after loading the view.
 }
+
+#pragma mark-------------------pushGesture------------------
+
+//- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
+//{
+//    // fix 'nested pop animation can result in corrupted navigation bar'
+//    if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//        self.interactivePopGestureRecognizer.enabled = NO;
+//    }
+//    
+//    [super pushViewController:viewController animated:animated];
+//}
+//
+//
+//- (void)navigationController:(UINavigationController *)navigationController
+//       didShowViewController:(UIViewController *)viewController
+//                    animated:(BOOL)animated
+//{
+//    if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//        navigationController.interactivePopGestureRecognizer.enabled = YES;
+//    }
+//}
 
 
 -(void)manualBack
@@ -144,8 +179,6 @@
             }
             
         }
-
-       
         [self.view layoutIfNeeded];
         
     } completion:^(BOOL finished) {
@@ -155,9 +188,27 @@
 
 #pragma mark----------Noticfic－－－－－－－
 
--(void)checkDataAndFill
+-(BOOL)checkDataAndFill
 {
     [_currentField resignFirstResponder];
+    
+    if (![NSString verifyIsMobilePhoneNu:_shopData.mobilePhoneNu])
+    {
+        THActivityView* showView = [[THActivityView alloc]initWithString:@"手机号格式不正确"];
+        [showView show];
+        return NO;
+    }
+    
+    if (![NSString verifyisTelPhone:_shopData.telPhoneNu])
+    {
+        THActivityView* showView = [[THActivityView alloc]initWithString:@"电话格式不正确"];
+        [showView show];
+        return NO;
+    }
+
+    return YES;
+    
+    
 //    NSIndexPath* path = [NSIndexPath indexPathForRow:0 inSection:0];
 //   
 //    AddProductCommonCell* cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
@@ -187,7 +238,10 @@
 
 -(void)updateShopInfo
 {
-    [self checkDataAndFill];
+    if (NO==[self checkDataAndFill]) {
+        return;
+    }
+
     __weak ShopInfoViewController* wself = self;
     THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
@@ -249,7 +303,8 @@
         AddProductCommonCell* cell3 = [tableView dequeueReusableCellWithIdentifier:@"cell3"];
         if (cell3==nil) {
             cell3 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell3" WithFieldBk:^(NSString *text) {
-                 wSelf.isInfoChanged = YES;
+                
+                wSelf.isInfoChanged = YES;
                 wShopData.minPrice = [text floatValue];
             }];
             [cell3 setTextTitleLabel:@"起送价格¥"];

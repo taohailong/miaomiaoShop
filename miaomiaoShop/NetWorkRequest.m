@@ -17,8 +17,8 @@
 #import "ShopInfoData.h"
 
 
-#if DEBUG
-//#if 0
+//#if DEBUG
+#if 0
 #define HTTPHOST @"www.mbianli.com:8088"
 #else
 #define HTTPHOST @"www.mbianli.com"

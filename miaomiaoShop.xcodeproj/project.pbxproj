@@ -51,6 +51,8 @@
 		C74278931AF27BDB008E17BA /* ProductEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = C74278921AF27BDB008E17BA /* ProductEditController.m */; };
 		C7428BDE1B019C5A00F63ADB /* ShopSelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7428BDD1B019C5A00F63ADB /* ShopSelectController.m */; };
 		C7428BDF1B019C5A00F63ADB /* ShopSelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7428BDD1B019C5A00F63ADB /* ShopSelectController.m */; };
+		C749AED11B10434200F82FF2 /* NSString+ZhengZe.m in Sources */ = {isa = PBXBuildFile; fileRef = C749AED01B10434200F82FF2 /* NSString+ZhengZe.m */; };
+		C749AED21B10434200F82FF2 /* NSString+ZhengZe.m in Sources */ = {isa = PBXBuildFile; fileRef = C749AED01B10434200F82FF2 /* NSString+ZhengZe.m */; };
 		C753BEAB1AE7460800562EF6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C753BEAA1AE7460800562EF6 /* main.m */; };
 		C753BEAE1AE7460800562EF6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C753BEAD1AE7460800562EF6 /* AppDelegate.m */; };
 		C753BEB11AE7460800562EF6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C753BEB01AE7460800562EF6 /* ViewController.m */; };
@@ -296,6 +298,8 @@
 		C74278921AF27BDB008E17BA /* ProductEditController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductEditController.m; sourceTree = "<group>"; };
 		C7428BDC1B019C5A00F63ADB /* ShopSelectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopSelectController.h; sourceTree = "<group>"; };
 		C7428BDD1B019C5A00F63ADB /* ShopSelectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopSelectController.m; sourceTree = "<group>"; };
+		C749AECF1B10434200F82FF2 /* NSString+ZhengZe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ZhengZe.h"; sourceTree = "<group>"; };
+		C749AED01B10434200F82FF2 /* NSString+ZhengZe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ZhengZe.m"; sourceTree = "<group>"; };
 		C753BEA51AE7460800562EF6 /* miaomiaoShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = miaomiaoShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C753BEA91AE7460800562EF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C753BEAA1AE7460800562EF6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -698,6 +702,8 @@
 				C725BB441AEBBB1A00F344CB /* UIImage+ZoomImage.m */,
 				C717DFE51AF3973C0057DD72 /* DateFormateManager.h */,
 				C717DFE61AF3973C0057DD72 /* DateFormateManager.m */,
+				C749AECF1B10434200F82FF2 /* NSString+ZhengZe.h */,
+				C749AED01B10434200F82FF2 /* NSString+ZhengZe.m */,
 				C753C1851AE78E5800562EF6 /* SDWebImage */,
 				C753C1651AE78E4E00562EF6 /* ASI */,
 			);
@@ -1063,6 +1069,7 @@
 				C753C17D1AE78E4E00562EF6 /* ASIDataCompressor.m in Sources */,
 				C75680CA1AF762F900F0A990 /* ShopBusinessController.m in Sources */,
 				C71842DD1AF20CFA00140237 /* ScanViewController.m in Sources */,
+				C749AED11B10434200F82FF2 /* NSString+ZhengZe.m in Sources */,
 				C753BEB11AE7460800562EF6 /* ViewController.m in Sources */,
 				C78444151AFA1DD8009B4C2D /* YFGIFImageView.m in Sources */,
 				C74136AA1AE8F48E00B08CBD /* ProductCell.m in Sources */,
@@ -1145,6 +1152,7 @@
 				C784433C1AF9E3A0009B4C2D /* ASIDataCompressor.m in Sources */,
 				C784433D1AF9E3A0009B4C2D /* ShopBusinessController.m in Sources */,
 				C784433E1AF9E3A0009B4C2D /* ScanViewController.m in Sources */,
+				C749AED21B10434200F82FF2 /* NSString+ZhengZe.m in Sources */,
 				C784433F1AF9E3A0009B4C2D /* ViewController.m in Sources */,
 				C78444161AFA1DD8009B4C2D /* YFGIFImageView.m in Sources */,
 				C78443401AF9E3A0009B4C2D /* ProductCell.m in Sources */,
