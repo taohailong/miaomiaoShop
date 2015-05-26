@@ -11,8 +11,12 @@
 typedef void (^NetCallback)(id backDic,NSError* error);
 @interface NetWorkRequest : NSObject
 //数据
--(void)getDailyOrderSummaryWithBk:(NetCallback)completeBk;
+-(void)getDailyOrderSummaryFromIndex:(int)index WithBk:(NetCallback)completeBk;
 -(void)getBusinessOrderInfoWithDate:(NSString*)date WithType:(NSString*)type  withIndex:(int)index WithBk:(NetCallback)completeBk;
+-(void)getCashWithRequestMoney:(NSString*)money WithBk:(NetCallback)completeBk;
+-(void)getCashTradeListWithIndex:(int)index WithBK:(NetCallback)completeBk;
+
+
 
 -(void)shopOrderConfirmDeliverWithOrderID:(NSString*)orderID WithBk:(NetCallback)completeBk;
 -(void)shopOrderCancelDeliverWithOrderID:(NSString*)orderID WithBk:(NetCallback)completeBk;

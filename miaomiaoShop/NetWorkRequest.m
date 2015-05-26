@@ -17,8 +17,8 @@
 #import "ShopInfoData.h"
 
 
-//#if DEBUG
-#if 0
+#if DEBUG
+//#if 0
 #define HTTPHOST @"www.mbianli.com:8088"
 #else
 #define HTTPHOST @"www.mbianli.com"
@@ -70,7 +70,7 @@
             
             data.mobilePhoneNu = sourceDic[@"data"][@"shop"][@"owner_phone"];
             data.shopStatue = ![sourceDic[@"data"][@"shop"][@"status"] intValue];//0 营业中,1 打烊
-            data.minPrice = [sourceDic[@"data"][@"shop"][@"base_price"] floatValue];
+            data.minPrice = [sourceDic[@"data"][@"shop"][@"base_price"] floatValue]/100;
             data.telPhoneNu  = sourceDic[@"data"][@"shop"][@"tel"];
             completeBk(data,nil);
             
@@ -87,7 +87,7 @@
 -(void)shopInfoUpdateWithShopInfoData:(ShopInfoData*)data WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shop/updateShopInfo?shop_id=%@&name=%@&tel=%@&shop_address=%@&owner_phone=%@&base_price=%d&shopInfo=%@&status=%d&ver=%@",HTTPHOST,manager.shopID,data.shopName,data.telPhoneNu,data.shopAddress,data.mobilePhoneNu,(int)data.minPrice,data.serveArea,data.shopStatue,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shop/updateShopInfo?shop_id=%@&name=%@&tel=%@&shop_address=%@&owner_phone=%@&base_price=%d&shopInfo=%@&status=%d&ver=%@",HTTPHOST,manager.shopID,data.shopName,data.telPhoneNu,data.shopAddress,data.mobilePhoneNu,(int)(data.minPrice*100),data.serveArea,data.shopStatue,VERSION];
     if (data.openTime) {
         url = [NSString stringWithFormat:@"%@&open_time=%@&close_time=%@",url,data.openTime,data.closeTime];
     }
@@ -111,21 +111,16 @@
 
 
 #pragma mark--------------------Business--------
-//http://www.mbianli.com:8088/console/api/order/summary?shop_id=10033&beginDate=&endDate=&ver=6
-//李龙春  14:37:00
-//http://www.mbianli.com:8088/console/api/order/dailySummary?shop_id=10033&ver=6
-//
--(void)getDailyOrderSummaryWithBk:(NetCallback)completeBk
+
+-(void)getCashTradeListWithIndex:(int)index WithBK:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/dailySummary?shop_id=%@&ver=%@",HTTPHOST,manager.shopID,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/wallet/show?shop_id=%@&ver=%@&from=%d&end=%d",HTTPHOST,manager.shopID,VERSION,index,index+7];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
         
         if (sourceDic)
         {
-//            [sourceDic[@"code"] intValue] ==0
             completeBk(sourceDic,nil);
-            
         }
         else
         {
@@ -134,6 +129,51 @@
         
     }];
 }
+
+
+-(void)getCashWithRequestMoney:(NSString*)money WithBk:(NetCallback)completeBk
+{
+    UserManager* manager = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/wallet/show?shop_id=%@&ver=%@&from=0&end=7",HTTPHOST,manager.shopID,VERSION];
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+        
+        if (sourceDic)
+        {
+            completeBk(sourceDic,nil);
+        }
+        else
+        {
+            completeBk(nil,err);
+        }
+        
+    }];
+
+
+}
+
+
+
+
+
+-(void)getDailyOrderSummaryFromIndex:(int)index WithBk:(NetCallback)completeBk
+{
+    UserManager* manager = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/dailySummary?shop_id=%@&ver=%@&from=%d&end=%d",HTTPHOST,manager.shopID,VERSION,index,index+7];
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+        
+        if (sourceDic)
+        {
+            completeBk(sourceDic,nil);
+        }
+        else
+        {
+            completeBk(nil,err);
+        }
+        
+    }];
+}
+
+
 
 -(void)getBusinessOrderInfoWithDate:(NSString*)date WithType:(NSString*)type  withIndex:(int)index WithBk:(NetCallback)completeBk
 {
@@ -146,7 +186,7 @@
 //            [sourceDic[@"code"] intValue] ==0
             NSArray* sourceArr = sourceDic[@"data"][@"orders"];
             DateFormateManager* manager = [DateFormateManager shareDateFormateManager];
-            [manager  setDateStyleString:@"YY-MM-dd HH:ss"];
+            [manager  setDateStyleString:@"YY-MM-dd HH:mm"];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                NSMutableArray* backArr = [NSMutableArray array];
                 for (NSDictionary* dic in sourceArr) {
@@ -171,7 +211,7 @@
                     order.telPhone = dic[@"phone"];
                     
                     order.discountMoney = [dic[@"dprice"] floatValue];
-                    order.totalMoney = [NSString stringWithFormat:@"%.1f",[dic[@"price"] floatValue]/100] ;
+                    order.totalMoney = [NSString stringWithFormat:@"%.2f",[dic[@"price"] floatValue]/100] ;
                     order.messageStr = dic[@"msg"];
                     [order setOrderStatueWithString:dic[@"order_status"]];
                     [order setOrderInfoString:dic[@"info"]];
@@ -192,8 +232,9 @@
         }
         
     }];
-
 }
+
+
 
 #pragma mark-------------order-------------------
 
@@ -208,7 +249,7 @@
 //            [sourceDic[@"code"] intValue] ==0
             NSArray* sourceArr = sourceDic[@"data"][@"orderls"];
             DateFormateManager* manager = [DateFormateManager shareDateFormateManager];
-            [manager  setDateStyleString:@"YY-MM-dd HH:ss"];
+            [manager  setDateStyleString:@"YY-MM-dd HH:mm"];
            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 NSMutableArray* todayArr = [NSMutableArray array];
                 NSMutableArray* notTodayArr = [NSMutableArray array];
@@ -225,7 +266,7 @@
                    order.telPhone = dic[@"phone"];
                    
                    order.discountMoney = [dic[@"dprice"] floatValue];
-                   order.totalMoney = [NSString stringWithFormat:@"%.1f",[dic[@"price"] floatValue]/100] ;
+                   order.totalMoney = [NSString stringWithFormat:@"%.2f",[dic[@"price"] floatValue]/100] ;
                    order.messageStr = dic[@"remarks"];
                    [order setOrderStatueWithString:dic[@"order_status"]];
                    [order setOrderInfoString:dic[@"info"]];
@@ -332,7 +373,7 @@
 -(void)shopProductUpdateWithProduct:(ShopProductData *)data WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/update?itemId=%@&itemName=%@&serialNo=%@&category_id=%@&count=1000&score=0&price=%d&saleStatus=%d&shop_id=%@&pic_url=%@&ver=%@",HTTPHOST,data.pID,data.pName,data.scanNu,data.categoryID,(int)data.price*100,data.status,manager.shopID,data.pUrl,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/update?itemId=%@&itemName=%@&serialNo=%@&category_id=%@&count=1000&price=%d&saleStatus=%d&shop_id=%@&pic_url=%@&score=%@&ver=%@",HTTPHOST,data.pID,data.pName,data.scanNu,data.categoryID,(int)(data.price*100),data.status,manager.shopID,data.pUrl,data.score,VERSION];
     
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
@@ -378,7 +419,7 @@
 -(void)shopAddProductInfoToServeWith:(ShopProductData*)data WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/addItem?serialNo=%@&name=%@&categoryId=%@&count=100&score=0&price=%d&saleStatus=%d&shop_id=%@&pic_ur=%@&ver=%@",HTTPHOST,data.scanNu,data.pName,data.categoryID,(int)data.price*100,data.status,manager.shopID,data.pUrl,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/addItem?serialNo=%@&name=%@&categoryId=%@&count=100&score=0&price=%d&saleStatus=%d&shop_id=%@&pic_ur=%@&ver=%@",HTTPHOST,data.scanNu,data.pName,data.categoryID,(int)(data.price*100),data.status,manager.shopID,data.pUrl,VERSION];
     
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
@@ -481,6 +522,7 @@
                 product.pID = dic[@"id"];
                 product.count = [dic[@"count"] intValue];
                 product.scanNu = dic[@"serialNo"] ;
+                product.score = dic[@"score"];
                 [arr addObject:product];
             }
              back(arr,err);

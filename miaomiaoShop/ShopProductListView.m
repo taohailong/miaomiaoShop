@@ -176,7 +176,7 @@
     }
     ShopProductData* data = _dataArr[indexPath.row];
     [cell setProductOnOff:data.status?YES:NO];
-    [cell setPriceStr:[NSString stringWithFormat:@"%.1f", data.price]];
+    [cell setPriceStr:[NSString stringWithFormat:@"%.2f", data.price]];
     [cell setTitleStr:data.pName];
     [cell setPicUrl:data.pUrl];
     return cell;

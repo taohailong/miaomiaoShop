@@ -9,7 +9,7 @@
 
 #import "ScanViewController.h"
 
-@interface ScanViewController ()
+@interface ScanViewController ()<UIAlertViewDelegate>
 
 @end
 
@@ -138,8 +138,27 @@
         [_session addOutput:self.output];
     }
     
+    
+    NSString *mediaType = AVMediaTypeVideo;
+    
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+    
+    if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
+        
+        NSLog(@"相机权限受限");
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请检查是否开启系统相机权限" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+            alert.tag = 10;
+            [alert show];
+        return;
+    }
+    
     // 条码类型 AVMetadataObjectTypeQRCode
-    _output.metadataObjectTypes =@[AVMetadataObjectTypeEAN13Code, AVMetadataObjectTypeEAN8Code, AVMetadataObjectTypeCode128Code];
+    
+    
+    
+    NSArray* types = @[AVMetadataObjectTypeEAN13Code, AVMetadataObjectTypeEAN8Code, AVMetadataObjectTypeCode128Code];
+
+    _output.metadataObjectTypes = types;
 //    AVMetadataObjectTypeQRCode  二维码
 //    AVCaptureDeviceFormat
 //    AVCaptureSessionPreset
@@ -174,6 +193,26 @@
         [timer invalidate];
         NSLog(@"%@",stringValue);
     }];
+}
+
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag==10) {
+        
+        if (alertView.cancelButtonIndex == buttonIndex) {
+            return;
+        }
+        
+        
+        if(IOS_VERSION(8.0))
+        {
+            [[UIApplication sharedApplication] openURL:[NSURL
+                                                        URLWithString:UIApplicationOpenSettingsURLString]];
+           
+        }
+}
+
 }
 
 - (void)didReceiveMemoryWarning

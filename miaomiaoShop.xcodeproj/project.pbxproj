@@ -39,6 +39,7 @@
 		C732E2B11AF9ACB1005B03A8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C732E2B01AF9ACB1005B03A8 /* Images.xcassets */; };
 		C732E2B41AF9ACB1005B03A8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C732E2B21AF9ACB1005B03A8 /* LaunchScreen.xib */; };
 		C732E2C01AF9ACB1005B03A8 /* miaomiaoClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C732E2BF1AF9ACB1005B03A8 /* miaomiaoClientTests.m */; };
+		C73A4DD91B145F2A00A93545 /* CashDebitController.m in Sources */ = {isa = PBXBuildFile; fileRef = C73A4DD81B145F2A00A93545 /* CashDebitController.m */; };
 		C741368E1AE8933200B08CBD /* THActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = C741368D1AE8933200B08CBD /* THActivityView.m */; };
 		C74136951AE8C00300B08CBD /* ShopObjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C74136941AE8C00300B08CBD /* ShopObjectController.m */; };
 		C741369B1AE8C1DE00B08CBD /* ShopProductListView.m in Sources */ = {isa = PBXBuildFile; fileRef = C741369A1AE8C1DE00B08CBD /* ShopProductListView.m */; };
@@ -275,6 +276,8 @@
 		C732E2B91AF9ACB1005B03A8 /* miaomiaoClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = miaomiaoClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C732E2BE1AF9ACB1005B03A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C732E2BF1AF9ACB1005B03A8 /* miaomiaoClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = miaomiaoClientTests.m; sourceTree = "<group>"; };
+		C73A4DD71B145F2A00A93545 /* CashDebitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CashDebitController.h; sourceTree = "<group>"; };
+		C73A4DD81B145F2A00A93545 /* CashDebitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CashDebitController.m; sourceTree = "<group>"; };
 		C741368C1AE8933200B08CBD /* THActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THActivityView.h; sourceTree = "<group>"; };
 		C741368D1AE8933200B08CBD /* THActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THActivityView.m; sourceTree = "<group>"; };
 		C741368F1AE8A15300B08CBD /* miaomiao-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "miaomiao-Prefix.pch"; sourceTree = "<group>"; };
@@ -569,6 +572,8 @@
 			children = (
 				C75680C81AF762F900F0A990 /* ShopBusinessController.h */,
 				C75680C91AF762F900F0A990 /* ShopBusinessController.m */,
+				C73A4DD71B145F2A00A93545 /* CashDebitController.h */,
+				C73A4DD81B145F2A00A93545 /* CashDebitController.m */,
 				C75680CB1AF769D200F0A990 /* BusinessCell.h */,
 				C75680CC1AF769D200F0A990 /* BusinessCell.m */,
 				C75680CE1AF77BFC00F0A990 /* ShopBusinessInfoController.h */,
@@ -1119,6 +1124,7 @@
 				C753C1A31AE78E5800562EF6 /* MKAnnotationView+WebCache.m in Sources */,
 				C753C1A41AE78E5800562EF6 /* NSData+GIF.m in Sources */,
 				C74136A71AE8E0A000B08CBD /* ShopProductData.m in Sources */,
+				C73A4DD91B145F2A00A93545 /* CashDebitController.m in Sources */,
 				C717DFEA1AF3A41B0057DD72 /* OrderData.m in Sources */,
 				C7777CD31AEA657000A9BDC3 /* AddProductController.m in Sources */,
 				C713A2581AF4A4A5000EC646 /* OrderInfoFirstCell.m in Sources */,

@@ -122,10 +122,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GQV-K0-eIg">
-                                <rect key="frame" x="0.0" y="64" width="600" height="116"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="156"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  未结算" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R4K-dy-Dhm">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="30"/>
+                                        <rect key="frame" x="0.0" y="40" width="600" height="30"/>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.80392156862745101" blue="0.37254901960784315" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="mhE-Gu-g4I"/>
@@ -135,12 +135,12 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="订单数：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vFU-tH-OfO">
-                                        <rect key="frame" x="39" y="35" width="60" height="18"/>
+                                        <rect key="frame" x="39" y="75" width="60" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="   已结算" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ym4-jl-oIa">
-                                        <rect key="frame" x="0.0" y="86" width="600" height="30"/>
+                                        <rect key="frame" x="0.0" y="126" width="600" height="30"/>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.80392156862745101" blue="0.37254901960784315" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="IG5-Vv-7w3"/>
@@ -160,16 +160,40 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="总金额：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QV6-FY-92V">
-                                        <rect key="frame" x="39" y="63" width="60" height="18"/>
+                                        <rect key="frame" x="39" y="103" width="60" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="order_statue" translatesAutoresizingMaskIntoConstraints="NO" id="bOP-7T-ZFX">
-                                        <rect key="frame" x="16" y="37" width="13" height="14"/>
+                                        <rect key="frame" x="16" y="77" width="13" height="14"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dollar" translatesAutoresizingMaskIntoConstraints="NO" id="etH-uI-mZY">
-                                        <rect key="frame" x="18" y="64" width="9" height="15"/>
+                                        <rect key="frame" x="18" y="104" width="9" height="15"/>
                                     </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="og0-4h-ahG">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="251" image="bussiness_top" translatesAutoresizingMaskIntoConstraints="NO" id="ehI-Vs-FTi">
+                                                <rect key="frame" x="565" y="12" width="10" height="16"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lWf-qU-Rfy">
+                                                <rect key="frame" x="0.0" y="0.0" width="565" height="40"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="ehI-Vs-FTi" secondAttribute="trailing" constant="25" id="Bcn-TS-vV6"/>
+                                            <constraint firstAttribute="bottom" secondItem="lWf-qU-Rfy" secondAttribute="bottom" id="GBF-k3-Sa2"/>
+                                            <constraint firstItem="ehI-Vs-FTi" firstAttribute="leading" secondItem="lWf-qU-Rfy" secondAttribute="trailing" id="QM5-R4-gfs"/>
+                                            <constraint firstAttribute="centerY" secondItem="ehI-Vs-FTi" secondAttribute="centerY" id="Qw6-f2-NUZ"/>
+                                            <constraint firstItem="lWf-qU-Rfy" firstAttribute="leading" secondItem="og0-4h-ahG" secondAttribute="leading" id="Xzr-x8-5mz"/>
+                                            <constraint firstItem="lWf-qU-Rfy" firstAttribute="top" secondItem="og0-4h-ahG" secondAttribute="top" id="nue-Mk-r6k"/>
+                                            <constraint firstAttribute="height" constant="40" id="s0F-pn-vhk"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -177,25 +201,28 @@
                                     <constraint firstItem="etH-uI-mZY" firstAttribute="top" secondItem="bOP-7T-ZFX" secondAttribute="bottom" constant="13" id="6VC-UZ-rji"/>
                                     <constraint firstItem="vFU-tH-OfO" firstAttribute="leading" secondItem="bOP-7T-ZFX" secondAttribute="trailing" constant="10" id="8Ox-Jv-eue"/>
                                     <constraint firstAttribute="trailing" secondItem="ym4-jl-oIa" secondAttribute="trailing" id="9Rc-RJ-UnM"/>
-                                    <constraint firstAttribute="height" constant="116" id="D2V-1y-Hu8"/>
+                                    <constraint firstAttribute="height" constant="156" id="D2V-1y-Hu8"/>
                                     <constraint firstItem="R4K-dy-Dhm" firstAttribute="leading" secondItem="GQV-K0-eIg" secondAttribute="leading" id="MPS-tm-EH8"/>
                                     <constraint firstItem="vFU-tH-OfO" firstAttribute="top" secondItem="R4K-dy-Dhm" secondAttribute="bottom" constant="5" id="NLU-V4-rhc"/>
                                     <constraint firstItem="ym4-jl-oIa" firstAttribute="top" secondItem="QV6-FY-92V" secondAttribute="bottom" constant="5" id="OiP-Wv-3VS"/>
+                                    <constraint firstAttribute="trailing" secondItem="og0-4h-ahG" secondAttribute="trailing" id="R4R-lt-Byo"/>
+                                    <constraint firstItem="og0-4h-ahG" firstAttribute="leading" secondItem="GQV-K0-eIg" secondAttribute="leading" id="RI6-Ip-qg2"/>
                                     <constraint firstItem="i3K-hI-sxg" firstAttribute="centerY" secondItem="QV6-FY-92V" secondAttribute="centerY" id="ShD-XO-0Da"/>
                                     <constraint firstItem="QV6-FY-92V" firstAttribute="top" secondItem="vFU-tH-OfO" secondAttribute="bottom" constant="10" id="TDS-1t-jWS"/>
                                     <constraint firstItem="bOP-7T-ZFX" firstAttribute="leading" secondItem="GQV-K0-eIg" secondAttribute="leading" constant="16" id="TND-F1-m0K"/>
                                     <constraint firstItem="QV6-FY-92V" firstAttribute="leading" secondItem="etH-uI-mZY" secondAttribute="trailing" constant="12" id="U72-wy-Tay"/>
-                                    <constraint firstItem="R4K-dy-Dhm" firstAttribute="top" secondItem="GQV-K0-eIg" secondAttribute="top" id="W9q-uz-P6D"/>
+                                    <constraint firstItem="R4K-dy-Dhm" firstAttribute="top" secondItem="GQV-K0-eIg" secondAttribute="top" constant="40" id="W9q-uz-P6D"/>
                                     <constraint firstItem="etH-uI-mZY" firstAttribute="leading" secondItem="GQV-K0-eIg" secondAttribute="leading" constant="18" id="ZKn-S7-e8R"/>
                                     <constraint firstAttribute="trailing" secondItem="XgH-Pc-cNL" secondAttribute="trailing" constant="30" id="ZqS-KJ-qEi"/>
                                     <constraint firstItem="bOP-7T-ZFX" firstAttribute="top" secondItem="R4K-dy-Dhm" secondAttribute="bottom" constant="7" id="n1y-oI-mhN"/>
+                                    <constraint firstItem="og0-4h-ahG" firstAttribute="top" secondItem="GQV-K0-eIg" secondAttribute="top" id="ny6-kt-ugl"/>
                                     <constraint firstAttribute="trailing" secondItem="i3K-hI-sxg" secondAttribute="trailing" constant="30" id="pq9-Xs-7F5"/>
                                     <constraint firstItem="ym4-jl-oIa" firstAttribute="leading" secondItem="GQV-K0-eIg" secondAttribute="leading" id="taY-k0-lew"/>
                                     <constraint firstAttribute="trailing" secondItem="R4K-dy-Dhm" secondAttribute="trailing" id="zrR-oS-1mi"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="89" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="VAX-3t-KRX">
-                                <rect key="frame" x="0.0" y="180" width="600" height="371"/>
+                                <rect key="frame" x="0.0" y="220" width="600" height="331"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BusinessCell" rowHeight="89" id="xrN-mv-mgA" customClass="BusinessCell">
@@ -205,7 +232,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="总金额:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ld2-Pk-B0Z">
-                                                    <rect key="frame" x="40" y="62" width="50" height="18"/>
+                                                    <rect key="frame" x="40" y="62" width="49.5" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -313,6 +340,8 @@
                         <outlet property="_backView" destination="GQV-K0-eIg" id="x4R-Po-eND"/>
                         <outlet property="_countOrderL" destination="XgH-Pc-cNL" id="NHG-Em-RxW"/>
                         <outlet property="_table" destination="VAX-3t-KRX" id="lUV-Pb-6Kt"/>
+                        <outlet property="_topBackView" destination="og0-4h-ahG" id="b3o-Hj-51c"/>
+                        <outlet property="_topLabel" destination="lWf-qU-Rfy" id="faY-lz-Fjz"/>
                         <outlet property="_totalMoney" destination="i3K-hI-sxg" id="kZx-TT-47d"/>
                     </connections>
                 </viewController>
@@ -841,6 +870,7 @@
     <resources>
         <image name="TabbarFirst" width="23" height="23"/>
         <image name="businessNotPay" width="12" height="12"/>
+        <image name="bussiness_top" width="10" height="16"/>
         <image name="dollar" width="9" height="15"/>
         <image name="order_Nu" width="15" height="18"/>
         <image name="order_RedTime" width="12" height="12"/>

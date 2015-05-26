@@ -11,12 +11,20 @@
 #import "BusinessCell.h"
 #import "THActivityView.h"
 #import "ShopBusinessInfoController.h"
+#import "LastViewOnTable.h"
+#import "CashDebitController.h"
 @interface ShopBusinessController ()<UITableViewDataSource,UITableViewDelegate>
 {
     IBOutlet UITableView* _table;
     IBOutlet UILabel* _countOrderL;
     IBOutlet UILabel* _totalMoney;
     IBOutlet UIView* _backView;
+    
+    IBOutlet UILabel* _topLabel;
+    IBOutlet UIView* _topBackView;
+    
+    float _currentCash;
+    
     NSMutableArray* _settleOrderS;
     
     
@@ -50,6 +58,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _settleOrderS = [[NSMutableArray alloc]init];
+    _topLabel.textColor = DEFAULTNAVCOLOR;
     _table.delegate = self;
     _table.dataSource = self;
     if ([_table respondsToSelector:@selector(setSeparatorInset:)]) {
@@ -64,11 +74,22 @@
         
     }
     
-    
     UITapGestureRecognizer* tap  = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapViewToInfo)];
     [_backView addGestureRecognizer:tap];
     
+    UITapGestureRecognizer* tapTop = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapViewToCashTrade)];
+    [_topBackView addGestureRecognizer:tapTop];
+    
     // Do any additional setup after loading the view.
+}
+
+
+-(void)tapViewToCashTrade
+{
+    CashDebitController* cashView = [[CashDebitController alloc]initWithCash:_currentCash];
+    cashView.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:cashView animated:YES];
+
 }
 
 -(void)tapViewToInfo
@@ -80,9 +101,10 @@
 -(void)getOrderSummary
 {
     THActivityView* loadView = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
+    
     __weak ShopBusinessController* wSelf = self;
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request getDailyOrderSummaryWithBk:^(NSDictionary* backDic, NSError *error) {
+    [request getDailyOrderSummaryFromIndex:0 WithBk:^(NSDictionary* backDic, NSError *error) {
         
         [wSelf.errorView removeFromSuperview];
         [loadView removeFromSuperview];
@@ -103,13 +125,68 @@
     [request startAsynchronous];
 }
 
+-(void)loadMoreData
+{
+    __weak ShopBusinessController* wSelf = self;
+    NetWorkRequest* request = [[NetWorkRequest alloc]init];
+    [request getDailyOrderSummaryFromIndex:_settleOrderS.count  WithBk:^(NSDictionary* backDic, NSError *error) {
+    
+        if (backDic) {
+            [wSelf loadMoreDataAnalysis:backDic];
+        }
+    }];
+    [request startAsynchronous];
+
+}
+
+
+-(void)loadMoreDataAnalysis:(NSDictionary*)souceDic
+{
+//    NSDictionary* dic = souceDic[@"data"][@"summary"][@"nosettlemet"];
+//    _countOrderL.text = [NSString stringWithFormat:@"%d单",[dic[@"orderCount"] intValue]];
+//    _totalMoney.text = [NSString stringWithFormat:@"¥%.2f",[dic[@"orderPrice"] floatValue]/100];
+    
+    NSArray* arr = souceDic[@"data"][@"summary"][@"settlemets"];
+    [self addLoadMoreViewWithCount:arr.count];
+    if (arr)
+    {
+        [_settleOrderS addObjectsFromArray:arr];
+    }
+    
+    [_table reloadData];
+
+}
+
+
+-(void)addLoadMoreViewWithCount:(int)count
+{
+    
+    if (count<7) {
+        _table.tableFooterView = nil;
+    }
+    else
+    {
+        _table.tableFooterView = [[LastViewOnTable alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50)];
+    }
+}
+
+
+
 -(void)fillDataToViewWith:(NSDictionary*)souceDic
 {
     NSDictionary* dic = souceDic[@"data"][@"summary"][@"nosettlemet"];
     _countOrderL.text = [NSString stringWithFormat:@"%d单",[dic[@"orderCount"] intValue]];
-    _totalMoney.text = [NSString stringWithFormat:@"¥%.1f",[dic[@"orderPrice"] floatValue]/100];
+    _totalMoney.text = [NSString stringWithFormat:@"¥%.2f",[dic[@"orderPrice"] floatValue]/100];
     
-    _settleOrderS = souceDic[@"data"][@"summary"][@"settlemets"];
+    _currentCash = [souceDic[@"data"][@"summary"][@"walletPrice"]floatValue]/100;
+    _topLabel.text = [NSString stringWithFormat:@"  钱包：%.2f 元",_currentCash] ;
+    NSArray* arr = souceDic[@"data"][@"summary"][@"settlemets"];
+    if (arr)
+    {
+       [_settleOrderS removeAllObjects];
+       [_settleOrderS addObjectsFromArray:arr];
+    }
+    [self addLoadMoreViewWithCount:arr.count];
     [_table reloadData];
 }
 
@@ -127,22 +204,23 @@
     
     
     NSDictionary* temp = _settleOrderS[indexPath.row];
+    cell.payStatueLabel.text = @"";
+    [cell setPayStatueImage:nil];
     
-    
-    if ([temp[@"payStatus"] intValue]==0) {
-
-        cell.payStatueLabel.text = @"未打款";
-        cell.payStatueLabel.textColor = DEFAULTNAVCOLOR;
-        [cell setPayStatueImage:[UIImage imageNamed:@"businessNotPay"]];
-    }
-    else
-    {
-        cell.payStatueLabel.text = @"已打款";
-        cell.payStatueLabel.textColor = DEFAULTGREENCOLOR;
-        [cell setPayStatueImage:[UIImage imageNamed:@"businessPayed"]];
-        [cell setTitleLabelText:temp[@"date"]];
-       
-    }
+//    if ([temp[@"payStatus"] intValue]==0) {
+//
+//        cell.payStatueLabel.text = @"未打款";
+//        cell.payStatueLabel.textColor = DEFAULTNAVCOLOR;
+////        [cell setPayStatueImage:[UIImage imageNamed:@"businessNotPay"]];
+//    }
+//    else
+//    {
+//        cell.payStatueLabel.text = @"已打款";
+//        cell.payStatueLabel.textColor = DEFAULTGREENCOLOR;
+//        [cell setPayStatueImage:[UIImage imageNamed:@"businessPayed"]];
+//        [cell setTitleLabelText:temp[@"date"]];
+//       
+//    }
     [cell setTitleLabelText:temp[@"date"]];
     [cell setCountOrderStr:[NSString stringWithFormat:@"%@单",[temp[@"orderCount"] stringValue]]];
     float money = [temp[@"orderPrice"] floatValue]/100;
@@ -161,12 +239,30 @@
     }
     
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-        
         [cell setLayoutMargins:UIEdgeInsetsZero];
-        
     }
 
 }
+
+
+-(void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    CGPoint offset = scrollView.contentOffset;
+    CGRect bounds = scrollView.bounds;
+    CGSize size = scrollView.contentSize;
+    UIEdgeInsets inset = scrollView.contentInset;
+    float y =  bounds.size.height - inset.bottom;
+    float h = size.height;
+    
+    NSLog(@"h-offset is %lf",h-offset.y-y);
+    if(h - offset.y-y <50 && _table.tableFooterView)
+    {
+        [self loadMoreData];
+    }
+}
+
+
+
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

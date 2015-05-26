@@ -199,12 +199,12 @@
         return NO;
     }
     
-    if (![NSString verifyisTelPhone:_shopData.telPhoneNu])
-    {
-        THActivityView* showView = [[THActivityView alloc]initWithString:@"电话格式不正确"];
-        [showView show];
-        return NO;
-    }
+//    if (![NSString verifyisTelPhone:_shopData.telPhoneNu])
+//    {
+//        THActivityView* showView = [[THActivityView alloc]initWithString:@"电话格式不正确"];
+//        [showView show];
+//        return NO;
+//    }
 
     return YES;
     
@@ -308,7 +308,7 @@
                 wShopData.minPrice = [text floatValue];
             }];
             [cell3 setTextTitleLabel:@"起送价格¥"];
-            [cell3 setTextField:[NSString stringWithFormat:@"%.1f",wShopData.minPrice]];
+            [cell3 setTextField:[NSString stringWithFormat:@"%.2f",wShopData.minPrice]];
         }
         return cell3;
     }

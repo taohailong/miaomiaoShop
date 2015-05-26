@@ -241,7 +241,7 @@
            }];
        }
         [cell3 setTextTitleLabel:@"价格:"]  ;
-        [cell3 setTextField:[NSString stringWithFormat:@"%.1f", _productData.price]];
+        [cell3 setTextField:[NSString stringWithFormat:@"%.2f", _productData.price]];
        cell = cell3;
     }
     else if (indexPath.row==3)

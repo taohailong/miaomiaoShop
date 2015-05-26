@@ -255,7 +255,7 @@
         
         [cell setTitleText:product.pName];
         [cell setProductUrl:product.pUrl];
-        [cell setTotalMoney:[NSString stringWithFormat:@"%d件 X ¥ %.1f",product.count,product.price]];
+        [cell setTotalMoney:[NSString stringWithFormat:@"%d件 X ¥ %.2f",product.count,product.price]];
         return cell;
 
         
