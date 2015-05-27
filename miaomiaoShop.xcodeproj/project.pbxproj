@@ -32,6 +32,13 @@
 		C725BB3F1AEB6FAA00F344CB /* AddProductSwithCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C725BB3E1AEB6FAA00F344CB /* AddProductSwithCell.m */; };
 		C725BB421AEBAA3E00F344CB /* AddProductPictureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C725BB411AEBAA3E00F344CB /* AddProductPictureCell.m */; };
 		C725BB451AEBBB1A00F344CB /* UIImage+ZoomImage.m in Sources */ = {isa = PBXBuildFile; fileRef = C725BB441AEBBB1A00F344CB /* UIImage+ZoomImage.m */; };
+		C72FFA371B155C2C007C9C3D /* CashDebitData.m in Sources */ = {isa = PBXBuildFile; fileRef = C72FFA361B155C2C007C9C3D /* CashDebitData.m */; };
+		C72FFA381B155C2C007C9C3D /* CashDebitData.m in Sources */ = {isa = PBXBuildFile; fileRef = C72FFA361B155C2C007C9C3D /* CashDebitData.m */; };
+		C72FFA3B1B15647C007C9C3D /* CashDebitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C72FFA3A1B15647C007C9C3D /* CashDebitCell.m */; };
+		C72FFA3C1B15647C007C9C3D /* CashDebitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C72FFA3A1B15647C007C9C3D /* CashDebitCell.m */; };
+		C72FFA3D1B15ADF6007C9C3D /* CashDebitController.m in Sources */ = {isa = PBXBuildFile; fileRef = C73A4DD81B145F2A00A93545 /* CashDebitController.m */; };
+		C72FFA431B15C78E007C9C3D /* CommonWebController.m in Sources */ = {isa = PBXBuildFile; fileRef = C72FFA421B15C78E007C9C3D /* CommonWebController.m */; };
+		C72FFA441B15C78E007C9C3D /* CommonWebController.m in Sources */ = {isa = PBXBuildFile; fileRef = C72FFA421B15C78E007C9C3D /* CommonWebController.m */; };
 		C732E2A61AF9ACB1005B03A8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C732E2A51AF9ACB1005B03A8 /* main.m */; };
 		C732E2A91AF9ACB1005B03A8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C732E2A81AF9ACB1005B03A8 /* AppDelegate.m */; };
 		C732E2AC1AF9ACB1005B03A8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C732E2AB1AF9ACB1005B03A8 /* ViewController.m */; };
@@ -263,6 +270,12 @@
 		C725BB411AEBAA3E00F344CB /* AddProductPictureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProductPictureCell.m; sourceTree = "<group>"; };
 		C725BB431AEBBB1A00F344CB /* UIImage+ZoomImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ZoomImage.h"; sourceTree = "<group>"; };
 		C725BB441AEBBB1A00F344CB /* UIImage+ZoomImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ZoomImage.m"; sourceTree = "<group>"; };
+		C72FFA351B155C2C007C9C3D /* CashDebitData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CashDebitData.h; sourceTree = "<group>"; };
+		C72FFA361B155C2C007C9C3D /* CashDebitData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CashDebitData.m; sourceTree = "<group>"; };
+		C72FFA391B15647C007C9C3D /* CashDebitCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CashDebitCell.h; sourceTree = "<group>"; };
+		C72FFA3A1B15647C007C9C3D /* CashDebitCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CashDebitCell.m; sourceTree = "<group>"; };
+		C72FFA411B15C78E007C9C3D /* CommonWebController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonWebController.h; sourceTree = "<group>"; };
+		C72FFA421B15C78E007C9C3D /* CommonWebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonWebController.m; sourceTree = "<group>"; };
 		C732E2A11AF9ACB1005B03A8 /* miaomiaoEnterprise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = miaomiaoEnterprise.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C732E2A41AF9ACB1005B03A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C732E2A51AF9ACB1005B03A8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -574,6 +587,12 @@
 				C75680C91AF762F900F0A990 /* ShopBusinessController.m */,
 				C73A4DD71B145F2A00A93545 /* CashDebitController.h */,
 				C73A4DD81B145F2A00A93545 /* CashDebitController.m */,
+				C72FFA411B15C78E007C9C3D /* CommonWebController.h */,
+				C72FFA421B15C78E007C9C3D /* CommonWebController.m */,
+				C72FFA391B15647C007C9C3D /* CashDebitCell.h */,
+				C72FFA3A1B15647C007C9C3D /* CashDebitCell.m */,
+				C72FFA351B155C2C007C9C3D /* CashDebitData.h */,
+				C72FFA361B155C2C007C9C3D /* CashDebitData.m */,
 				C75680CB1AF769D200F0A990 /* BusinessCell.h */,
 				C75680CC1AF769D200F0A990 /* BusinessCell.m */,
 				C75680CE1AF77BFC00F0A990 /* ShopBusinessInfoController.h */,
@@ -1080,6 +1099,7 @@
 				C74136AA1AE8F48E00B08CBD /* ProductCell.m in Sources */,
 				C75680D31AF7807300F0A990 /* BusinessInfoCell.m in Sources */,
 				C753C1AF1AE78E5800562EF6 /* UIImage+WebP.m in Sources */,
+				C72FFA371B155C2C007C9C3D /* CashDebitData.m in Sources */,
 				C713A23B1AF45F64000EC646 /* OrderListCell.m in Sources */,
 				C753C1811AE78E4E00562EF6 /* ASIHTTPRequest.m in Sources */,
 				C717DFE71AF3973C0057DD72 /* DateFormateManager.m in Sources */,
@@ -1089,6 +1109,7 @@
 				C741368E1AE8933200B08CBD /* THActivityView.m in Sources */,
 				C713A2551AF4A48C000EC646 /* OrderInfoSecondCell.m in Sources */,
 				C75680C61AF72EF200F0A990 /* EGORefreshTableHeaderView.m in Sources */,
+				C72FFA431B15C78E007C9C3D /* CommonWebController.m in Sources */,
 				C753C1A91AE78E5800562EF6 /* SDWebImageDownloaderOperation.m in Sources */,
 				C753C17C1AE78E4E00562EF6 /* ASIAuthenticationDialog.m in Sources */,
 				C753C1A51AE78E5800562EF6 /* SDImageCache.m in Sources */,
@@ -1127,6 +1148,7 @@
 				C73A4DD91B145F2A00A93545 /* CashDebitController.m in Sources */,
 				C717DFEA1AF3A41B0057DD72 /* OrderData.m in Sources */,
 				C7777CD31AEA657000A9BDC3 /* AddProductController.m in Sources */,
+				C72FFA3B1B15647C007C9C3D /* CashDebitCell.m in Sources */,
 				C713A2581AF4A4A5000EC646 /* OrderInfoFirstCell.m in Sources */,
 				C74278931AF27BDB008E17BA /* ProductEditController.m in Sources */,
 				C753C1AA1AE78E5800562EF6 /* SDWebImageManager.m in Sources */,
@@ -1155,6 +1177,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C72FFA3D1B15ADF6007C9C3D /* CashDebitController.m in Sources */,
 				C784433C1AF9E3A0009B4C2D /* ASIDataCompressor.m in Sources */,
 				C784433D1AF9E3A0009B4C2D /* ShopBusinessController.m in Sources */,
 				C784433E1AF9E3A0009B4C2D /* ScanViewController.m in Sources */,
@@ -1173,6 +1196,7 @@
 				C78443491AF9E3A0009B4C2D /* THActivityView.m in Sources */,
 				C784434A1AF9E3A0009B4C2D /* OrderInfoSecondCell.m in Sources */,
 				C784434B1AF9E3A0009B4C2D /* EGORefreshTableHeaderView.m in Sources */,
+				C72FFA441B15C78E007C9C3D /* CommonWebController.m in Sources */,
 				C784434C1AF9E3A0009B4C2D /* SDWebImageDownloaderOperation.m in Sources */,
 				C784434D1AF9E3A0009B4C2D /* ASIAuthenticationDialog.m in Sources */,
 				C784434E1AF9E3A0009B4C2D /* SDImageCache.m in Sources */,
@@ -1221,6 +1245,8 @@
 				C78443771AF9E3A0009B4C2D /* Reachability.m in Sources */,
 				C78443781AF9E3A0009B4C2D /* NetWorkRequest.m in Sources */,
 				C78443791AF9E3A0009B4C2D /* UIImage+ZoomImage.m in Sources */,
+				C72FFA381B155C2C007C9C3D /* CashDebitData.m in Sources */,
+				C72FFA3C1B15647C007C9C3D /* CashDebitCell.m in Sources */,
 				C784437A1AF9E3A0009B4C2D /* ASIDownloadCache.m in Sources */,
 				C784437B1AF9E3A0009B4C2D /* BusinessCell.m in Sources */,
 			);

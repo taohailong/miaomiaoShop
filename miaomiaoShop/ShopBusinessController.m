@@ -24,7 +24,8 @@
     IBOutlet UIView* _topBackView;
     
     float _currentCash;
-    
+    BOOL _canTake;
+    BOOL _isLoading;
     NSMutableArray* _settleOrderS;
     
     
@@ -88,6 +89,7 @@
 {
     CashDebitController* cashView = [[CashDebitController alloc]initWithCash:_currentCash];
     cashView.hidesBottomBarWhenPushed = YES;
+    cashView.canTake = _canTake;
     [self.navigationController pushViewController:cashView animated:YES];
 
 }
@@ -127,6 +129,11 @@
 
 -(void)loadMoreData
 {
+    if (_isLoading==YES) {
+        return;
+    }
+    _isLoading = YES;
+    
     __weak ShopBusinessController* wSelf = self;
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
     [request getDailyOrderSummaryFromIndex:_settleOrderS.count  WithBk:^(NSDictionary* backDic, NSError *error) {
@@ -145,6 +152,7 @@
 //    NSDictionary* dic = souceDic[@"data"][@"summary"][@"nosettlemet"];
 //    _countOrderL.text = [NSString stringWithFormat:@"%d单",[dic[@"orderCount"] intValue]];
 //    _totalMoney.text = [NSString stringWithFormat:@"¥%.2f",[dic[@"orderPrice"] floatValue]/100];
+    _isLoading = NO;
     
     NSArray* arr = souceDic[@"data"][@"summary"][@"settlemets"];
     [self addLoadMoreViewWithCount:arr.count];
@@ -154,7 +162,6 @@
     }
     
     [_table reloadData];
-
 }
 
 
@@ -174,12 +181,13 @@
 
 -(void)fillDataToViewWith:(NSDictionary*)souceDic
 {
+    _canTake = [souceDic[@"data"][@"summary"][@"canTake"] boolValue];
     NSDictionary* dic = souceDic[@"data"][@"summary"][@"nosettlemet"];
     _countOrderL.text = [NSString stringWithFormat:@"%d单",[dic[@"orderCount"] intValue]];
     _totalMoney.text = [NSString stringWithFormat:@"¥%.2f",[dic[@"orderPrice"] floatValue]/100];
     
     _currentCash = [souceDic[@"data"][@"summary"][@"walletPrice"]floatValue]/100;
-    _topLabel.text = [NSString stringWithFormat:@"  钱包：%.2f 元",_currentCash] ;
+    _topLabel.text = [NSString stringWithFormat:@"  可提现金额：%.2f 元",_currentCash] ;
     NSArray* arr = souceDic[@"data"][@"summary"][@"settlemets"];
     if (arr)
     {
@@ -188,6 +196,9 @@
     }
     [self addLoadMoreViewWithCount:arr.count];
     [_table reloadData];
+    
+    NSIndexPath* path = [NSIndexPath  indexPathForRow:0 inSection:0];
+    [_table scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 
@@ -272,7 +283,15 @@
 
 -(void)showDetailInfoViewWithDate:(NSString*)date Type:(NSString*)type
 {
-    ShopBusinessInfoController* buiness = [[ShopBusinessInfoController alloc]init];
+     ShopBusinessInfoController* buiness = [[ShopBusinessInfoController alloc]init];
+    if ([type isEqualToString:@"nosettle"]) {
+        buiness.title = @"未确认收货订单";
+    }
+    else
+    {
+        buiness.title = @"已确认收货订单";
+    }
+
     [buiness setOrdeDate:date];
     [buiness setOrderType:type];
     buiness.hidesBottomBarWhenPushed = YES;

@@ -15,10 +15,10 @@
 #import "OrderData.h"
 #import "DateFormateManager.h"
 #import "ShopInfoData.h"
+#import "CashDebitData.h"
 
-
-#if DEBUG
-//#if 0
+//#if DEBUG
+#if 1
 #define HTTPHOST @"www.mbianli.com:8088"
 #else
 #define HTTPHOST @"www.mbianli.com"
@@ -115,12 +115,28 @@
 -(void)getCashTradeListWithIndex:(int)index WithBK:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/wallet/show?shop_id=%@&ver=%@&from=%d&end=%d",HTTPHOST,manager.shopID,VERSION,index,index+7];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/wallet/show?shop_id=%@&ver=%@&from=%d&offset=%d",HTTPHOST,manager.shopID,VERSION,index,index+6];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
         
-        if (sourceDic)
+        if (sourceDic&&[sourceDic[@"code"] intValue]==0)
         {
-            completeBk(sourceDic,nil);
+            DateFormateManager* dateManager = [DateFormateManager shareDateFormateManager];
+            [dateManager setDateStyleString:@"YY-MM-dd HH:mm"];
+
+            NSArray* arr = sourceDic[@"data"][@"shopCashLists"];
+            NSMutableArray* backArr = [[NSMutableArray alloc]init];
+            
+            for (NSDictionary* dic in arr)
+            {
+                CashDebitData* cashData = [[CashDebitData alloc]init];
+                cashData.debitMoney = [NSString stringWithFormat:@"%.2f",[dic[@"price"] floatValue]/100];
+                double time = [dic[@"create_time"] doubleValue]/1000;
+                cashData.debitTime = [dateManager formateFloatTimeValueToString:time];
+                cashData.debitStatus = [dic[@"status"] intValue]?CashComplete:CashProcess;
+                cashData.debitType = [dic[@"cash_type"] intValue]?CashIncome:CashExpend;
+                [backArr addObject:cashData];
+            }
+            completeBk(backArr,nil);
         }
         else
         {
@@ -134,12 +150,29 @@
 -(void)getCashWithRequestMoney:(NSString*)money WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/wallet/show?shop_id=%@&ver=%@&from=0&end=7",HTTPHOST,manager.shopID,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/wallet/getCash?shop_id=%@&from=0&offset=7&price=%@&ver=%@",HTTPHOST,manager.shopID,money,VERSION];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
         
-        if (sourceDic)
+        if ([sourceDic[@"code"] intValue]==0&&sourceDic)
         {
-            completeBk(sourceDic,nil);
+            
+            DateFormateManager* dateManager = [DateFormateManager shareDateFormateManager];
+            [dateManager setDateStyleString:@"YY-MM-dd HH:mm"];
+            
+            NSArray* arr = sourceDic[@"data"][@"shopCashLists"];
+            NSMutableArray* backArr = [[NSMutableArray alloc]init];
+            
+            for (NSDictionary* dic in arr)
+            {
+                CashDebitData* cashData = [[CashDebitData alloc]init];
+                cashData.debitMoney = [NSString stringWithFormat:@"%.2f",[dic[@"price"] floatValue]/100];
+                double time = [dic[@"create_time"] doubleValue]/1000;
+                cashData.debitTime = [dateManager formateFloatTimeValueToString:time];
+                cashData.debitStatus = [dic[@"status"] intValue]?CashComplete:CashProcess;
+                cashData.debitType = [dic[@"cash_type"] intValue]?CashIncome:CashExpend;
+                [backArr addObject:cashData];
+            }
+            completeBk(backArr,nil);
         }
         else
         {
@@ -147,22 +180,20 @@
         }
         
     }];
-
-
 }
-
-
 
 
 
 -(void)getDailyOrderSummaryFromIndex:(int)index WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/dailySummary?shop_id=%@&ver=%@&from=%d&end=%d",HTTPHOST,manager.shopID,VERSION,index,index+7];
-    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/dailySummary?shop_id=%@&ver=%@&from=%d&offset=%d",HTTPHOST,manager.shopID,VERSION,index,index+7];
+    
+       [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
         
-        if (sourceDic)
+        if (sourceDic&&[sourceDic[@"code"] intValue]==0)
         {
+            
             completeBk(sourceDic,nil);
         }
         else
@@ -183,7 +214,7 @@
         
         if (sourceDic)
         {
-//            [sourceDic[@"code"] intValue] ==0
+
             NSArray* sourceArr = sourceDic[@"data"][@"orders"];
             DateFormateManager* manager = [DateFormateManager shareDateFormateManager];
             [manager  setDateStyleString:@"YY-MM-dd HH:mm"];
@@ -212,7 +243,7 @@
                     
                     order.discountMoney = [dic[@"dprice"] floatValue];
                     order.totalMoney = [NSString stringWithFormat:@"%.2f",[dic[@"price"] floatValue]/100] ;
-                    order.messageStr = dic[@"msg"];
+                    order.messageStr = dic[@"remarks"];
                     [order setOrderStatueWithString:dic[@"order_status"]];
                     [order setOrderInfoString:dic[@"info"]];
                     [backArr addObject:order];

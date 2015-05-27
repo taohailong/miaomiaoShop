@@ -22,6 +22,7 @@
 @property(nonatomic,strong)NSString* messageStr;
 @property(nonatomic,strong)NSString* orderNu;
 @property(nonatomic,strong)NSString* orderTakeOver;
+@property(nonatomic,strong)NSString* deadTime;
 @property(nonatomic,assign)int countOfProduct;
 @property(nonatomic,assign)float discountMoney;
 -(void)setOrderInfoString:(NSString*)string;

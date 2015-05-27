@@ -7,7 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-
+typedef enum _TodayType
+{
+    Monday,
+    Tuesday,
+    Wednesday,
+    Thursday,
+    Friday,
+    Saturday,
+    Sunday
+}TodayType;
 @interface DateFormateManager : NSObject
 +(id)shareDateFormateManager;
 -(void)setDateStyleString:(NSString*)style;
@@ -18,4 +27,7 @@
 -(NSString*)formateFloatTimeValueToString:(double)time;
 -(BOOL)isTodayWithTimeFloatValue:(double)time;
 -(NSString*)formateDateToString:(NSDate*)date;
+
+
+- (TodayType)weekDay;
 @end

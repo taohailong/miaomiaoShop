@@ -12,7 +12,6 @@
 #import "BusinessInfoCell.h"
 #import "OrderData.h"
 #import "OrderInfoController.h"
-#import "DateFormateManager.h"
 #import "LastViewOnTable.h"
 @interface ShopBusinessInfoController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
@@ -168,12 +167,7 @@
     [cell setTakeOverTimeText:[NSString stringWithFormat:@"收货时间：%@",data.orderTakeOver]];
     if ([data.orderStatue isEqualToString:@"配送中"])
     {
-        DateFormateManager* formate = [DateFormateManager shareDateFormateManager];
-        [formate setDateStyleString:@"YY-MM-dd HH:ss"];
-        NSDate* date = [formate getDateFromString:data.orderTakeOver];
-        date = [date dateByAddingTimeInterval:86400.0];
-        
-        [cell setDeadLineTime:[NSString stringWithFormat:@"最晚收货时间：%@",[formate formateDateToString:date]]];
+        [cell setDeadLineTime:[NSString stringWithFormat:@"最晚收货时间：%@",data.deadTime]];
     }
     
     return cell;

@@ -67,11 +67,6 @@
 
 - (void)keyboardShown:(NSNotification *)aNotification
 {
-    
-//    NSDictionary *info = [aNotification userInfo];
-//    NSValue *aValue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-    
-//    CGSize keyboardSize = [aValue CGRectValue].size;
     [self accessViewAnimate:80];
     
 }

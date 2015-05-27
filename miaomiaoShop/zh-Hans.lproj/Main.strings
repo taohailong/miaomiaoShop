@@ -57,7 +57,7 @@
 "iav-BE-m0s.title" = "订单";
 
 /* Class = "UITabBarItem"; title = "数据"; ObjectID = "iqx-7R-gSL"; */
-"iqx-7R-gSL.title" = "数据";
+"iqx-7R-gSL.title" = "钱包";
 
 /* Class = "UITabBarItem"; title = "首页"; ObjectID = "jQT-Ae-ntL"; */
 "jQT-Ae-ntL.title" = "首页";
@@ -78,4 +78,4 @@
 "uXP-dM-uAw.text" = "Label";
 
 /* Class = "UINavigationItem"; title = "数据"; ObjectID = "wJG-sO-Ubj"; */
-"wJG-sO-Ubj.title" = "数据";
+"wJG-sO-Ubj.title" = "钱包";

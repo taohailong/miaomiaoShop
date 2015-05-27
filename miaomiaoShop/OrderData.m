@@ -8,8 +8,9 @@
 
 #import "OrderData.h"
 #import "ShopProductData.h"
+#import "DateFormateManager.h"
 @implementation OrderData
-@synthesize orderAddress,orderID,orderStatue,orderTime,telPhone,messageStr,mobilePhone,payWay,productArr,shopName,discountMoney,totalMoney,countOfProduct,orderNu,orderTakeOver;
+@synthesize orderAddress,orderID,orderStatue,orderTime,telPhone,messageStr,mobilePhone,payWay,productArr,shopName,discountMoney,totalMoney,countOfProduct,orderNu,orderTakeOver,deadTime;
 
 -(NSString*)getPayMethod
 {
@@ -58,6 +59,7 @@
             break;
         case 1:
             self.orderStatue = @"配送中";
+            [self setDeadTimeThroughStatus];
             break;
         case 2:
             self.orderStatue = @"用户取消";
@@ -79,5 +81,14 @@
 
 }
 
+-(void)setDeadTimeThroughStatus
+{
+    DateFormateManager* formate = [DateFormateManager shareDateFormateManager];
+    [formate setDateStyleString:@"YY-MM-dd HH:mm"];
+    NSDate* date = [formate getDateFromString:self.orderTime];
+    date = [date dateByAddingTimeInterval:86400.0];
+    
+    self.deadTime = [formate formateDateToString:date];
+}
 
 @end

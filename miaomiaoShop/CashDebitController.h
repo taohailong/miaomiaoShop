@@ -10,4 +10,5 @@
 
 @interface CashDebitController : UIViewController
 -(id)initWithCash:(float)cash;
+@property(nonatomic,assign)BOOL canTake;
 @end

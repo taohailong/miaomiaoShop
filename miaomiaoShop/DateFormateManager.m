@@ -103,5 +103,63 @@
     return NO;
 }
 
+- (TodayType)weekDay
+{
+    TodayType weekDayStr ;
+    
+    [self setDateStyleString:@"yyyy-mm-dd"];
+    NSString* str =  [self formateDateToString:[NSDate date]];
+    
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
 
+    if (str.length >= 10) {
+        NSString *nowString = [str substringToIndex:10];
+        NSArray *array = [nowString componentsSeparatedByString:@"-"];
+        if (array.count == 0) {
+            array = [nowString componentsSeparatedByString:@"/"];
+        }
+        if (array.count >= 3) {
+            int year = [[array objectAtIndex:0] integerValue];
+            int month = [[array objectAtIndex:1] integerValue];
+            int day = [[array objectAtIndex:2] integerValue];
+            [comps setYear:year];
+            [comps setMonth:month];
+            [comps setDay:day];
+        }
+    }
+    
+    NSCalendar *gregorian = [[NSCalendar alloc]
+                             initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDate *_date = [gregorian dateFromComponents:comps];
+    NSDateComponents *weekdayComponents = [gregorian components:NSWeekdayCalendarUnit fromDate:_date];
+    int week = [weekdayComponents weekday];
+    week ++;
+    switch (week) {
+        case 1:
+            weekDayStr = Sunday;
+            break;
+        case 2:
+            weekDayStr = Monday;
+            break;
+        case 3:
+            weekDayStr = Tuesday;
+            break;
+        case 4:
+            weekDayStr = Wednesday;
+            break;
+        case 5:
+            weekDayStr = Thursday;
+            break;
+        case 6:
+            weekDayStr = Friday;
+            break;
+        case 7:
+            weekDayStr = Saturday;
+            break;
+        default:
+            weekDayStr = Sunday;
+            break;  
+    }  
+    return weekDayStr;  
+}
 @end
