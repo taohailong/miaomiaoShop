@@ -30,6 +30,7 @@
 
 -(void)setAddress:(NSString*)address
 {
+    _addressLabel.adjustsFontSizeToFitWidth = YES;
     _addressLabel.text = [NSString stringWithFormat:@"收货地址:%@",address];
 }
 

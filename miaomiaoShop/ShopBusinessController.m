@@ -63,7 +63,9 @@
     _topLabel.textColor = DEFAULTNAVCOLOR;
     _table.delegate = self;
     _table.dataSource = self;
-    if ([_table respondsToSelector:@selector(setSeparatorInset:)]) {
+//    _table.separatorColor =  
+    if ([_table respondsToSelector:@selector(setSeparatorInset:)])
+    {
         
         [_table setSeparatorInset:UIEdgeInsetsZero];
         

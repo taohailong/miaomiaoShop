@@ -424,19 +424,19 @@
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UvA-1E-T08">
                                                     <rect key="frame" x="41" y="8" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14.5"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="13.5"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CTY-aS-61p">
                                                     <rect key="frame" x="41" y="37" width="542" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14.5"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="13.5"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4fb-LX-0Wr">
                                                     <rect key="frame" x="41" y="66" width="542" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14.5"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="13.5"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -445,25 +445,25 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="E1U-hm-aev"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14.5"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="13.5"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVx-jf-rKl">
                                                     <rect key="frame" x="41" y="124" width="542" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14.5"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="13.5"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uXP-dM-uAw">
                                                     <rect key="frame" x="41" y="153" width="542" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14.5"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="13.5"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Okv-Ya-AJn">
                                                     <rect key="frame" x="41" y="182" width="542" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14.5"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="13.5"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
