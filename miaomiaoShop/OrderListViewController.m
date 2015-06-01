@@ -283,7 +283,7 @@
 //        cell = [[OrderListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
 //    }
     NSLog(@"data.orderTime %@",data);
-    [cell setTitleText:[NSString stringWithFormat:@"%@        共%d件 ¥%@",data.orderTime,data.countOfProduct ,data.totalMoney]];
+    [cell setTitleText:[NSString stringWithFormat:@"%@        共%d个 ¥%@",data.orderTime,data.countOfProduct ,data.totalMoney]];
     [cell setAddress:data.orderAddress];
     [cell setTephone:data.telPhone];
     [cell setPayWay:[data getPayMethod]];

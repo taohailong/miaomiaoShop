@@ -64,14 +64,14 @@
     
     _statueLabel = [[UILabel alloc]init];
     _statueLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addSubview:_statueLabel];
+    [self.contentView addSubview:_statueLabel];
     _statueLabel.backgroundColor = DEFAULTNAVCOLOR;
     _statueLabel.textColor = [UIColor whiteColor];
     _statueLabel.text = @"下架";
     _statueLabel.font = [UIFont boldSystemFontOfSize:10.0];
     _statueLabel.transform = CGAffineTransformMakeRotation(M_PI_4);
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_statueLabel(25)]-1-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_statueLabel)]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_statueLabel(15)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_statueLabel)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_statueLabel(25)]-(-31)-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_statueLabel)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-6-[_statueLabel(15)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_statueLabel)]];
     
 
  }

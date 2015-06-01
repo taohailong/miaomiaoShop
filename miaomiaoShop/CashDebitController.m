@@ -80,9 +80,9 @@
     __weak CashDebitController* wSelf = self;
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
     [request getCashTradeListWithIndex:_dataArr.count WithBK:^(id backDic, NSError *error) {
-        if (error!=nil) {
+       
           [wSelf loadMoreDataReloadTable:backDic];
-        }
+       
     }];
     [request startAsynchronous];
     
@@ -94,9 +94,8 @@
     if (arr) {
        [_dataArr addObjectsFromArray:arr];
        [_table reloadData];
-       [self addLoadMoreViewWithCount:arr.count];
     }
-    
+    [self addLoadMoreViewWithCount:arr.count];
 }
 
 -(void)addLoadMoreViewWithCount:(int)count
@@ -116,30 +115,38 @@
 
 -(void)cashDebitThroughNet
 {
+   
     if (self.canTake==NO) {
-        THActivityView* loadView = [[THActivityView alloc]initWithString:@"一天只能提现一次"];
-        [loadView show];
+        
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"一天只能提现一次" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+        
         return;
     }
     
-
+    
     if (_cash==0)
     {
-        THActivityView* loadView = [[THActivityView alloc]initWithString:@"0元不能提款"];
-        [loadView show];
+        
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"0元不能提款" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
         return;
     }
     
     
     DateFormateManager* date = [DateFormateManager shareDateFormateManager];
+
     if (_cash<500)
     {
         if ([date weekDay]!=Sunday) {
             
-            THActivityView* loadView = [[THActivityView alloc]initWithString:@"周一到周六最低可提现500元,周日可以任意提现"];
-            [loadView show];
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"周一到周六最低可提现500元,周日可以任意提现" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+            
             return;
         }
+        
+       
     }
     
     
@@ -151,6 +158,7 @@
     __weak CashDebitController* wself = self;
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
     [req getCashWithRequestMoney:[NSString stringWithFormat:@"%d",(int)(_cash*100)] WithBk:^(id backDic, NSError *error) {
+        
         [loadView removeFromSuperview];
         [fullView removeFromSuperview];
         
@@ -164,11 +172,16 @@
         }
         else
         {
-            NSString* str = nil;
-            str = @"提现失败！";
-            THActivityView* showStr = [[THActivityView alloc]initWithString:str];
-            [showStr show];
-            
+             NSString* str = nil;
+            if ([error isKindOfClass:[NSString class]]) {
+                str = (NSString*)error;
+            }
+            else
+            {
+                str = @"网络错误！";
+            }
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:str  delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
         }
        
     }];
@@ -212,7 +225,16 @@
     _cashBt.translatesAutoresizingMaskIntoConstraints = NO;
     [_cashBt setTitle:@"提现" forState:UIControlStateNormal];
     [_cashBt setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    _cashBt.backgroundColor = DEFAULTNAVCOLOR;
+    if (self.canTake==NO) {
+//        _cashBt.enabled = NO;
+        _cashBt.backgroundColor = [UIColor lightGrayColor];
+        
+    }
+    else
+    {
+        _cashBt.backgroundColor = DEFAULTNAVCOLOR;
+    }
+   
     _cashBt.layer.masksToBounds = YES;
     _cashBt.layer.cornerRadius = 5;
 
@@ -282,7 +304,7 @@
     CashDebitData* dic = _dataArr[indexPath.row];
     
     cell.titleLabel.text = dic.debitTime;
-    cell.contentLabel.text = [NSString stringWithFormat:@"当日%@¥%@",dic.debitType==CashIncome?@"收入 +":@"提现 -", dic.debitMoney];
+    cell.contentLabel.text = [NSString stringWithFormat:@"当日%@%@元",dic.debitType==CashIncome?@"收入 +":@"提现 -", dic.debitMoney];
     
     if(dic.debitType==CashIncome)
     {
@@ -291,7 +313,7 @@
     else
     {
         
-        if (dic.debitType==CashComplete) {
+        if (dic.debitStatus==CashComplete) {
            cell.detailLabel.text = @"打款状态：打款完成";
         }
         else

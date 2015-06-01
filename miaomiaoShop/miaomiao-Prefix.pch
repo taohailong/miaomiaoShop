@@ -10,10 +10,6 @@
 #define miaomiaoShop_miaomiao_Prefix_pch
 
 
-
-
-
-
 #define SHOPIDCHANGED @"shopIdChanged"
 
 #define DEFAULTIMAGE [UIImage imageNamed:@"DefaultImage"]
@@ -31,6 +27,14 @@
 #define IOS_VERSION_5_OR_ABOVE (([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)? (YES):(NO))
 
 #define IOS_VERSION(X) (([[[UIDevice currentDevice] systemVersion] floatValue] >= X)? (YES):(NO))
+
+
+
+#if DEBUG
+#define HTTPHOST @"www.mbianli.com:8088"
+#else
+#define HTTPHOST @"www.mbianli.com"
+#endif
 
 
 

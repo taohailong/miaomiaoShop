@@ -223,9 +223,9 @@
 {
     if (indexPath.row==0) {
         
-        OrderInfoFirstCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
+        OrderInfoFirstCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell0"];
         if (cell==nil) {
-            cell = [[OrderInfoFirstCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
+            cell = [[OrderInfoFirstCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell0"];
         }
         [cell setTelPhoneText:_orderData.telPhone];
         [cell setAddressText:_orderData.orderAddress];
@@ -241,7 +241,7 @@
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
             cell.textLabel.font = [UIFont systemFontOfSize:15];
         }
-        cell.textLabel.text = [NSString stringWithFormat:@"共%d件 ¥ %@",_orderData.countOfProduct,_orderData.totalMoney];
+        cell.textLabel.text = [NSString stringWithFormat:@"共%d个 ¥ %@",_orderData.countOfProduct,_orderData.totalMoney];
         return cell;
     }
     else
@@ -255,10 +255,9 @@
         
         [cell setTitleText:product.pName];
         [cell setProductUrl:product.pUrl];
-        [cell setTotalMoney:[NSString stringWithFormat:@"%d件 X ¥ %.2f",product.count,product.price]];
+        [cell setTotalMoney:[NSString stringWithFormat:@"%d个 X ¥ %.2f",product.count,product.price]];
         return cell;
 
-        
     }
 }
 

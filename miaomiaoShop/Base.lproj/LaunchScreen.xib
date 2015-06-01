@@ -12,8 +12,8 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="LaunchTop" translatesAutoresizingMaskIntoConstraints="NO" id="LM3-30-Jgu">
-                    <rect key="frame" x="197" y="122" width="85" height="80"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchTop" translatesAutoresizingMaskIntoConstraints="NO" id="LM3-30-Jgu">
+                    <rect key="frame" x="197" y="120" width="85" height="80"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchBottom" translatesAutoresizingMaskIntoConstraints="NO" id="OqE-W3-t7c">
                     <rect key="frame" x="180" y="440" width="120" height="20"/>
@@ -23,7 +23,7 @@
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="LM3-30-Jgu" secondAttribute="centerX" id="2v4-xu-sie"/>
                 <constraint firstAttribute="bottom" secondItem="OqE-W3-t7c" secondAttribute="bottom" constant="20" id="KqX-Ip-nUE"/>
-                <constraint firstAttribute="centerY" secondItem="LM3-30-Jgu" secondAttribute="centerY" multiplier="1/3" constant="186" id="Wge-Ul-kHD"/>
+                <constraint firstAttribute="centerY" secondItem="LM3-30-Jgu" secondAttribute="centerY" multiplier="3/2" id="Wge-Ul-kHD"/>
                 <constraint firstAttribute="centerX" secondItem="OqE-W3-t7c" secondAttribute="centerX" id="cv9-oM-Itx"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>

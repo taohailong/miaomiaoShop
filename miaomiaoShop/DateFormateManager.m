@@ -107,7 +107,7 @@
 {
     TodayType weekDayStr ;
     
-    [self setDateStyleString:@"yyyy-mm-dd"];
+    [self setDateStyleString:@"yyyy-MM-dd"];
     NSString* str =  [self formateDateToString:[NSDate date]];
     
     NSDateComponents *comps = [[NSDateComponents alloc] init];
@@ -133,7 +133,7 @@
     NSDate *_date = [gregorian dateFromComponents:comps];
     NSDateComponents *weekdayComponents = [gregorian components:NSWeekdayCalendarUnit fromDate:_date];
     int week = [weekdayComponents weekday];
-    week ++;
+
     switch (week) {
         case 1:
             weekDayStr = Sunday;
@@ -157,7 +157,7 @@
             weekDayStr = Saturday;
             break;
         default:
-            weekDayStr = Sunday;
+            weekDayStr = Monday;
             break;  
     }  
     return weekDayStr;  

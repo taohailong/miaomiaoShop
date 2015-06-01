@@ -24,7 +24,7 @@
 #else
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/wallet/cashPrompt?shop_id=%@", @"www.mbianli.com",manager.shopID];
 #endif
-    
+    NSLog(@"%@",url);
     [web loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
 }
 @end
