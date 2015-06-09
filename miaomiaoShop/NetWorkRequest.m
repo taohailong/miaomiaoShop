@@ -39,9 +39,9 @@
     
     [formate setDateStyleString:@"HH:mm"];
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/summary?shop_id=%@&beginDate=&endDate=&ver=%@",HTTPHOST,manager.shopID,VERSION];
-    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
         
-        if (sourceDic)
+        if (status == NetWorkStatusSuccess)
         {
             ShopInfoData* data = [[ShopInfoData alloc]init];
             data.countCategory = [sourceDic[@"data"][@"cat"][@"totalCount"]  stringValue];
@@ -67,12 +67,12 @@
             data.shopStatue = ![sourceDic[@"data"][@"shop"][@"status"] intValue];//0 营业中,1 打烊
             data.minPrice = [sourceDic[@"data"][@"shop"][@"base_price"] floatValue]/100;
             data.telPhoneNu  = sourceDic[@"data"][@"shop"][@"tel"];
-            completeBk(data,nil);
+            completeBk(data,status);
             
         }
         else
         {
-            completeBk(nil,err);
+            completeBk(sourceDic,status);
         }
         
     }];
@@ -87,19 +87,9 @@
         url = [NSString stringWithFormat:@"%@&open_time=%@&close_time=%@",url,data.openTime,data.closeTime];
     }
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
         
-        if (sourceDic)
-        {
-//            [sourceDic[@"code"] intValue] ==0
-            completeBk(sourceDic,nil);
-            
-        }
-        else
-        {
-            completeBk(nil,err);
-        }
-        
+        completeBk(sourceDic,status);
     }];
 }
 
@@ -111,9 +101,9 @@
 {
     UserManager* manager = [UserManager shareUserManager];
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/wallet/show?shop_id=%@&ver=%@&from=%d&offset=7",HTTPHOST,manager.shopID,VERSION,index];
-    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
         
-        if (sourceDic&&[sourceDic[@"code"] intValue]==0)
+        if (status == NetWorkStatusSuccess)
         {
             DateFormateManager* dateManager = [DateFormateManager shareDateFormateManager];
             
@@ -142,11 +132,11 @@
                 cashData.debitTime = [dateManager formateFloatTimeValueToString:time];
                 [backArr addObject:cashData];
             }
-            completeBk(backArr,nil);
+            completeBk(backArr,status);
         }
         else
         {
-            completeBk(nil,err);
+            completeBk(sourceDic,status);
         }
         
     }];
@@ -157,9 +147,9 @@
 {
     UserManager* manager = [UserManager shareUserManager];
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/wallet/getCash?shop_id=%@&from=0&offset=7&price=%@&ver=%@",HTTPHOST,manager.shopID,money,VERSION];
-    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
-        
-        if ([sourceDic[@"code"] intValue]==0&&sourceDic)
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
+    
+        if (status == NetWorkStatusSuccess)
         {
             
             DateFormateManager* dateManager = [DateFormateManager shareDateFormateManager];
@@ -189,16 +179,12 @@
                 cashData.debitTime = [dateManager formateFloatTimeValueToString:time];
                 [backArr addObject:cashData];
             }
-            completeBk(backArr,nil);
+            completeBk(backArr,status);
         }
         
-        else if (sourceDic)
-        {
-             completeBk(nil,sourceDic[@"msg"]);
-        }
         else
         {
-            completeBk(nil,nil);
+            completeBk(sourceDic,status);
         }
         
     }];
@@ -211,18 +197,10 @@
     UserManager* manager = [UserManager shareUserManager];
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/dailySummary?shop_id=%@&ver=%@&from=%d&offset=7",HTTPHOST,manager.shopID,VERSION,index];
     
-       [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+       [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
         
-        if (sourceDic&&[sourceDic[@"code"] intValue]==0)
-        {
-            
-            completeBk(sourceDic,nil);
-        }
-        else
-        {
-            completeBk(nil,err);
-        }
-        
+         completeBk(sourceDic,status);
+           
     }];
 }
 
@@ -232,9 +210,9 @@
 {
     UserManager* manager = [UserManager shareUserManager];
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/dailySummaryDetail?shop_id=%@&from=%d&offset=20&date=%@&type=%@&ver=%@",HTTPHOST,manager.shopID,index,date,type,VERSION];
-    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
         
-        if (sourceDic)
+        if (status == NetWorkStatusSuccess)
         {
 
             NSArray* sourceArr = sourceDic[@"data"][@"orders"];
@@ -272,7 +250,7 @@
                 }
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    completeBk(backArr,nil);
+                    completeBk(backArr,status);
                 });
                 
             });
@@ -281,7 +259,7 @@
         }
         else
         {
-            completeBk(nil,err);
+            completeBk(sourceDic,status);
         }
         
     }];
@@ -295,11 +273,11 @@
 {
     UserManager* manager = [UserManager shareUserManager];
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/listbyType?shop_id=%@&from=%d&offset=20&order_status=%@&ver=%@",HTTPHOST,manager.shopID,index,statue,VERSION];
-    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
-        
-        if (sourceDic)
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
+ 
+        if (status == NetWorkStatusSuccess)
         {
-//            [sourceDic[@"code"] intValue] ==0
+
             NSArray* sourceArr = sourceDic[@"data"][@"orderls"];
             DateFormateManager* manager = [DateFormateManager shareDateFormateManager];
             [manager  setDateStyleString:@"YY-MM-dd HH:mm"];
@@ -339,7 +317,7 @@
                [backArr addObject:todayArr];
                [backArr addObject: notTodayArr];
                dispatch_async(dispatch_get_main_queue(), ^{
-                  completeBk(backArr,nil); 
+                  completeBk(backArr,status);
                });
                
            });
@@ -347,7 +325,7 @@
         }
         else
         {
-            completeBk(nil,err);
+            completeBk(sourceDic,status);
         }
         
     }];
@@ -359,19 +337,10 @@
 {
     UserManager* manager = [UserManager shareUserManager];
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/cate/del?category_id=%@&shop_id=%@&ver=%@",HTTPHOST,cateID,manager.shopID,VERSION];
-    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
         
-        if (sourceDic)
-        {
-//            [sourceDic[@"code"] intValue] ==0
-            completeBk(sourceDic,nil);
+        completeBk(sourceDic,status);
             
-        }
-        else
-        {
-            completeBk(nil,err);
-        }
-        
     }];
 }
 
@@ -380,19 +349,10 @@
     UserManager* manager = [UserManager shareUserManager];
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/cate/add?categoryId=0&shopId=%@&scorce=0&categoryName=%@&ver=%@",HTTPHOST,manager.shopID,name,VERSION];
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
         
-        if (sourceDic)
-        {
-//            [sourceDic[@"code"] intValue] ==0
-            completeBk(sourceDic,nil);
-            
-        }
-        else
-        {
-            completeBk(nil,err);
-        }
-        
+        completeBk(sourceDic,status);
+
     }];
 }
 
@@ -405,18 +365,9 @@
 {
     UserManager* manager = [UserManager shareUserManager];
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/del?itemId=%@&shop_id=%@&ver=%@",HTTPHOST,pID,manager.shopID,VERSION];
-    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
-        
-        if (sourceDic)
-        {
-//            [sourceDic[@"code"] intValue] ==0
-            completeBk(sourceDic,nil);
-            
-        }
-        else
-        {
-            completeBk(nil,err);
-        }
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
+    
+        completeBk(sourceDic,status);
         
     }];
 }
@@ -429,18 +380,9 @@
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/update?itemId=%@&itemName=%@&serialNo=%@&category_id=%@&count=1000&price=%d&saleStatus=%d&shop_id=%@&pic_url=%@&score=%@&ver=%@",HTTPHOST,data.pID,data.pName,data.scanNu,data.categoryID,(int)(data.price*100),data.status,manager.shopID,data.pUrl,data.score,VERSION];
     
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
         
-        if (sourceDic)
-        {
-            completeBk(sourceDic,nil);
-            
-        }
-        else
-        {
-            completeBk(nil,err);
-        }
-        
+            completeBk(sourceDic,status);
     }];
 
 
@@ -458,12 +400,12 @@
     [_postAsi setPostValue:nu forKey:@"serialNo"];
     [_postAsi addData:data withFileName:@"text.jpg" andContentType:@"image/jpeg" forKey:@"pic"];
     [_postAsi setFailedBlock:^{
-        completeBk(nil,wPost.error);
+        completeBk(@"网络连接失败",NetWorkStatusErrorCanntConnect);
     }];
     [_postAsi setCompletionBlock:^{
         
            NSDictionary* dataDic = [NSJSONSerialization JSONObjectWithData:wPost.responseData options:NSJSONReadingMutableContainers error:NULL];
-        completeBk(dataDic,nil);
+        completeBk(dataDic,NetWorkStatusSuccess);
        
     }];
     [_postAsi startAsynchronous];
@@ -475,16 +417,16 @@
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/addItem?serialNo=%@&name=%@&categoryId=%@&count=100&score=0&price=%d&saleStatus=%d&shop_id=%@&pic_ur=%@&ver=%@",HTTPHOST,data.scanNu,data.pName,data.categoryID,(int)(data.price*100),data.status,manager.shopID,data.pUrl,VERSION];
     
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
-        
-        if (sourceDic)
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
+    
+        if (status==NetWorkStatusSuccess)
         {
-            completeBk(sourceDic,nil);
+            completeBk(sourceDic,status);
             
         }
         else
         {
-            completeBk(nil,err);
+            completeBk(sourceDic,status);
         }
         
     }];
@@ -499,9 +441,9 @@
 
 
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/product/get?serialNo=%@&ver=%@",HTTPHOST,serialNu,VERSION];
-    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
-        
-        if (sourceDic)
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
+    
+        if (status==NetWorkStatusSuccess)
         {
             
             NSDictionary* pDic = sourceDic[@"data"][@"product"];
@@ -511,12 +453,12 @@
             product.pUrl = pDic[@"pic_url"];
             product.price = [pDic[@"price"] intValue]/100.0;
             product.scanNu =pDic[@"serialNo"];
-            completeBk(product,nil);
+            completeBk(product,status);
             
         }
         else
         {
-            completeBk(nil,err);
+            completeBk(sourceDic,status);
         }
         
     }];
@@ -528,9 +470,9 @@
 {
     UserManager* manager = [UserManager shareUserManager];
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shop/category/get?shop_id=%@&ver=%@",HTTPHOST,manager.shopID,VERSION];
-    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
         
-        if (sourceDic)
+        if (status == NetWorkStatusSuccess)
         {
             NSMutableArray* arr = [NSMutableArray array];
             NSArray* cateArr = sourceDic[@"data"][@"categoryls"];
@@ -541,11 +483,11 @@
                 ca.categoryName = dic[@"name"];
                 [arr addObject:ca];
             }
-             back(arr,err);
+             back(arr,status);
         }
         else
         {
-           back(nil,err);
+           back(sourceDic,status);
         }
         
     }];
@@ -558,8 +500,9 @@
 -(void)shopGetProductWithShopID:(NSString*)shopID withCategory:(NSString*)category fromIndex:(int)nu WithCallBack:(NetCallback)back
 {
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shop/getitems?shop_id=%@&category_id=%@&from=%d&offset=20&ver=%@",HTTPHOST,shopID,category,nu,VERSION];
-    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err) {
-        if (sourceDic)
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
+        
+        if (status == NetWorkStatusSuccess)
         {
 //            [sourceDic[@"code"] intValue]==0
             NSMutableArray* arr = [NSMutableArray array];
@@ -578,11 +521,11 @@
                 product.score = dic[@"score"];
                 [arr addObject:product];
             }
-             back(arr,err);
+             back(arr,status);
         }
         else
         {
-           back(sourceDic,err);
+           back(sourceDic,status);
         }
        
     }];
@@ -593,17 +536,9 @@
 {
     UserManager* manager = [UserManager shareUserManager];
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/order_confirm?shop_id=%@&order_id=%@&confirm=done&ver=%@",HTTPHOST,manager.shopID,orderID,VERSION];
-    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
         
-        if (sourceDic&&[sourceDic[@"code"] intValue]==0)
-        {
-            completeBk(sourceDic,err);
-        }
-        else
-        {
-            completeBk(nil,err);
-        }
-        
+            completeBk(sourceDic,status);
     }];
 
 }
@@ -612,17 +547,9 @@
 {
     UserManager* manager = [UserManager shareUserManager];
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/order_cancel?shop_id=%@&order_id=%@&confirm=done&ver=%@",HTTPHOST,manager.shopID,orderID,VERSION];
-    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err){
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
         
-        if (sourceDic&&[sourceDic[@"code"] intValue]==0)
-        {
-            completeBk(sourceDic,err);
-        }
-        else
-        {
-            completeBk(nil,err);
-        }
-        
+            completeBk(sourceDic,status);
     }];
 
 }
@@ -635,11 +562,9 @@
 -(void)verifyTokenToServer:(NSString *)token WithCallBack:(NetCallback)back
 {
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/login/islogin?token=%@&ver=%@",HTTPHOST,token,VERSION];
-    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err) {
-        if (sourceDic) {
-             back(sourceDic,err);
-        }
-       
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
+    
+             back(sourceDic,status);
     }];
 }
 
@@ -647,49 +572,39 @@
 {
     NSString* logUrl = [NSString stringWithFormat:@"http://%@/console/api/login/valid?phone=%@&pwd=%@",HTTPHOST,phone,pw];
     
-    [self getMethodRequestStrUrl:logUrl complete:^(NSDictionary *sourceDic, NSError *err) {
-       
-                back(sourceDic,err);
+    [self getMethodRequestStrUrl:logUrl complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
+        back(sourceDic,status);
     }];
 }
 
 -(void)requestRemoveUserAccount:(NSString*)account WithPushKey:(NSString*)pushKey WithToken:(NSString*)token Bk:(NetCallback)completeBk
 {
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/logout?phone=%@&device_token=%@&token=%@&ver=%@",HTTPHOST,account,pushKey,token,VERSION];
-    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err) {
-        if (sourceDic) {
-            completeBk(sourceDic,nil);
-        }
-        else
-        {
-           completeBk(nil,err);
-        }
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
+        
+        completeBk(sourceDic,status);
     }];
 }
 
 -(void)registePushToken:(NSString*)token WithAccount:(NSString*)account WithBk:(NetCallback)completeBk
 {
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/subscribe?ower_phone=%@&chn=ios&device_token=%@&ver=%@",HTTPHOST,account,token,VERSION];
-    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NSError *err) {
-        if (sourceDic) {
-            completeBk(sourceDic,nil);
+   
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
+        
+        if (status == NetWorkStatusSuccess)
+        {
+            completeBk(sourceDic,status);
         }
         else
         {
-            completeBk(nil,err);
+            completeBk(sourceDic,status);
         }
     }];
-
-
 }
 
 
-
-
-
-
-
--(void)getMethodRequestStrUrl:(NSString*)url complete:(void(^)( NSDictionary* sourceDic,NSError* err))block
+-(void)getMethodRequestStrUrl:(NSString*)url complete:(void(^)( id sourceDic,NetWorkStatus status))block
 {
     
     _asi = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
@@ -699,14 +614,19 @@
     [_asi setCompletionBlock:^{
         
         NSDictionary* dataDic = [NSJSONSerialization JSONObjectWithData:bkAsi.responseData options:NSJSONReadingMutableContainers error:NULL];
-
-        block(dataDic,nil);
+       
+        if (dataDic&&[dataDic[@"code"] intValue]==0) {
+            block(dataDic,NetWorkStatusSuccess);
+        }
+        else
+        {
+           block(dataDic[@"msg"],NetWorkStatusServerError);
+        }
         
     }];
     
     [_asi setFailedBlock:^{
-//        NSLog(@"error is %@",bkAsi.error);
-        block(nil,bkAsi.error);
+        block(@"网络连接失败！",NetWorkStatusErrorCanntConnect);
     }];
     
 }

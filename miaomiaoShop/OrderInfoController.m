@@ -152,10 +152,10 @@
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
     if (alertView.tag) {
         
-        [request shopOrderConfirmDeliverWithOrderID:_orderData.orderNu WithBk:^(id backDic, NSError *error) {
+        [request shopOrderConfirmDeliverWithOrderID:_orderData.orderNu WithBk:^(id backDic, NetWorkStatus status) {
             
             [fullView removeFromSuperview];
-            if (backDic) {
+            if (status==NetWorkStatusSuccess) {
                 THActivityView* showStr = [[THActivityView alloc]initWithString:@"提交成功！"];
                 [showStr show];
                 [wself manualBack];
@@ -171,10 +171,11 @@
     }
     else
     {
-        [request shopOrderCancelDeliverWithOrderID:_orderData.orderNu WithBk:^(id backDic, NSError *error) {
+        [request shopOrderCancelDeliverWithOrderID:_orderData.orderNu WithBk:^(id backDic, NetWorkStatus status) {
+            
             [fullView removeFromSuperview];
             
-            if (backDic) {
+            if (status == NetWorkStatusSuccess) {
                 THActivityView* showStr = [[THActivityView alloc]initWithString:@"提交成功！"];
                 [showStr show];
                 [wself manualBack];

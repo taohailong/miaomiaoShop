@@ -36,7 +36,7 @@
 }
 
 
--(BOOL)verifyTokenOnNet:(void(^)(BOOL success, NSError *error))completeBlock
+-(BOOL)verifyTokenOnNet:(void(^)(BOOL success, id error))completeBlock
 {
     NSString* t = [self checkTokenExsit];
     if (t==nil) {
@@ -46,9 +46,10 @@
     __weak UserManager* bSelf = self;
 
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
-    [req verifyTokenToServer:t WithCallBack:^(NSDictionary *backDic, NSError *error) {
+    [req verifyTokenToServer:t WithCallBack:^(NSDictionary* backDic, NetWorkStatus status) {
+    
        
-        if ([backDic[@"code"] intValue] ==0&&backDic) {
+        if (status==NetWorkStatusSuccess) {
             
             NSArray* shopArr = backDic[@"data"][@"shop"];
             [self saveAllShopArr:shopArr];
@@ -61,14 +62,14 @@
             
             completeBlock(YES,nil);
         }
-        else if(error)
-        {
-            completeBlock(NO,error);
-        }
         else
         {
-           completeBlock(NO,nil);//token失效
+            completeBlock(NO,backDic);
         }
+//        else
+//        {
+//           completeBlock(NO,nil);//token失效
+//        }
 
     }];
     [req startAsynchronous];
@@ -103,14 +104,15 @@
     NSString* pushKey = [def objectForKey:PUSHTOKEN];
     __weak UserManager* wSelf = self;
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request requestRemoveUserAccount:account WithPushKey:pushKey WithToken:self.token Bk:^(id backDic, NSError *error) {
-        if (backDic) {
+    [request requestRemoveUserAccount:account WithPushKey:pushKey WithToken:self.token Bk:^(id backDic, NetWorkStatus status) {
+    
+        if (status == NetWorkStatusSuccess) {
             complete(YES,nil);
             [wSelf removeUserData];
         }
         else
         {
-            complete(NO,nil);
+            complete(NO,backDic);
         }
         
     }];
@@ -154,7 +156,7 @@
     }
 
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request registePushToken:pushKey WithAccount:account WithBk:^(id backDic, NSError *error) {
+    [request registePushToken:pushKey WithAccount:account WithBk:^(id backDic, NetWorkStatus status) {
         
         if (backDic) {
             
@@ -178,11 +180,11 @@
 {
     __weak UserManager* bSelf = self;
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
-     [req shopLoginWithPhone:phone password:ps withCallBack:^(NSDictionary *backDic, NSError *error) {
-        
+     [req shopLoginWithPhone:phone password:ps withCallBack:^(id backDic, NetWorkStatus status) {
          
-         if (backDic==nil||[backDic[@"code"] intValue]!=0) {
-            blockBack(NO,error);
+         
+         if (status != NetWorkStatusSuccess) {
+            blockBack(NO,backDic);
              return ;
          }
          
@@ -201,11 +203,7 @@
              blockBack(YES,nil);
             [bSelf registePushKey];
         }
-        else if(error)
-        {
-            blockBack(NO,error);
-        }
-        
+               
     }];
 
     [req startAsynchronous];

@@ -122,11 +122,11 @@
 {
     __weak RootViewController* wSelf = self;
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request getShopInfoWitbBk:^(ShopInfoData* backDic, NSError *error) {
+    [request getShopInfoWitbBk:^(id backDic, NetWorkStatus status) {
         
 //        防止多次错误 时errView重叠
         [wSelf.errView removeFromSuperview];
-        if (backDic) {
+        if (status == NetWorkStatusSuccess) {
             _shopData =backDic;
             [_table reloadData];
         }

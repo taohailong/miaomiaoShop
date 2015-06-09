@@ -60,12 +60,18 @@
     THActivityView* loadView = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
     __weak ShopBusinessInfoController* wSelf = self;
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request getBusinessOrderInfoWithDate:_orderDate WithType:_orderType withIndex:0 WithBk:^(id backDic, NSError *error) {
+    [request getBusinessOrderInfoWithDate:_orderDate WithType:_orderType withIndex:0 WithBk:^(id backDic, NetWorkStatus status) {
+        [loadView removeFromSuperview];
         
-        if (backDic) {
+        if (status == NetWorkStatusSuccess) {
             [wSelf reloadTableWithData:backDic];
         }
-        [loadView removeFromSuperview];
+        else
+        {
+            THActivityView* loadView = [[THActivityView alloc]initWithString:backDic];
+            [loadView show];
+        }
+        
     }];
     [request startAsynchronous];
 }
@@ -79,10 +85,15 @@
     _isLoading = YES;
     __weak ShopBusinessInfoController* wSelf = self;
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request getBusinessOrderInfoWithDate:_orderDate WithType:_orderType withIndex:_orderArr.count WithBk:^(id backDic, NSError *error) {
+    [request getBusinessOrderInfoWithDate:_orderDate WithType:_orderType withIndex:_orderArr.count WithBk:^(id backDic, NetWorkStatus status) {
         
-        if (backDic) {
+        if (status==NetWorkStatusSuccess) {
             [wSelf addDataArr:backDic];
+        }
+        else
+        {
+            THActivityView* showStr = [[THActivityView alloc]initWithString:backDic];
+            [showStr show];
         }
 
     }];

@@ -245,17 +245,17 @@
     __weak ShopInfoViewController* wself = self;
     THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request shopInfoUpdateWithShopInfoData:_shopData WithBk:^(id backDic, NSError *error) {
+    [request shopInfoUpdateWithShopInfoData:_shopData WithBk:^(id backDic, NetWorkStatus status) {
         
         NSString* str = nil;
-        if (backDic) {
+        if (status == NetWorkStatusSuccess) {
             
             [wself.navigationController popViewControllerAnimated:YES];
             str = @"添加成功！";
         }
         else
         {
-            str = @"添加失败！";
+            str = backDic;
         }
         THActivityView* show = [[THActivityView alloc]initWithString:str];
         [show show];

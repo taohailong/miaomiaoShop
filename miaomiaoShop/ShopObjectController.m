@@ -55,10 +55,10 @@
     __weak ShopObjectController* wself = self;
     THActivityView* loadV = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
     NetWorkRequest* categoryReq = [[NetWorkRequest alloc]init];
-    [categoryReq shopGetCategoryWithCallBack:^(NSMutableArray* backDic, NSError *error) {
+    [categoryReq shopGetCategoryWithCallBack:^(NSMutableArray* backDic, NetWorkStatus status) {
         
         [loadV removeFromSuperview];
-        if (error) {
+        if (status != NetWorkStatusSuccess) {
             THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wself.view];
             
             [loadView setErrorBk:^{

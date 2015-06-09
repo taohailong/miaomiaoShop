@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface UserManager : NSObject
-typedef void (^logCallBack)(BOOL success,NSError* err) ;
+typedef void (^logCallBack)(BOOL success,id err) ;
 +(UserManager*)shareUserManager;
 @property(nonatomic,strong)NSString* shopName;
 @property(nonatomic,strong)NSString* phoneNumber;
@@ -25,5 +25,5 @@ typedef void (^logCallBack)(BOOL success,NSError* err) ;
 //@property(nonatomic,assign)
 //-(void)logInWithPhone:(NSString*)phone Pass:(NSString*)ps;
 -(void)logInWithPhone:(NSString *)phone Pass:(NSString *)ps logBack:(logCallBack) blockBack;
--(BOOL)verifyTokenOnNet:(void(^)(BOOL success, NSError *error))completeBlock;
+-(BOOL)verifyTokenOnNet:(void(^)(BOOL success, id error))completeBlock;
 @end

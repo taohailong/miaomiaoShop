@@ -81,11 +81,11 @@
     THActivityView* loadView = [[THActivityView alloc]initFullViewTransparentWithSuperView:self.view];
     __weak OrderListViewController* wSelf = self;
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
-    [req shopGetOrderWithStatue:statue WithIndex:0 WithBk:^(NSArray* backDic, NSError *error) {
+    [req shopGetOrderWithStatue:statue WithIndex:0 WithBk:^(id backDic, NetWorkStatus status) {
         
         [loadView removeFromSuperview];
-        if (error) {
-            THActivityView* alert = [[THActivityView alloc]initWithString:@"连接失败！"];
+        if (status == NetWorkStatusErrorCanntConnect) {
+            THActivityView* alert = [[THActivityView alloc]initWithString:@"网络连接失败！"];
             [alert show];
             [wSelf refreshTableOver];
             return ;
@@ -111,10 +111,10 @@
     THActivityView* loadView = [[THActivityView alloc]initFullViewTransparentWithSuperView:self.view];
     
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
-    [req shopGetOrderWithStatue:_currentStatue WithIndex:_todayArr.count+ _notTodayArr.count WithBk:^(NSArray* backDic, NSError *error) {
-        
+    [req shopGetOrderWithStatue:_currentStatue WithIndex:_todayArr.count+ _notTodayArr.count WithBk:^(id backDic, NetWorkStatus status) {
+    
          [loadView removeFromSuperview];
-        if (backDic) {
+        if (status == NetWorkStatusSuccess) {
             
             NSArray* notTodayArr = backDic[1];
             NSArray* todayArr = backDic[0];

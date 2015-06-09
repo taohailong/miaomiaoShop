@@ -108,11 +108,11 @@
     
     __weak ShopBusinessController* wSelf = self;
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request getDailyOrderSummaryFromIndex:0 WithBk:^(NSDictionary* backDic, NSError *error) {
+    [request getDailyOrderSummaryFromIndex:0 WithBk:^(NSDictionary* backDic, NetWorkStatus status) {
         
         [wSelf.errorView removeFromSuperview];
         [loadView removeFromSuperview];
-        if (error) {
+        if (status!=NetWorkStatusSuccess) {
             THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wSelf.view];
             wSelf.errorView = loadView;
             [loadView setErrorBk:^{
@@ -138,7 +138,7 @@
     
     __weak ShopBusinessController* wSelf = self;
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request getDailyOrderSummaryFromIndex:_settleOrderS.count  WithBk:^(NSDictionary* backDic, NSError *error) {
+    [request getDailyOrderSummaryFromIndex:_settleOrderS.count  WithBk:^(NSDictionary* backDic, NetWorkStatus status) {
     
         if (backDic) {
             [wSelf loadMoreDataAnalysis:backDic];

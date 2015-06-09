@@ -69,10 +69,11 @@
     UserManager* manager = [UserManager shareUserManager];
     NetWorkRequest* productReq = [[NetWorkRequest alloc]init];
     _currentCategoryID = categoryID;
-    [productReq shopGetProductWithShopID:manager.shopID withCategory:categoryID fromIndex:0 WithCallBack:^(id backDic, NSError *error) {
+    [productReq shopGetProductWithShopID:manager.shopID withCategory:categoryID fromIndex:0 WithCallBack:^(id backDic, NetWorkStatus status) {
+        
         [loadView removeFromSuperview];
         [fullView removeFromSuperview];
-        if (error) {
+        if (status == NetWorkStatusErrorCanntConnect) {
             THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wSelf.superview];
             
             [loadView setErrorBk:^{
@@ -80,8 +81,13 @@
             }];
             return ;
         }
+        else if (status ==NetWorkStatusServerError)
+        {
+            THActivityView* messageShow = [[THActivityView alloc]initWithString:backDic];
+            [messageShow show];
 
-        if (backDic) {
+        }
+        else if (status == NetWorkStatusSuccess) {
            [wSelf setDataArrReloadTable:backDic];
         }
         
@@ -103,12 +109,19 @@
     UserManager* manager = [UserManager shareUserManager];
     NetWorkRequest* productReq = [[NetWorkRequest alloc]init];
     __weak ShopProductListView* wSelf = self;
-    [productReq shopGetProductWithShopID:manager.shopID withCategory:_currentCategoryID fromIndex:_dataArr.count WithCallBack:^(id backDic, NSError *error) {
-       
-        wSelf.isLoading = NO;
-    
-        [wSelf addDataArr:backDic];
+    [productReq shopGetProductWithShopID:manager.shopID withCategory:_currentCategoryID fromIndex:_dataArr.count WithCallBack:^(id backDic, NetWorkStatus status) {
+        
         [fullView removeFromSuperview];
+        wSelf.isLoading = NO;
+        
+        if (status == NetWorkStatusSuccess) {
+            [wSelf addDataArr:backDic];
+        }
+        else
+        {
+            THActivityView* messageShow = [[THActivityView alloc]initWithString:backDic];
+            [messageShow show];
+        }
     }];
     [productReq startAsynchronous];
 
@@ -199,15 +212,16 @@
         __weak ShopProductListView* wSelf = self;
         ShopProductData* data = _dataArr[indexPath.row];
         NetWorkRequest* request = [[NetWorkRequest alloc]init];
-        [request shopProductDeleteProductWithProductID:data.pID WithBk:^(id backDic, NSError *error) {
+        [request shopProductDeleteProductWithProductID:data.pID WithBk:^(id backDic, NetWorkStatus status) {
+            
             NSString* str = nil;
-            if (backDic) {
+            if (status == NetWorkStatusSuccess) {
                 str = @"删除成功！";
                 [wSelf deleteCategoryReloadTableWithIndex:indexPath];
             }
             else
             {
-                str = @"删除失败！";
+                str = backDic;
             }
             THActivityView* show = [[THActivityView alloc]initWithString:str];
             [show show];

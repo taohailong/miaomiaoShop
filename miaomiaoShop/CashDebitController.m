@@ -52,9 +52,10 @@
     THActivityView* loadView = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
     
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
-    [req getCashTradeListWithIndex:0 WithBK:^(NSMutableArray* backDic, NSError *error) {
+    [req getCashTradeListWithIndex:0 WithBK:^(id backDic, NetWorkStatus status) {
+        
         [loadView removeFromSuperview];
-        if (backDic) {
+        if (status == NetWorkStatusSuccess) {
             [wself reloadTableWithData:backDic];
         }
     }];
@@ -79,9 +80,17 @@
     
     __weak CashDebitController* wSelf = self;
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request getCashTradeListWithIndex:_dataArr.count WithBK:^(id backDic, NSError *error) {
-       
+    [request getCashTradeListWithIndex:_dataArr.count WithBK:^(id backDic, NetWorkStatus status) {
+        
+        if(status == NetWorkStatusSuccess)
+        {
           [wSelf loadMoreDataReloadTable:backDic];
+        }
+        else
+        {
+            THActivityView* messageShow = [[THActivityView alloc]initWithString:backDic];
+            [messageShow show];
+        }
        
     }];
     [request startAsynchronous];
@@ -157,12 +166,12 @@
     
     __weak CashDebitController* wself = self;
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
-    [req getCashWithRequestMoney:[NSString stringWithFormat:@"%d",(int)(_cash*100)] WithBk:^(id backDic, NSError *error) {
-        
+    [req getCashWithRequestMoney:[NSString stringWithFormat:@"%d",(int)(_cash*100)] WithBk:^(id backDic, NetWorkStatus status) {
+
         [loadView removeFromSuperview];
         [fullView removeFromSuperview];
         
-        if (backDic)
+        if (status == NetWorkStatusSuccess)
         {
             UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:[NSString stringWithFormat:@"提现成功！金额：￥%.2f",_cash] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
@@ -172,14 +181,8 @@
         }
         else
         {
-             NSString* str = nil;
-            if ([error isKindOfClass:[NSString class]]) {
-                str = (NSString*)error;
-            }
-            else
-            {
-                str = @"网络错误！";
-            }
+            
+             NSString* str = (NSString*)backDic;
             UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:str  delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
         }

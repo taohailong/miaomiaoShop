@@ -432,9 +432,10 @@
     __weak AddProductController* wSelf = self;
     THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request shopAddProductInfoToServeWith:_productData WithBk:^(id backDic, NSError *error) {
+    [request shopAddProductInfoToServeWith:_productData WithBk:^(id backDic, NetWorkStatus status) {
+        
         NSString* str = nil;
-        if (backDic) {
+        if (status == NetWorkStatusSuccess) {
             str = @"添加成功！";
             [wSelf commitCompleteBack];
         }
@@ -466,8 +467,9 @@
 -(void)postUpImageWithImage:(UIImage*)image WithBk:(void(^)(NSString * url))complete
 {
     _postAsi = [[NetWorkRequest alloc]init];
-    [_postAsi shopProductImagePostWithImage:UIImageJPEGRepresentation(image, 1.0) WithScanNu:_productData.scanNu WithBk:^(NSDictionary* backDic, NSError *error) {
-        if (backDic[@"data"][@"url"]&&complete) {
+    [_postAsi shopProductImagePostWithImage:UIImageJPEGRepresentation(image, 1.0) WithScanNu:_productData.scanNu WithBk:^(id backDic, NetWorkStatus status) {
+        
+        if (status == NetWorkStatusSuccess) {
             
             complete(backDic[@"data"][@"url"]);
         }
@@ -481,8 +483,9 @@
     THActivityView* alert = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
 
     NetWorkRequest* requ = [[NetWorkRequest alloc]init];
-    [requ shopScanProductWithSerial:string WithBk:^(ShopProductData* backDic, NSError *error) {
-        if (backDic) {
+    [requ shopScanProductWithSerial:string WithBk:^(ShopProductData* backDic, NetWorkStatus status) {
+        
+        if (status == NetWorkStatusSuccess) {
             _productData.pName = backDic.pName;
             _productData.pID = backDic.pID;
 //            _productData.categoryID = backDic.categoryID;

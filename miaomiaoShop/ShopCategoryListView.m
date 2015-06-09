@@ -142,10 +142,10 @@
         __weak ShopCategoryListView* wSelf = self;
         ShopCategoryData* data = _dataArr[indexPath.row];
         NetWorkRequest* request = [[NetWorkRequest alloc]init];
-        [request shopCateDeleteWithCategoryID:data.categoryID WithBk:^(id backDic, NSError *error) {
+        [request shopCateDeleteWithCategoryID:data.categoryID WithBk:^(id backDic, NetWorkStatus status) {
             
             NSString* str = nil;
-            if (backDic) {
+            if (status == NetWorkStatusSuccess) {
                 str = @"删除成功！";
               [wSelf deleteCategoryReloadTableWithIndex:indexPath];
             }
@@ -184,10 +184,10 @@
     
     UITextField* field =  [alertView textFieldAtIndex:0];
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request shopCategoryAddWithName:field.text WithBk:^(id backDic, NSError *error) {
+    [request shopCategoryAddWithName:field.text WithBk:^(id backDic, NetWorkStatus status) {
         
         NSString* str = nil;
-        if (backDic) {
+        if (status == NetWorkStatusSuccess) {
            str = @"添加成功！";
             [self initNetData];
         }
@@ -205,8 +205,9 @@
 -(void)initNetData
 {
     NetWorkRequest* categoryReq = [[NetWorkRequest alloc]init];
-    [categoryReq shopGetCategoryWithCallBack:^(NSMutableArray* backDic, NSError *error) {
-        if (backDic) {
+    [categoryReq shopGetCategoryWithCallBack:^(id backDic, NetWorkStatus status) {
+    
+        if (status == NetWorkStatusSuccess) {
            [self setDataArr:backDic];
         }
      }];

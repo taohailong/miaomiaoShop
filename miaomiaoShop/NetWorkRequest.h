@@ -8,7 +8,22 @@
 
 #import <Foundation/Foundation.h>
 @class ShopProductData,ShopCategoryData,ShopInfoData;
-typedef void (^NetCallback)(id backDic,NSError* error);
+
+
+typedef  enum _NetWorkStatus{
+    NetWorkStatusSuccess,
+    NetWorkStatusErrorCanntConnect,
+    NetWorkStatusErrorTokenInvalid,
+    NetWorkStatusErrorUnKnow,
+    NetWorkStatusServerError
+}NetWorkStatus;
+
+
+typedef void (^NetCallback)(id backDic,NetWorkStatus status);
+
+
+
+
 @interface NetWorkRequest : NSObject
 //数据
 -(void)getDailyOrderSummaryFromIndex:(int)index WithBk:(NetCallback)completeBk;

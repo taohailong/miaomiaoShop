@@ -61,9 +61,10 @@
     __weak AddProductController* wSelf = self;
     THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request shopProductUpdateWithProduct:_productData WithBk:^(id backDic, NSError *error) {
+    [request shopProductUpdateWithProduct:_productData WithBk:^(id backDic, NetWorkStatus status) {
+        
         NSString* str = nil;
-        if (backDic) {
+        if (status == NetWorkStatusSuccess) {
             str = @"添加成功！";
             [wSelf commitCompleteBack];
         }

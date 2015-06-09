@@ -65,6 +65,38 @@
             endingLineNumber = "83"
             landmarkName = "-loadMoreData"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[CashDebitController loadMoreData]"
+                  moduleName = "miaomiaoShop"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taohailong/Desktop/miaomiaoShop/miaomiaoShop/CashDebitController.m"
+                  timestampString = "455521872.962822"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "83"
+                  endingLineNumber = "83"
+                  offsetFromSymbolStart = "250">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__35-[CashDebitController loadMoreData]_block_invoke"
+                  moduleName = "miaomiaoShop"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taohailong/Desktop/miaomiaoShop/miaomiaoShop/CashDebitController.m"
+                  timestampString = "455521872.962959"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "83"
+                  endingLineNumber = "83"
+                  offsetFromSymbolStart = "32">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
