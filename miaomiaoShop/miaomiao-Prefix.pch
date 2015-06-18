@@ -31,7 +31,7 @@
 
 
 #if DEBUG
-#define HTTPHOST @"www.mbianli.com:8088"
+#define HTTPHOST @"www.mbianli.com:8099"
 #else
 #define HTTPHOST @"www.mbianli.com"
 #endif

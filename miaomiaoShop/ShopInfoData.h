@@ -7,6 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+typedef enum _ShopStatus
+{
+   ShopStatusOpen,
+   ShopStatusClose
+}ShopStatus;
 
 @interface ShopInfoData : NSObject
 @property(nonatomic,strong)NSString* shopName;
@@ -18,10 +23,10 @@
 @property(nonatomic,strong)NSString* serveArea;
 @property(nonatomic,strong)NSString* telPhoneNu;
 @property(nonatomic,strong)NSString* mobilePhoneNu;
-@property(nonatomic,assign)int shopStatue;
+@property(nonatomic,assign)ShopStatus shopStatue;
 @property(nonatomic,strong)NSString* openTime;
 @property(nonatomic,strong)NSString* closeTime;
 @property(nonatomic,assign)float minPrice;
-
-
+@property(nonatomic,strong)NSString* shopSpread;
+-(NSString*)getShopStatusStr;
 @end

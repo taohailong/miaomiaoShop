@@ -78,7 +78,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _dataArr.count+1;
+    return _dataArr.count;
 }
 
 
@@ -91,14 +91,8 @@
         cell.backgroundColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];
         cell.selectedBackgroundView = [self  tableSelectView];
     }
-    if (indexPath.row==_dataArr.count) {
-        cell.textLabel.text = @"添加分类";
-    }
-    else
-    {
-        ShopCategoryData* data = _dataArr[indexPath.row];
-        cell.textLabel.text = data.categoryName;
-    }
+    ShopCategoryData* data = _dataArr[indexPath.row];
+    cell.textLabel.text = data.categoryName;
     cell.textLabel.font = [UIFont systemFontOfSize:14.5];
     return cell;
 
@@ -106,14 +100,14 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == _dataArr.count) {
-        
-        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"添加分类" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        alert.alertViewStyle =UIAlertViewStylePlainTextInput;
-        [alert show];
-        
-        return;
-    }
+//    if (indexPath.row == _dataArr.count) {
+//        
+//        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"添加分类" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//        alert.alertViewStyle =UIAlertViewStylePlainTextInput;
+//        [alert show];
+//        
+//        return;
+//    }
    
     ShopCategoryData* data = _dataArr[indexPath.row];
     

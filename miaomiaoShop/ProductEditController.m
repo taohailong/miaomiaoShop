@@ -12,6 +12,8 @@
 #import "THActivityView.h"
 #import "CategorySelectController.h"
 #import "UIImage+ZoomImage.h"
+#import "SDWebImageManager.h"
+
 @interface ProductEditController ()
 {
 //    ShopProductData* _productData;
@@ -207,6 +209,11 @@
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
+    
+//  清除缓存
+    SDWebImageManager* manager = [SDWebImageManager sharedManager];
+    [manager diskImageRemoveForURL:[NSURL URLWithString:_productData.pUrl]];
+    
     self.infoChange = YES;
     UIImage* image=[info objectForKey:UIImagePickerControllerOriginalImage];
     
@@ -214,6 +221,10 @@
         _thumbImage = [UIImage imageByScalingAndCroppingForSize:CGSizeMake(200, 200) and:image];
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            
+            
+            
+            
             NSIndexPath* path = [NSIndexPath indexPathForRow:4 inSection:0];
             AddProductPictureCell* cell = (AddProductPictureCell*)[_table cellForRowAtIndexPath:path];
             

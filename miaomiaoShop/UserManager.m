@@ -22,7 +22,7 @@
 
 @implementation UserManager
 @synthesize shopName,phoneNumber,token,shopID,shopAddress;
-
+@synthesize shopSpread;
 
 +(UserManager*)shareUserManager
 {
@@ -35,46 +35,6 @@
     return shareUser;
 }
 
-
--(BOOL)verifyTokenOnNet:(void(^)(BOOL success, id error))completeBlock
-{
-    NSString* t = [self checkTokenExsit];
-    if (t==nil) {
-        return NO;
-    }
-    
-    __weak UserManager* bSelf = self;
-
-    NetWorkRequest* req = [[NetWorkRequest alloc]init];
-    [req verifyTokenToServer:t WithCallBack:^(NSDictionary* backDic, NetWorkStatus status) {
-    
-       
-        if (status==NetWorkStatusSuccess) {
-            
-            NSArray* shopArr = backDic[@"data"][@"shop"];
-            [self saveAllShopArr:shopArr];
-
-            bSelf.token = backDic[@"token"];
-            bSelf.shopName = backDic[@"data"][@"shop"][0][@"name"];
-            bSelf.shopID = backDic[@"data"][@"shop"][0][@"id"];
-            bSelf.shopAddress = backDic[@"data"][@"shop"][0][@"shop_address"];
-            bSelf.phoneNumber = backDic[@"data"][@"shop"][0][@"tel"];
-            
-            completeBlock(YES,nil);
-        }
-        else
-        {
-            completeBlock(NO,backDic);
-        }
-//        else
-//        {
-//           completeBlock(NO,nil);//token失效
-//        }
-
-    }];
-    [req startAsynchronous];
-    return t !=nil;
-}
 
 
 -(NSString*)checkTokenExsit
@@ -170,7 +130,7 @@
     [request startAsynchronous];
 }
 
-
+#pragma mark----------------log function--------
 
 -(BOOL)isLogin
 {
@@ -182,24 +142,22 @@
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
      [req shopLoginWithPhone:phone password:ps withCallBack:^(id backDic, NetWorkStatus status) {
          
-         
          if (status != NetWorkStatusSuccess) {
             blockBack(NO,backDic);
              return ;
          }
          
-         
         if (backDic) {
             
             NSArray* shopArr = backDic[@"data"][@"shop"];
             [self saveAllShopArr:shopArr];
-            
             bSelf.token = backDic[@"data"][@"token"];
             bSelf.shopName = backDic[@"data"][@"shop"][0][@"name"];
             bSelf.shopID = backDic[@"data"][@"shop"][0][@"id"];
             bSelf.shopAddress = backDic[@"data"][@"shop"][0][@"shop_address"];
             bSelf.phoneNumber = backDic[@"data"][@"shop"][0][@"tel"];
             [bSelf setTokenToDish:bSelf.token WithShopID:bSelf.shopID WithAccount:phone];
+            
              blockBack(YES,nil);
             [bSelf registePushKey];
         }
@@ -207,8 +165,43 @@
     }];
 
     [req startAsynchronous];
-
 }
+
+
+-(BOOL)verifyTokenOnNet:(void(^)(BOOL success, id error))completeBlock
+{
+    NSString* t = [self checkTokenExsit];
+    if (t==nil) {
+        return NO;
+    }
+    
+    __weak UserManager* bSelf = self;
+    
+    NetWorkRequest* req = [[NetWorkRequest alloc]init];
+    [req verifyTokenToServer:t WithCallBack:^(NSDictionary* backDic, NetWorkStatus status) {
+        
+        if (status==NetWorkStatusSuccess) {
+            
+            NSArray* shopArr = backDic[@"data"][@"shop"];
+            [self saveAllShopArr:shopArr];
+            
+            bSelf.token = backDic[@"token"];
+            bSelf.shopName = backDic[@"data"][@"shop"][0][@"name"];
+            bSelf.shopID = backDic[@"data"][@"shop"][0][@"id"];
+            bSelf.shopAddress = backDic[@"data"][@"shop"][0][@"shop_address"];
+            bSelf.phoneNumber = backDic[@"data"][@"shop"][0][@"tel"];
+            
+            completeBlock(YES,nil);
+        }
+        else
+        {
+            completeBlock(NO,backDic);
+        }
+    }];
+    [req startAsynchronous];
+    return t !=nil;
+}
+
 
 
 -(void)saveAllShopArr:(NSArray*)arr

@@ -848,9 +848,9 @@
 			productReference = C753BEBE1AE7460800562EF6 /* miaomiaoShopTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		C784433A1AF9E3A0009B4C2D /* miaomiaoShop copy */ = {
+		C784433A1AF9E3A0009B4C2D /* miaomiaoShopEnterpise */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C784438F1AF9E3A0009B4C2D /* Build configuration list for PBXNativeTarget "miaomiaoShop copy" */;
+			buildConfigurationList = C784438F1AF9E3A0009B4C2D /* Build configuration list for PBXNativeTarget "miaomiaoShopEnterpise" */;
 			buildPhases = (
 				C784433B1AF9E3A0009B4C2D /* Sources */,
 				C784437C1AF9E3A0009B4C2D /* Frameworks */,
@@ -860,7 +860,7 @@
 			);
 			dependencies = (
 			);
-			name = "miaomiaoShop copy";
+			name = miaomiaoShopEnterpise;
 			productName = miaomiaoShop;
 			productReference = C78443921AF9E3A0009B4C2D /* miaomiaoShop copy.app */;
 			productType = "com.apple.product-type.application";
@@ -903,7 +903,7 @@
 			targets = (
 				C753BEA41AE7460800562EF6 /* miaomiaoShop */,
 				C753BEBD1AE7460800562EF6 /* miaomiaoShopTests */,
-				C784433A1AF9E3A0009B4C2D /* miaomiaoShop copy */,
+				C784433A1AF9E3A0009B4C2D /* miaomiaoShopEnterpise */,
 			);
 		};
 /* End PBXProject section */
@@ -1276,7 +1276,7 @@
 					"$(PROJECT_DIR)/UMessage_Sdk",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "cbb1876f-0341-42bb-95dc-6e91af04ea21";
+				PROVISIONING_PROFILE = "3bd4bb3d-942c-4eb4-b6ac-30cccf0974ef";
 			};
 			name = Debug;
 		};
@@ -1297,7 +1297,7 @@
 					"$(PROJECT_DIR)/UMessage_Sdk",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bb7981ab-8779-4320-8f75-c4915173e638";
+				PROVISIONING_PROFILE = "626f1923-670a-45eb-b54c-ba68e3874c2d";
 			};
 			name = Release;
 		};
@@ -1420,7 +1420,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C784438F1AF9E3A0009B4C2D /* Build configuration list for PBXNativeTarget "miaomiaoShop copy" */ = {
+		C784438F1AF9E3A0009B4C2D /* Build configuration list for PBXNativeTarget "miaomiaoShopEnterpise" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C78443901AF9E3A0009B4C2D /* Debug */,

@@ -11,19 +11,23 @@
 #import "DateFormateManager.h"
 @implementation OrderData
 @synthesize orderAddress,orderID,orderStatue,orderTime,telPhone,messageStr,mobilePhone,payWay,productArr,shopName,discountMoney,totalMoney,countOfProduct,orderNu,orderTakeOver,deadTime;
+@synthesize isNew;
 
 -(NSString*)getPayMethod
 {
-    if ([self.payWay isEqualToString:@"wx"])
+//    [self.payWay isEqualToString:@"wx"]||[self.payWay isEqualToString:@"zfb"]
+    
+    if (![self.payWay isEqualToString:@""])
     {
         if (self.discountMoney) {
-            return [NSString stringWithFormat:@"微信支付(代金券%.2f)",self.discountMoney/100];
+            return [NSString stringWithFormat:@"在线支付(代金券%.2f)",self.discountMoney/100];
         }
         else
         {
-           return @"微信支付";
+           return @"在线支付";
         }
     }
+    
     else
     {
       return @"货到付款";

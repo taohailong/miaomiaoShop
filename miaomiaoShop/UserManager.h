@@ -16,6 +16,8 @@ typedef void (^logCallBack)(BOOL success,id err) ;
 @property(nonatomic,strong)NSString* token;
 @property(nonatomic,strong)NSString* shopID;
 @property(nonatomic,strong)NSString* shopAddress;
+@property(nonatomic,strong)NSString* shopSpread;
+
 
 -(void)savePushToken:(NSString*)push;
 -(void)registePushKey;

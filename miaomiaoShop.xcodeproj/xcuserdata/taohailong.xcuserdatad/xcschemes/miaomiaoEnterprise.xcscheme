@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C784433A1AF9E3A0009B4C2D"
                BuildableName = "miaomiaoShop copy.app"
-               BlueprintName = "miaomiaoShop copy"
+               BlueprintName = "miaomiaoShopEnterpise"
                ReferencedContainer = "container:miaomiaoShop.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,7 +34,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C784433A1AF9E3A0009B4C2D"
             BuildableName = "miaomiaoShop copy.app"
-            BlueprintName = "miaomiaoShop copy"
+            BlueprintName = "miaomiaoShopEnterpise"
             ReferencedContainer = "container:miaomiaoShop.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -54,7 +54,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C784433A1AF9E3A0009B4C2D"
             BuildableName = "miaomiaoShop copy.app"
-            BlueprintName = "miaomiaoShop copy"
+            BlueprintName = "miaomiaoShopEnterpise"
             ReferencedContainer = "container:miaomiaoShop.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -73,7 +73,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C784433A1AF9E3A0009B4C2D"
             BuildableName = "miaomiaoShop copy.app"
-            BlueprintName = "miaomiaoShop copy"
+            BlueprintName = "miaomiaoShopEnterpise"
             ReferencedContainer = "container:miaomiaoShop.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

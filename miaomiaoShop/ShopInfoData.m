@@ -11,5 +11,11 @@
 @implementation ShopInfoData
 @synthesize countCategory,countOrder,closeTime,countProducts,shopAddress,serveArea,shopName,shopStatue,minPrice;
 @synthesize openTime,telPhoneNu,mobilePhoneNu,totalMoney;
+@synthesize shopSpread;
+
+-(NSString*)getShopStatusStr
+{
+   return  self.shopStatue == ShopStatusOpen?@"营业中":@"打烊";
+}
 
 @end

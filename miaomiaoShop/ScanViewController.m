@@ -147,8 +147,8 @@
         
         NSLog(@"相机权限受限");
         UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请检查是否开启系统相机权限" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
-            alert.tag = 10;
-            [alert show];
+        alert.tag = 10;
+        [alert show];
         return;
     }
     

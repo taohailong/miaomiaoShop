@@ -405,6 +405,7 @@
     
     THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
    [self postUpImageWithImage:_thumbImage WithBk:^(NSString *url) {
+       
        wPdata.pUrl = url;
        [wself networkRequestApi];
        [activeV removeFromSuperview];
@@ -428,7 +429,6 @@
 
 -(void)networkRequestApi
 {
-    
     __weak AddProductController* wSelf = self;
     THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
@@ -472,6 +472,12 @@
         if (status == NetWorkStatusSuccess) {
             
             complete(backDic[@"data"][@"url"]);
+        }
+        else
+        {
+        
+            THActivityView* warnView = [[THActivityView alloc]initWithString:@"图片上传失败"];
+            [warnView show];
         }
         NSLog(@"%@",backDic);
     }];

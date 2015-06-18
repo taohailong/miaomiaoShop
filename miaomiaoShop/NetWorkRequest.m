@@ -29,7 +29,6 @@
 
 -(void)getShopInfoWitbBk:(NetCallback)completeBk
 {
-    
     UserManager* manager = [UserManager shareUserManager];
     if (!manager.shopID) {
         return;
@@ -61,22 +60,21 @@
                 double closeT = [sourceDic[@"data"][@"shop"][@"close_time"] doubleValue]/1000;
                 data.closeTime = [formate formateFloatTimeValueToString:closeT];
             }
-            
-            
+            data.shopSpread = sourceDic[@"shop_code"];
             data.mobilePhoneNu = sourceDic[@"data"][@"shop"][@"owner_phone"];
-            data.shopStatue = ![sourceDic[@"data"][@"shop"][@"status"] intValue];//0 营业中,1 打烊
+            int status = [sourceDic[@"data"][@"shop"][@"status"] intValue];
+            //0 营业中,1 打烊
+            data.shopStatue = status==0?ShopStatusOpen:ShopStatusClose;
+            
             data.minPrice = [sourceDic[@"data"][@"shop"][@"base_price"] floatValue]/100;
             data.telPhoneNu  = sourceDic[@"data"][@"shop"][@"tel"];
             completeBk(data,status);
-            
         }
         else
         {
             completeBk(sourceDic,status);
         }
-        
     }];
-
 }
 
 -(void)shopInfoUpdateWithShopInfoData:(ShopInfoData*)data WithBk:(NetCallback)completeBk
@@ -198,9 +196,8 @@
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/dailySummary?shop_id=%@&ver=%@&from=%d&offset=7",HTTPHOST,manager.shopID,VERSION,index];
     
        [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
-        
-         completeBk(sourceDic,status);
            
+         completeBk(sourceDic,status);
     }];
 }
 
@@ -284,12 +281,14 @@
            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 NSMutableArray* todayArr = [NSMutableArray array];
                 NSMutableArray* notTodayArr = [NSMutableArray array];
-               
                 for (NSDictionary* dic in sourceArr) {
+                    
                    OrderData* order = [[OrderData alloc]init];
                    order.orderAddress = dic[@"address"];
                    order.orderID = dic[@"id"];
-                    double timeLength = [dic[@"create_time"] doubleValue]/1000;
+                    
+                   order.isNew = [dic[@"flag"] boolValue];
+                   double timeLength = [dic[@"create_time"] doubleValue]/1000;
                    order.orderTime = [manager  formateFloatTimeValueToString:timeLength] ;
                    order.orderNu = dic[@"order_id"];
                    order.payWay = dic[@"act"];
@@ -414,7 +413,7 @@
 -(void)shopAddProductInfoToServeWith:(ShopProductData*)data WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/addItem?serialNo=%@&name=%@&categoryId=%@&count=100&score=0&price=%d&saleStatus=%d&shop_id=%@&pic_ur=%@&ver=%@",HTTPHOST,data.scanNu,data.pName,data.categoryID,(int)(data.price*100),data.status,manager.shopID,data.pUrl,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/addItem?serialNo=%@&name=%@&categoryId=%@&count=100&score=0&price=%d&saleStatus=%d&shop_id=%@&pic_url=%@&ver=%@",HTTPHOST,data.scanNu,data.pName,data.categoryID,(int)(data.price*100),data.status,manager.shopID,data.pUrl,VERSION];
     
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
@@ -438,7 +437,6 @@
 
 -(void)shopScanProductWithSerial:(NSString*)serialNu WithBk:(NetCallback)completeBk
 {
-
 
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/product/get?serialNo=%@&ver=%@",HTTPHOST,serialNu,VERSION];
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
@@ -504,7 +502,6 @@
         
         if (status == NetWorkStatusSuccess)
         {
-//            [sourceDic[@"code"] intValue]==0
             NSMutableArray* arr = [NSMutableArray array];
             NSArray* products = sourceDic[@"data"][@"itemls"];
             for (NSDictionary* dic in products)

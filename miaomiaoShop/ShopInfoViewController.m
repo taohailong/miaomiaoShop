@@ -355,33 +355,18 @@
         AddProductSwithCell* cell7 = [tableView dequeueReusableCellWithIdentifier:@"cell7"];
         if (cell7==nil) {
             cell7 = [[AddProductSwithCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell7"];
+            
             __weak AddProductSwithCell* wCell = cell7;
             [cell7 setSwitchBlock:^(BOOL statue) {
-                
-                if (statue) {
-                    
-                   wCell.textLabel.text = @"营业管理:营业中";
-                }
-                else
-                {
-                     wCell.textLabel.text = @"营业管理:打烊";
-                    
-                }
                  wSelf.isInfoChanged = YES;
-                wShopData.shopStatue = !statue;//0 营业中,1 打烊
+                 wShopData.shopStatue = !statue;//0 营业中,1 打烊
+                
+                 wCell.textLabel.text = [NSString stringWithFormat:@"营业管理:%@",[wShopData getShopStatusStr]];
                 
             }];
-            [cell7 setSWitchStatue:wShopData.shopStatue];
+            [cell7 setSWitchStatue:!wShopData.shopStatue];
             
-            if (wShopData.shopStatue) {
-                cell7.textLabel.text = @"营业管理:营业中";
-            }
-            else
-            {
-                cell7.textLabel.text = @"营业管理:打烊";
-            }
-
-
+            cell7.textLabel.text = [NSString stringWithFormat:@"营业管理:%@",[wShopData getShopStatusStr]];
         }
         return cell7;
     }

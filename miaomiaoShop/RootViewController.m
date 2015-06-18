@@ -67,8 +67,6 @@
     _table.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
-
-    
 }
 
 
@@ -123,7 +121,6 @@
     __weak RootViewController* wSelf = self;
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
     [request getShopInfoWitbBk:^(id backDic, NetWorkStatus status) {
-        
 //        防止多次错误 时errView重叠
         [wSelf.errView removeFromSuperview];
         if (status == NetWorkStatusSuccess) {
@@ -165,6 +162,9 @@
     if (section==3) {
         return 1;
     }
+    if (section == 0) {
+        return 3;
+    }
     return 2;
 }
 
@@ -191,22 +191,28 @@
     NSString* titleStr = nil;
     if (indexPath.section==0)
     {
-    
         if (indexPath.row==0)
         {
             titleImage = [UIImage imageNamed:@"shopInfoIcon"];
-            titleStr = [NSString stringWithFormat:@"%@(%@)",_shopData.shopName?_shopData.shopName:@"",_shopData.shopStatue?@"营业中":@"打烊"];
+            
+            titleStr = [NSString stringWithFormat:@"%@(%@)",_shopData.shopName?_shopData.shopName:@"",[_shopData getShopStatusStr]];
             accessLabel.text = [NSString stringWithFormat:@"版本号:%@",VERSION];
             accessLabel.font = [UIFont systemFontOfSize:15];
             accessLabel.textColor = [UIColor lightGrayColor];
         }
-        else
+        else if(indexPath.row == 1)
         {
             cell.accessoryView = nil;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             titleImage = [UIImage imageNamed:@"shopInfo"];
             titleStr = _shopData.shopAddress;
         }
+        else
+        {
+            titleImage = [UIImage imageNamed:@"shop_spread"];
+            titleStr = _shopData.shopSpread;
+        }
+        
     }
     else if (indexPath.section==1)
     {

@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>C0362416-C377-45D3-A47E-B761435C9C4A</string>
 	<key>IDESourceControlProjectName</key>
-	<string>miaomiaoShop</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>0251F53A865A616BE670D94033AFE720B77AB6E0</key>
 		<string>https://github.com/taohailong/miaomiaoShop.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>miaomiaoShop.xcodeproj</string>
+	<string>miaomiaoShop.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>0251F53A865A616BE670D94033AFE720B77AB6E0</key>

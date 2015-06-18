@@ -36,7 +36,7 @@
 -(void)creatSubViews
 {
     _productImageView = [[UIImageView alloc]init];
-//    _productImageView.backgroundColor = [UIColor redColor];
+    _productImageView.contentMode = UIViewContentModeScaleAspectFit;
     _productImageView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_productImageView];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-2-[_productImageView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productImageView)]];

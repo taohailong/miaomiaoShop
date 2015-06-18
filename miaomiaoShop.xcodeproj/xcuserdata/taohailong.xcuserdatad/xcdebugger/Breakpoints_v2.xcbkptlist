@@ -74,7 +74,7 @@
                   moduleName = "miaomiaoShop"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/taohailong/Desktop/miaomiaoShop/miaomiaoShop/CashDebitController.m"
-                  timestampString = "455521872.962822"
+                  timestampString = "456318537.79813"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "83"
@@ -89,7 +89,7 @@
                   moduleName = "miaomiaoShop"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/taohailong/Desktop/miaomiaoShop/miaomiaoShop/CashDebitController.m"
-                  timestampString = "455521872.962959"
+                  timestampString = "456318537.798293"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "83"
@@ -97,6 +97,86 @@
                   offsetFromSymbolStart = "32">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "miaomiaoShop/ShopProductListView.m"
+            timestampString = "456054800.617215"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
+            landmarkName = "-tableView:commitEditingStyle:forRowAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "miaomiaoShop/AddProductController.m"
+            timestampString = "456307382.825357"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "-initWithCoder:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "miaomiaoShop/UserManager.m"
+            timestampString = "456314113.678972"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "-removeUserAccountWithBk:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "miaomiaoShop/UserManager.m"
+            timestampString = "456314113.678972"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
+            landmarkName = "-logInWithPhone:Pass:logBack:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "miaomiaoShop/NetWorkRequest.m"
+            timestampString = "456318512.18627"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "570"
+            endingLineNumber = "570"
+            landmarkName = "-shopLoginWithPhone:password:withCallBack:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

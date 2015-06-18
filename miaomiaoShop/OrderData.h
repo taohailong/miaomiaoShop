@@ -25,6 +25,8 @@
 @property(nonatomic,strong)NSString* deadTime;
 @property(nonatomic,assign)int countOfProduct;
 @property(nonatomic,assign)float discountMoney;
+@property(nonatomic,assign)BOOL isNew;
+
 -(void)setOrderInfoString:(NSString*)string;
 -(void)setOrderStatueWithString:(NSString *)orderStatue;
 -(NSString*)getPayMethod;
