@@ -307,6 +307,7 @@
                 wSelf.isInfoChanged = YES;
                 wShopData.minPrice = [text floatValue];
             }];
+            [cell3 setFieldKeyboardStyle:UIKeyboardTypeDecimalPad];
             [cell3 setTextTitleLabel:@"起送价格¥"];
             [cell3 setTextField:[NSString stringWithFormat:@"%.2f",wShopData.minPrice]];
         }

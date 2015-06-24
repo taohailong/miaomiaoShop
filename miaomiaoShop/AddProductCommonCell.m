@@ -72,7 +72,7 @@
 -(void)setTextTitleLabel:(NSString*)text
 {
     _textLabel.text= text;
-   }
+}
 
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string

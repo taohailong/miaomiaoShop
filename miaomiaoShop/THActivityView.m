@@ -253,7 +253,7 @@
 
 -(void)show
 {
-    UIWindow* window =  [UIApplication sharedApplication].keyWindow;
+    UIWindow* window =  [UIApplication sharedApplication].delegate.window;
     self.center = CGPointMake(window.center.x, window.center.y-20);
     [window addSubview:self];
     

@@ -13,6 +13,6 @@
 -(void)setCountOrderStr:(NSString*)str;
 -(void)setTotalMoney:(NSString*)str;
 //-(void)setPayStatueStr:(NSString*)str;
--(void)setPayStatueImage:(UIImage*)image;
-@property(nonatomic,weak)IBOutlet UILabel* payStatueLabel;
+//-(void)setPayStatueImage:(UIImage*)image;
+//@property(nonatomic,weak)IBOutlet UILabel* payStatueLabel;
 @end

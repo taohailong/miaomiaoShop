@@ -188,14 +188,16 @@
     
     UILabel* accessLabel = (UILabel*)cell.accessoryView;
     UIImage* titleImage = nil;
-    NSString* titleStr = nil;
+    NSString* titleStr = @"";
     if (indexPath.section==0)
     {
         if (indexPath.row==0)
         {
             titleImage = [UIImage imageNamed:@"shopInfoIcon"];
             
-            titleStr = [NSString stringWithFormat:@"%@(%@)",_shopData.shopName?_shopData.shopName:@"",[_shopData getShopStatusStr]];
+            if (_shopData) {
+              titleStr = [NSString stringWithFormat:@"%@(%@)",_shopData.shopName,[_shopData getShopStatusStr]];
+            }
             accessLabel.text = [NSString stringWithFormat:@"版本号:%@",VERSION];
             accessLabel.font = [UIFont systemFontOfSize:15];
             accessLabel.textColor = [UIColor lightGrayColor];
@@ -210,7 +212,8 @@
         else
         {
             titleImage = [UIImage imageNamed:@"shop_spread"];
-            titleStr = _shopData.shopSpread;
+            titleStr = @"推荐码";
+            accessLabel.text = _shopData.shopSpread;
         }
         
     }
@@ -219,13 +222,13 @@
          cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (indexPath.row)
         {
-             titleImage = [UIImage imageNamed:@"shopCountProduct"];
+            titleImage = [UIImage imageNamed:@"shopCountProduct"];
             titleStr = @"商品总数";
             accessLabel.text = _shopData.countProducts;
         }
         else
         {
-             titleImage = [UIImage imageNamed:@"shopCountCategory"];
+            titleImage = [UIImage imageNamed:@"shopCountCategory"];
             titleStr = @"商品分类总数";
             accessLabel.text = _shopData.countCategory;
         }
@@ -236,18 +239,16 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (indexPath.row)
         {
-             titleImage = [UIImage imageNamed:@"shopCountOrder"];
+            titleImage = [UIImage imageNamed:@"shopCountOrder"];
             titleStr = @"订单总数";
             accessLabel.text = _shopData.countOrder;
         }
         else
         {
-             titleImage = [UIImage imageNamed:@"shopTotalMoney"];
+            titleImage = [UIImage imageNamed:@"shopTotalMoney"];
             titleStr = @"订单总收入";
             accessLabel.text = _shopData.totalMoney;
-
         }
-
     }
     else
     {
@@ -279,7 +280,10 @@
     else  if (indexPath.row==0&&indexPath.section==0) {
         [self selectShopAction];
     }
-
+//    else if(indexPath.row == 2&& indexPath.section == 0)
+//    {
+//        
+//    }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

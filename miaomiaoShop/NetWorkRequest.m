@@ -16,7 +16,7 @@
 #import "DateFormateManager.h"
 #import "ShopInfoData.h"
 #import "CashDebitData.h"
-
+#import "SpreadData.h"
 
 
 @interface NetWorkRequest()
@@ -60,11 +60,11 @@
                 double closeT = [sourceDic[@"data"][@"shop"][@"close_time"] doubleValue]/1000;
                 data.closeTime = [formate formateFloatTimeValueToString:closeT];
             }
-            data.shopSpread = sourceDic[@"shop_code"];
+            data.shopSpread = sourceDic[@"data"][@"shop"][@"shop_code"];
             data.mobilePhoneNu = sourceDic[@"data"][@"shop"][@"owner_phone"];
-            int status = [sourceDic[@"data"][@"shop"][@"status"] intValue];
+            int shopStatus = [sourceDic[@"data"][@"shop"][@"status"] intValue];
             //0 营业中,1 打烊
-            data.shopStatue = status==0?ShopStatusOpen:ShopStatusClose;
+            data.shopStatue = shopStatus==0?ShopStatusOpen:ShopStatusClose;
             
             data.minPrice = [sourceDic[@"data"][@"shop"][@"base_price"] floatValue]/100;
             data.telPhoneNu  = sourceDic[@"data"][@"shop"][@"tel"];
@@ -190,13 +190,24 @@
 
 
 
--(void)getDailyOrderSummaryFromIndex:(int)index WithBk:(NetCallback)completeBk
+-(void)getDailyOrderSummaryDataWithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/dailySummary?shop_id=%@&ver=%@&from=%d&offset=7",HTTPHOST,manager.shopID,VERSION,index];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/dailySummary?shop_id=%@&ver=%@",HTTPHOST,manager.shopID,VERSION];
     
-       [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
-           
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
+        completeBk(sourceDic,status);
+    }];
+
+}
+
+
+-(void)getDailyOrderFromIndex:(int)index WithBk:(NetCallback)completeBk
+{
+    UserManager* manager = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/settleOrderList?shop_id=%@&from=%d&offset=7&ver=%@",HTTPHOST,manager.shopID,index,VERSION];
+    
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
          completeBk(sourceDic,status);
     }];
 }
@@ -251,14 +262,79 @@
                 });
                 
             });
-
-            
         }
         else
         {
             completeBk(sourceDic,status);
         }
         
+    }];
+}
+
+-(void)getSpreadSummaryDataWithIndex:(int)index WithBk:(NetCallback)completeBk
+{
+    UserManager* manager = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/inviteSummary?shop_id=%@&from=%d&offset=30&ver=%@",HTTPHOST,manager.shopID,index,VERSION];
+    [self getMethodRequestStrUrl:url complete:^(id sourceDic, NetWorkStatus status) {
+        
+        if (status == NetWorkStatusSuccess)
+        {
+            NSArray* dataArr = sourceDic[@"data"][@"list"];
+            NSMutableDictionary* returnDic = [[NSMutableDictionary alloc]init];
+            for (NSDictionary* dic in dataArr) {
+                
+                SpreadData* element = [[SpreadData alloc]init];
+                element.month = dic[@"month"];
+                element.date = dic[@"date"];
+                element.wxUserNu = [dic[@"wxUser"] intValue];
+                element.appUserNu = [dic[@"appUser"] intValue];
+                element.totalUserNu = [dic[@"totalUser"] intValue];
+                
+                 NSMutableArray* dicMothArr = returnDic[element.month];
+                if (dicMothArr == nil) {
+                    dicMothArr = [[NSMutableArray alloc]init];
+                    [returnDic setValue:dicMothArr forKey:element.month];
+                }
+                [dicMothArr addObject:element];
+                
+            }
+            completeBk(returnDic,status);
+        }
+        else
+        {
+           
+           completeBk(sourceDic,status);
+        }
+    }];
+}
+
+-(void)getSpreadInfoWithDate:(NSString*)date WithIndex:(int)index WithBk:(NetCallback)completeBk
+{
+    UserManager* manager = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/inviteDetail?shop_id=%@&date=%@&from=%d&offset=30&ver=%@",HTTPHOST,manager.shopID,date,index,VERSION];
+    
+    [self getMethodRequestStrUrl:url complete:^(id sourceDic, NetWorkStatus status) {
+        if (status == NetWorkStatusSuccess)
+        {
+            NSArray* dataArr = sourceDic[@"data"][@"list"];
+            NSMutableArray* returnArr = [[NSMutableArray alloc]init];
+            
+            for (NSDictionary* dic in dataArr) {
+                
+                SpreadData* element = [[SpreadData alloc]init];
+                element.confirmTime = dic[@"corderTime"];
+                element.shopID = dic[@"shopId"];
+                element.userID = dic[@"userId"];
+                element.codeTime = dic[@"ccodeTime"] ;
+                element.platform = dic[@"plat"];
+                [returnArr addObject:element];
+            }
+            completeBk(returnArr,status);
+        }
+        else
+        {
+            completeBk(sourceDic,status);
+        }
     }];
 }
 
@@ -274,7 +350,6 @@
  
         if (status == NetWorkStatusSuccess)
         {
-
             NSArray* sourceArr = sourceDic[@"data"][@"orderls"];
             DateFormateManager* manager = [DateFormateManager shareDateFormateManager];
             [manager  setDateStyleString:@"YY-MM-dd HH:mm"];

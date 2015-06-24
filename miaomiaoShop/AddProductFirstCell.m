@@ -33,9 +33,11 @@
 
     _contentField = [[UITextField alloc]initWithFrame:CGRectMake(63, 15, 190, 30)];
     _contentField.delegate= self;
+
     _contentField.font = [UIFont systemFontOfSize:15];
      _contentField.center = CGPointMake(SCREENWIDTH/2, 30);
     _contentField.keyboardType = UIKeyboardTypeNumberPad;
+//    _contentField.keyboardType = UIKeyboardTypeDecimalPad;
     _contentField.returnKeyType = UIReturnKeyDone;
     _contentField.borderStyle = UITextBorderStyleRoundedRect;
     [self.contentView addSubview:_contentField];

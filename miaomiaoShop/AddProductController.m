@@ -223,7 +223,6 @@
         if (cell2==nil) {
             cell2 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"2" WithFieldBk:^(NSString *text) {
                 wData.pName = text;
-                NSLog(@"pNmae %@ wdata %@",wData.pName,wData);
                 wSelf.infoChange = YES;
             }];
         }
@@ -239,7 +238,9 @@
                wData.price = [text floatValue];
                wSelf.infoChange = YES;
            }];
+        
        }
+       [cell3 setFieldKeyboardStyle:UIKeyboardTypeDecimalPad];
         [cell3 setTextTitleLabel:@"价格:"]  ;
         [cell3 setTextField:[NSString stringWithFormat:@"%.2f", _productData.price]];
        cell = cell3;

@@ -52,6 +52,10 @@
 		C74278931AF27BDB008E17BA /* ProductEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = C74278921AF27BDB008E17BA /* ProductEditController.m */; };
 		C7428BDE1B019C5A00F63ADB /* ShopSelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7428BDD1B019C5A00F63ADB /* ShopSelectController.m */; };
 		C7428BDF1B019C5A00F63ADB /* ShopSelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7428BDD1B019C5A00F63ADB /* ShopSelectController.m */; };
+		C7463FD81B393FEB00169FF6 /* ShopDailyDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7463FD71B393FEB00169FF6 /* ShopDailyDataController.m */; };
+		C7463FD91B393FEB00169FF6 /* ShopDailyDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7463FD71B393FEB00169FF6 /* ShopDailyDataController.m */; };
+		C7463FDC1B3958FA00169FF6 /* BusinessSummaryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7463FDB1B3958FA00169FF6 /* BusinessSummaryCell.m */; };
+		C7463FDD1B3958FA00169FF6 /* BusinessSummaryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7463FDB1B3958FA00169FF6 /* BusinessSummaryCell.m */; };
 		C749AED11B10434200F82FF2 /* NSString+ZhengZe.m in Sources */ = {isa = PBXBuildFile; fileRef = C749AED01B10434200F82FF2 /* NSString+ZhengZe.m */; };
 		C749AED21B10434200F82FF2 /* NSString+ZhengZe.m in Sources */ = {isa = PBXBuildFile; fileRef = C749AED01B10434200F82FF2 /* NSString+ZhengZe.m */; };
 		C753BEAB1AE7460800562EF6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C753BEAA1AE7460800562EF6 /* main.m */; };
@@ -101,6 +105,16 @@
 		C76ADB721AFCAA73008DF9A4 /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C76ADB701AFCAA73008DF9A4 /* line@2x.png */; };
 		C76ADB741AFCAA77008DF9A4 /* pick_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C76ADB731AFCAA77008DF9A4 /* pick_bg@2x.png */; };
 		C76ADB751AFCAA77008DF9A4 /* pick_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C76ADB731AFCAA77008DF9A4 /* pick_bg@2x.png */; };
+		C7749F4E1B3A493D0090BBC4 /* BusinessSpreadSummarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7749F4D1B3A493D0090BBC4 /* BusinessSpreadSummarCell.m */; };
+		C7749F4F1B3A493D0090BBC4 /* BusinessSpreadSummarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7749F4D1B3A493D0090BBC4 /* BusinessSpreadSummarCell.m */; };
+		C7749F521B3A698F0090BBC4 /* SpreadData.m in Sources */ = {isa = PBXBuildFile; fileRef = C7749F511B3A698F0090BBC4 /* SpreadData.m */; };
+		C7749F531B3A698F0090BBC4 /* SpreadData.m in Sources */ = {isa = PBXBuildFile; fileRef = C7749F511B3A698F0090BBC4 /* SpreadData.m */; };
+		C7749F561B3A86E30090BBC4 /* SpreadListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7749F551B3A86E30090BBC4 /* SpreadListController.m */; };
+		C7749F571B3A86E30090BBC4 /* SpreadListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7749F551B3A86E30090BBC4 /* SpreadListController.m */; };
+		C7749F5A1B3A8FC40090BBC4 /* SpreadListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7749F591B3A8FC40090BBC4 /* SpreadListCell.m */; };
+		C7749F5B1B3A8FC40090BBC4 /* SpreadListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7749F591B3A8FC40090BBC4 /* SpreadListCell.m */; };
+		C7749F5E1B3AA5FC0090BBC4 /* SpreadInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7749F5D1B3AA5FC0090BBC4 /* SpreadInfoController.m */; };
+		C7749F5F1B3AA5FC0090BBC4 /* SpreadInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7749F5D1B3AA5FC0090BBC4 /* SpreadInfoController.m */; };
 		C7777CD31AEA657000A9BDC3 /* AddProductController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7777CD21AEA657000A9BDC3 /* AddProductController.m */; };
 		C784433C1AF9E3A0009B4C2D /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = C753C16A1AE78E4E00562EF6 /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C784433D1AF9E3A0009B4C2D /* ShopBusinessController.m in Sources */ = {isa = PBXBuildFile; fileRef = C75680C91AF762F900F0A990 /* ShopBusinessController.m */; };
@@ -291,6 +305,10 @@
 		C74278921AF27BDB008E17BA /* ProductEditController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductEditController.m; sourceTree = "<group>"; };
 		C7428BDC1B019C5A00F63ADB /* ShopSelectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopSelectController.h; sourceTree = "<group>"; };
 		C7428BDD1B019C5A00F63ADB /* ShopSelectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopSelectController.m; sourceTree = "<group>"; };
+		C7463FD61B393FEB00169FF6 /* ShopDailyDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopDailyDataController.h; sourceTree = "<group>"; };
+		C7463FD71B393FEB00169FF6 /* ShopDailyDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopDailyDataController.m; sourceTree = "<group>"; };
+		C7463FDA1B3958FA00169FF6 /* BusinessSummaryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessSummaryCell.h; sourceTree = "<group>"; };
+		C7463FDB1B3958FA00169FF6 /* BusinessSummaryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessSummaryCell.m; sourceTree = "<group>"; };
 		C749AECF1B10434200F82FF2 /* NSString+ZhengZe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ZhengZe.h"; sourceTree = "<group>"; };
 		C749AED01B10434200F82FF2 /* NSString+ZhengZe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ZhengZe.m"; sourceTree = "<group>"; };
 		C753BEA51AE7460800562EF6 /* miaomiaoShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = miaomiaoShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -384,6 +402,16 @@
 		C75680D21AF7807300F0A990 /* BusinessInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessInfoCell.m; sourceTree = "<group>"; };
 		C76ADB701AFCAA73008DF9A4 /* line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line@2x.png"; sourceTree = "<group>"; };
 		C76ADB731AFCAA77008DF9A4 /* pick_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pick_bg@2x.png"; sourceTree = "<group>"; };
+		C7749F4C1B3A493D0090BBC4 /* BusinessSpreadSummarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessSpreadSummarCell.h; sourceTree = "<group>"; };
+		C7749F4D1B3A493D0090BBC4 /* BusinessSpreadSummarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessSpreadSummarCell.m; sourceTree = "<group>"; };
+		C7749F501B3A698F0090BBC4 /* SpreadData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpreadData.h; sourceTree = "<group>"; };
+		C7749F511B3A698F0090BBC4 /* SpreadData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpreadData.m; sourceTree = "<group>"; };
+		C7749F541B3A86E30090BBC4 /* SpreadListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpreadListController.h; sourceTree = "<group>"; };
+		C7749F551B3A86E30090BBC4 /* SpreadListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpreadListController.m; sourceTree = "<group>"; };
+		C7749F581B3A8FC40090BBC4 /* SpreadListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpreadListCell.h; sourceTree = "<group>"; };
+		C7749F591B3A8FC40090BBC4 /* SpreadListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpreadListCell.m; sourceTree = "<group>"; };
+		C7749F5C1B3AA5FC0090BBC4 /* SpreadInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpreadInfoController.h; sourceTree = "<group>"; };
+		C7749F5D1B3AA5FC0090BBC4 /* SpreadInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpreadInfoController.m; sourceTree = "<group>"; };
 		C7777CD11AEA657000A9BDC3 /* AddProductController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProductController.h; sourceTree = "<group>"; };
 		C7777CD21AEA657000A9BDC3 /* AddProductController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProductController.m; sourceTree = "<group>"; };
 		C78443921AF9E3A0009B4C2D /* miaomiaoShop copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "miaomiaoShop copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -548,6 +576,20 @@
 			children = (
 				C75680C81AF762F900F0A990 /* ShopBusinessController.h */,
 				C75680C91AF762F900F0A990 /* ShopBusinessController.m */,
+				C7463FDA1B3958FA00169FF6 /* BusinessSummaryCell.h */,
+				C7463FDB1B3958FA00169FF6 /* BusinessSummaryCell.m */,
+				C7749F4C1B3A493D0090BBC4 /* BusinessSpreadSummarCell.h */,
+				C7749F4D1B3A493D0090BBC4 /* BusinessSpreadSummarCell.m */,
+				C7463FD61B393FEB00169FF6 /* ShopDailyDataController.h */,
+				C7463FD71B393FEB00169FF6 /* ShopDailyDataController.m */,
+				C7749F541B3A86E30090BBC4 /* SpreadListController.h */,
+				C7749F551B3A86E30090BBC4 /* SpreadListController.m */,
+				C7749F5C1B3AA5FC0090BBC4 /* SpreadInfoController.h */,
+				C7749F5D1B3AA5FC0090BBC4 /* SpreadInfoController.m */,
+				C7749F581B3A8FC40090BBC4 /* SpreadListCell.h */,
+				C7749F591B3A8FC40090BBC4 /* SpreadListCell.m */,
+				C7749F501B3A698F0090BBC4 /* SpreadData.h */,
+				C7749F511B3A698F0090BBC4 /* SpreadData.m */,
 				C73A4DD71B145F2A00A93545 /* CashDebitController.h */,
 				C73A4DD81B145F2A00A93545 /* CashDebitController.m */,
 				C72FFA411B15C78E007C9C3D /* CommonWebController.h */,
@@ -977,6 +1019,7 @@
 				C78444151AFA1DD8009B4C2D /* YFGIFImageView.m in Sources */,
 				C74136AA1AE8F48E00B08CBD /* ProductCell.m in Sources */,
 				C75680D31AF7807300F0A990 /* BusinessInfoCell.m in Sources */,
+				C7749F521B3A698F0090BBC4 /* SpreadData.m in Sources */,
 				C753C1AF1AE78E5800562EF6 /* UIImage+WebP.m in Sources */,
 				C72FFA371B155C2C007C9C3D /* CashDebitData.m in Sources */,
 				C713A23B1AF45F64000EC646 /* OrderListCell.m in Sources */,
@@ -1004,22 +1047,27 @@
 				C753BEAB1AE7460800562EF6 /* main.m in Sources */,
 				C753C1A81AE78E5800562EF6 /* SDWebImageDownloader.m in Sources */,
 				C753C1B01AE78E5800562EF6 /* UIImageView+WebCache.m in Sources */,
+				C7463FD81B393FEB00169FF6 /* ShopDailyDataController.m in Sources */,
 				C753C1A61AE78E5800562EF6 /* SDWebImageCompat.m in Sources */,
 				C753C1831AE78E4E00562EF6 /* ASINetworkQueue.m in Sources */,
 				C7241F7C1AF4EFB3000474B4 /* ShopInfoData.m in Sources */,
 				C741369E1AE8C65200B08CBD /* ShopCategoryListView.m in Sources */,
 				C75680BF1AF7117E00F0A990 /* NavigationBaseController.m in Sources */,
 				C74136A41AE8DFA900B08CBD /* ShopCategoryData.m in Sources */,
+				C7749F561B3A86E30090BBC4 /* SpreadListController.m in Sources */,
 				C78444131AFA1DD8009B4C2D /* UIImageView+PlayGIF.m in Sources */,
+				C7749F4E1B3A493D0090BBC4 /* BusinessSpreadSummarCell.m in Sources */,
 				C74136AD1AE90B0C00B08CBD /* LastViewOnTable.m in Sources */,
 				C725BB421AEBAA3E00F344CB /* AddProductPictureCell.m in Sources */,
 				C725BB3F1AEB6FAA00F344CB /* AddProductSwithCell.m in Sources */,
+				C7463FDC1B3958FA00169FF6 /* BusinessSummaryCell.m in Sources */,
 				C753C1AD1AE78E5800562EF6 /* UIImage+GIF.m in Sources */,
 				C717DFEE1AF3B61D0057DD72 /* OrderListViewController.m in Sources */,
 				C71F470F1AF592EF00D14972 /* DatePickerView.m in Sources */,
 				C753C1AE1AE78E5800562EF6 /* UIImage+MultiFormat.m in Sources */,
 				C753C17E1AE78E4E00562EF6 /* ASIDataDecompressor.m in Sources */,
 				C713A2521AF48E57000EC646 /* OrderInfoController.m in Sources */,
+				C7749F5A1B3A8FC40090BBC4 /* SpreadListCell.m in Sources */,
 				C753C1AB1AE78E5800562EF6 /* SDWebImagePrefetcher.m in Sources */,
 				C753C1A31AE78E5800562EF6 /* MKAnnotationView+WebCache.m in Sources */,
 				C753C1A41AE78E5800562EF6 /* NSData+GIF.m in Sources */,
@@ -1034,6 +1082,7 @@
 				C7241F7F1AF4F514000474B4 /* ShopInfoViewController.m in Sources */,
 				C753C1C21AE7A8B500562EF6 /* RootTabBarViewController.m in Sources */,
 				C7241F791AF4E197000474B4 /* RootViewController.m in Sources */,
+				C7749F5E1B3AA5FC0090BBC4 /* SpreadInfoController.m in Sources */,
 				C741369B1AE8C1DE00B08CBD /* ShopProductListView.m in Sources */,
 				C7428BDE1B019C5A00F63ADB /* ShopSelectController.m in Sources */,
 				C753C1841AE78E4E00562EF6 /* Reachability.m in Sources */,
@@ -1064,6 +1113,7 @@
 				C784433F1AF9E3A0009B4C2D /* ViewController.m in Sources */,
 				C78444161AFA1DD8009B4C2D /* YFGIFImageView.m in Sources */,
 				C78443401AF9E3A0009B4C2D /* ProductCell.m in Sources */,
+				C7749F531B3A698F0090BBC4 /* SpreadData.m in Sources */,
 				C78443411AF9E3A0009B4C2D /* BusinessInfoCell.m in Sources */,
 				C78443421AF9E3A0009B4C2D /* UIImage+WebP.m in Sources */,
 				C78443431AF9E3A0009B4C2D /* OrderListCell.m in Sources */,
@@ -1091,22 +1141,27 @@
 				C78443581AF9E3A0009B4C2D /* main.m in Sources */,
 				C78443591AF9E3A0009B4C2D /* SDWebImageDownloader.m in Sources */,
 				C784435A1AF9E3A0009B4C2D /* UIImageView+WebCache.m in Sources */,
+				C7463FD91B393FEB00169FF6 /* ShopDailyDataController.m in Sources */,
 				C784435B1AF9E3A0009B4C2D /* SDWebImageCompat.m in Sources */,
 				C784435C1AF9E3A0009B4C2D /* ASINetworkQueue.m in Sources */,
 				C784435D1AF9E3A0009B4C2D /* ShopInfoData.m in Sources */,
 				C784435E1AF9E3A0009B4C2D /* ShopCategoryListView.m in Sources */,
 				C784435F1AF9E3A0009B4C2D /* NavigationBaseController.m in Sources */,
 				C78443601AF9E3A0009B4C2D /* ShopCategoryData.m in Sources */,
+				C7749F571B3A86E30090BBC4 /* SpreadListController.m in Sources */,
 				C78444141AFA1DD8009B4C2D /* UIImageView+PlayGIF.m in Sources */,
+				C7749F4F1B3A493D0090BBC4 /* BusinessSpreadSummarCell.m in Sources */,
 				C78443611AF9E3A0009B4C2D /* LastViewOnTable.m in Sources */,
 				C78443621AF9E3A0009B4C2D /* AddProductPictureCell.m in Sources */,
 				C78443631AF9E3A0009B4C2D /* AddProductSwithCell.m in Sources */,
+				C7463FDD1B3958FA00169FF6 /* BusinessSummaryCell.m in Sources */,
 				C78443641AF9E3A0009B4C2D /* UIImage+GIF.m in Sources */,
 				C78443651AF9E3A0009B4C2D /* OrderListViewController.m in Sources */,
 				C78443661AF9E3A0009B4C2D /* DatePickerView.m in Sources */,
 				C78443671AF9E3A0009B4C2D /* UIImage+MultiFormat.m in Sources */,
 				C78443681AF9E3A0009B4C2D /* ASIDataDecompressor.m in Sources */,
 				C78443691AF9E3A0009B4C2D /* OrderInfoController.m in Sources */,
+				C7749F5B1B3A8FC40090BBC4 /* SpreadListCell.m in Sources */,
 				C784436A1AF9E3A0009B4C2D /* SDWebImagePrefetcher.m in Sources */,
 				C784436B1AF9E3A0009B4C2D /* MKAnnotationView+WebCache.m in Sources */,
 				C784436C1AF9E3A0009B4C2D /* NSData+GIF.m in Sources */,
@@ -1121,6 +1176,7 @@
 				C78443751AF9E3A0009B4C2D /* RootViewController.m in Sources */,
 				C78443761AF9E3A0009B4C2D /* ShopProductListView.m in Sources */,
 				C7428BDF1B019C5A00F63ADB /* ShopSelectController.m in Sources */,
+				C7749F5F1B3AA5FC0090BBC4 /* SpreadInfoController.m in Sources */,
 				C78443771AF9E3A0009B4C2D /* Reachability.m in Sources */,
 				C78443781AF9E3A0009B4C2D /* NetWorkRequest.m in Sources */,
 				C78443791AF9E3A0009B4C2D /* UIImage+ZoomImage.m in Sources */,
