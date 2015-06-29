@@ -113,9 +113,19 @@
             {
                 CashDebitData* cashData = [[CashDebitData alloc]init];
                 cashData.debitMoney = [NSString stringWithFormat:@"%.2f",[dic[@"price"] floatValue]/100];
-                
+                cashData.spreadMoney = [dic[@"invite_price"] floatValue]/100;
                 cashData.debitStatus = [dic[@"status"] intValue]?CashComplete:CashProcess;
-                cashData.debitType = [dic[@"cash_type"] intValue]?CashIncome:CashExpend;
+                
+                switch ([dic[@"cash_type"] intValue]) {
+                    case 0:
+                        cashData.debitType = CashExpend;
+                        break;
+                    case 1:
+                         cashData.debitType = CashIncome;
+                        break;
+                    default:
+                        break;
+                }
                 
                 if (cashData.debitType==CashIncome)
                 {
@@ -193,7 +203,7 @@
 -(void)getDailyOrderSummaryDataWithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/dailySummary?shop_id=%@&ver=%@",HTTPHOST,manager.shopID,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/dailySummaryNew?shop_id=%@&ver=%@",HTTPHOST,manager.shopID,VERSION];
     
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
         completeBk(sourceDic,status);

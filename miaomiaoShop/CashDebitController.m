@@ -15,6 +15,8 @@
 #import "LastViewOnTable.h"
 #import "DateFormateManager.h"
 #import "CommonWebController.h"
+
+
 @interface CashDebitController()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView* _table;
@@ -23,15 +25,19 @@
     UILabel* _cashLabel;
     UIButton* _cashBt;
     NSMutableArray* _dataArr ;
+    float _spreadMoney;
+    
+    UILabel* _detailLabel;
 }
 @end
 @implementation CashDebitController
 @synthesize canTake;
 
--(id)initWithCash:(float)cash
+-(id)initWithCash:(float)cash WithSpread:(float)spread
 {
     self = [super init];
     _cash = cash;
+    _spreadMoney = spread;
     _dataArr = [[NSMutableArray alloc]init];
     return self;
 }
@@ -62,13 +68,6 @@
     [req startAsynchronous];
 }
 
--(void)reloadTableWithData:(NSMutableArray*)arr
-{
-    _cashLabel.text = [NSString stringWithFormat:@"可提金额：%.2f 元",_cash];;
-    _dataArr = arr;
-    [_table reloadData];
-    [self addLoadMoreViewWithCount:arr.count];
-}
 
 
 -(void)loadMoreData
@@ -109,7 +108,6 @@
 
 -(void)addLoadMoreViewWithCount:(int)count
 {
-    
     if (count<7) {
         _table.tableFooterView = nil;
     }
@@ -120,42 +118,32 @@
 }
 
 
-
-
 -(void)cashDebitThroughNet
 {
-   
     if (self.canTake==NO) {
         
         UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"一天只能提现一次" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alert show];
-        
         return;
     }
     
     
     if (_cash==0)
     {
-        
         UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"0元不能提款" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alert show];
         return;
     }
-    
     
     DateFormateManager* date = [DateFormateManager shareDateFormateManager];
 
     if (_cash<500)
     {
         if ([date weekDay]!=Sunday) {
-            
             UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"周一到周六最低可提现500元,周日可以任意提现" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
-            
             return;
         }
-        
-       
     }
     
     
@@ -167,7 +155,6 @@
     __weak CashDebitController* wself = self;
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
     [req getCashWithRequestMoney:[NSString stringWithFormat:@"%d",(int)(_cash*100)] WithBk:^(id backDic, NetWorkStatus status) {
-
         [loadView removeFromSuperview];
         [fullView removeFromSuperview];
         
@@ -175,14 +162,12 @@
         {
             UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:[NSString stringWithFormat:@"提现成功！金额：￥%.2f",_cash] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
-            
             _cash = 0;
             [wself reloadTableWithData:backDic];
         }
         else
         {
-            
-             NSString* str = (NSString*)backDic;
+            NSString* str = (NSString*)backDic;
             UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:str  delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
         }
@@ -191,10 +176,21 @@
     [req startAsynchronous];
 }
 
+
+-(void)reloadTableWithData:(NSMutableArray*)arr
+{
+    _cashLabel.text = [NSString stringWithFormat:@"可提金额：%.2f 元",_cash];
+    _detailLabel.text = [NSString stringWithFormat:@"＝%.1f(订单金额)＋%.1f(推广金额)",_cash-_spreadMoney,_spreadMoney];
+    _dataArr = arr;
+    [_table reloadData];
+    [self addLoadMoreViewWithCount:arr.count];
+}
+
+
 -(void)creatSubView
 {
     UIView* headBack = [[UIView alloc]init];
-//    headBack.backgroundColor = [UIColor colorWithRed:240.0f/255.0 green:240.f/255.0 blue:240.f/255.0 alpha:1.0 ];
+
     headBack.backgroundColor = [UIColor whiteColor];
     headBack.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:headBack];
@@ -212,7 +208,7 @@
    
     _cashLabel = [[UILabel alloc]init];
     _cashLabel.adjustsFontSizeToFitWidth = YES;
-    _cashLabel.text = [NSString stringWithFormat:@"可提金额：%.2f 元",_cash];
+    _cashLabel.text = [NSString stringWithFormat:@"可提金额：%.1f 元",_cash];
     _cashLabel.font = [UIFont boldSystemFontOfSize:24];
     _cashLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [headBack addSubview:_cashLabel];
@@ -222,6 +218,14 @@
     [headBack addConstraint:[NSLayoutConstraint constraintWithItem:_cashLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:headBack attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
     
     
+    _detailLabel = [[UILabel alloc]init];
+    _detailLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [headBack addSubview:_detailLabel];
+    [headBack addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_cashLabel]-5-[_detailLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_cashLabel,_detailLabel)]];
+    [headBack addConstraint:[NSLayoutConstraint constraintWithItem:_detailLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_cashLabel attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
+    
+    _detailLabel.font = [UIFont systemFontOfSize:15];
+    _detailLabel.text = [NSString stringWithFormat:@"订单收入(%.1f)＋推广收入(%.1f)",_cash-_spreadMoney,_spreadMoney];
     
     
     _cashBt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -229,7 +233,6 @@
     [_cashBt setTitle:@"提现" forState:UIControlStateNormal];
     [_cashBt setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     if (self.canTake==NO) {
-//        _cashBt.enabled = NO;
         _cashBt.backgroundColor = [UIColor lightGrayColor];
         
     }
@@ -253,8 +256,6 @@
     self.navigationItem.rightBarButtonItem = rightBar;
     
     
-    
-    
     _table = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     _table.delegate = self;
     _table.dataSource = self;
@@ -273,6 +274,9 @@
     web.title = @"提现规则";
     [self.navigationController pushViewController:web animated:YES];
 }
+
+
+#pragma mark-----------getCash------------------
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -305,28 +309,9 @@
     }
     
     CashDebitData* dic = _dataArr[indexPath.row];
-    
     cell.titleLabel.text = dic.debitTime;
-    cell.contentLabel.text = [NSString stringWithFormat:@"当日%@%@元",dic.debitType==CashIncome?@"收入 +":@"提现 -", dic.debitMoney];
-    
-    if(dic.debitType==CashIncome)
-    {
-       cell.detailLabel.text = @"";
-    }
-    else
-    {
-        
-        if (dic.debitStatus==CashComplete) {
-           cell.detailLabel.text = @"打款状态：打款完成";
-        }
-        else
-        {
-            NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"打款状态：打款中"];
-            [str addAttribute:NSForegroundColorAttributeName value:DEFAULTNAVCOLOR range:NSMakeRange(5, 3)];
-            
-           cell.detailLabel.attributedText = str;
-        }
-    }
+    cell.contentLabel.text = [dic cashCellContentStr];
+    cell.detailLabel.attributedText = [dic cashCellDetailStr];
     
     return cell;
 }

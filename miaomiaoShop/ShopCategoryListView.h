@@ -1,4 +1,4 @@
-//
+
 //  ShopCategoryList.h
 //  miaomiaoShop
 //
@@ -16,7 +16,7 @@
 @end
 @interface ShopCategoryListView : UIView<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
-     UITableView* _table;
+    UITableView* _table;
     NSMutableArray* _dataArr;
 }
 @property(nonatomic,weak)IBOutlet id<ShopCategoryProtocol>delegate;

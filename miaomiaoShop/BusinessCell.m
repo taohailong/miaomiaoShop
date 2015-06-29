@@ -29,7 +29,7 @@
     timeImage.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:timeImage];
     timeImage.image = [UIImage imageNamed:@"order_time"];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[timeImage]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(timeImage)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[timeImage]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(timeImage)]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[timeImage]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(timeImage)]];
   
     _titleLabel = [[UILabel alloc]init];
@@ -46,7 +46,7 @@
     orderNuImage.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:orderNuImage];
     orderNuImage.image = [UIImage imageNamed:@"order_statue"];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[timeImage]-8-[orderNuImage]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(timeImage,orderNuImage)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[timeImage]-10-[orderNuImage]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(timeImage,orderNuImage)]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:orderNuImage attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:timeImage attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
     
     UILabel* orderTitleL = [[UILabel alloc]init];
@@ -72,7 +72,7 @@
     moneyImage.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:moneyImage];
     moneyImage.image = [UIImage imageNamed:@"dollar"];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[orderNuImage]-8-[moneyImage]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(orderNuImage,moneyImage)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[orderNuImage]-10-[moneyImage]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(orderNuImage,moneyImage)]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:moneyImage attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:timeImage attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
     
     

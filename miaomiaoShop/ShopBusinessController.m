@@ -28,6 +28,7 @@
     IBOutlet UIView* _topBackView;
     
     float _currentCash;
+    float _spreadMoney;
     BOOL _canTake;
     BOOL _isLoading;
     
@@ -121,8 +122,8 @@
 -(void)fillDataToViewWith:(NSDictionary*)souceDic
 {
     _canTake = [souceDic[@"data"][@"summary"][@"canTake"] boolValue];
-    _currentCash = [souceDic[@"data"][@"summary"][@"walletPrice"]floatValue]/100;
-    
+    _currentCash = [souceDic[@"data"][@"summary"][@"walletPrice"][@"totalPrice"]floatValue]/100;
+    _spreadMoney = [souceDic[@"data"][@"summary"][@"walletPrice"][@"invitePrice"]floatValue]/100;
     
     NSDictionary* nosetDic = souceDic[@"data"][@"summary"][@"nosettlemet"];
     
@@ -132,20 +133,28 @@
     
     
     _settleCountOrder = [souceDic[@"data"][@"summary"][@"settleOder"][@"count"] stringValue];
-    _settleTotalMoney = [souceDic[@"data"][@"summary"][@"settleOder"][@"price"] stringValue];
+    _settleTotalMoney = [NSString stringWithFormat:@"¥%.2f",[souceDic[@"data"][@"summary"][@"settleOder"][@"price"] floatValue]/100];
     
     
     _spread_app = [souceDic[@"data"][@"summary"][@"inviteUser"][@"appUser"] stringValue];
     
-     _spread_wx = [souceDic[@"data"][@"summary"][@"inviteUser"][@"wxUser"] stringValue];
+    _spread_wx = [souceDic[@"data"][@"summary"][@"inviteUser"][@"wxUser"] stringValue];
     
-     _spreadTotal = [souceDic[@"data"][@"summary"][@"inviteUser"][@"totalUser"] stringValue];
-    
+    _spreadTotal = [souceDic[@"data"][@"summary"][@"inviteUser"][@"totalUser"] stringValue];
     [_table reloadData];
 }
 
 
 #pragma mark-----------tableview-----------------
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section==0) {
+        return 30;
+    }
+    return 20;
+}
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -178,7 +187,7 @@
         case 2:
             return @"用户已确认收货订单";
         case 3:
-            return @"推广用户信息";
+            return @"当前月推广用户信息";
         default:
             break;
     }
@@ -254,7 +263,7 @@
 
 -(void)tapViewToCashTrade
 {
-    CashDebitController* cashView = [[CashDebitController alloc]initWithCash:_currentCash];
+    CashDebitController* cashView = [[CashDebitController alloc]initWithCash:_currentCash WithSpread:_spreadMoney];
     cashView.hidesBottomBarWhenPushed = YES;
     cashView.canTake = _canTake;
     [self.navigationController pushViewController:cashView animated:YES];

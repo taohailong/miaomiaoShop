@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface CashDebitController : UIViewController
--(id)initWithCash:(float)cash;
+-(id)initWithCash:(float)cash WithSpread:(float)spread;
 @property(nonatomic,assign)BOOL canTake;
 @end
