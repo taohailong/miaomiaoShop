@@ -99,13 +99,13 @@
 {
     UserManager* manager = [UserManager shareUserManager];
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/wallet/show?shop_id=%@&ver=%@&from=%d&offset=7",HTTPHOST,manager.shopID,VERSION,index];
+    NSLog(@"ur is %@",url);
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
         
         if (status == NetWorkStatusSuccess)
         {
             DateFormateManager* dateManager = [DateFormateManager shareDateFormateManager];
             
-
             NSArray* arr = sourceDic[@"data"][@"shopCashLists"];
             NSMutableArray* backArr = [[NSMutableArray alloc]init];
             
@@ -199,7 +199,7 @@
 }
 
 
-
+//钱包首页  总数
 -(void)getDailyOrderSummaryDataWithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
@@ -461,6 +461,9 @@
 -(void)shopProductUpdateWithProduct:(ShopProductData *)data WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
+    data.price += 0.0001;
+
+    
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/update?itemId=%@&itemName=%@&serialNo=%@&category_id=%@&count=1000&price=%d&saleStatus=%d&shop_id=%@&pic_url=%@&score=%@&ver=%@",HTTPHOST,data.pID,data.pName,data.scanNu,data.categoryID,(int)(data.price*100),data.status,manager.shopID,data.pUrl,data.score,VERSION];
     
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -497,6 +500,8 @@
 
 -(void)shopAddProductInfoToServeWith:(ShopProductData*)data WithBk:(NetCallback)completeBk
 {
+    
+    data.price += 0.0001;
     UserManager* manager = [UserManager shareUserManager];
     NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/addItem?serialNo=%@&name=%@&categoryId=%@&count=100&score=0&price=%d&saleStatus=%d&shop_id=%@&pic_url=%@&ver=%@",HTTPHOST,data.scanNu,data.pName,data.categoryID,(int)(data.price*100),data.status,manager.shopID,data.pUrl,VERSION];
     

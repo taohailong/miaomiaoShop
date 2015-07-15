@@ -7,8 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <UIKit/UIKit.h>
 @interface OrderData : NSObject
+{
+    UIFont* _addressFont;
+    CGSize _addressSize;
+    float _addressHeight;
+}
 @property(nonatomic,strong)NSString* orderAddress;
 @property(nonatomic,strong)NSString* orderTime;
 @property(nonatomic,strong)NSString* orderID;
@@ -26,6 +31,12 @@
 @property(nonatomic,assign)int countOfProduct;
 @property(nonatomic,assign)float discountMoney;
 @property(nonatomic,assign)BOOL isNew;
+
+//calculate address Height
+-(float)getAddressHeight;
+-(float)calculateAddressHeightWithFont:(UIFont*)font WithSize:(CGSize)size;
+
+
 
 -(void)setOrderInfoString:(NSString*)string;
 -(void)setOrderStatueWithString:(NSString *)orderStatue;

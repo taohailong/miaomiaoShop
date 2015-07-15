@@ -109,7 +109,7 @@
     UserManager* manager = [UserManager shareUserManager];
     NetWorkRequest* productReq = [[NetWorkRequest alloc]init];
     __weak ShopProductListView* wSelf = self;
-    [productReq shopGetProductWithShopID:manager.shopID withCategory:_currentCategoryID fromIndex:_dataArr.count WithCallBack:^(id backDic, NetWorkStatus status) {
+    [productReq shopGetProductWithShopID:manager.shopID withCategory:_currentCategoryID fromIndex:_dataArr.count+1 WithCallBack:^(id backDic, NetWorkStatus status) {
         
         [fullView removeFromSuperview];
         wSelf.isLoading = NO;

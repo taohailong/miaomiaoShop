@@ -98,7 +98,7 @@
     
     __weak ShopDailyDataController* wSelf = self;
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request getDailyOrderFromIndex:_settleOrderS.count  WithBk:^(NSDictionary* backDic, NetWorkStatus status) {
+    [request getDailyOrderFromIndex:_settleOrderS.count+1  WithBk:^(NSDictionary* backDic, NetWorkStatus status) {
         
         if (status==NetWorkStatusSuccess) {
             [wSelf loadMoreDataAnalysis:backDic];
@@ -111,7 +111,7 @@
 -(void)loadMoreDataAnalysis:(NSDictionary*)souceDic
 {
     _isLoading = NO;
-    NSArray* arr = souceDic[@"data"][@"summary"][@"settlemets"];
+    NSArray* arr = souceDic[@"data"][@"settlemets"];
     [self addLoadMoreViewWithCount:arr.count];
     if (arr)
     {

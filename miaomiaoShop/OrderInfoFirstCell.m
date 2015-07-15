@@ -23,11 +23,13 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     _addressLabel = [[UILabel alloc]init];
+    _addressLabel.numberOfLines = 0;
+    _addressLabel.lineBreakMode = NSLineBreakByCharWrapping;
     _addressLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _addressLabel.font = [UIFont systemFontOfSize:15];
     [self.contentView addSubview:_addressLabel];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-14-[_addressLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_addressLabel)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-14-[_addressLabel]-2-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_addressLabel)]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_addressLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_addressLabel)]];
 
     _payWayLabel = [[UILabel alloc]init];
@@ -66,8 +68,8 @@
     _messageLabel.font = [UIFont systemFontOfSize:15];
     [self.contentView addSubview:_messageLabel];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-14-[_messageLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_messageLabel)]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[textBtL]-8-[_messageLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(textBtL,_messageLabel)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-14-[_messageLabel]-2-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_messageLabel)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[textBtL]-8-[_messageLabel]-5-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(textBtL,_messageLabel)]];
 
     
     

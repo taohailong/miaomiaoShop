@@ -24,7 +24,7 @@
 		C717DFEE1AF3B61D0057DD72 /* OrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C717DFED1AF3B61D0057DD72 /* OrderListViewController.m */; };
 		C71842DD1AF20CFA00140237 /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C71842DC1AF20CFA00140237 /* ScanViewController.m */; };
 		C71F470F1AF592EF00D14972 /* DatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C71F470E1AF592EF00D14972 /* DatePickerView.m */; };
-		C7241F791AF4E197000474B4 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7241F781AF4E197000474B4 /* RootViewController.m */; };
+		C7241F791AF4E197000474B4 /* ShopSummaryController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7241F781AF4E197000474B4 /* ShopSummaryController.m */; };
 		C7241F7C1AF4EFB3000474B4 /* ShopInfoData.m in Sources */ = {isa = PBXBuildFile; fileRef = C7241F7B1AF4EFB3000474B4 /* ShopInfoData.m */; };
 		C7241F7F1AF4F514000474B4 /* ShopInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7241F7E1AF4F514000474B4 /* ShopInfoViewController.m */; };
 		C725BB391AEB6E7800F344CB /* AddProductFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C725BB381AEB6E7800F344CB /* AddProductFirstCell.m */; };
@@ -173,7 +173,7 @@
 		C78443721AF9E3A0009B4C2D /* SDWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C753C1951AE78E5800562EF6 /* SDWebImageManager.m */; };
 		C78443731AF9E3A0009B4C2D /* ShopInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7241F7E1AF4F514000474B4 /* ShopInfoViewController.m */; };
 		C78443741AF9E3A0009B4C2D /* RootTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C753C1C11AE7A8B500562EF6 /* RootTabBarViewController.m */; };
-		C78443751AF9E3A0009B4C2D /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7241F781AF4E197000474B4 /* RootViewController.m */; };
+		C78443751AF9E3A0009B4C2D /* ShopSummaryController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7241F781AF4E197000474B4 /* ShopSummaryController.m */; };
 		C78443761AF9E3A0009B4C2D /* ShopProductListView.m in Sources */ = {isa = PBXBuildFile; fileRef = C741369A1AE8C1DE00B08CBD /* ShopProductListView.m */; };
 		C78443771AF9E3A0009B4C2D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C753C17B1AE78E4E00562EF6 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C78443781AF9E3A0009B4C2D /* NetWorkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C753C1BB1AE7992F00562EF6 /* NetWorkRequest.m */; };
@@ -208,6 +208,16 @@
 		C7A7E5201AF8D1C900D9420A /* libUMessage_Sdk_1.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7A7E51E1AF8D1C900D9420A /* libUMessage_Sdk_1.1.0.a */; };
 		C7B86CD31AF8A7B800FCF5BE /* house.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7B86CD21AF8A7B800FCF5BE /* house.plist */; };
 		C7B86CD81AF8B4C500FCF5BE /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7B86CD51AF8B4C500FCF5BE /* libMobClickLibrary.a */; };
+		C7BCDA6B1B56062C003460F8 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BCDA6A1B56062C003460F8 /* RootViewController.m */; };
+		C7BCDA6C1B56062C003460F8 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BCDA6A1B56062C003460F8 /* RootViewController.m */; };
+		C7BCDA711B5607A0003460F8 /* PosterScorllView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BCDA6E1B5607A0003460F8 /* PosterScorllView.m */; };
+		C7BCDA721B5607A0003460F8 /* PosterScorllView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BCDA6E1B5607A0003460F8 /* PosterScorllView.m */; };
+		C7BCDA731B5607A0003460F8 /* AdvertiseCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BCDA701B5607A0003460F8 /* AdvertiseCollectionCell.m */; };
+		C7BCDA741B5607A0003460F8 /* AdvertiseCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BCDA701B5607A0003460F8 /* AdvertiseCollectionCell.m */; };
+		C7BCDA781B5608B9003460F8 /* PCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BCDA771B5608B9003460F8 /* PCollectionCell.m */; };
+		C7BCDA791B5608B9003460F8 /* PCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BCDA771B5608B9003460F8 /* PCollectionCell.m */; };
+		C7BCDA911B5640EF003460F8 /* FloatView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BCDA901B5640EF003460F8 /* FloatView.m */; };
+		C7BCDA921B5640EF003460F8 /* FloatView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BCDA901B5640EF003460F8 /* FloatView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -247,8 +257,8 @@
 		C71842DC1AF20CFA00140237 /* ScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanViewController.m; sourceTree = "<group>"; };
 		C71F470D1AF592EF00D14972 /* DatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerView.h; sourceTree = "<group>"; };
 		C71F470E1AF592EF00D14972 /* DatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerView.m; sourceTree = "<group>"; };
-		C7241F771AF4E197000474B4 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
-		C7241F781AF4E197000474B4 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		C7241F771AF4E197000474B4 /* ShopSummaryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopSummaryController.h; sourceTree = "<group>"; };
+		C7241F781AF4E197000474B4 /* ShopSummaryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopSummaryController.m; sourceTree = "<group>"; };
 		C7241F7A1AF4EFB3000474B4 /* ShopInfoData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopInfoData.h; sourceTree = "<group>"; };
 		C7241F7B1AF4EFB3000474B4 /* ShopInfoData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopInfoData.m; sourceTree = "<group>"; };
 		C7241F7D1AF4F514000474B4 /* ShopInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopInfoViewController.h; sourceTree = "<group>"; };
@@ -428,6 +438,16 @@
 		C7B86CD51AF8B4C500FCF5BE /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
 		C7B86CD61AF8B4C500FCF5BE /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		C7B86CD71AF8B4C500FCF5BE /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
+		C7BCDA691B56062C003460F8 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		C7BCDA6A1B56062C003460F8 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		C7BCDA6D1B5607A0003460F8 /* PosterScorllView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PosterScorllView.h; sourceTree = "<group>"; };
+		C7BCDA6E1B5607A0003460F8 /* PosterScorllView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PosterScorllView.m; sourceTree = "<group>"; };
+		C7BCDA6F1B5607A0003460F8 /* AdvertiseCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvertiseCollectionCell.h; sourceTree = "<group>"; };
+		C7BCDA701B5607A0003460F8 /* AdvertiseCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvertiseCollectionCell.m; sourceTree = "<group>"; };
+		C7BCDA761B5608B9003460F8 /* PCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCollectionCell.h; sourceTree = "<group>"; };
+		C7BCDA771B5608B9003460F8 /* PCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCollectionCell.m; sourceTree = "<group>"; };
+		C7BCDA8F1B5640EF003460F8 /* FloatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloatView.h; sourceTree = "<group>"; };
+		C7BCDA901B5640EF003460F8 /* FloatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloatView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -615,8 +635,8 @@
 				C7241F7B1AF4EFB3000474B4 /* ShopInfoData.m */,
 				C7241F7D1AF4F514000474B4 /* ShopInfoViewController.h */,
 				C7241F7E1AF4F514000474B4 /* ShopInfoViewController.m */,
-				C7241F771AF4E197000474B4 /* RootViewController.h */,
-				C7241F781AF4E197000474B4 /* RootViewController.m */,
+				C7241F771AF4E197000474B4 /* ShopSummaryController.h */,
+				C7241F781AF4E197000474B4 /* ShopSummaryController.m */,
 				C7428BDC1B019C5A00F63ADB /* ShopSelectController.h */,
 				C7428BDD1B019C5A00F63ADB /* ShopSelectController.m */,
 			);
@@ -658,6 +678,7 @@
 				C74136A61AE8E0A000B08CBD /* ShopProductData.m */,
 				C753BEAC1AE7460800562EF6 /* AppDelegate.h */,
 				C753BEAD1AE7460800562EF6 /* AppDelegate.m */,
+				C7BCDA751B56088D003460F8 /* Root */,
 				C753BEAF1AE7460800562EF6 /* ViewController.h */,
 				C753BEB01AE7460800562EF6 /* ViewController.m */,
 				C753C1B71AE7952600562EF6 /* UserManager.h */,
@@ -731,6 +752,8 @@
 				C717DFE61AF3973C0057DD72 /* DateFormateManager.m */,
 				C749AECF1B10434200F82FF2 /* NSString+ZhengZe.h */,
 				C749AED01B10434200F82FF2 /* NSString+ZhengZe.m */,
+				C7BCDA6D1B5607A0003460F8 /* PosterScorllView.h */,
+				C7BCDA6E1B5607A0003460F8 /* PosterScorllView.m */,
 				C753C1851AE78E5800562EF6 /* SDWebImage */,
 				C753C1651AE78E4E00562EF6 /* ASI */,
 			);
@@ -851,6 +874,21 @@
 			);
 			path = UMAnalytics_Sdk;
 			sourceTree = SOURCE_ROOT;
+		};
+		C7BCDA751B56088D003460F8 /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				C7BCDA691B56062C003460F8 /* RootViewController.h */,
+				C7BCDA6A1B56062C003460F8 /* RootViewController.m */,
+				C7BCDA6F1B5607A0003460F8 /* AdvertiseCollectionCell.h */,
+				C7BCDA701B5607A0003460F8 /* AdvertiseCollectionCell.m */,
+				C7BCDA761B5608B9003460F8 /* PCollectionCell.h */,
+				C7BCDA771B5608B9003460F8 /* PCollectionCell.m */,
+				C7BCDA8F1B5640EF003460F8 /* FloatView.h */,
+				C7BCDA901B5640EF003460F8 /* FloatView.m */,
+			);
+			name = Root;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -1030,9 +1068,11 @@
 				C753C1AC1AE78E5800562EF6 /* UIButton+WebCache.m in Sources */,
 				C741368E1AE8933200B08CBD /* THActivityView.m in Sources */,
 				C713A2551AF4A48C000EC646 /* OrderInfoSecondCell.m in Sources */,
+				C7BCDA731B5607A0003460F8 /* AdvertiseCollectionCell.m in Sources */,
 				C75680C61AF72EF200F0A990 /* EGORefreshTableHeaderView.m in Sources */,
 				C72FFA431B15C78E007C9C3D /* CommonWebController.m in Sources */,
 				C753C1A91AE78E5800562EF6 /* SDWebImageDownloaderOperation.m in Sources */,
+				C7BCDA781B5608B9003460F8 /* PCollectionCell.m in Sources */,
 				C753C17C1AE78E4E00562EF6 /* ASIAuthenticationDialog.m in Sources */,
 				C753C1A51AE78E5800562EF6 /* SDImageCache.m in Sources */,
 				C725BB391AEB6E7800F344CB /* AddProductFirstCell.m in Sources */,
@@ -1045,6 +1085,7 @@
 				C753C1BF1AE7A25400562EF6 /* LogViewController.m in Sources */,
 				C74136951AE8C00300B08CBD /* ShopObjectController.m in Sources */,
 				C753BEAB1AE7460800562EF6 /* main.m in Sources */,
+				C7BCDA6B1B56062C003460F8 /* RootViewController.m in Sources */,
 				C753C1A81AE78E5800562EF6 /* SDWebImageDownloader.m in Sources */,
 				C753C1B01AE78E5800562EF6 /* UIImageView+WebCache.m in Sources */,
 				C7463FD81B393FEB00169FF6 /* ShopDailyDataController.m in Sources */,
@@ -1055,6 +1096,7 @@
 				C75680BF1AF7117E00F0A990 /* NavigationBaseController.m in Sources */,
 				C74136A41AE8DFA900B08CBD /* ShopCategoryData.m in Sources */,
 				C7749F561B3A86E30090BBC4 /* SpreadListController.m in Sources */,
+				C7BCDA911B5640EF003460F8 /* FloatView.m in Sources */,
 				C78444131AFA1DD8009B4C2D /* UIImageView+PlayGIF.m in Sources */,
 				C7749F4E1B3A493D0090BBC4 /* BusinessSpreadSummarCell.m in Sources */,
 				C74136AD1AE90B0C00B08CBD /* LastViewOnTable.m in Sources */,
@@ -1081,7 +1123,7 @@
 				C753C1AA1AE78E5800562EF6 /* SDWebImageManager.m in Sources */,
 				C7241F7F1AF4F514000474B4 /* ShopInfoViewController.m in Sources */,
 				C753C1C21AE7A8B500562EF6 /* RootTabBarViewController.m in Sources */,
-				C7241F791AF4E197000474B4 /* RootViewController.m in Sources */,
+				C7241F791AF4E197000474B4 /* ShopSummaryController.m in Sources */,
 				C7749F5E1B3AA5FC0090BBC4 /* SpreadInfoController.m in Sources */,
 				C741369B1AE8C1DE00B08CBD /* ShopProductListView.m in Sources */,
 				C7428BDE1B019C5A00F63ADB /* ShopSelectController.m in Sources */,
@@ -1090,6 +1132,7 @@
 				C725BB451AEBBB1A00F344CB /* UIImage+ZoomImage.m in Sources */,
 				C753C17F1AE78E4E00562EF6 /* ASIDownloadCache.m in Sources */,
 				C75680CD1AF769D200F0A990 /* BusinessCell.m in Sources */,
+				C7BCDA711B5607A0003460F8 /* PosterScorllView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1124,9 +1167,11 @@
 				C78443481AF9E3A0009B4C2D /* UIButton+WebCache.m in Sources */,
 				C78443491AF9E3A0009B4C2D /* THActivityView.m in Sources */,
 				C784434A1AF9E3A0009B4C2D /* OrderInfoSecondCell.m in Sources */,
+				C7BCDA741B5607A0003460F8 /* AdvertiseCollectionCell.m in Sources */,
 				C784434B1AF9E3A0009B4C2D /* EGORefreshTableHeaderView.m in Sources */,
 				C72FFA441B15C78E007C9C3D /* CommonWebController.m in Sources */,
 				C784434C1AF9E3A0009B4C2D /* SDWebImageDownloaderOperation.m in Sources */,
+				C7BCDA791B5608B9003460F8 /* PCollectionCell.m in Sources */,
 				C784434D1AF9E3A0009B4C2D /* ASIAuthenticationDialog.m in Sources */,
 				C784434E1AF9E3A0009B4C2D /* SDImageCache.m in Sources */,
 				C784434F1AF9E3A0009B4C2D /* AddProductFirstCell.m in Sources */,
@@ -1139,6 +1184,7 @@
 				C78443561AF9E3A0009B4C2D /* LogViewController.m in Sources */,
 				C78443571AF9E3A0009B4C2D /* ShopObjectController.m in Sources */,
 				C78443581AF9E3A0009B4C2D /* main.m in Sources */,
+				C7BCDA6C1B56062C003460F8 /* RootViewController.m in Sources */,
 				C78443591AF9E3A0009B4C2D /* SDWebImageDownloader.m in Sources */,
 				C784435A1AF9E3A0009B4C2D /* UIImageView+WebCache.m in Sources */,
 				C7463FD91B393FEB00169FF6 /* ShopDailyDataController.m in Sources */,
@@ -1149,6 +1195,7 @@
 				C784435F1AF9E3A0009B4C2D /* NavigationBaseController.m in Sources */,
 				C78443601AF9E3A0009B4C2D /* ShopCategoryData.m in Sources */,
 				C7749F571B3A86E30090BBC4 /* SpreadListController.m in Sources */,
+				C7BCDA921B5640EF003460F8 /* FloatView.m in Sources */,
 				C78444141AFA1DD8009B4C2D /* UIImageView+PlayGIF.m in Sources */,
 				C7749F4F1B3A493D0090BBC4 /* BusinessSpreadSummarCell.m in Sources */,
 				C78443611AF9E3A0009B4C2D /* LastViewOnTable.m in Sources */,
@@ -1173,7 +1220,7 @@
 				C78443721AF9E3A0009B4C2D /* SDWebImageManager.m in Sources */,
 				C78443731AF9E3A0009B4C2D /* ShopInfoViewController.m in Sources */,
 				C78443741AF9E3A0009B4C2D /* RootTabBarViewController.m in Sources */,
-				C78443751AF9E3A0009B4C2D /* RootViewController.m in Sources */,
+				C78443751AF9E3A0009B4C2D /* ShopSummaryController.m in Sources */,
 				C78443761AF9E3A0009B4C2D /* ShopProductListView.m in Sources */,
 				C7428BDF1B019C5A00F63ADB /* ShopSelectController.m in Sources */,
 				C7749F5F1B3AA5FC0090BBC4 /* SpreadInfoController.m in Sources */,
@@ -1184,6 +1231,7 @@
 				C72FFA3C1B15647C007C9C3D /* CashDebitCell.m in Sources */,
 				C784437A1AF9E3A0009B4C2D /* ASIDownloadCache.m in Sources */,
 				C784437B1AF9E3A0009B4C2D /* BusinessCell.m in Sources */,
+				C7BCDA721B5607A0003460F8 /* PosterScorllView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

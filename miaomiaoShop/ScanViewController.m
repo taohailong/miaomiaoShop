@@ -221,4 +221,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+//- (void) drawPlaceholderInRect:(CGRect)rect {
+//    [[UIColor blueColor] setFill];
+//    [self.placeholder drawInRect:rect withFont:self.font lineBreakMode:UILineBreakModeTailTruncation alignment:self.textAlignment];
+//}
+
 @end

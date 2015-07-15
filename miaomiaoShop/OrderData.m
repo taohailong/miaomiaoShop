@@ -12,7 +12,6 @@
 @implementation OrderData
 @synthesize orderAddress,orderID,orderStatue,orderTime,telPhone,messageStr,mobilePhone,payWay,productArr,shopName,discountMoney,totalMoney,countOfProduct,orderNu,orderTakeOver,deadTime;
 @synthesize isNew;
-
 -(NSString*)getPayMethod
 {
 //    [self.payWay isEqualToString:@"wx"]||[self.payWay isEqualToString:@"zfb"]
@@ -93,6 +92,22 @@
     date = [date dateByAddingTimeInterval:86400.0];
     
     self.deadTime = [formate formateDateToString:date];
+}
+
+-(float)calculateAddressHeightWithFont:(UIFont *)font WithSize:(CGSize)size
+{
+    if (font==nil) {
+        return _addressHeight;
+    }
+    
+    CGRect frame = [self.orderAddress boundingRectWithSize:size options:0 attributes:@{NSFontAttributeName:font} context:nil];
+    _addressHeight = CGRectGetHeight(frame);
+    return _addressHeight;
+}
+
+-(float)getAddressHeight
+{
+    return _addressHeight;
 }
 
 @end

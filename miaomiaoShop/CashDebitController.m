@@ -26,7 +26,7 @@
     UIButton* _cashBt;
     NSMutableArray* _dataArr ;
     float _spreadMoney;
-    
+    int _currentPage;
     UILabel* _detailLabel;
 }
 @end
@@ -58,7 +58,7 @@
     THActivityView* loadView = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
     
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
-    [req getCashTradeListWithIndex:0 WithBK:^(id backDic, NetWorkStatus status) {
+    [req getCashTradeListWithIndex:_currentPage  WithBK:^(id backDic, NetWorkStatus status) {
         
         [loadView removeFromSuperview];
         if (status == NetWorkStatusSuccess) {
@@ -76,10 +76,11 @@
         return;
     }
     _isLoading = YES;
+    _currentPage += 8;
     
     __weak CashDebitController* wSelf = self;
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request getCashTradeListWithIndex:_dataArr.count WithBK:^(id backDic, NetWorkStatus status) {
+    [request getCashTradeListWithIndex:_currentPage WithBK:^(id backDic, NetWorkStatus status) {
         
         if(status == NetWorkStatusSuccess)
         {
@@ -179,7 +180,7 @@
 
 -(void)reloadTableWithData:(NSMutableArray*)arr
 {
-    _cashLabel.text = [NSString stringWithFormat:@"可提金额：%.2f 元",_cash];
+    _cashLabel.text = [NSString stringWithFormat:@"可提金额：%.1f 元",_cash];
     _detailLabel.text = [NSString stringWithFormat:@"＝%.1f(订单金额)＋%.1f(推广金额)",_cash-_spreadMoney,_spreadMoney];
     _dataArr = arr;
     [_table reloadData];

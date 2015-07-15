@@ -82,7 +82,7 @@
     
     __weak SpreadListController* wSelf = self;
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request getSpreadSummaryDataWithIndex:_dataCount WithBk:^(id backDic, NetWorkStatus status) {
+    [request getSpreadSummaryDataWithIndex:_dataCount+1 WithBk:^(id backDic, NetWorkStatus status) {
         
         if (status==NetWorkStatusSuccess) {
             [wSelf fillDataToViewWith:backDic];
@@ -185,8 +185,6 @@
     NSArray* arr = _dataDic[key];
     return arr.count;
 }
-
-
 
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

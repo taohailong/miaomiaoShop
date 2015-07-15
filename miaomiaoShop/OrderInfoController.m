@@ -42,11 +42,12 @@
     [self.view addSubview:_table];
     _table.delegate = self;
     _table.dataSource = self;
-    
+    _table.rowHeight = UITableViewAutomaticDimension;
     _table.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
-
+    
+    
     if ([_orderData.orderStatue isEqualToString:@"订单确认"]) {
         [self setTableViewFootWithConfirmDeliver:YES];
     }
@@ -212,13 +213,22 @@
    
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row==0) {
-          return 110;
+        return 110;
     }
     return 50;
 }
+
+//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (indexPath.row==0) {
+//          return 110;
+//    }
+//    return 50;
+//}
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -229,7 +239,8 @@
             cell = [[OrderInfoFirstCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell0"];
         }
         [cell setTelPhoneText:_orderData.telPhone];
-        [cell setAddressText:_orderData.orderAddress];
+//        [cell setAddressText:_orderData.orderAddress];
+        [cell setAddressText:@"dsfjaksdfjklasjdkfljasdklfjlkadjfl;adfl;asdfjl;dsjfl;sjdflkajsdflk"];
         [cell setPayWayText:[_orderData getPayMethod]];
         [cell setOrderMessage:_orderData.messageStr];
         return cell;

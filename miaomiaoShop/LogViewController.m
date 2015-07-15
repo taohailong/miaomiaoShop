@@ -131,16 +131,17 @@
     __weak LogViewController* wSelf = self;
     
     UserManager* user = [UserManager shareUserManager];
-    [user logInWithPhone:phoneField.text Pass:pwField.text logBack:^(BOOL success, NSError *err) {
+    [user logInWithPhone:phoneField.text Pass:pwField.text logBack:^(BOOL success, id respond) {
+        
+         [loading removeFromSuperview];
         if (success) {
             [wSelf dismissViewControllerAnimated:YES completion:^{}];
         }
         else
         {
             
-            THActivityView* alter = [[THActivityView alloc]initWithString:@"登录失败！"];
+            THActivityView* alter = [[THActivityView alloc]initWithString:respond];
             [alter show];
-            [loading removeFromSuperview];
         }
         
     }];

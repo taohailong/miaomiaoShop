@@ -126,7 +126,9 @@
         if (cell3==nil) {
             cell3 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"3" WithFieldBk:^(NSString *text) {
                  wSelf.infoChange = YES;
-                wData.price = [text floatValue];
+                float p = [text floatValue];
+                
+                 wData.price = p;
             }];
         }
         [cell3 setTextTitleLabel:@"价格:"]  ;

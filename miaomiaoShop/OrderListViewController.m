@@ -111,7 +111,7 @@
     THActivityView* loadView = [[THActivityView alloc]initFullViewTransparentWithSuperView:self.view];
     
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
-    [req shopGetOrderWithStatue:_currentStatue WithIndex:_todayArr.count+ _notTodayArr.count WithBk:^(id backDic, NetWorkStatus status) {
+    [req shopGetOrderWithStatue:_currentStatue WithIndex:_todayArr.count+ _notTodayArr.count+1 WithBk:^(id backDic, NetWorkStatus status) {
     
          [loadView removeFromSuperview];
         if (status == NetWorkStatusSuccess) {

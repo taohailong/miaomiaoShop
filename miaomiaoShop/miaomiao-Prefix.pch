@@ -24,6 +24,12 @@
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 
 
+
+#define DEFAULTFONT(X) [UIFont systemFontOfSize:X]
+#define FUNCTCOLOR(R,G,B) [UIColor colorWithRed:((R) / 255.0f) green:((G) / 255.0f) blue:((B) / 255.0f) alpha:1.0f]
+
+
+
 #define IOS_VERSION_5_OR_ABOVE (([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)? (YES):(NO))
 
 #define IOS_VERSION(X) (([[[UIDevice currentDevice] systemVersion] floatValue] >= X)? (YES):(NO))
@@ -31,7 +37,6 @@
 
 
 #if DEBUG
-//#if 0
 #define HTTPHOST @"www.mbianli.com:8099"
 #else
 #define HTTPHOST @"www.mbianli.com"

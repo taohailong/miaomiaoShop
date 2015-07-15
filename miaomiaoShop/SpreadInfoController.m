@@ -87,7 +87,7 @@
     
     __weak SpreadInfoController* wSelf = self;
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request getSpreadInfoWithDate:_currentDate WithIndex:_dataArr.count WithBk:^(id backDic, NetWorkStatus status) {
+    [request getSpreadInfoWithDate:_currentDate WithIndex:_dataArr.count+1 WithBk:^(id backDic, NetWorkStatus status) {
         
         if (status==NetWorkStatusSuccess) {
             [wSelf fillDataToViewWith:backDic];

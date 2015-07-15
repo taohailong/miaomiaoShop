@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface UserManager : NSObject
-typedef void (^logCallBack)(BOOL success,id err) ;
+typedef void (^logCallBack)(BOOL success,id respond) ;
 +(UserManager*)shareUserManager;
 @property(nonatomic,strong)NSString* shopName;
 @property(nonatomic,strong)NSString* phoneNumber;

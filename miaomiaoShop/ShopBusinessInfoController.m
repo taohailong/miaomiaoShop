@@ -85,7 +85,7 @@
     _isLoading = YES;
     __weak ShopBusinessInfoController* wSelf = self;
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request getBusinessOrderInfoWithDate:_orderDate WithType:_orderType withIndex:_orderArr.count WithBk:^(id backDic, NetWorkStatus status) {
+    [request getBusinessOrderInfoWithDate:_orderDate WithType:_orderType withIndex:_orderArr.count+1 WithBk:^(id backDic, NetWorkStatus status) {
         
         if (status==NetWorkStatusSuccess) {
             [wSelf addDataArr:backDic];
