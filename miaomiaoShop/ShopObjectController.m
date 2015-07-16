@@ -26,6 +26,52 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    if (IOS_VERSION(7.0)) {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
+    _productView = [[ShopProductListView alloc]init];
+    _productView.backgroundColor = [UIColor greenColor];
+    _productView.translatesAutoresizingMaskIntoConstraints = NO;
+    _productView.delegate = self;
+    [self.view addSubview:_productView];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_productView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productView)]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_productView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.7 constant:0]];
+    
+    
+    if (IOS_VERSION(7.0)) {
+        
+       [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-64-[_productView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productView)]];    }
+    else
+    {
+       [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_productView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productView)]];
+    }
+    
+    
+    
+    _categoryView = [[ShopCategoryListView alloc]init];
+    _categoryView.translatesAutoresizingMaskIntoConstraints = NO;
+    _categoryView.delegate = self;
+    [self.view addSubview:_categoryView];
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_categoryView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_categoryView)]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_categoryView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.3 constant:0]];
+    
+    
+    if (IOS_VERSION(7.0)) {
+        
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-64-[_categoryView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_categoryView)]];    }
+    else
+    {
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_categoryView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_categoryView)]];
+    }
+
+    
+    
+    
     [self initNetData];
     
     UIBarButtonItem* rightBar = [[UIBarButtonItem alloc]initWithTitle:@"添加商品" style:UIBarButtonItemStylePlain target:self action:@selector(addProductAction)];

@@ -10,13 +10,70 @@
 #import "AdvertiseCollectionCell.h"
 #import "PCollectionCell.h"
 #import "FloatView.h"
-@interface RootViewController()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,PosterProtocol>
+#import "RootDetailCell.h"
+#import "UserManager.h"
+#import "LogViewController.h"
+#import "ShopObjectController.h"
+#import "THActivityView.h"
+#import "NetWorkRequest.h"
+#import "OrderListViewController.h"
+#import "ShopInfoViewController.h"
+#import "ShopBusinessController.h"
+
+
+@interface RootViewController()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,PosterProtocol,FloatProtocol>
 {
     UICollectionView* _collectionView;
     FloatView* _floatView;
+    ShopInfoData* _shop;
 }
+@property(nonatomic,weak)THActivityView* errView;
 @end
 @implementation RootViewController
+@synthesize errView;
+
+#pragma mark- check login
+
+-(void)checkUserLogState
+{
+    UserManager* manage = [UserManager shareUserManager];
+    
+    if ([manage isLogin]) {
+        return;
+    }
+    
+    __weak RootViewController* wSelf = self;
+    if ([manage verifyTokenOnNet:^(BOOL success, NSError *error) {
+        
+        if (success==NO)
+        {
+            THActivityView* alter = [[THActivityView alloc]initWithString:@"登录验证失效"];
+            [alter show];
+            [wSelf  showLogView];
+        }
+        
+    }]==NO)
+        
+    {
+        [self showLogView];
+    }
+}
+
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self checkUserLogState];
+    [self netShopInfoFromNet];
+}
+
+-(void)showLogView
+{
+    LogViewController* log = [self.storyboard instantiateViewControllerWithIdentifier:@"LogViewController"];
+    [self presentViewController:log animated:YES completion:^{}];
+}
+
+
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -28,6 +85,8 @@
     [_collectionView registerClass:[PCollectionCell class] forCellWithReuseIdentifier:@"PCollectionCell"];
     [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"UICollectionViewCell"];
     [_collectionView registerClass:[AdvertiseCollectionCell class] forCellWithReuseIdentifier:@"AdvertiseCollectionCell"];
+    
+    [_collectionView registerClass:[RootDetailCell class] forCellWithReuseIdentifier:@"RootDetailCell"];
     
 //    [_collectionView registerClass:[PCollectionHeadView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PCollectionHeadView"];
     
@@ -68,7 +127,9 @@
 -(void)showFloatView
 {
     if (_floatView==nil) {
+        
         _floatView = [[FloatView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
+        _floatView.delegate = self;
     }
    
     [self.navigationController.view addSubview:_floatView];
@@ -77,8 +138,6 @@
 
 
 #pragma mark-----------collectionView ---------------
-
-//|error| Could not find <PCollectionCell: 0x7beb0990; baseClass = UICollectionViewCell; frame = (0 129; 159.5 44); layer = <CALayer: 0x7beb0b50>> in a list of sorted view [parent: <UIApplication: 0x7be08130>] siblings ("<UICollectionView: 0x7d247a00; frame = (0 0; 320 480); clipsToBounds = YES; gestureRecognizers = <NSArray: 0x7bea25f0>; layer = <CALayer: 0x7bea31a0>; contentOffset: {0, -64}; contentSize: {320, 474}> collection view layout: <UICollectionViewFlowLayout: 0x7bea3f00>").  If this happened right around a screen change, it might be okay, but otherwise this is probably a bug.
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
@@ -132,7 +191,7 @@
 
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 {//水平间隙
-    return 0.5;
+    return 1;
 }
 
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
@@ -152,17 +211,24 @@
             return cell;
         }
         
-        __weak RootViewController* wSelf = self;
-        UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"UICollectionViewCell" forIndexPath:indexPath];
-        cell.backgroundColor = [UIColor greenColor];
-    
+        RootDetailCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RootDetailCell" forIndexPath:indexPath];
+        if (indexPath.row ==1) {
+            
+            [cell setTitleLabelStr:[NSString stringWithFormat:@"%@单",_shop.countOrder]];
+            [cell setContentLabelStr:@"在线支付订单总数"];
+        }
+        else
+        {
+            [cell setTitleLabelStr:[NSString stringWithFormat:@"¥%@", _shop.totalMoney]];
+            [cell setContentLabelStr:@"在线支付订单总金额"];
+        }
+        
         return cell;
     }
     
-    __weak RootViewController* wSelf = self;
+//    __weak RootViewController* wSelf = self;
     PCollectionCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PCollectionCell" forIndexPath:indexPath];
     
-    cell.backgroundColor = [UIColor orangeColor];
     NSString* imageName = nil;
     NSString* title = nil;
     switch (indexPath.row) {
@@ -206,7 +272,123 @@
 
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{}
+{
+    if (indexPath.section == 1) {
+        
+        if (indexPath.row == 0) {
+            [self showShopManageController];
+        }
+        else if (indexPath.row == 1)
+        {
+            [self showOrderManageController];
+        }
+        else if (indexPath.row == 2)
+        {
+            [self showMoneyManageController];
+        }
+        else if (indexPath.row == 3)
+        {
+            [self showProductManageController];
+        }
+        else if (indexPath.row == 4)
+        {
+            [self showCategoryManageController];
+        }
+        else
+        {
+            [self showMoreController];
+        }
+        
+    }
+
+}
+
+#pragma mark-netApi
+
+
+-(void)netShopInfoFromNet
+{
+    __weak RootViewController* wSelf = self;
+    NetWorkRequest* request = [[NetWorkRequest alloc]init];
+    [request getShopInfoWitbBk:^(ShopInfoData* backDic, NetWorkStatus status) {
+        //        防止多次错误 时errView重叠
+        [wSelf.errView removeFromSuperview];
+        if (status == NetWorkStatusSuccess) {
+            [wSelf getShopInfo:backDic];
+        }
+        else
+        {
+            THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wSelf.view];
+            wSelf.errView = loadView;
+            [loadView setErrorBk:^{
+                [wSelf netShopInfoFromNet];
+            }];
+        }
+    }];
+    [request startAsynchronous];
+    
+}
+
+-(void)getShopInfo:(ShopInfoData*)shop
+{
+    _shop = shop;
+    [_collectionView reloadData];
+
+}
+
+
+#pragma mark-action
+
+-(void)showShopManageController
+{
+    if (_shop == nil) {
+        return;
+    }
+    ShopInfoViewController * shopInfo = [[ShopInfoViewController alloc]initWithShopInfoData:_shop];
+    shopInfo.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:shopInfo animated:YES];
+}
+
+-(void)showOrderManageController
+{
+     OrderListViewController* order = [self.storyboard instantiateViewControllerWithIdentifier:@"OrderListViewController"];
+    [self.navigationController pushViewController:order animated:YES];
+}
+
+-(void)showMoneyManageController
+{
+    ShopBusinessController* moneyController = [[ShopBusinessController alloc]init];
+    [self.navigationController pushViewController:moneyController animated:YES];
+    
+}
+
+-(void)showProductManageController
+{
+    ShopObjectController* object = [[ShopObjectController alloc]init];
+    [self.navigationController pushViewController:object animated:YES];
+}
+
+-(void)showCategoryManageController
+{
+
+}
+
+-(void)showMoreController
+{
+
+}
+
+#pragma mark-delegate
+
+-(void)posterViewDidSelectAtIndex:(NSInteger)index WithData:(id)data
+{
+}
+
+
+-(void)floatViewSelectStyle:(int)action
+{
+
+}
 
 
 @end

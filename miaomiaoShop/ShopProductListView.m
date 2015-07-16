@@ -29,6 +29,22 @@
 {
     self = [super initWithCoder:aDecoder];
     _dataArr = [[NSMutableArray alloc]init];
+    [self creatTableView];
+    return self;
+}
+
+
+-(id)init
+{
+    self = [super init];
+    _dataArr = [[NSMutableArray alloc]init];
+    [self creatTableView];
+    return self;
+}
+
+
+-(void)creatTableView
+{
     _table = [[UITableView alloc]initWithFrame:self.bounds style:UITableViewStylePlain];
     //    _table
     [self addSubview:_table];
@@ -43,14 +59,13 @@
     if ([_table respondsToSelector:@selector(setLayoutMargins:)]) {
         [_table setLayoutMargins:UIEdgeInsetsZero];
     }
-
+    
     
     _table.translatesAutoresizingMaskIntoConstraints = NO;
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
-    return self;
-}
 
+}
 
 -(void)reloadTable
 {

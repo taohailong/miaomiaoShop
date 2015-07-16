@@ -11,8 +11,8 @@
 #import "ShopCategoryListView.h"
 @interface ShopObjectController : UIViewController
 {
-    IBOutlet ShopCategoryListView* _categoryView;
-    IBOutlet ShopProductListView* _productView;
+     ShopCategoryListView* _categoryView;
+     ShopProductListView* _productView;
     
 }
 @end

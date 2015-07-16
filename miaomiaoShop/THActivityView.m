@@ -96,6 +96,11 @@
 -(id)initFullViewTransparentWithSuperView:(UIView *)superView
 {
     self = [super init];
+    
+    if (superView==nil) {
+        return self;
+    }
+
 //    self.backgroundColor = [UIColor redColor];
     self.translatesAutoresizingMaskIntoConstraints = NO;
     [superView addSubview:self];
@@ -159,6 +164,11 @@
 -(id)initWithNetErrorWithSuperView:(UIView*)su
 {
     self = [super init];
+    if (su==nil) {
+        return self;
+    }
+
+    
     self.translatesAutoresizingMaskIntoConstraints = NO;
     [su addSubview:self];
     self.backgroundColor = [UIColor whiteColor];
@@ -229,27 +239,6 @@
 
 
 
--(id)initWithFailView
-{
-    self = [super initWithFrame:CGRectMake(0, 0, 250, 60)];
-    if (self)
-    {
-        self.backgroundColor = [UIColor blackColor];
-        self.alpha = 0.8;
-        
-        self.layer.cornerRadius = 6;
-        self.layer.masksToBounds = YES;
-        
-        UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 250, 60)];
-        label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = [UIColor whiteColor];
-        label.backgroundColor = [UIColor clearColor];
-        label.text = @"未能连接到服务器";
-        [self addSubview:label];
-        
-    }
-    return self;
-}
 
 -(void)show
 {

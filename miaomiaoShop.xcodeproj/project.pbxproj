@@ -105,6 +105,8 @@
 		C76ADB721AFCAA73008DF9A4 /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C76ADB701AFCAA73008DF9A4 /* line@2x.png */; };
 		C76ADB741AFCAA77008DF9A4 /* pick_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C76ADB731AFCAA77008DF9A4 /* pick_bg@2x.png */; };
 		C76ADB751AFCAA77008DF9A4 /* pick_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C76ADB731AFCAA77008DF9A4 /* pick_bg@2x.png */; };
+		C76D062C1B5751EA0025515F /* RootDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C76D062B1B5751EA0025515F /* RootDetailCell.m */; };
+		C76D062D1B5751EA0025515F /* RootDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C76D062B1B5751EA0025515F /* RootDetailCell.m */; };
 		C7749F4E1B3A493D0090BBC4 /* BusinessSpreadSummarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7749F4D1B3A493D0090BBC4 /* BusinessSpreadSummarCell.m */; };
 		C7749F4F1B3A493D0090BBC4 /* BusinessSpreadSummarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7749F4D1B3A493D0090BBC4 /* BusinessSpreadSummarCell.m */; };
 		C7749F521B3A698F0090BBC4 /* SpreadData.m in Sources */ = {isa = PBXBuildFile; fileRef = C7749F511B3A698F0090BBC4 /* SpreadData.m */; };
@@ -412,6 +414,8 @@
 		C75680D21AF7807300F0A990 /* BusinessInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessInfoCell.m; sourceTree = "<group>"; };
 		C76ADB701AFCAA73008DF9A4 /* line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line@2x.png"; sourceTree = "<group>"; };
 		C76ADB731AFCAA77008DF9A4 /* pick_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pick_bg@2x.png"; sourceTree = "<group>"; };
+		C76D062A1B5751EA0025515F /* RootDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootDetailCell.h; sourceTree = "<group>"; };
+		C76D062B1B5751EA0025515F /* RootDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootDetailCell.m; sourceTree = "<group>"; };
 		C7749F4C1B3A493D0090BBC4 /* BusinessSpreadSummarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessSpreadSummarCell.h; sourceTree = "<group>"; };
 		C7749F4D1B3A493D0090BBC4 /* BusinessSpreadSummarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessSpreadSummarCell.m; sourceTree = "<group>"; };
 		C7749F501B3A698F0090BBC4 /* SpreadData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpreadData.h; sourceTree = "<group>"; };
@@ -884,6 +888,8 @@
 				C7BCDA701B5607A0003460F8 /* AdvertiseCollectionCell.m */,
 				C7BCDA761B5608B9003460F8 /* PCollectionCell.h */,
 				C7BCDA771B5608B9003460F8 /* PCollectionCell.m */,
+				C76D062A1B5751EA0025515F /* RootDetailCell.h */,
+				C76D062B1B5751EA0025515F /* RootDetailCell.m */,
 				C7BCDA8F1B5640EF003460F8 /* FloatView.h */,
 				C7BCDA901B5640EF003460F8 /* FloatView.m */,
 			);
@@ -1079,6 +1085,7 @@
 				C753C1801AE78E4E00562EF6 /* ASIFormDataRequest.m in Sources */,
 				C753BEAE1AE7460800562EF6 /* AppDelegate.m in Sources */,
 				C753C1B91AE7952600562EF6 /* UserManager.m in Sources */,
+				C76D062C1B5751EA0025515F /* RootDetailCell.m in Sources */,
 				C725BB3C1AEB6F4200F344CB /* AddProductCommonCell.m in Sources */,
 				C753C1A71AE78E5800562EF6 /* SDWebImageDecoder.m in Sources */,
 				C753C1821AE78E4E00562EF6 /* ASIInputStream.m in Sources */,
@@ -1178,6 +1185,7 @@
 				C78443501AF9E3A0009B4C2D /* ASIFormDataRequest.m in Sources */,
 				C78443511AF9E3A0009B4C2D /* AppDelegate.m in Sources */,
 				C78443521AF9E3A0009B4C2D /* UserManager.m in Sources */,
+				C76D062D1B5751EA0025515F /* RootDetailCell.m in Sources */,
 				C78443531AF9E3A0009B4C2D /* AddProductCommonCell.m in Sources */,
 				C78443541AF9E3A0009B4C2D /* SDWebImageDecoder.m in Sources */,
 				C78443551AF9E3A0009B4C2D /* ASIInputStream.m in Sources */,

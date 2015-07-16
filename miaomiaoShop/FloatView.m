@@ -7,7 +7,7 @@
 //
 
 #import "FloatView.h"
-@interface FloatView()<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>
+@interface FloatView()<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,UIAlertViewDelegate>
 {
     UITableView* _table;
     UIView* _backView;
@@ -24,8 +24,14 @@
 {
     self = [super initWithFrame:frame];
     self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+    
+    UIView* tapView = [[UIView alloc]initWithFrame:self.bounds];
+    [self addSubview:tapView];
+    
+    
+    
     UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tap:)];
-    [self addGestureRecognizer:tap];
+    [tapView addGestureRecognizer:tap];
     
     [self creatBackView];
     return self;
@@ -54,7 +60,7 @@
     
     
     
-    _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 255, CGRectGetHeight(_backView.frame)-50)];
+    _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 20, 255, CGRectGetHeight(_backView.frame)-70)];
     [_table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     _table.dataSource = self;
     _table.delegate = self;
@@ -64,6 +70,7 @@
     
     UIButton* logOutBt = [UIButton buttonWithType:UIButtonTypeCustom];
     [logOutBt setTitle:@"退出登录" forState:UIControlStateNormal];
+    [logOutBt setTitleColor:DEFAULTNAVCOLOR forState:UIControlStateNormal];
     logOutBt.translatesAutoresizingMaskIntoConstraints = NO;
     [_backView addSubview:logOutBt];
     [logOutBt addTarget:self action:@selector(logOutAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -86,7 +93,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 4;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -98,20 +105,24 @@
         
         cell.textLabel.text = @"888";
         cellImage = [UIImage imageNamed:@""];
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }
     else if (indexPath.row == 1) {
         cell.textLabel.text = @"意见反馈";
         cellImage = [UIImage imageNamed:@""];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     else if (indexPath.row==2)
     {
         cell.textLabel.text = @"联系喵喵";
         cellImage = [UIImage imageNamed:@""];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     else
     {
         cell.textLabel.text = @"关于喵喵";
         cellImage = [UIImage imageNamed:@""];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 
     cell.imageView.image = cellImage;
@@ -123,6 +134,16 @@
     if (indexPath.row == 0) {
         return;
     }
+    
+    if (indexPath.row == 2) {
+        
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否联系喵喵客服？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        alert.tag = 10;
+        [alert show];
+        return;
+    }
+    
+    
     if ([self.delegate respondsToSelector:@selector(floatViewSelectStyle:)]) {
         
         int  action =0;
@@ -131,7 +152,7 @@
             case 1:
                 action = FloatActionSuggestion;
                 break;
-            case 2:
+            case 3:
                 action = FloatActionAbout;
                 break;
             default:
@@ -144,16 +165,42 @@
 
 -(void)logOutAction:(UIButton*)bt
 {
-    if ([self.delegate respondsToSelector:@selector(floatViewSelectStyle:)]) {
-        [self.delegate floatViewSelectStyle:FloatActionLogOut];
-    }
+    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否退出登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alert.tag = 100;
+    [alert show];
+    
 }
+
+#pragma mark-AlertDelegate
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.cancelButtonIndex == buttonIndex) {
+        return;
+    }
+    
+    if (alertView.tag == 100)
+    {
+        if ([self.delegate respondsToSelector:@selector(floatViewSelectStyle:)]) {
+            [self.delegate floatViewSelectStyle:FloatActionLogOut];
+        }
+    }
+    else
+    {
+        NSString* url = [NSString stringWithFormat:@"tel://%@",@"123"];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+
+    
+    }
+
+}
+
 
 
 #pragma mark UIGestureRecognizerDelegate
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     
-    if (gestureRecognizer.view == self) {
+    if (gestureRecognizer.view != _backView) {
         return YES;
     }
 // Check for horizontal pan gesture
@@ -231,7 +278,6 @@
     else
     {
         CGPoint velocity = [pan velocityInView:_backView];
-        NSLog(@"velocity is %f",velocity);
         if (velocity.x>0) {
 //            _panMovingRightOrLeft = true;
         }else if(velocity.x<0){

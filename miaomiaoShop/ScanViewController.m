@@ -181,7 +181,15 @@
     if ([metadataObjects count] >0)
     {
         AVMetadataMachineReadableCodeObject * metadataObject = [metadataObjects objectAtIndex:0];
-        stringValue = metadataObject.stringValue;
+        if ([metadataObject isKindOfClass:[AVMetadataMachineReadableCodeObject class]])
+        {
+            stringValue = metadataObject.stringValue;
+        }
+        else
+        {
+           
+        }
+        
     }
     
     [_session stopRunning];

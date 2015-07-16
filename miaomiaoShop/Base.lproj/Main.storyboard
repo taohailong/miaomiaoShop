@@ -5,7 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -23,7 +22,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ylg-b4-XHv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2462" y="-1387"/>
+            <point key="canvasLocation" x="-2660" y="-1387"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="W48-S5-ZzY">
@@ -42,36 +41,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I6x-Mh-jd4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1826" y="-1369"/>
-        </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="Ud8-yQ-qZZ">
-            <objects>
-                <tabBarController id="tW5-SS-dKZ" sceneMemberID="viewController">
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="cHZ-tK-Qs1">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="selectedImageTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="color" keyPath="selectedImageTintColor">
-                                <color key="value" red="0.20000000000000001" green="0.80392156862745101" blue="0.37254901960784315" alpha="1" colorSpace="calibratedRGB"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
-                    </tabBar>
-                    <connections>
-                        <segue destination="AKr-Rd-4BU" kind="relationship" relationship="viewControllers" id="STv-Cx-0dW"/>
-                        <segue destination="06H-VS-14E" kind="relationship" relationship="viewControllers" id="eGw-XJ-5ZA"/>
-                        <segue destination="Bgt-wn-QKG" kind="relationship" relationship="viewControllers" id="qaO-Bi-Gs8"/>
-                        <segue destination="VAP-Dx-zsx" kind="relationship" relationship="viewControllers" id="Tb3-HZ-gm2"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HNH-RL-8gj" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1706" y="-649"/>
+            <point key="canvasLocation" x="-2036" y="-1387"/>
         </scene>
         <!--首页-->
         <scene sceneID="PDW-dc-NB9">
@@ -89,25 +59,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Try-8W-D20" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1318" y="-1369"/>
-        </scene>
-        <!--商品-->
-        <scene sceneID="jNL-Pf-zZR">
-            <objects>
-                <navigationController id="06H-VS-14E" customClass="NavigationBaseController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="商品" image="tabbarSecond" id="BRS-UT-SgW"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="kpV-oZ-ykn">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.90980392160000001" green="0.1843137255" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="lsS-kH-UJD" kind="relationship" relationship="rootViewController" id="k7g-0A-PHA"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ont-Xy-ln0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-932" y="-623"/>
+            <point key="canvasLocation" x="-1122" y="-1405"/>
         </scene>
         <!--钱包-->
         <scene sceneID="wmF-nz-dpw">
@@ -125,7 +77,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aaE-4P-3Kk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2001" y="127"/>
+            <point key="canvasLocation" x="-2223" y="105"/>
         </scene>
         <!--钱包-->
         <scene sceneID="SmB-nx-oVF">
@@ -147,27 +99,9 @@
             <point key="canvasLocation" x="-2001" y="852"/>
         </scene>
         <!--订单-->
-        <scene sceneID="SYt-NO-kNa">
-            <objects>
-                <navigationController id="Bgt-wn-QKG" customClass="NavigationBaseController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="订单" image="tabbarThird" id="mzu-gZ-629"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="e5D-UL-CBL">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.90980392160000001" green="0.1843137255" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="Kli-0N-nRk" kind="relationship" relationship="rootViewController" id="60E-qH-Nr7"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6VM-8I-hUl" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1360" y="127"/>
-        </scene>
-        <!--订单-->
         <scene sceneID="sT6-Ys-sNQ">
             <objects>
-                <viewController id="Kli-0N-nRk" customClass="OrderListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OrderListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Kli-0N-nRk" customClass="OrderListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yGq-lj-Cjf"/>
                         <viewControllerLayoutGuide type="bottom" id="DHR-rz-lIh"/>
@@ -189,7 +123,7 @@
                                     <action selector="segViewChange:" destination="Kli-0N-nRk" eventType="valueChanged" id="aoi-xM-JwC"/>
                                 </connections>
                             </segmentedControl>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="216" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="wcE-q4-gtQ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="216" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="wcE-q4-gtQ">
                                 <rect key="frame" x="0.0" y="117" width="600" height="434"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -348,7 +282,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E09-aH-Oig" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1286" y="849"/>
+            <point key="canvasLocation" x="-1258" y="105"/>
         </scene>
         <!--Log View Controller-->
         <scene sceneID="XgQ-K1-vjC">
@@ -445,56 +379,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xkF-oC-qf2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-245" y="739"/>
-        </scene>
-        <!--商品-->
-        <scene sceneID="zzA-AP-Om7">
-            <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="lsS-kH-UJD" customClass="ShopObjectController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ZOi-bT-5Yd"/>
-                        <viewControllerLayoutGuide type="bottom" id="wIS-vD-cgQ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="2Wq-Ff-O4p">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6US-ty-kZY" userLabel="category" customClass="ShopCategoryListView">
-                                <rect key="frame" x="0.0" y="64" width="171.5" height="487"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <outlet property="delegate" destination="lsS-kH-UJD" id="32l-rx-qVq"/>
-                                </connections>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qSl-yv-LF2" userLabel="product" customClass="ShopProductListView">
-                                <rect key="frame" x="171" y="64" width="428.5" height="487"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="delegate" destination="lsS-kH-UJD" id="a0j-hJ-Yhw"/>
-                                </connections>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="qSl-yv-LF2" firstAttribute="leading" secondItem="6US-ty-kZY" secondAttribute="trailing" id="7Y4-0E-9oc"/>
-                            <constraint firstItem="6US-ty-kZY" firstAttribute="top" secondItem="ZOi-bT-5Yd" secondAttribute="bottom" id="9EP-UZ-QVQ"/>
-                            <constraint firstItem="wIS-vD-cgQ" firstAttribute="top" secondItem="qSl-yv-LF2" secondAttribute="bottom" id="Doz-rX-HjG"/>
-                            <constraint firstItem="wIS-vD-cgQ" firstAttribute="top" secondItem="6US-ty-kZY" secondAttribute="bottom" id="F1N-kh-bPj"/>
-                            <constraint firstItem="qSl-yv-LF2" firstAttribute="width" secondItem="6US-ty-kZY" secondAttribute="width" multiplier="5:2" id="KZd-C1-fGk"/>
-                            <constraint firstItem="6US-ty-kZY" firstAttribute="leading" secondItem="2Wq-Ff-O4p" secondAttribute="leading" id="eki-tD-ue7"/>
-                            <constraint firstAttribute="trailing" secondItem="qSl-yv-LF2" secondAttribute="trailing" id="iYW-gz-dMf"/>
-                            <constraint firstItem="qSl-yv-LF2" firstAttribute="leading" secondItem="6US-ty-kZY" secondAttribute="trailing" id="pa3-Ut-Msc"/>
-                            <constraint firstItem="qSl-yv-LF2" firstAttribute="top" secondItem="ZOi-bT-5Yd" secondAttribute="bottom" id="qxZ-cx-8qh"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="商品" id="7Id-6S-D6h"/>
-                    <connections>
-                        <outlet property="_categoryView" destination="6US-ty-kZY" id="zGT-d2-gAM"/>
-                        <outlet property="_productView" destination="qSl-yv-LF2" id="cRg-Fh-zUF"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iun-aG-Qfc" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-228" y="-632"/>
         </scene>
         <!--Add Product Controller-->
         <scene sceneID="pJR-HS-ih8">
@@ -642,7 +526,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SEs-6p-4Jm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="499" y="-684"/>
+            <point key="canvasLocation" x="359" y="-746"/>
         </scene>
         <!--首页-->
         <scene sceneID="bfn-kJ-WeT">
@@ -661,7 +545,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d72-E4-CHN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-704" y="-1369"/>
+            <point key="canvasLocation" x="-432" y="-1387"/>
         </scene>
     </scenes>
     <resources>
@@ -674,7 +558,5 @@
         <image name="order_statue" width="13" height="14"/>
         <image name="order_tel" width="15" height="15"/>
         <image name="tabbarFourth" width="23" height="23"/>
-        <image name="tabbarSecond" width="23" height="23"/>
-        <image name="tabbarThird" width="23" height="23"/>
     </resources>
 </document>
