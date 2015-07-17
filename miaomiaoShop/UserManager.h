@@ -23,6 +23,8 @@ typedef void (^logCallBack)(BOOL success,id respond) ;
 -(void)registePushKey;
 -(void)removeUserAccountWithBk:(logCallBack)complete;
 
+
+-(NSString*)getUserAccount;
 -(BOOL)isLogin;
 //@property(nonatomic,assign)
 //-(void)logInWithPhone:(NSString*)phone Pass:(NSString*)ps;

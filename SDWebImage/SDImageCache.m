@@ -326,7 +326,7 @@ static const NSInteger kDefaultCacheMaxCacheAge = 60 * 60 * 24 * 7; // 1 week
     {
         return;
     }
-
+    
     [self.memCache removeObjectForKey:key];
 
     if (fromDisk)

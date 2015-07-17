@@ -7,11 +7,12 @@
 //
 
 #import "NetWorkRequest.h"
-#import "ASIHTTPRequest.h"
+//#import "ASIHTTPRequest.h"
+//#import "ASIFormDataRequest.h"
 #import "ShopCategoryData.h"
 #import "ShopProductData.h"
 #import "UserManager.h"
-#import "ASIFormDataRequest.h"
+
 #import "OrderData.h"
 #import "DateFormateManager.h"
 #import "ShopInfoData.h"
@@ -21,8 +22,9 @@
 
 @interface NetWorkRequest()
 {
-    ASIHTTPRequest* _asi;
-    ASIFormDataRequest* _postAsi;
+    AFHTTPRequestOperation* _afnet;
+//    ASIHTTPRequest* _asi;
+//    ASIFormDataRequest* _postAsi;
 }
 @end;
 @implementation NetWorkRequest
@@ -89,6 +91,7 @@
         
         completeBk(sourceDic,status);
     }];
+
 }
 
 
@@ -480,22 +483,38 @@
 {
    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/ul_pic",HTTPHOST];
    UserManager* manager = [UserManager shareUserManager];
-    _postAsi = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:url]];
-    _postAsi.delegate = self;
-    __weak ASIFormDataRequest* wPost = _postAsi;
-    [_postAsi setPostValue:manager.shopID forKey:@"shop_id"];
-    [_postAsi setPostValue:nu forKey:@"serialNo"];
-    [_postAsi addData:data withFileName:@"text.jpg" andContentType:@"image/jpeg" forKey:@"pic"];
-    [_postAsi setFailedBlock:^{
-        completeBk(@"网络连接失败",NetWorkStatusErrorCanntConnect);
-    }];
-    [_postAsi setCompletionBlock:^{
+    
+    
+    AFHTTPRequestOperationManager *af_manager = [AFHTTPRequestOperationManager manager];
+    NSDictionary *parameters = @{@"shop_id":manager.shopID,@"serialNo":nu};
+    [af_manager POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
-           NSDictionary* dataDic = [NSJSONSerialization JSONObjectWithData:wPost.responseData options:NSJSONReadingMutableContainers error:NULL];
-        completeBk(dataDic,NetWorkStatusSuccess);
-       
+        [formData appendPartWithFileData:data name:@"pic" fileName:@"text.jpg" mimeType:@"image/jpeg"];
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+        completeBk(responseObject,NetWorkStatusSuccess);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         completeBk(@"网络连接失败",NetWorkStatusErrorCanntConnect);
     }];
-    [_postAsi startAsynchronous];
+    
+    return;
+//    _postAsi = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:url]];
+//    _postAsi.delegate = self;
+//    __weak ASIFormDataRequest* wPost = _postAsi;
+//    [_postAsi setPostValue:manager.shopID forKey:@"shop_id"];
+//    [_postAsi setPostValue:nu forKey:@"serialNo"];
+//    [_postAsi addData:data withFileName:@"text.jpg" andContentType:@"image/jpeg" forKey:@"pic"];
+//    [_postAsi setFailedBlock:^{
+//        completeBk(@"网络连接失败",NetWorkStatusErrorCanntConnect);
+//    }];
+//    [_postAsi setCompletionBlock:^{
+//        
+//           NSDictionary* dataDic = [NSJSONSerialization JSONObjectWithData:wPost.responseData options:NSJSONReadingMutableContainers error:NULL];
+//        completeBk(dataDic,NetWorkStatusSuccess);
+//       
+//    }];
+//    [_postAsi startAsynchronous];
 }
 
 -(void)shopAddProductInfoToServeWith:(ShopProductData*)data WithBk:(NetCallback)completeBk
@@ -694,40 +713,63 @@
 -(void)getMethodRequestStrUrl:(NSString*)url complete:(void(^)( id sourceDic,NetWorkStatus status))block
 {
     
-    _asi = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
-    
-    __weak ASIHTTPRequest* bkAsi = _asi;
-    
-    [_asi setCompletionBlock:^{
+     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+    _afnet = [[AFHTTPRequestOperation alloc]initWithRequest:request];
+    [_afnet setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        NSDictionary* dataDic = [NSJSONSerialization JSONObjectWithData:bkAsi.responseData options:NSJSONReadingMutableContainers error:NULL];
-       
+        NSDictionary* dataDic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:NULL];
+        
         if (dataDic&&[dataDic[@"code"] intValue]==0) {
             block(dataDic,NetWorkStatusSuccess);
         }
         else
         {
-           block(dataDic[@"msg"],NetWorkStatusServerError);
+            block(dataDic[@"msg"],NetWorkStatusServerError);
         }
         
-    }];
-    
-    [_asi setFailedBlock:^{
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         block(@"网络连接失败！",NetWorkStatusErrorCanntConnect);
     }];
+    
+    return;
+    
+//    _asi = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
+//    
+//    __weak ASIHTTPRequest* bkAsi = _asi;
+//    
+//    [_asi setCompletionBlock:^{
+//        
+//        NSDictionary* dataDic = [NSJSONSerialization JSONObjectWithData:bkAsi.responseData options:NSJSONReadingMutableContainers error:NULL];
+//       
+//        if (dataDic&&[dataDic[@"code"] intValue]==0) {
+//            block(dataDic,NetWorkStatusSuccess);
+//        }
+//        else
+//        {
+//           block(dataDic[@"msg"],NetWorkStatusServerError);
+//        }
+//        
+//    }];
+//    
+//    [_asi setFailedBlock:^{
+//        block(@"网络连接失败！",NetWorkStatusErrorCanntConnect);
+//    }];
     
 }
 
 
 -(void)startAsynchronous
 {
-    [_asi startAsynchronous];
+    [_afnet start];
+//    [_asi startAsynchronous];
 }
 
 -(void)cancel
 {
-    [_asi cancel];
-    _asi = nil;
+     [_afnet cancel];
+    _afnet = nil;
+//    [_asi cancel];
+//    _asi = nil;
 }
 
 -(void)dealloc

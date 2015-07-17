@@ -221,6 +221,13 @@
 		C7BCDA791B5608B9003460F8 /* PCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BCDA771B5608B9003460F8 /* PCollectionCell.m */; };
 		C7BCDA911B5640EF003460F8 /* FloatView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BCDA901B5640EF003460F8 /* FloatView.m */; };
 		C7BCDA921B5640EF003460F8 /* FloatView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7BCDA901B5640EF003460F8 /* FloatView.m */; };
+		C7D4AD931B58F64600F46561 /* NavigationTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D4AD921B58F64600F46561 /* NavigationTitleView.m */; };
+		C7D4AD941B58F64600F46561 /* NavigationTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D4AD921B58F64600F46561 /* NavigationTitleView.m */; };
+		C7D4AD971B58FA3200F46561 /* SuggestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D4AD961B58FA3200F46561 /* SuggestViewController.m */; };
+		C7D4AD981B58FA3200F46561 /* SuggestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D4AD961B58FA3200F46561 /* SuggestViewController.m */; };
+		C7D4AD9B1B58FA4C00F46561 /* AboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D4AD9A1B58FA4C00F46561 /* AboutController.m */; };
+		C7D4AD9C1B58FA4C00F46561 /* AboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D4AD9A1B58FA4C00F46561 /* AboutController.m */; };
+		C81998D87F0A9173F4890171 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5C7B21A40D4597792F02A6D /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -439,6 +446,7 @@
 		C78444121AFA1DD8009B4C2D /* YFGIFImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFGIFImageView.m; sourceTree = "<group>"; };
 		C78444191AFA1EB3009B4C2D /* LoadingGif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = LoadingGif.gif; sourceTree = "<group>"; };
 		C784441A1AFA1EB3009B4C2D /* miaomiao.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = miaomiao.mp3; sourceTree = "<group>"; };
+		C796943C1B57B03800B0B21B /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		C7A7E51E1AF8D1C900D9420A /* libUMessage_Sdk_1.1.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.1.0.a; sourceTree = "<group>"; };
 		C7A7E51F1AF8D1C900D9420A /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
 		C7B86CD21AF8A7B800FCF5BE /* house.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = house.plist; sourceTree = "<group>"; };
@@ -455,6 +463,12 @@
 		C7BCDA771B5608B9003460F8 /* PCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCollectionCell.m; sourceTree = "<group>"; };
 		C7BCDA8F1B5640EF003460F8 /* FloatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloatView.h; sourceTree = "<group>"; };
 		C7BCDA901B5640EF003460F8 /* FloatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloatView.m; sourceTree = "<group>"; };
+		C7D4AD911B58F64600F46561 /* NavigationTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationTitleView.h; sourceTree = "<group>"; };
+		C7D4AD921B58F64600F46561 /* NavigationTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationTitleView.m; sourceTree = "<group>"; };
+		C7D4AD951B58FA3200F46561 /* SuggestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuggestViewController.h; sourceTree = "<group>"; };
+		C7D4AD961B58FA3200F46561 /* SuggestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuggestViewController.m; sourceTree = "<group>"; };
+		C7D4AD991B58FA4C00F46561 /* AboutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutController.h; sourceTree = "<group>"; };
+		C7D4AD9A1B58FA4C00F46561 /* AboutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutController.m; sourceTree = "<group>"; };
 		EBD9FB732CEDF94BC2B38AA9 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -488,6 +502,7 @@
 				C784437F1AF9E3A0009B4C2D /* SystemConfiguration.framework in Frameworks */,
 				C78443801AF9E3A0009B4C2D /* CFNetwork.framework in Frameworks */,
 				C78443811AF9E3A0009B4C2D /* libMobClickLibrary.a in Frameworks */,
+				C81998D87F0A9173F4890171 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -497,6 +512,7 @@
 		648B7F0F17F06821220747DA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C796943C1B57B03800B0B21B /* libPods.a */,
 				A5C7B21A40D4597792F02A6D /* libPods.a */,
 			);
 			name = Frameworks;
@@ -719,6 +735,10 @@
 				C753C1C11AE7A8B500562EF6 /* RootTabBarViewController.m */,
 				C71F470D1AF592EF00D14972 /* DatePickerView.h */,
 				C71F470E1AF592EF00D14972 /* DatePickerView.m */,
+				C7D4AD991B58FA4C00F46561 /* AboutController.h */,
+				C7D4AD9A1B58FA4C00F46561 /* AboutController.m */,
+				C7D4AD951B58FA3200F46561 /* SuggestViewController.h */,
+				C7D4AD961B58FA3200F46561 /* SuggestViewController.m */,
 				C74837C31B005CD20090A679 /* Order */,
 				C74837C51B005D7D0090A679 /* Business */,
 				C74837C61B005DB00090A679 /* ShopInfo */,
@@ -916,6 +936,8 @@
 				C76D062B1B5751EA0025515F /* RootDetailCell.m */,
 				C7BCDA8F1B5640EF003460F8 /* FloatView.h */,
 				C7BCDA901B5640EF003460F8 /* FloatView.m */,
+				C7D4AD911B58F64600F46561 /* NavigationTitleView.h */,
+				C7D4AD921B58F64600F46561 /* NavigationTitleView.m */,
 			);
 			name = Root;
 			sourceTree = "<group>";
@@ -964,9 +986,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C784438F1AF9E3A0009B4C2D /* Build configuration list for PBXNativeTarget "miaomiaoShopEnterpise" */;
 			buildPhases = (
+				1FA5A01316A83EDBA7AD571E /* Check Pods Manifest.lock */,
 				C784433B1AF9E3A0009B4C2D /* Sources */,
 				C784437C1AF9E3A0009B4C2D /* Frameworks */,
 				C78443821AF9E3A0009B4C2D /* Resources */,
+				5E05C80AA6FD938D9D4CE3B2 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1077,6 +1101,36 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1FA5A01316A83EDBA7AD571E /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5E05C80AA6FD938D9D4CE3B2 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		95E6582547832ED586B148B6 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1161,6 +1215,7 @@
 				C741369E1AE8C65200B08CBD /* ShopCategoryListView.m in Sources */,
 				C75680BF1AF7117E00F0A990 /* NavigationBaseController.m in Sources */,
 				C74136A41AE8DFA900B08CBD /* ShopCategoryData.m in Sources */,
+				C7D4AD931B58F64600F46561 /* NavigationTitleView.m in Sources */,
 				C7749F561B3A86E30090BBC4 /* SpreadListController.m in Sources */,
 				C7BCDA911B5640EF003460F8 /* FloatView.m in Sources */,
 				C78444131AFA1DD8009B4C2D /* UIImageView+PlayGIF.m in Sources */,
@@ -1176,6 +1231,7 @@
 				C753C17E1AE78E4E00562EF6 /* ASIDataDecompressor.m in Sources */,
 				C713A2521AF48E57000EC646 /* OrderInfoController.m in Sources */,
 				C7749F5A1B3A8FC40090BBC4 /* SpreadListCell.m in Sources */,
+				C7D4AD971B58FA3200F46561 /* SuggestViewController.m in Sources */,
 				C753C1AB1AE78E5800562EF6 /* SDWebImagePrefetcher.m in Sources */,
 				C753C1A31AE78E5800562EF6 /* MKAnnotationView+WebCache.m in Sources */,
 				C753C1A41AE78E5800562EF6 /* NSData+GIF.m in Sources */,
@@ -1195,6 +1251,7 @@
 				C7428BDE1B019C5A00F63ADB /* ShopSelectController.m in Sources */,
 				C753C1841AE78E4E00562EF6 /* Reachability.m in Sources */,
 				C753C1BC1AE7992F00562EF6 /* NetWorkRequest.m in Sources */,
+				C7D4AD9B1B58FA4C00F46561 /* AboutController.m in Sources */,
 				C725BB451AEBBB1A00F344CB /* UIImage+ZoomImage.m in Sources */,
 				C753C17F1AE78E4E00562EF6 /* ASIDownloadCache.m in Sources */,
 				C75680CD1AF769D200F0A990 /* BusinessCell.m in Sources */,
@@ -1261,6 +1318,7 @@
 				C784435E1AF9E3A0009B4C2D /* ShopCategoryListView.m in Sources */,
 				C784435F1AF9E3A0009B4C2D /* NavigationBaseController.m in Sources */,
 				C78443601AF9E3A0009B4C2D /* ShopCategoryData.m in Sources */,
+				C7D4AD941B58F64600F46561 /* NavigationTitleView.m in Sources */,
 				C7749F571B3A86E30090BBC4 /* SpreadListController.m in Sources */,
 				C7BCDA921B5640EF003460F8 /* FloatView.m in Sources */,
 				C78444141AFA1DD8009B4C2D /* UIImageView+PlayGIF.m in Sources */,
@@ -1276,6 +1334,7 @@
 				C78443681AF9E3A0009B4C2D /* ASIDataDecompressor.m in Sources */,
 				C78443691AF9E3A0009B4C2D /* OrderInfoController.m in Sources */,
 				C7749F5B1B3A8FC40090BBC4 /* SpreadListCell.m in Sources */,
+				C7D4AD981B58FA3200F46561 /* SuggestViewController.m in Sources */,
 				C784436A1AF9E3A0009B4C2D /* SDWebImagePrefetcher.m in Sources */,
 				C784436B1AF9E3A0009B4C2D /* MKAnnotationView+WebCache.m in Sources */,
 				C784436C1AF9E3A0009B4C2D /* NSData+GIF.m in Sources */,
@@ -1295,6 +1354,7 @@
 				C78443781AF9E3A0009B4C2D /* NetWorkRequest.m in Sources */,
 				C78443791AF9E3A0009B4C2D /* UIImage+ZoomImage.m in Sources */,
 				C72FFA381B155C2C007C9C3D /* CashDebitData.m in Sources */,
+				C7D4AD9C1B58FA4C00F46561 /* AboutController.m in Sources */,
 				C72FFA3C1B15647C007C9C3D /* CashDebitCell.m in Sources */,
 				C784437A1AF9E3A0009B4C2D /* ASIDownloadCache.m in Sources */,
 				C784437B1AF9E3A0009B4C2D /* BusinessCell.m in Sources */,
@@ -1516,6 +1576,7 @@
 		};
 		C78443901AF9E3A0009B4C2D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EBD9FB732CEDF94BC2B38AA9 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Weiyuan Huang (62Z3L937NL)";
@@ -1533,6 +1594,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/UMAnalytics_Sdk",
 					"$(PROJECT_DIR)/UMessage_Sdk",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				PRIVATE_HEADERS_FOLDER_PATH = miaoShopEnterprise/PrivateHeaders;
 				PRODUCT_NAME = "miaomiaoShop copy";
@@ -1542,6 +1604,7 @@
 		};
 		C78443911AF9E3A0009B4C2D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2FC29E5B95DA2C9331C957C1 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Wuxi Chestnut Company Limited";
@@ -1556,6 +1619,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/UMAnalytics_Sdk",
 					"$(PROJECT_DIR)/UMessage_Sdk",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				PRIVATE_HEADERS_FOLDER_PATH = miaoShopEnterprise/PrivateHeaders;
 				PRODUCT_NAME = "miaomiaoShop copy";

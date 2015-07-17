@@ -10,7 +10,7 @@
 
 @class FloatView;
 
-enum _FloatActionStyle{
+typedef  enum _FloatActionStyle{
     FloatActionSuggestion,
     FloatActionAbout,
     FloatActionLogOut
@@ -18,7 +18,7 @@ enum _FloatActionStyle{
 
 @protocol FloatProtocol <NSObject>
 
--(void)floatViewSelectStyle:(int)action;
+-(void)floatViewSelectStyle:(FloatActionStyle)action;
 
 @end
 @interface FloatView : UIView

@@ -19,9 +19,14 @@
 #import "OrderListViewController.h"
 #import "ShopInfoViewController.h"
 #import "ShopBusinessController.h"
+#import "NavigationTitleView.h"
+#import "ShopSelectController.h"
+#import "SuggestViewController.h"
+#import "AboutController.h"
 
 
-@interface RootViewController()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,PosterProtocol,FloatProtocol>
+
+@interface RootViewController()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,PosterProtocol,FloatProtocol,NavigationTieleViewProtocol>
 {
     UICollectionView* _collectionView;
     FloatView* _floatView;
@@ -78,10 +83,12 @@
     
     [super viewDidLoad];
     
+    
+    
     UICollectionViewFlowLayout* flow = [[UICollectionViewFlowLayout alloc]init];
     
     _collectionView = [[UICollectionView alloc]initWithFrame:self.view.bounds collectionViewLayout:flow];
-    _collectionView.backgroundColor = FUNCTCOLOR(243, 243, 243);
+    _collectionView.backgroundColor = FUNCTCOLOR(237, 237, 237);
     [_collectionView registerClass:[PCollectionCell class] forCellWithReuseIdentifier:@"PCollectionCell"];
     [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"UICollectionViewCell"];
     [_collectionView registerClass:[AdvertiseCollectionCell class] forCellWithReuseIdentifier:@"AdvertiseCollectionCell"];
@@ -102,26 +109,58 @@
     
     
     
-//    UIBarButtonItem* rightBar = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"root_right"] style:UIBarButtonItemStylePlain target:self action:@selector(showShopInfoViewController)];
-    UIBarButtonItem* leftBar = [[UIBarButtonItem alloc]initWithTitle:@"float" style:UIBarButtonItemStyleDone target:self action:@selector(showFloatView)];
+    UIBarButtonItem* leftBar = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"root_leftIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(showFloatView)];
     self.navigationItem.leftBarButtonItem = leftBar;
     
     
+    UIView* titleView = [self  navgationTitleView];
+    self.navigationItem.titleView = titleView;
+    
+    [self setAttributeOfNavigationBar];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopInfo) name:SHOPROOTCHANGE object:nil];
 //    
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notiShowLogView) name:PNEEDLOG object:nil];
 //    
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarNuChanged) name:PSHOPCARCHANGE object:nil];
-    
-    
-//    UserManager* manager = [UserManager shareUserManager];
-//    
-//    if (manager.shopID!=nil) {
-//        [self checkLocation];
-//        [self updateNavigationView];
-//    }
-//    [self getShopInfo];
 }
+
+-(void)setAttributeOfNavigationBar
+{
+    NSDictionary * dict = @{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:DEFAULTFONT(18)};
+    
+    self.navigationController.navigationBar.titleTextAttributes = dict;
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    if (IOS_VERSION(7.0)) {
+        //        [self.navigationController.navigationBar setBarTintColor:FUNCTCOLOR(254, 87, 84)];
+    }
+
+}
+
+#pragma mark-navigationTitleView
+
+-(UIView*)navgationTitleView
+{
+    NavigationTitleView* titleView = [[NavigationTitleView alloc]initWithFrame:CGRectMake(0, 0, 250, 44)];
+    titleView.delegate = self;
+    return titleView;
+}
+
+
+-(void)updateNavigationView
+{
+    NavigationTitleView* title = (NavigationTitleView*)self.navigationItem.titleView;
+    
+    UILabel* textLabel = [title getTextLabel];
+//    UserManager* manager = [UserManager shareUserManager];
+    textLabel.text = _shop.shopName;
+}
+
+-(void)navigationTitleViewDidTouchWithView:(NavigationTitleView *)titleView
+{
+    ShopSelectController* shopSelect = [[ShopSelectController alloc]init];
+    [self.navigationController pushViewController:shopSelect animated:YES];
+}
+
 #pragma mark-floatView
 
 -(void)showFloatView
@@ -181,7 +220,7 @@
     if (indexPath.section==0)
     {
         if (indexPath.row !=0) {
-            return CGSizeMake((SCREENWIDTH-1)/2, 44);
+            return CGSizeMake((SCREENWIDTH-1)/2, 62);
         }
         
         return CGSizeMake(SCREENWIDTH, SCREENWIDTH*0.4);
@@ -333,7 +372,7 @@
 {
     _shop = shop;
     [_collectionView reloadData];
-
+    [self updateNavigationView];
 }
 
 
@@ -385,9 +424,31 @@
 }
 
 
--(void)floatViewSelectStyle:(int)action
+-(void)floatViewSelectStyle:(FloatActionStyle)action
 {
-
+    if (action == FloatActionAbout ) {
+        AboutController* aboutView = [[AboutController alloc]init];
+        [self.navigationController pushViewController:aboutView animated:YES];
+    }
+    else if (action == FloatActionLogOut)
+    {
+        __weak RootViewController* wself = self;
+        UserManager* manager = [UserManager shareUserManager];
+        [manager removeUserAccountWithBk:^(BOOL success, id respond) {
+            
+            if (success==NO) {
+                return ;
+            }
+            [wself showLogView];
+        }];
+        
+    }
+    else if (action == FloatActionSuggestion)
+    {
+        SuggestViewController* sController = [[SuggestViewController alloc]init];
+        [self.navigationController pushViewController:sController animated:YES];
+    }
+    [_floatView hidFloatView];
 }
 
 

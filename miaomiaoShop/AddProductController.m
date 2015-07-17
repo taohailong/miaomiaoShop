@@ -406,7 +406,6 @@
     
     THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
    [self postUpImageWithImage:_thumbImage WithBk:^(NSString *url) {
-       
        wPdata.pUrl = url;
        [wself networkRequestApi];
        [activeV removeFromSuperview];

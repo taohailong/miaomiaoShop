@@ -21,22 +21,23 @@
     [self.contentView addSubview:_productImageView];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_productImageView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
     
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_productImageView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:-15]];
 //    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[_productImageView]-15-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productImageView)]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_productImageView(40)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productImageView)]];
+//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_productImageView(40)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productImageView)]];
 
     
     
     _titleL = [[UILabel alloc]init];
     _titleL.font = DEFAULTFONT(14);
     _titleL.translatesAutoresizingMaskIntoConstraints = NO;
-//    _titleL.textColor = DEFAULTBLACK;
+    _titleL.textColor = FUNCTCOLOR(102, 102, 102);
 //    _titleL.numberOfLines = 0;
     _titleL.lineBreakMode = NSLineBreakByTruncatingTail;
     [self.contentView addSubview:_titleL];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_titleL attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
 //    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[_titleL]-2-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_titleL)]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_productImageView]-5-[_titleL]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productImageView,_titleL)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_productImageView]-18-[_titleL]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productImageView,_titleL)]];
     
     
 //    _priceL = [[UILabel alloc]init];

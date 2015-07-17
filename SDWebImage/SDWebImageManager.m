@@ -75,9 +75,8 @@
 -(void)diskImageRemoveForURL:(NSURL*)url
 {
     NSString *key = [self cacheKeyForURL:url];
-    return [self.imageCache removeImageForKey:key fromDisk:YES];
+    [self.imageCache removeImageForKey:key fromDisk:YES];
 }
-
 
 
 - (id<SDWebImageOperation>)downloadWithURL:(NSURL *)url options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletedWithFinishedBlock)completedBlock

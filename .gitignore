@@ -1,4 +1,6 @@
 miaomiaoShop.xcodeproj/project.xcworkspace/
 miaomiaoShop.xcodeproj/xcuserdata/  
 miaomiaoShop.xcworkspace/
- 
+Pods/Pods.xcodeproj/project.xcworkspace/
+Pods/Pods.xcodeproj/xcuserdata/   
+build/

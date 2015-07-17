@@ -95,6 +95,11 @@ static SystemSoundID shake_sound_male_id = 0;
 //    }
 //
 //    self.window.tintColor = [UIColor colorWithRed:51.0/255.0 green:205/255.0 blue:95/255.0 alpha:1.0];
+    
+    
+#if DEBUG
+   NSSetUncaughtExceptionHandler (&UncaughtExceptionHandler);
+#endif
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     return YES;
 }
@@ -164,5 +169,22 @@ static SystemSoundID shake_sound_male_id = 0;
     
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);   //让手机震动
 }
+
+
+void UncaughtExceptionHandler(NSException *exception) {
+    NSArray *arr = [exception callStackSymbols];//得到当前调用栈信息
+    NSString *reason = [exception reason];//非常重要，就是崩溃的原因
+    NSString *name = [exception name];//异常类型
+    
+    //    NSLog(@"exception type : %@ \n crash reason : %@ \n call stack info : %@", name, reason, arr);
+    
+    NSString *crashLogInfo = [NSString stringWithFormat:@"exception type : %@ \n crash reason : %@ \n call stack info : %@", name, reason, arr];
+    NSString *urlStr = [NSString stringWithFormat:@"mailto://taohailong@lizi-inc.com?subject=bug报告&body=请把这封邮件发出，感谢您的配合!"
+                        "错误详情:%@",
+                        crashLogInfo];
+    NSURL *url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    [[UIApplication sharedApplication] openURL:url];
+}
+
 
 @end

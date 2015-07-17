@@ -57,6 +57,16 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:SHOPIDCHANGED object:nil];
 }
 
+-(NSString*)getUserAccount
+{
+    NSUserDefaults* def = [NSUserDefaults standardUserDefaults];
+    return [def objectForKey:UACCOUNT];
+}
+
+
+
+
+
 -(void)removeUserAccountWithBk:(logCallBack)complete
 {
     NSUserDefaults* def = [NSUserDefaults standardUserDefaults];

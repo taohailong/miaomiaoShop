@@ -7,6 +7,7 @@
 //
 
 #import "FloatView.h"
+#import "UserManager.h"
 @interface FloatView()<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,UIAlertViewDelegate>
 {
     UITableView* _table;
@@ -61,22 +62,28 @@
     
     
     _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 20, 255, CGRectGetHeight(_backView.frame)-70)];
+    _table.separatorColor = FUNCTCOLOR(221, 221, 221);
     [_table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     _table.dataSource = self;
     _table.delegate = self;
+    _table.tableFooterView = [[UIView alloc]init];
     [_backView addSubview:_table];
     
     
     
     UIButton* logOutBt = [UIButton buttonWithType:UIButtonTypeCustom];
+    logOutBt.layer.masksToBounds = YES;
+    logOutBt.layer.cornerRadius = 4;
+    logOutBt.layer.borderColor = DEFAULTNAVCOLOR.CGColor;
+    logOutBt.layer.borderWidth = 1;
     [logOutBt setTitle:@"退出登录" forState:UIControlStateNormal];
     [logOutBt setTitleColor:DEFAULTNAVCOLOR forState:UIControlStateNormal];
     logOutBt.translatesAutoresizingMaskIntoConstraints = NO;
     [_backView addSubview:logOutBt];
     [logOutBt addTarget:self action:@selector(logOutAction:) forControlEvents:UIControlEventTouchUpInside];
     
-    [_backView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[logOutBt]-20-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(logOutBt)]];
-    [_backView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[logOutBt]-15-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(logOutBt)]];
+    [_backView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[logOutBt]-15-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(logOutBt)]];
+    [_backView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[logOutBt(35)]-20-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(logOutBt)]];
 }
 
 
@@ -85,9 +92,9 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0 ) {
-        return 55;
+        return 80;
     }
-    return 45;
+    return 50;
 }
 
 
@@ -99,29 +106,31 @@
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell*cell= [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    
+    cell.textLabel.font = DEFAULTFONT(15);
+    cell.textLabel.textColor = FUNCTCOLOR(102, 102, 102);
     UIImage* cellImage = nil;
     if (indexPath.row == 0) {
-        
-        cell.textLabel.text = @"888";
-        cellImage = [UIImage imageNamed:@""];
+        cell.textLabel.font = DEFAULTFONT(17);
+        UserManager* manager = [UserManager shareUserManager];
+        cell.textLabel.text = [manager getUserAccount];
+        cellImage = [UIImage imageNamed:@"float_userIcon"];
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     else if (indexPath.row == 1) {
         cell.textLabel.text = @"意见反馈";
-        cellImage = [UIImage imageNamed:@""];
+        cellImage = [UIImage imageNamed:@"float_suggestion"];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     else if (indexPath.row==2)
     {
         cell.textLabel.text = @"联系喵喵";
-        cellImage = [UIImage imageNamed:@""];
+        cellImage = [UIImage imageNamed:@"float_telphone"];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     else
     {
         cell.textLabel.text = @"关于喵喵";
-        cellImage = [UIImage imageNamed:@""];
+        cellImage = [UIImage imageNamed:@"float_about"];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 
@@ -131,6 +140,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row == 0) {
         return;
     }
@@ -291,7 +301,7 @@
     [UIView animateWithDuration:0.2 animations:^{
        [self layoutCurrentViewWithOffset:0];
     } completion:^(BOOL finished) {
-        
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     }];
     
 }
@@ -302,6 +312,7 @@
         [self layoutCurrentViewWithOffset:-255];
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     }];
 
     
