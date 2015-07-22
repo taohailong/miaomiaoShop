@@ -7,18 +7,26 @@
 //
 
 #import "ShopInfoViewController.h"
-#import "AddProductCommonCell.h"
-#import "AddProductSwithCell.h"
+//#import "AddProductCommonCell.h"
+//#import "AddProductSwithCell.h"
+
+#import "ShopNameChangeController.h"
 #import "DatePickerView.h"
 #import "NetWorkRequest.h"
 #import "THActivityView.h"
 #import "NSString+ZhengZe.h"
+#import "ShopInfoHeadCell.h"
+#import "ShopInfoSubCell.h"
+#import "ShopInfoThreeLCell.h"
+#import "ShopInfoTimeSetCell.h"
 
-
-@interface ShopInfoViewController ()<UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
+@interface ShopInfoViewController ()<UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate,ShopNameChangeProtocol>
 {
     UITableView* _table;
     __weak UITextField* _currentField;
+    UIView* _inputView;
+//    UIToolbar* _inputAccessoryView;
+//    UIpi*
 }
 @property(nonatomic,assign)BOOL isInfoChanged;
 @end
@@ -35,7 +43,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _table = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    _table = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    
+    if ([_table respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_table setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([_table respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_table setLayoutMargins:UIEdgeInsetsMake(0, 0, 0, 0)];
+    }
+    
+    
+    [_table registerClass:[ShopInfoHeadCell class] forCellReuseIdentifier:@"ShopInfoHeadCell"];
+    
+    [_table registerClass:[ShopInfoSubCell class] forCellReuseIdentifier:@"ShopInfoSubCell"];
+    
+    [_table registerClass:[ShopInfoThreeLCell class] forCellReuseIdentifier:@"ShopInfoThreeLCell"];
+    
+    [_table registerClass:[ShopInfoTimeSetCell class] forCellReuseIdentifier:@"ShopInfoTimeSetCell"];
+    
     
     [self.view addSubview:_table];
     _table.delegate = self;
@@ -50,18 +76,15 @@
     
     
     
-    UIBarButtonItem* rigtBar = [[UIBarButtonItem alloc]initWithTitle:@"提交" style:UIBarButtonItemStyleDone target:self action:@selector(updateShopInfo)];
-    self.navigationItem.rightBarButtonItem = rigtBar;
+//    UIBarButtonItem* rigtBar = [[UIBarButtonItem alloc]initWithTitle:@"提交" style:UIBarButtonItemStyleDone target:self action:@selector(updateShopInfo)];
+//    self.navigationItem.rightBarButtonItem = rigtBar;
+//    
+//    UIBarButtonItem* leftBar = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:@selector(manualBack)];
+////    self.navigationItem.backBarButtonItem = nil;
+//    self.navigationItem.leftBarButtonItem = leftBar;
+////    [self.navigationItem.backBarButtonItem add]
     
-    UIBarButtonItem* leftBar = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:@selector(manualBack)];
-//    self.navigationItem.backBarButtonItem = nil;
-    self.navigationItem.leftBarButtonItem = leftBar;
-//    [self.navigationItem.backBarButtonItem add]
-    
-    
-    if (_shopData.openTime) {
-        [self creatTableFootView];
-    }
+    [self creatTableFootView];
     [self registeNotificationCenter];
     
     
@@ -98,7 +121,6 @@
 
 -(void)manualBack
 {
-    
     if (self.isInfoChanged) {
         UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"需要提交信息吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alert show];
@@ -207,30 +229,6 @@
 //    }
 
     return YES;
-    
-    
-//    NSIndexPath* path = [NSIndexPath indexPathForRow:0 inSection:0];
-//   
-//    AddProductCommonCell* cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
-//    [cell registeFirstRespond];
-////    _shopData.shopName = [cell getTextFieldString];
-//    
-//    
-//    path = [NSIndexPath indexPathForRow:1 inSection:0];
-//    cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
-////    _shopData.shopAddress = [cell getTextFieldString];
-//    [cell registeFirstRespond];
-//    
-//    path = [NSIndexPath indexPathForRow:2 inSection:0];
-//    cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
-////    _shopData.minPrice = [[cell getTextFieldString] floatValue];
-//    [cell registeFirstRespond];
-//    
-//    path = [NSIndexPath indexPathForRow:3 inSection:0];
-//    cell = (AddProductCommonCell*)[_table cellForRowAtIndexPath:path];
-////    _shopData.serveArea = [cell getTextFieldString];
-//   [cell registeFirstRespond];
-//   
 }
 
 
@@ -238,10 +236,6 @@
 
 -(void)updateShopInfo
 {
-    if (NO==[self checkDataAndFill]) {
-        return;
-    }
-
     __weak ShopInfoViewController* wself = self;
     THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
@@ -251,7 +245,7 @@
         if (status == NetWorkStatusSuccess) {
             
             [wself.navigationController popViewControllerAnimated:YES];
-            str = @"添加成功！";
+            str = @"修改成功！";
         }
         else
         {
@@ -266,235 +260,248 @@
 }
 
 
+#pragma mark-TableView
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 3;
+}
+
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 8;
+    if (section==0) {
+        return 2;
+    }
+    else
+    {
+        return 1;
+    }
 }
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+//        if (indexPath.row == 0) {
+            return 50;
+//        }
+    }
+    else if(indexPath.section == 1)
+    {
+        return 45;
+    }
+    else
+    {
+        return 80 ;
+    }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 10;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 0.5;
+}
+
+
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    __weak ShopInfoViewController* wSelf = self;
-    __weak ShopInfoData* wShopData = _shopData;
-    if (indexPath.row==0) {
-        AddProductCommonCell* cell1 = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
-        if (cell1==nil) {
-            cell1 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1" WithFieldBk:^(NSString *text) {
-                wSelf.isInfoChanged = YES;
-                wShopData.shopName = text;
-            }];
-            [cell1 setTextTitleLabel:@"店名"];
-            [cell1 setTextField:wShopData.shopName];
+    
+    if (indexPath.section == 0) {
+       
+        if (indexPath.row == 0) {
+           
+            ShopInfoHeadCell* cell = [tableView dequeueReusableCellWithIdentifier:@"ShopInfoHeadCell"];
+            [cell setHeadLabelStr:_shopData.shopName];
+            [cell setCellImage:@"shopInfo_modifyImage"];
+            return cell;
         }
-        return cell1;
-    }
-    else if (indexPath.row==1) {
-        AddProductCommonCell* cell2 = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
-        if (cell2==nil) {
-            cell2 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2" WithFieldBk:^(NSString *text) {
-                 wSelf.isInfoChanged = YES;
-                wShopData.shopAddress = text;
-            }];
-            [cell2 setTextTitleLabel:@"店地址"];
-            [cell2 setTextField:wShopData.shopAddress];
+        else
+        {
+            ShopInfoSubCell* cell = [tableView dequeueReusableCellWithIdentifier:@"ShopInfoSubCell"];
+            [cell setLeftLabelStr:[NSString stringWithFormat:@"%.2f",_shopData.minPrice]];
+            [cell setRightLabelStr:_shopData.shopSpread];
+            return cell;
         }
-        return cell2;
+        
     }
-    else if (indexPath.row==2) {
-        AddProductCommonCell* cell3 = [tableView dequeueReusableCellWithIdentifier:@"cell3"];
-        if (cell3==nil) {
-            cell3 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell3" WithFieldBk:^(NSString *text) {
-                
-                wSelf.isInfoChanged = YES;
-                wShopData.minPrice = [text floatValue];
-            }];
-            [cell3 setFieldKeyboardStyle:UIKeyboardTypeDecimalPad];
-            [cell3 setTextTitleLabel:@"起送价格¥"];
-            [cell3 setTextField:[NSString stringWithFormat:@"%.2f",wShopData.minPrice]];
+    else if (indexPath.section == 1)
+    {
+        ShopInfoTimeSetCell* cell = [tableView dequeueReusableCellWithIdentifier:@"ShopInfoTimeSetCell"];
+        
+        NSString* time = nil;
+        
+        if (_shopData.openTime) {
+            time = [NSString stringWithFormat:@"%@-%@",_shopData.openTime,_shopData.closeTime];
         }
-        return cell3;
+        else
+        {
+          time = @"24小时";
+        }
+        [cell setAccessLabelStr:time];
+        return cell;
     }
-    else if (indexPath.row==3) {
-        AddProductCommonCell* cell4 = [tableView dequeueReusableCellWithIdentifier:@"cell4"];
-        if (cell4==nil) {
-            cell4 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell4" WithFieldBk:^(NSString *text) {
-                 wSelf.isInfoChanged = YES;
-                wShopData.serveArea = text;
-            }];
-            [cell4 setTextTitleLabel:@"服务范围"];
-            [cell4 setTextField:wShopData.serveArea];
+    else
+    {
+        ShopInfoThreeLCell* cell = [tableView dequeueReusableCellWithIdentifier:@"ShopInfoThreeLCell"];
+        [cell setFirstLabelStr:[NSString stringWithFormat:@"店铺地址：%@",_shopData.shopAddress ]];
+        [cell setSecondLabelStr:[NSString stringWithFormat:@"店铺电话：%@",_shopData.telPhoneNu]];
+        [cell setThirdLabelStr:[NSString stringWithFormat:@"老板手机：%@",_shopData.mobilePhoneNu]];
+        return cell;
+    }
 
-        }
-        return cell4;
-    }
-    else if (indexPath.row==4) {
-        AddProductCommonCell* cell5 = [tableView dequeueReusableCellWithIdentifier:@"cell5"];
-        if (cell5==nil) {
-            cell5 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell5" WithFieldBk:^(NSString *text) {
-                 wSelf.isInfoChanged = YES;
-                wShopData.telPhoneNu = text;
-            }];
-            [cell5 setFieldKeyboardStyle:UIKeyboardTypeNumberPad];
-            [cell5 setTextTitleLabel:@"店铺座机"];
-            [cell5 setTextField:wShopData.telPhoneNu];
-        }
-        return cell5;
-    }
-    else if (indexPath.row==5) {
-        AddProductCommonCell* cell6 = [tableView dequeueReusableCellWithIdentifier:@"cell6"];
-        if (cell6==nil) {
-            cell6 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell6" WithFieldBk:^(NSString *text) {
-                 wSelf.isInfoChanged = YES;
-                wShopData.mobilePhoneNu = text;
-            }];
-            [cell6 setFieldKeyboardStyle:UIKeyboardTypeNumberPad];
-            [cell6 setTextTitleLabel:@"老板电话"];
-            [cell6 setTextField:wShopData.mobilePhoneNu];
-        }
-        return cell6;
-    }
-    else if (indexPath.row==6) {
-        AddProductSwithCell* cell7 = [tableView dequeueReusableCellWithIdentifier:@"cell7"];
-        if (cell7==nil) {
-            cell7 = [[AddProductSwithCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell7"];
-            
-            __weak AddProductSwithCell* wCell = cell7;
-            [cell7 setSwitchBlock:^(BOOL statue) {
-                 wSelf.isInfoChanged = YES;
-                 wShopData.shopStatue = !statue;//0 营业中,1 打烊
-                
-                 wCell.textLabel.text = [NSString stringWithFormat:@"营业管理:%@",[wShopData getShopStatusStr]];
-                
-            }];
-            [cell7 setSWitchStatue:!wShopData.shopStatue];
-            
-            cell7.textLabel.text = [NSString stringWithFormat:@"营业管理:%@",[wShopData getShopStatusStr]];
-        }
-        return cell7;
-    }
-    else  {
-        AddProductSwithCell* cell8 = [tableView dequeueReusableCellWithIdentifier:@"cell8"];
-        if (cell8==nil) {
-            cell8 = [[AddProductSwithCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell8" ];
-            cell8.textLabel.text = @"营业时间24小时" ;
-            [cell8 setSwitchBlock:^(BOOL statue) {
-                if (!statue) {
-                    [wSelf creatTableFootView];
-                }
-                else
-                {
-                    [wSelf removeTableFootView];
-                }
-                 wSelf.isInfoChanged = YES;
-            }];
-            if (_shopData.openTime) {
-                [cell8 setSWitchStatue:0];
-            }
-            else
-            {
-                [cell8 setSWitchStatue:1];
-            }
-        }
-        return cell8;
-    }
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (indexPath.section == 0) {
+        [self showChangeShopNameView];
+    }
+    else if(indexPath.section == 1)
+    {
+        [self creatPickerView];
+    }
+        
+}
+
 
 
 -(void)creatTableFootView
 {
     UIView* footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50)];
-    footView.backgroundColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240/255.0 alpha:1.0];
     
-    UIButton* closeBt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    
-    NSString* closeStr = nil;
-    if (_shopData.closeTime) {
-        closeStr = [NSString stringWithFormat:@"关门时间: %@",_shopData.closeTime] ;
-    }
-    else
-    {
-        closeStr = [NSString stringWithFormat:@"关门时间: 22:00"] ;
-        _shopData.closeTime = @"22:00";
-    }
-    
-    [closeBt setTitle:closeStr forState:UIControlStateNormal];
-    closeBt.translatesAutoresizingMaskIntoConstraints = NO;
-    [footView addSubview:closeBt];
-    [closeBt addTarget:self action:@selector(selectCloseTime:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [footView addConstraint:[NSLayoutConstraint constraintWithItem:closeBt attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:footView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-    
-    [footView addConstraint:[NSLayoutConstraint constraintWithItem:closeBt attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:footView attribute:NSLayoutAttributeCenterX multiplier:1.5 constant:0]];
-    
-    
-    UIButton * openBt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    openBt.translatesAutoresizingMaskIntoConstraints  = NO;
-    
-    NSString* openStr = nil;
-    if (_shopData.openTime) {
-        openStr = [NSString stringWithFormat:@"开门时间: %@",_shopData.openTime] ;
-    }
-    else
-    {
-        openStr = [NSString stringWithFormat:@"开门时间: 08:00"] ;
-        _shopData.openTime = @"08:00";
-    }
 
-    [openBt setTitle:openStr forState:UIControlStateNormal];
-    [footView addSubview:openBt];
-    [openBt addTarget:self action:@selector(selectOpenTime:) forControlEvents:UIControlEventTouchUpInside];
+    UILabel* titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 0, 200, 20)];
+    titleLabel.text = @"服务范围";
+    titleLabel.font = DEFAULTFONT(16);
+    titleLabel.textColor = FUNCTCOLOR(153, 153, 153);
+    [footView addSubview:titleLabel];
     
-    [footView addConstraint:[NSLayoutConstraint constraintWithItem:openBt attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:footView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
     
-    [footView addConstraint:[NSLayoutConstraint constraintWithItem:openBt attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:footView attribute:NSLayoutAttributeCenterX multiplier:.5 constant:0]];
+    CGRect frame = CGRectMake(15, 30, 0, 18);
+//    NSArray* strArr = @[@"sklfjkqqqqqqqqqqql",@"sjkdfjklajfkl",@"jfkajkrdgfdgfd",@"djfkaljfkljakldfjkladjfklajs",@"jkklkl",@"jdsfkljkl",@"fjakldjflajkdlfjklajf",@"ddd" ];
+    NSArray* strArr = [_shopData.serveArea componentsSeparatedByString:@","];
     
-    _table.tableFooterView = footView;
-}
-
--(void)removeTableFootView
-{
-    _table.tableFooterView = nil;
-    _shopData.closeTime = nil;
-    _shopData.openTime = nil;
-}
-
-
--(void)selectCloseTime:(UIButton*)sender
-{
-    [self creatPickerView:sender];
-}
-
--(void)selectOpenTime:(UIButton*)sender
-{
-    sender.tag = 1;
-    [self creatPickerView:sender];
-}
-
-
--(void)creatPickerView:(UIButton*)bt
-{
-     self.isInfoChanged = YES;
-    __weak ShopInfoData* wData = _shopData;
-    DatePickerView* picker = [[DatePickerView alloc]initWithDateSelectComplete:^(NSString *dateStr) {
+    
+    for (NSString* sub in strArr) {
         
-        if (bt.tag) {
-            [bt setTitle:[NSString stringWithFormat:@"开门时间: %@",dateStr] forState:UIControlStateNormal];
-            wData.openTime =  dateStr;
-        }
-        else
+        CGSize size = [sub sizeWithAttributes:@{NSFontAttributeName:DEFAULTFONT(15)}];
+        size.width += 8;
+        if (size.width + frame.origin.x +15 >SCREENWIDTH)
         {
-            [bt setTitle:[NSString stringWithFormat:@"关门时间: %@",dateStr] forState:UIControlStateNormal];
-            wData.closeTime = dateStr;
+            frame.origin.y +=23;
+            frame.origin.x = 15;
         }
+        frame.size.width = size.width;
         
+        UILabel* lable = [[UILabel alloc]initWithFrame:frame];
+        lable.textColor = FUNCTCOLOR(246, 246, 246);
+        lable.textAlignment = NSTextAlignmentCenter;
+        lable.backgroundColor = FUNCTCOLOR(183, 183, 183);
+        
+        frame.origin.x += size.width +15;
+        [footView addSubview:lable];
+        lable.layer.masksToBounds = YES;
+        lable.layer.cornerRadius = 6;
+        lable.font = DEFAULTFONT(15);
+        lable.text = sub;
+    }
+    footView.frame = CGRectMake(0, 0, SCREENWIDTH, frame.size.height+40);
+     _table.tableFooterView = footView;
+    return;
+    
+}
+
+//-(void)removeTableFootView
+//{
+//    _table.tableFooterView = nil;
+//    _shopData.closeTime = nil;
+//    _shopData.openTime = nil;
+//}
+
+
+//-(void)selectCloseTime:(UIButton*)sender
+//{
+//    [self creatPickerView:sender];
+//}
+//
+//-(void)selectOpenTime:(UIButton*)sender
+//{
+//    sender.tag = 1;
+//    [self creatPickerView:sender];
+//}
+
+
+-(void)creatPickerView
+{
+//     self.isInfoChanged = YES;
+    __weak ShopInfoViewController* wSelf = self;
+    __weak UITableView* wtable = _table;
+    __weak ShopInfoData* wData = _shopData;
+    DatePickerView* picker = [[DatePickerView alloc]initWithDateSelectComplete:^(NSString *startT, NSString *endT) {
+        
+        wData.openTime =  startT;
+        wData.closeTime = endT;
+        [wtable reloadData];
+        [wSelf updateShopInfo];
     }];
     picker.translatesAutoresizingMaskIntoConstraints = NO;
-    //    _table.tableFooterView = picker;
+    
     [self.view addSubview:picker];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[picker]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(picker)]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[picker]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(picker)]];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:picker attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.4 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:picker attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.5 constant:0]];
 }
+
+
+
+//-(UIView*)inputView
+//{
+//    if (_inputView==nil) {
+//        
+//        __weak ShopInfoData* wData = _shopData;
+//        DatePickerView* picker = [[DatePickerView alloc]initWithDateSelectComplete:^(NSString *dateStr) {
+//            [self resignFirstResponder];
+////            [bt setTitle:[NSString stringWithFormat:@"开门时间: %@",dateStr] forState:UIControlStateNormal];
+//            wData.openTime =  dateStr;
+//        }];
+//        
+//        picker.frame = CGRectMake(0, 0, SCREENWIDTH, 300);
+//        _inputView = picker;
+//    }
+//    
+//    return _inputView;
+//}
+//
+//-(BOOL)canBecomeFirstResponder
+//{
+//    return YES;
+//}
+
+
+#pragma mark-ShopnameChanged
+
+-(void)showChangeShopNameView
+{
+    ShopNameChangeController* changeName = [[ShopNameChangeController alloc]init];
+    changeName.delegate = self;
+    [self.navigationController pushViewController:changeName animated:YES];
+}
+
+-(void)shopNameChanged:(NSString *)shopName
+{
+    _shopData.shopName = shopName;
+    [self updateShopInfo];
+}
+
 
 
 

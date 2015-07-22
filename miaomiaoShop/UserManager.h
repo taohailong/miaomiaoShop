@@ -7,6 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#define UTOKEN @"userToken"
+#define USHOPID @"shop_id"
+#define UACCOUNT @"user_account"
+#define PUSHTOKEN @"push_token"
+#define PWMD5 @"password_md5"
 
 @interface UserManager : NSObject
 typedef void (^logCallBack)(BOOL success,id respond) ;

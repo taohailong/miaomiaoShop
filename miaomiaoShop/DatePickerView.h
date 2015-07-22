@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-typedef void (^DatePickerComplete)(NSString*dateStr);
+typedef void (^DatePickerComplete)(NSString*startT,NSString*endT);
 @interface DatePickerView : UIView
 {
     DatePickerComplete _completeBk;

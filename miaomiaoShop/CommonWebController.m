@@ -7,24 +7,50 @@
 //
 
 #import "CommonWebController.h"
-#import "UserManager.h"
+
 @implementation CommonWebController
+
+-(id)initWithUrl:(NSString*)url
+{
+    self = [super init];
+    _url = url;
+    return self;
+}
+
 -(void)viewDidLoad
 {
-    UIWebView* web = [[UIWebView alloc]init];
+    web = [[UIWebView alloc]init];
+    web.delegate = self;
     [self.view addSubview:web];
     web.translatesAutoresizingMaskIntoConstraints = NO;
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[web]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(web)]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[web]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(web)]];
+    [web loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_url]]];
     
-    UserManager* manager = [UserManager shareUserManager];
-#if DEBUG
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/wallet/cashPrompt?shop_id=%@",@"www.mbianli.com:8088",manager.shopID];
-#else
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/wallet/cashPrompt?shop_id=%@", @"www.mbianli.com",manager.shopID];
-#endif
-    NSLog(@"%@",url);
-    [web loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
+    _warnView = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
+    
 }
+
+-(void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [_warnView removeFromSuperview];
+    
+}
+
+
+
+//-(void)viewDidLoad
+//{
+//    UIWebView* web = [[UIWebView alloc]init];
+//    [self.view addSubview:web];
+//    web.translatesAutoresizingMaskIntoConstraints = NO;
+//    
+//    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[web]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(web)]];
+//    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[web]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(web)]];
+//    
+//    UserManager* manager = [UserManager shareUserManager];
+//    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/wallet/cashPrompt?shop_id=%@", @"www.mbianli.com",manager.shopID];
+//    [web loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
+//}
 @end

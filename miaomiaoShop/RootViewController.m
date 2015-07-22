@@ -23,14 +23,16 @@
 #import "ShopSelectController.h"
 #import "SuggestViewController.h"
 #import "AboutController.h"
-
-
+#import "CommonWebController.h"
+#import "RootIndicateCell.h"
 
 @interface RootViewController()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,PosterProtocol,FloatProtocol,NavigationTieleViewProtocol>
 {
     UICollectionView* _collectionView;
     FloatView* _floatView;
     ShopInfoData* _shop;
+    NSArray* _picDataArr;
+    NSMutableArray* _picUrls;
 }
 @property(nonatomic,weak)THActivityView* errView;
 @end
@@ -94,8 +96,9 @@
     [_collectionView registerClass:[AdvertiseCollectionCell class] forCellWithReuseIdentifier:@"AdvertiseCollectionCell"];
     
     [_collectionView registerClass:[RootDetailCell class] forCellWithReuseIdentifier:@"RootDetailCell"];
+    [_collectionView registerClass:[RootIndicateCell class] forCellWithReuseIdentifier:@"RootIndicateCell"];
     
-//    [_collectionView registerClass:[PCollectionHeadView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PCollectionHeadView"];
+    //[_collectionView registerClass:[PCollectionHeadView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PCollectionHeadView"];
     
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
@@ -176,6 +179,34 @@
 }
 
 
+-(void)floatViewSelectStyle:(FloatActionStyle)action
+{
+    if (action == FloatActionAbout ) {
+        AboutController* aboutView = [[AboutController alloc]init];
+        [self.navigationController pushViewController:aboutView animated:YES];
+    }
+    else if (action == FloatActionLogOut)
+    {
+        __weak RootViewController* wself = self;
+        UserManager* manager = [UserManager shareUserManager];
+        [manager removeUserAccountWithBk:^(BOOL success, id respond) {
+            
+            if (success==NO) {
+                return ;
+            }
+            [wself showLogView];
+        }];
+        
+    }
+    else if (action == FloatActionSuggestion)
+    {
+        SuggestViewController* sController = [[SuggestViewController alloc]init];
+        [self.navigationController pushViewController:sController animated:YES];
+    }
+    [_floatView hidFloatView];
+}
+
+
 #pragma mark-----------collectionView ---------------
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -246,11 +277,14 @@
             AdvertiseCollectionCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AdvertiseCollectionCell" forIndexPath:indexPath];
             cell.delegate = self;
             cell.backgroundColor = [UIColor redColor];
-            //        [cell setImageDataArr:_picUrls];
+            [cell setImageDataArr:_picUrls];
             return cell;
         }
         
         RootDetailCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RootDetailCell" forIndexPath:indexPath];
+        if (_shop == nil) {
+            return cell;
+        }
         if (indexPath.row ==1) {
             
             [cell setTitleLabelStr:[NSString stringWithFormat:@"%@单",_shop.countOrder]];
@@ -266,6 +300,25 @@
     }
     
 //    __weak RootViewController* wSelf = self;
+    
+    if (indexPath.row == 0) {
+        RootIndicateCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RootIndicateCell" forIndexPath:indexPath];
+        
+        if (_shop.shopStatue == ShopStatusClose) {
+            [cell setIndicateImage:@"root_indicate_close"];
+        }
+        else
+        {
+            [cell setIndicateImage:@"root_indicate_open"];
+        }
+        
+        [cell setPicUrl:@"root_shopManage"];
+        [cell setTitleStr:@"营业管理"];
+        return cell;
+    }
+    
+    
+    
     PCollectionCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PCollectionCell" forIndexPath:indexPath];
     
     NSString* imageName = nil;
@@ -349,7 +402,7 @@
 {
     __weak RootViewController* wSelf = self;
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request getShopInfoWitbBk:^(ShopInfoData* backDic, NetWorkStatus status) {
+    [request getShopInfoWitbBk:^(NSDictionary* backDic, NetWorkStatus status) {
         //        防止多次错误 时errView重叠
         [wSelf.errView removeFromSuperview];
         if (status == NetWorkStatusSuccess) {
@@ -368,9 +421,11 @@
     
 }
 
--(void)getShopInfo:(ShopInfoData*)shop
+-(void)getShopInfo:(NSDictionary*)sourceDic
 {
-    _shop = shop;
+    _shop = sourceDic[@"shop"];
+    _picDataArr = sourceDic[@"pic_data"];
+    _picUrls = sourceDic[@"pics"];
     [_collectionView reloadData];
     [self updateNavigationView];
 }
@@ -383,6 +438,8 @@
     if (_shop == nil) {
         return;
     }
+    
+    
     ShopInfoViewController * shopInfo = [[ShopInfoViewController alloc]initWithShopInfoData:_shop];
     shopInfo.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:shopInfo animated:YES];
@@ -421,35 +478,15 @@
 
 -(void)posterViewDidSelectAtIndex:(NSInteger)index WithData:(id)data
 {
-}
-
-
--(void)floatViewSelectStyle:(FloatActionStyle)action
-{
-    if (action == FloatActionAbout ) {
-        AboutController* aboutView = [[AboutController alloc]init];
-        [self.navigationController pushViewController:aboutView animated:YES];
-    }
-    else if (action == FloatActionLogOut)
-    {
-        __weak RootViewController* wself = self;
-        UserManager* manager = [UserManager shareUserManager];
-        [manager removeUserAccountWithBk:^(BOOL success, id respond) {
-            
-            if (success==NO) {
-                return ;
-            }
-            [wself showLogView];
-        }];
+    NSDictionary* dic = _picDataArr[index];
+    NSString* url = dic[@"redirect"];
+    if (url) {
         
+        CommonWebController* web = [[CommonWebController alloc]initWithUrl:url];
+        [self.navigationController pushViewController:web animated:YES];
     }
-    else if (action == FloatActionSuggestion)
-    {
-        SuggestViewController* sController = [[SuggestViewController alloc]init];
-        [self.navigationController pushViewController:sController animated:YES];
-    }
-    [_floatView hidFloatView];
 }
+
 
 
 @end

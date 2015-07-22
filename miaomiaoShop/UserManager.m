@@ -8,10 +8,7 @@
 
 #import "UserManager.h"
 #import "NetWorkRequest.h"
-#define UTOKEN @"userToken"
-#define USHOPID @"shop_id"
-#define UACCOUNT @"user_account"
-#define PUSHTOKEN @"push_token"
+#import "NSString+Md5.h"
 //#define PUSHOK @"isPush"
 @interface UserManager()
 {
@@ -167,6 +164,11 @@
             bSelf.shopAddress = backDic[@"data"][@"shop"][0][@"shop_address"];
             bSelf.phoneNumber = backDic[@"data"][@"shop"][0][@"tel"];
             [bSelf setTokenToDish:bSelf.token WithShopID:bSelf.shopID WithAccount:phone];
+            
+            NSString*pwMd5 = [NSString md5:ps];
+            
+            NSUserDefaults* def = [NSUserDefaults standardUserDefaults];
+            [def setObject:pwMd5  forKey:PWMD5];
             
              blockBack(YES,nil);
             [bSelf registePushKey];

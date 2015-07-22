@@ -213,25 +213,6 @@
 {
     UIView* selectView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
     selectView.backgroundColor = [UIColor whiteColor];
-//    UIView* headView = [[UIView alloc]init];
-//    headView.backgroundColor = [UIColor whiteColor];
-//    headView.translatesAutoresizingMaskIntoConstraints = NO;
-//    [selectView addSubview:headView];
-//    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-13-[headView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(headView)]];
-//    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[headView(1)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(headView)]];
-//
-//    
-//    
-//    
-//    UIView* bottomView = [[UIView alloc]init];
-//    bottomView.backgroundColor = [UIColor whiteColor];
-//    bottomView.translatesAutoresizingMaskIntoConstraints = NO;
-//    [selectView addSubview:bottomView];
-//    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-13-[bottomView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(bottomView)]];
-//    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView(1)]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(bottomView)]];
-
-    
-    
     UIView* colorView = [[UIView alloc]init];
     colorView.backgroundColor = [UIColor redColor];
     colorView.translatesAutoresizingMaskIntoConstraints = NO;

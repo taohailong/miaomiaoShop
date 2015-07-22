@@ -15,7 +15,7 @@
 #import "LastViewOnTable.h"
 #import "DateFormateManager.h"
 #import "CommonWebController.h"
-
+#import "UserManager.h"
 
 @interface CashDebitController()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -271,7 +271,10 @@
 
 -(void)detailView
 {
-    CommonWebController* web = [[CommonWebController alloc]init];
+    UserManager* manager = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/wallet/cashPrompt?shop_id=%@", @"www.mbianli.com",manager.shopID];
+    
+    CommonWebController* web = [[CommonWebController alloc]initWithUrl:url];
     web.title = @"提现规则";
     [self.navigationController pushViewController:web animated:YES];
 }

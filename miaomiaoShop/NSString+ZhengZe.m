@@ -22,7 +22,6 @@
 
 
 
-
 +(BOOL)verifyIsMobilePhoneNu:(NSString*)phone
 {
     NSString * MOBILE =  @"^1[0-9]{10}";

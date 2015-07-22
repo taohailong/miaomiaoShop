@@ -13,4 +13,6 @@
     ShopInfoData* _shopData;
 }
 -(id)initWithShopInfoData:(ShopInfoData*)data;
+@property(nonatomic,strong,readwrite)UIView* inputView;
+//@property(nonatomic,strong,readwrite)UIView* inputAccessoryView;
 @end

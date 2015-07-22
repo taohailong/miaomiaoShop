@@ -108,6 +108,8 @@
 		C76ADB751AFCAA77008DF9A4 /* pick_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C76ADB731AFCAA77008DF9A4 /* pick_bg@2x.png */; };
 		C76D062C1B5751EA0025515F /* RootDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C76D062B1B5751EA0025515F /* RootDetailCell.m */; };
 		C76D062D1B5751EA0025515F /* RootDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C76D062B1B5751EA0025515F /* RootDetailCell.m */; };
+		C76F31D11B5CFDF300FAABC2 /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = C76F31D01B5CFDF300FAABC2 /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C76F31D21B5CFDF300FAABC2 /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = C76F31D01B5CFDF300FAABC2 /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C7749F4E1B3A493D0090BBC4 /* BusinessSpreadSummarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7749F4D1B3A493D0090BBC4 /* BusinessSpreadSummarCell.m */; };
 		C7749F4F1B3A493D0090BBC4 /* BusinessSpreadSummarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7749F4D1B3A493D0090BBC4 /* BusinessSpreadSummarCell.m */; };
 		C7749F521B3A698F0090BBC4 /* SpreadData.m in Sources */ = {isa = PBXBuildFile; fileRef = C7749F511B3A698F0090BBC4 /* SpreadData.m */; };
@@ -118,6 +120,18 @@
 		C7749F5B1B3A8FC40090BBC4 /* SpreadListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7749F591B3A8FC40090BBC4 /* SpreadListCell.m */; };
 		C7749F5E1B3AA5FC0090BBC4 /* SpreadInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7749F5D1B3AA5FC0090BBC4 /* SpreadInfoController.m */; };
 		C7749F5F1B3AA5FC0090BBC4 /* SpreadInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7749F5D1B3AA5FC0090BBC4 /* SpreadInfoController.m */; };
+		C775ECAB1B5F3866000AEDAD /* ShopInfoHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C775ECAA1B5F3866000AEDAD /* ShopInfoHeadCell.m */; };
+		C775ECAC1B5F3866000AEDAD /* ShopInfoHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C775ECAA1B5F3866000AEDAD /* ShopInfoHeadCell.m */; };
+		C775ECAF1B5F38AF000AEDAD /* ShopInfoSubCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C775ECAE1B5F38AF000AEDAD /* ShopInfoSubCell.m */; };
+		C775ECB01B5F38AF000AEDAD /* ShopInfoSubCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C775ECAE1B5F38AF000AEDAD /* ShopInfoSubCell.m */; };
+		C775ECB31B5F4483000AEDAD /* ShopInfoThreeLCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C775ECB21B5F4483000AEDAD /* ShopInfoThreeLCell.m */; };
+		C775ECB41B5F4483000AEDAD /* ShopInfoThreeLCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C775ECB21B5F4483000AEDAD /* ShopInfoThreeLCell.m */; };
+		C775ECB71B5F4BBA000AEDAD /* ShopInfoTimeSetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C775ECB61B5F4BBA000AEDAD /* ShopInfoTimeSetCell.m */; };
+		C775ECB81B5F4BBA000AEDAD /* ShopInfoTimeSetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C775ECB61B5F4BBA000AEDAD /* ShopInfoTimeSetCell.m */; };
+		C775ECBB1B5F8764000AEDAD /* ShopNameChangeController.m in Sources */ = {isa = PBXBuildFile; fileRef = C775ECBA1B5F8764000AEDAD /* ShopNameChangeController.m */; };
+		C775ECBC1B5F8764000AEDAD /* ShopNameChangeController.m in Sources */ = {isa = PBXBuildFile; fileRef = C775ECBA1B5F8764000AEDAD /* ShopNameChangeController.m */; };
+		C775ECBF1B5F8E74000AEDAD /* RootIndicateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C775ECBE1B5F8E74000AEDAD /* RootIndicateCell.m */; };
+		C775ECC01B5F8E74000AEDAD /* RootIndicateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C775ECBE1B5F8E74000AEDAD /* RootIndicateCell.m */; };
 		C7777CD31AEA657000A9BDC3 /* AddProductController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7777CD21AEA657000A9BDC3 /* AddProductController.m */; };
 		C784433C1AF9E3A0009B4C2D /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = C753C16A1AE78E4E00562EF6 /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C784433D1AF9E3A0009B4C2D /* ShopBusinessController.m in Sources */ = {isa = PBXBuildFile; fileRef = C75680C91AF762F900F0A990 /* ShopBusinessController.m */; };
@@ -208,6 +222,8 @@
 		C784441C1AFA1EB3009B4C2D /* LoadingGif.gif in Resources */ = {isa = PBXBuildFile; fileRef = C78444191AFA1EB3009B4C2D /* LoadingGif.gif */; };
 		C784441D1AFA1EB3009B4C2D /* miaomiao.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C784441A1AFA1EB3009B4C2D /* miaomiao.mp3 */; };
 		C784441E1AFA1EB3009B4C2D /* miaomiao.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C784441A1AFA1EB3009B4C2D /* miaomiao.mp3 */; };
+		C792550F1B5E210900F6C05E /* NSString+Md5.m in Sources */ = {isa = PBXBuildFile; fileRef = C792550E1B5E210900F6C05E /* NSString+Md5.m */; };
+		C79255101B5E210900F6C05E /* NSString+Md5.m in Sources */ = {isa = PBXBuildFile; fileRef = C792550E1B5E210900F6C05E /* NSString+Md5.m */; };
 		C7A7E5201AF8D1C900D9420A /* libUMessage_Sdk_1.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7A7E51E1AF8D1C900D9420A /* libUMessage_Sdk_1.1.0.a */; };
 		C7B86CD31AF8A7B800FCF5BE /* house.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7B86CD21AF8A7B800FCF5BE /* house.plist */; };
 		C7B86CD81AF8B4C500FCF5BE /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7B86CD51AF8B4C500FCF5BE /* libMobClickLibrary.a */; };
@@ -426,6 +442,8 @@
 		C76ADB731AFCAA77008DF9A4 /* pick_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pick_bg@2x.png"; sourceTree = "<group>"; };
 		C76D062A1B5751EA0025515F /* RootDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootDetailCell.h; sourceTree = "<group>"; };
 		C76D062B1B5751EA0025515F /* RootDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootDetailCell.m; sourceTree = "<group>"; };
+		C76F31CF1B5CFDF300FAABC2 /* OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenUDID.h; sourceTree = SOURCE_ROOT; };
+		C76F31D01B5CFDF300FAABC2 /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenUDID.m; sourceTree = SOURCE_ROOT; };
 		C7749F4C1B3A493D0090BBC4 /* BusinessSpreadSummarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessSpreadSummarCell.h; sourceTree = "<group>"; };
 		C7749F4D1B3A493D0090BBC4 /* BusinessSpreadSummarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessSpreadSummarCell.m; sourceTree = "<group>"; };
 		C7749F501B3A698F0090BBC4 /* SpreadData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpreadData.h; sourceTree = "<group>"; };
@@ -436,6 +454,18 @@
 		C7749F591B3A8FC40090BBC4 /* SpreadListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpreadListCell.m; sourceTree = "<group>"; };
 		C7749F5C1B3AA5FC0090BBC4 /* SpreadInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpreadInfoController.h; sourceTree = "<group>"; };
 		C7749F5D1B3AA5FC0090BBC4 /* SpreadInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpreadInfoController.m; sourceTree = "<group>"; };
+		C775ECA91B5F3866000AEDAD /* ShopInfoHeadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopInfoHeadCell.h; sourceTree = "<group>"; };
+		C775ECAA1B5F3866000AEDAD /* ShopInfoHeadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopInfoHeadCell.m; sourceTree = "<group>"; };
+		C775ECAD1B5F38AF000AEDAD /* ShopInfoSubCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopInfoSubCell.h; sourceTree = "<group>"; };
+		C775ECAE1B5F38AF000AEDAD /* ShopInfoSubCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopInfoSubCell.m; sourceTree = "<group>"; };
+		C775ECB11B5F4483000AEDAD /* ShopInfoThreeLCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopInfoThreeLCell.h; sourceTree = "<group>"; };
+		C775ECB21B5F4483000AEDAD /* ShopInfoThreeLCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopInfoThreeLCell.m; sourceTree = "<group>"; };
+		C775ECB51B5F4BBA000AEDAD /* ShopInfoTimeSetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopInfoTimeSetCell.h; sourceTree = "<group>"; };
+		C775ECB61B5F4BBA000AEDAD /* ShopInfoTimeSetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopInfoTimeSetCell.m; sourceTree = "<group>"; };
+		C775ECB91B5F8764000AEDAD /* ShopNameChangeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopNameChangeController.h; sourceTree = "<group>"; };
+		C775ECBA1B5F8764000AEDAD /* ShopNameChangeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopNameChangeController.m; sourceTree = "<group>"; };
+		C775ECBD1B5F8E74000AEDAD /* RootIndicateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootIndicateCell.h; sourceTree = "<group>"; };
+		C775ECBE1B5F8E74000AEDAD /* RootIndicateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootIndicateCell.m; sourceTree = "<group>"; };
 		C7777CD11AEA657000A9BDC3 /* AddProductController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProductController.h; sourceTree = "<group>"; };
 		C7777CD21AEA657000A9BDC3 /* AddProductController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProductController.m; sourceTree = "<group>"; };
 		C78443921AF9E3A0009B4C2D /* miaomiaoShop copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "miaomiaoShop copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -446,6 +476,8 @@
 		C78444121AFA1DD8009B4C2D /* YFGIFImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFGIFImageView.m; sourceTree = "<group>"; };
 		C78444191AFA1EB3009B4C2D /* LoadingGif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = LoadingGif.gif; sourceTree = "<group>"; };
 		C784441A1AFA1EB3009B4C2D /* miaomiao.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = miaomiao.mp3; sourceTree = "<group>"; };
+		C792550D1B5E210900F6C05E /* NSString+Md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Md5.h"; sourceTree = "<group>"; };
+		C792550E1B5E210900F6C05E /* NSString+Md5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Md5.m"; sourceTree = "<group>"; };
 		C796943C1B57B03800B0B21B /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		C7A7E51E1AF8D1C900D9420A /* libUMessage_Sdk_1.1.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.1.0.a; sourceTree = "<group>"; };
 		C7A7E51F1AF8D1C900D9420A /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
@@ -677,6 +709,16 @@
 				C7241F7B1AF4EFB3000474B4 /* ShopInfoData.m */,
 				C7241F7D1AF4F514000474B4 /* ShopInfoViewController.h */,
 				C7241F7E1AF4F514000474B4 /* ShopInfoViewController.m */,
+				C775ECA91B5F3866000AEDAD /* ShopInfoHeadCell.h */,
+				C775ECAA1B5F3866000AEDAD /* ShopInfoHeadCell.m */,
+				C775ECAD1B5F38AF000AEDAD /* ShopInfoSubCell.h */,
+				C775ECAE1B5F38AF000AEDAD /* ShopInfoSubCell.m */,
+				C775ECB11B5F4483000AEDAD /* ShopInfoThreeLCell.h */,
+				C775ECB21B5F4483000AEDAD /* ShopInfoThreeLCell.m */,
+				C775ECB51B5F4BBA000AEDAD /* ShopInfoTimeSetCell.h */,
+				C775ECB61B5F4BBA000AEDAD /* ShopInfoTimeSetCell.m */,
+				C775ECB91B5F8764000AEDAD /* ShopNameChangeController.h */,
+				C775ECBA1B5F8764000AEDAD /* ShopNameChangeController.m */,
 				C7241F771AF4E197000474B4 /* ShopSummaryController.h */,
 				C7241F781AF4E197000474B4 /* ShopSummaryController.m */,
 				C7428BDC1B019C5A00F63ADB /* ShopSelectController.h */,
@@ -800,6 +842,10 @@
 				C717DFE61AF3973C0057DD72 /* DateFormateManager.m */,
 				C749AECF1B10434200F82FF2 /* NSString+ZhengZe.h */,
 				C749AED01B10434200F82FF2 /* NSString+ZhengZe.m */,
+				C792550D1B5E210900F6C05E /* NSString+Md5.h */,
+				C792550E1B5E210900F6C05E /* NSString+Md5.m */,
+				C76F31CF1B5CFDF300FAABC2 /* OpenUDID.h */,
+				C76F31D01B5CFDF300FAABC2 /* OpenUDID.m */,
 				C7BCDA6D1B5607A0003460F8 /* PosterScorllView.h */,
 				C7BCDA6E1B5607A0003460F8 /* PosterScorllView.m */,
 				C753C1851AE78E5800562EF6 /* SDWebImage */,
@@ -932,6 +978,8 @@
 				C7BCDA701B5607A0003460F8 /* AdvertiseCollectionCell.m */,
 				C7BCDA761B5608B9003460F8 /* PCollectionCell.h */,
 				C7BCDA771B5608B9003460F8 /* PCollectionCell.m */,
+				C775ECBD1B5F8E74000AEDAD /* RootIndicateCell.h */,
+				C775ECBE1B5F8E74000AEDAD /* RootIndicateCell.m */,
 				C76D062A1B5751EA0025515F /* RootDetailCell.h */,
 				C76D062B1B5751EA0025515F /* RootDetailCell.m */,
 				C7BCDA8F1B5640EF003460F8 /* FloatView.h */,
@@ -1195,11 +1243,14 @@
 				C753C17C1AE78E4E00562EF6 /* ASIAuthenticationDialog.m in Sources */,
 				C753C1A51AE78E5800562EF6 /* SDImageCache.m in Sources */,
 				C725BB391AEB6E7800F344CB /* AddProductFirstCell.m in Sources */,
+				C775ECB71B5F4BBA000AEDAD /* ShopInfoTimeSetCell.m in Sources */,
 				C753C1801AE78E4E00562EF6 /* ASIFormDataRequest.m in Sources */,
+				C775ECAB1B5F3866000AEDAD /* ShopInfoHeadCell.m in Sources */,
 				C753BEAE1AE7460800562EF6 /* AppDelegate.m in Sources */,
 				C753C1B91AE7952600562EF6 /* UserManager.m in Sources */,
 				C76D062C1B5751EA0025515F /* RootDetailCell.m in Sources */,
 				C725BB3C1AEB6F4200F344CB /* AddProductCommonCell.m in Sources */,
+				C792550F1B5E210900F6C05E /* NSString+Md5.m in Sources */,
 				C753C1A71AE78E5800562EF6 /* SDWebImageDecoder.m in Sources */,
 				C753C1821AE78E4E00562EF6 /* ASIInputStream.m in Sources */,
 				C753C1BF1AE7A25400562EF6 /* LogViewController.m in Sources */,
@@ -1211,10 +1262,12 @@
 				C7463FD81B393FEB00169FF6 /* ShopDailyDataController.m in Sources */,
 				C753C1A61AE78E5800562EF6 /* SDWebImageCompat.m in Sources */,
 				C753C1831AE78E4E00562EF6 /* ASINetworkQueue.m in Sources */,
+				C775ECB31B5F4483000AEDAD /* ShopInfoThreeLCell.m in Sources */,
 				C7241F7C1AF4EFB3000474B4 /* ShopInfoData.m in Sources */,
 				C741369E1AE8C65200B08CBD /* ShopCategoryListView.m in Sources */,
 				C75680BF1AF7117E00F0A990 /* NavigationBaseController.m in Sources */,
 				C74136A41AE8DFA900B08CBD /* ShopCategoryData.m in Sources */,
+				C76F31D11B5CFDF300FAABC2 /* OpenUDID.m in Sources */,
 				C7D4AD931B58F64600F46561 /* NavigationTitleView.m in Sources */,
 				C7749F561B3A86E30090BBC4 /* SpreadListController.m in Sources */,
 				C7BCDA911B5640EF003460F8 /* FloatView.m in Sources */,
@@ -1231,6 +1284,7 @@
 				C753C17E1AE78E4E00562EF6 /* ASIDataDecompressor.m in Sources */,
 				C713A2521AF48E57000EC646 /* OrderInfoController.m in Sources */,
 				C7749F5A1B3A8FC40090BBC4 /* SpreadListCell.m in Sources */,
+				C775ECAF1B5F38AF000AEDAD /* ShopInfoSubCell.m in Sources */,
 				C7D4AD971B58FA3200F46561 /* SuggestViewController.m in Sources */,
 				C753C1AB1AE78E5800562EF6 /* SDWebImagePrefetcher.m in Sources */,
 				C753C1A31AE78E5800562EF6 /* MKAnnotationView+WebCache.m in Sources */,
@@ -1244,6 +1298,7 @@
 				C74278931AF27BDB008E17BA /* ProductEditController.m in Sources */,
 				C753C1AA1AE78E5800562EF6 /* SDWebImageManager.m in Sources */,
 				C7241F7F1AF4F514000474B4 /* ShopInfoViewController.m in Sources */,
+				C775ECBF1B5F8E74000AEDAD /* RootIndicateCell.m in Sources */,
 				C753C1C21AE7A8B500562EF6 /* RootTabBarViewController.m in Sources */,
 				C7241F791AF4E197000474B4 /* ShopSummaryController.m in Sources */,
 				C7749F5E1B3AA5FC0090BBC4 /* SpreadInfoController.m in Sources */,
@@ -1254,6 +1309,7 @@
 				C7D4AD9B1B58FA4C00F46561 /* AboutController.m in Sources */,
 				C725BB451AEBBB1A00F344CB /* UIImage+ZoomImage.m in Sources */,
 				C753C17F1AE78E4E00562EF6 /* ASIDownloadCache.m in Sources */,
+				C775ECBB1B5F8764000AEDAD /* ShopNameChangeController.m in Sources */,
 				C75680CD1AF769D200F0A990 /* BusinessCell.m in Sources */,
 				C7BCDA711B5607A0003460F8 /* PosterScorllView.m in Sources */,
 			);
@@ -1298,11 +1354,14 @@
 				C784434D1AF9E3A0009B4C2D /* ASIAuthenticationDialog.m in Sources */,
 				C784434E1AF9E3A0009B4C2D /* SDImageCache.m in Sources */,
 				C784434F1AF9E3A0009B4C2D /* AddProductFirstCell.m in Sources */,
+				C775ECB81B5F4BBA000AEDAD /* ShopInfoTimeSetCell.m in Sources */,
 				C78443501AF9E3A0009B4C2D /* ASIFormDataRequest.m in Sources */,
+				C775ECAC1B5F3866000AEDAD /* ShopInfoHeadCell.m in Sources */,
 				C78443511AF9E3A0009B4C2D /* AppDelegate.m in Sources */,
 				C78443521AF9E3A0009B4C2D /* UserManager.m in Sources */,
 				C76D062D1B5751EA0025515F /* RootDetailCell.m in Sources */,
 				C78443531AF9E3A0009B4C2D /* AddProductCommonCell.m in Sources */,
+				C79255101B5E210900F6C05E /* NSString+Md5.m in Sources */,
 				C78443541AF9E3A0009B4C2D /* SDWebImageDecoder.m in Sources */,
 				C78443551AF9E3A0009B4C2D /* ASIInputStream.m in Sources */,
 				C78443561AF9E3A0009B4C2D /* LogViewController.m in Sources */,
@@ -1314,10 +1373,12 @@
 				C7463FD91B393FEB00169FF6 /* ShopDailyDataController.m in Sources */,
 				C784435B1AF9E3A0009B4C2D /* SDWebImageCompat.m in Sources */,
 				C784435C1AF9E3A0009B4C2D /* ASINetworkQueue.m in Sources */,
+				C775ECB41B5F4483000AEDAD /* ShopInfoThreeLCell.m in Sources */,
 				C784435D1AF9E3A0009B4C2D /* ShopInfoData.m in Sources */,
 				C784435E1AF9E3A0009B4C2D /* ShopCategoryListView.m in Sources */,
 				C784435F1AF9E3A0009B4C2D /* NavigationBaseController.m in Sources */,
 				C78443601AF9E3A0009B4C2D /* ShopCategoryData.m in Sources */,
+				C76F31D21B5CFDF300FAABC2 /* OpenUDID.m in Sources */,
 				C7D4AD941B58F64600F46561 /* NavigationTitleView.m in Sources */,
 				C7749F571B3A86E30090BBC4 /* SpreadListController.m in Sources */,
 				C7BCDA921B5640EF003460F8 /* FloatView.m in Sources */,
@@ -1334,6 +1395,7 @@
 				C78443681AF9E3A0009B4C2D /* ASIDataDecompressor.m in Sources */,
 				C78443691AF9E3A0009B4C2D /* OrderInfoController.m in Sources */,
 				C7749F5B1B3A8FC40090BBC4 /* SpreadListCell.m in Sources */,
+				C775ECB01B5F38AF000AEDAD /* ShopInfoSubCell.m in Sources */,
 				C7D4AD981B58FA3200F46561 /* SuggestViewController.m in Sources */,
 				C784436A1AF9E3A0009B4C2D /* SDWebImagePrefetcher.m in Sources */,
 				C784436B1AF9E3A0009B4C2D /* MKAnnotationView+WebCache.m in Sources */,
@@ -1347,6 +1409,7 @@
 				C78443731AF9E3A0009B4C2D /* ShopInfoViewController.m in Sources */,
 				C78443741AF9E3A0009B4C2D /* RootTabBarViewController.m in Sources */,
 				C78443751AF9E3A0009B4C2D /* ShopSummaryController.m in Sources */,
+				C775ECC01B5F8E74000AEDAD /* RootIndicateCell.m in Sources */,
 				C78443761AF9E3A0009B4C2D /* ShopProductListView.m in Sources */,
 				C7428BDF1B019C5A00F63ADB /* ShopSelectController.m in Sources */,
 				C7749F5F1B3AA5FC0090BBC4 /* SpreadInfoController.m in Sources */,
@@ -1357,6 +1420,7 @@
 				C7D4AD9C1B58FA4C00F46561 /* AboutController.m in Sources */,
 				C72FFA3C1B15647C007C9C3D /* CashDebitCell.m in Sources */,
 				C784437A1AF9E3A0009B4C2D /* ASIDownloadCache.m in Sources */,
+				C775ECBC1B5F8764000AEDAD /* ShopNameChangeController.m in Sources */,
 				C784437B1AF9E3A0009B4C2D /* BusinessCell.m in Sources */,
 				C7BCDA721B5607A0003460F8 /* PosterScorllView.m in Sources */,
 			);

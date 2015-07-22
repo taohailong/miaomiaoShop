@@ -12,12 +12,14 @@
 #import "ShopCategoryData.h"
 #import "ShopProductData.h"
 #import "UserManager.h"
-
+#import "OpenUDID.h"
 #import "OrderData.h"
 #import "DateFormateManager.h"
 #import "ShopInfoData.h"
 #import "CashDebitData.h"
 #import "SpreadData.h"
+
+#define HTTPADD(X) X = [NSString stringWithFormat:@"%@&%@",X, [NSString stringWithFormat:@"uid=%@&key=%@&chn=ios&token=%@&ver=%@",[OpenUDID value],[[NSUserDefaults  standardUserDefaults] objectForKey:PWMD5]?[[NSUserDefaults  standardUserDefaults] objectForKey:PWMD5]:@"",[[NSUserDefaults  standardUserDefaults] objectForKey:UTOKEN]?[[NSUserDefaults  standardUserDefaults] objectForKey:UTOKEN]:@"",VERSION]]
 
 
 @interface NetWorkRequest()
@@ -39,15 +41,20 @@
     DateFormateManager* formate = [DateFormateManager shareDateFormateManager];
     
     [formate setDateStyleString:@"HH:mm"];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/summary?shop_id=%@&beginDate=&endDate=&ver=%@",HTTPHOST,manager.shopID,VERSION];
+//    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/summary?shop_id=%@&beginDate=&endDate=&ver=%@",HTTPHOST,manager.shopID,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shop/index?shopId=%@&",HTTPHOST,manager.shopID];
+    HTTPADD(url);
+
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
         
         if (status == NetWorkStatusSuccess)
         {
+            NSMutableDictionary* backDic = [[NSMutableDictionary alloc]init];
+            
             ShopInfoData* data = [[ShopInfoData alloc]init];
-            data.countCategory = [sourceDic[@"data"][@"cat"][@"totalCount"]  stringValue];
-            data.countOrder =  [sourceDic[@"data"][@"order"][@"totalCount"]stringValue];
-            data.totalMoney = sourceDic[@"data"][@"order"][@"totalPrice"];
+            data.countCategory = [sourceDic[@"data"][@"totalCount"]  stringValue];
+            data.countOrder =  sourceDic[@"data"][@"totalCount"];
+            data.totalMoney = sourceDic[@"data"][@"totalPrice"];
             data.countProducts = [sourceDic[@"data"][@"product"][@"totalCount"]stringValue];
             
             data.shopName = sourceDic[@"data"][@"shop"][@"name"];
@@ -70,7 +77,20 @@
             
             data.minPrice = [sourceDic[@"data"][@"shop"][@"base_price"] floatValue]/100;
             data.telPhoneNu  = sourceDic[@"data"][@"shop"][@"tel"];
-            completeBk(data,status);
+            
+            NSArray* picData = sourceDic[@"data"][@"urls"];
+            
+            NSMutableArray* picArr = [NSMutableArray array];
+            for (NSDictionary* temp  in picData) {
+                [picArr addObject:temp[@"image"]];
+            }
+            
+            [backDic setObject:data forKey:@"shop"];
+            if (picData) {
+                [backDic setObject:picData forKey:@"pic_data"];
+                [backDic setObject:picArr forKey:@"pics"];
+            }
+            completeBk(backDic,status);
         }
         else
         {
@@ -240,6 +260,7 @@
             DateFormateManager* manager = [DateFormateManager shareDateFormateManager];
             [manager  setDateStyleString:@"YY-MM-dd HH:mm"];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                
                NSMutableArray* backArr = [NSMutableArray array];
                 for (NSDictionary* dic in sourceArr) {
                     OrderData* order = [[OrderData alloc]init];
