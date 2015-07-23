@@ -29,8 +29,8 @@
 
     _headLabel = [[UILabel alloc]init];
     _headLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _headLabel.font = DEFAULTFONT(15);
-    _headLabel.textColor = FUNCTCOLOR(102, 102, 102);
+    _headLabel.font = DEFAULTFONT(18);
+    _headLabel.textColor = FUNCTCOLOR(64, 64, 64);
     [self.contentView addSubview:_headLabel];
     
     

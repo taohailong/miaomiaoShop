@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TSwitch.h"
 typedef void (^switchActionBack)(BOOL statue);
 @interface AddProductSwithCell : UITableViewCell
 {
-    IBOutlet UILabel* _titleL;
-    IBOutlet UISwitch* _contentSwitch;
+     UILabel* _titleL;
+     TSwitch * _contentSwitch;
     switchActionBack _block;
 }
 -(void)setSwitchBlock:(switchActionBack)bk;

@@ -21,7 +21,7 @@
     
     _leftLabel = [[UILabel alloc]init];
     _leftLabel.textColor = FUNCTCOLOR(102, 102, 102);
-     _leftLabel.font = DEFAULTFONT(15);
+    _leftLabel.font = DEFAULTFONT(15);
     _leftLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_leftLabel];
 
@@ -43,7 +43,7 @@
     _rightTitle = [[UILabel alloc]init];
     _rightTitle.font = DEFAULTFONT(15);
     _rightTitle.textColor = _leftLabel.textColor;
-    _rightTitle.text = @"配送费";
+    _rightTitle.text = @"推荐码";
     _rightTitle.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_rightTitle];
 
@@ -73,8 +73,6 @@
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_leftLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:0.5 constant:0]];
     
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_leftLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.5 constant:-3]];
-    
-    
     
     
     

@@ -36,8 +36,8 @@
     _textView.layer.masksToBounds = YES;
     _textView.layer.cornerRadius = 4;
 
-    _textView.layer.borderWidth = 1;
-    _textView.layer.borderColor = [UIColor grayColor].CGColor;
+//    _textView.layer.borderWidth = 1;
+//    _textView.layer.borderColor = [UIColor grayColor].CGColor;
     
     [self.view addSubview:_textView];
     _textView.translatesAutoresizingMaskIntoConstraints = NO;

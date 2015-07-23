@@ -14,7 +14,7 @@
 
 #define DEFAULTIMAGE [UIImage imageNamed:@"DefaultImage"]
 
-#define DEFAULTNAVCOLOR [UIColor colorWithRed:232.0/225.0 green:47.0/255.0 blue:45.0/255.0 alpha:1.0]  
+#define DEFAULTNAVCOLOR [UIColor colorWithRed:255.0/225.0f green:111.0/255.0f blue:108.0/255.0f alpha:1.0]  
 
 #define DEFAULTGREENCOLOR [UIColor colorWithRed:51.0/225.0 green:205.0/255.0 blue:95.0/255.0 alpha:1.0]
 
@@ -39,7 +39,8 @@
 #if DEBUG
 #define HTTPHOST @"test.mbianli.com:8099"
 #else
-#define HTTPHOST @"www.mbianli.com"
+//#define HTTPHOST @"www.mbianli.com"
+#define HTTPHOST @"test.mbianli.com:8099"
 #endif
 
 

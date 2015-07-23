@@ -11,14 +11,24 @@
 #import "UserManager.h"
 @interface LogViewController ()
 {
-    IBOutlet UITextField* phoneField;
-    IBOutlet UITextField* pwField;
-    IBOutlet UIButton* _logBt;
-    IBOutlet UIView* _backView;
+     UITextField* phoneField;
+     UITextField* pwField;
+     UIButton* _logBt;
+     UIView* _backView;
 }
 @end
 
 @implementation LogViewController
+
+//-(void)viewDidAppear:(BOOL)animated
+//{
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+//}
+//
+//-(void)viewDidDisappear:(BOOL)animated
+//{
+//   [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -36,12 +46,12 @@
     
     phoneField = [[UITextField alloc]init];
     phoneField.placeholder = @"喵喵商家专用账号";
-    phoneField.keyboardType = UIKeyboardTypeASCIICapable;
+    phoneField.keyboardType = UIKeyboardTypeNumberPad;
     phoneField.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:phoneField];
     phoneField.leftViewMode =UITextFieldViewModeAlways;
-    UILabel* phoneLeftV = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 35, 20)];
-    phoneLeftV.text = @"密码";
+    UILabel* phoneLeftV = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 40, 20)];
+    phoneLeftV.text = @"账号";
     phoneLeftV.font = DEFAULTFONT(16);
     phoneLeftV.textColor = FUNCTCOLOR(64, 64, 64);
 //    phoneLeftV.contentMode = UIViewContentModeScaleAspectFit;
@@ -72,8 +82,8 @@
     [self.view addSubview:pwField];
     
     pwField.leftViewMode =UITextFieldViewModeAlways;
-    UILabel* pwLeftV = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 35, 20)];
-    pwLeftV.text = @"账号";
+    UILabel* pwLeftV = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 40, 20)];
+    pwLeftV.text = @"密码";
     pwLeftV.font = DEFAULTFONT(16);
     pwLeftV.textColor = FUNCTCOLOR(64, 64, 64);
     pwField.leftView = pwLeftV;
@@ -99,7 +109,7 @@
     _logBt = [UIButton buttonWithType:UIButtonTypeCustom];
     _logBt.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_logBt];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separate2]-25-[_logBt(30)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separate2,_logBt)]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separate2]-25-[_logBt(35)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separate2,_logBt)]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_logBt attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:pwField attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_logBt attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:pwField attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
     
@@ -110,7 +120,7 @@
 //    _logBt.layer.borderWidth = 1;
     _logBt.backgroundColor = DEFAULTNAVCOLOR;
     
-    [self registeNotificationCenter];
+//    [self registeNotificationCenter];
     // Do any additional setup after loading the view.
 }
 

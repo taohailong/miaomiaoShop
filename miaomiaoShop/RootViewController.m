@@ -67,11 +67,50 @@
 }
 
 
--(void)viewDidAppear:(BOOL)animated
+-(void)setNavigationBarAttribute:(BOOL)flag
+{
+    //    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    //
+    //    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
+    UIColor * color = nil;
+    if (flag)
+    {
+        color = [UIColor whiteColor];
+        [self.navigationController.navigationBar setTintColor:color];
+        [self.navigationController.navigationBar setBarTintColor:FUNCTCOLOR(254, 87, 84)];
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    }
+    else
+    {
+//        if (self.navigationController.viewControllers.count == 1) {
+//            return;
+//        }
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+        color =  FUNCTCOLOR(102.0,102.0,102.0);
+        [self.navigationController.navigationBar setTintColor:color];
+        color = FUNCTCOLOR(64, 64, 64);
+        
+        [self.navigationController.navigationBar setBarTintColor:[UIColor whiteColor]];
+    }
+    NSDictionary * dict = @{NSForegroundColorAttributeName:color,NSFontAttributeName:DEFAULTFONT(18)};
+    
+    self.navigationController.navigationBar.titleTextAttributes = dict;
+}
+
+
+-(void)viewWillAppear:(BOOL)animated
 {
     [self checkUserLogState];
     [self netShopInfoFromNet];
+    [self setNavigationBarAttribute:YES];
 }
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+   [self setNavigationBarAttribute:NO];
+}
+
 
 -(void)showLogView
 {
@@ -276,7 +315,6 @@
         if (indexPath.row == 0) {
             AdvertiseCollectionCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AdvertiseCollectionCell" forIndexPath:indexPath];
             cell.delegate = self;
-            cell.backgroundColor = [UIColor redColor];
             [cell setImageDataArr:_picUrls];
             return cell;
         }
@@ -292,7 +330,7 @@
         }
         else
         {
-            [cell setTitleLabelStr:[NSString stringWithFormat:@"¥%@", _shop.totalMoney]];
+            [cell setTitleLabelStr:[NSString stringWithFormat:@"%@", _shop.totalMoney]];
             [cell setContentLabelStr:@"在线支付订单总金额"];
         }
         
@@ -441,6 +479,7 @@
     
     
     ShopInfoViewController * shopInfo = [[ShopInfoViewController alloc]initWithShopInfoData:_shop];
+    shopInfo.title = @"营业管理";
     shopInfo.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:shopInfo animated:YES];
 }
@@ -448,12 +487,14 @@
 -(void)showOrderManageController
 {
      OrderListViewController* order = [self.storyboard instantiateViewControllerWithIdentifier:@"OrderListViewController"];
+    order.title = @"订单管理";
     [self.navigationController pushViewController:order animated:YES];
 }
 
 -(void)showMoneyManageController
 {
     ShopBusinessController* moneyController = [[ShopBusinessController alloc]init];
+     moneyController.title = @"钱包";
     [self.navigationController pushViewController:moneyController animated:YES];
     
 }
@@ -461,17 +502,21 @@
 -(void)showProductManageController
 {
     ShopObjectController* object = [[ShopObjectController alloc]init];
+    object.title = @"商品管理";
     [self.navigationController pushViewController:object animated:YES];
 }
 
 -(void)showCategoryManageController
 {
+    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"敬请期待" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
 
 }
 
 -(void)showMoreController
 {
-
+    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"敬请期待" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 #pragma mark-delegate
@@ -480,7 +525,7 @@
 {
     NSDictionary* dic = _picDataArr[index];
     NSString* url = dic[@"redirect"];
-    if (url) {
+    if (url.length >0) {
         
         CommonWebController* web = [[CommonWebController alloc]initWithUrl:url];
         [self.navigationController pushViewController:web animated:YES];

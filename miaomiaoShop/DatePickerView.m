@@ -8,8 +8,10 @@
 
 #import "DatePickerView.h"
 //#import "DateFormateManager.h"
+
 @interface DatePickerView()<UIPickerViewDataSource,UIPickerViewDelegate>
 {
+    UILabel* _indicateLabel;
     UIPickerView* _picker;
 }
 @end
@@ -23,14 +25,29 @@
     _completeBk = bk;
     
     
-    UIView* headView = [[UIView alloc]init];
+    headView = [[UIView alloc]init];
     headView.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:headView];
     headView.backgroundColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];
     
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[headView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(headView)]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[headView(35)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(headView)]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[headView(40)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(headView)]];
 
+    UILabel* titleL = [[UILabel alloc]init];
+    titleL.text = @"选择营业时间";
+    titleL.textColor = FUNCTCOLOR(102, 102, 102);
+    titleL.font = DEFAULTFONT(15);
+    titleL.translatesAutoresizingMaskIntoConstraints = NO;
+    [headView addSubview:titleL];
+    [headView addConstraint:[NSLayoutConstraint constraintWithItem:titleL attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:headView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    
+    [headView addConstraint:[NSLayoutConstraint constraintWithItem:titleL attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:headView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    
+    
+    
+    
+    
+    
     UILabel* startL = [[UILabel alloc]init];
     startL.text =@"开始时间";
     startL.font = DEFAULTFONT(15);
@@ -56,20 +73,49 @@
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[headView]-5-[endL]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(headView,endL)]];
     
     [self addConstraint:[NSLayoutConstraint constraintWithItem:endL attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.5 constant:0]];
-    
+//    [endL setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
+//    [endL setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisVertical];
     
 //    UIPickerView
     
      _picker = [[UIPickerView alloc]init];
+//    _picker.backgroundColor = [UIColor redColor];
     _picker.delegate = self;
     _picker.dataSource = self;
 
     _picker.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:_picker];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_picker]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_picker)]];
+//     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[endL]-[_picker]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(endL,_picker)]];
+//    [_picker setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+//    [_picker setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisVertical];
     
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[headView]-25-[_picker]-45-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(headView,_picker)]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[headView]-25-[_picker]-50-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(headView,_picker)]];
 
+    
+    _indicateLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREENWIDTH -93, 10, 45, 25)];
+    _indicateLabel.font = DEFAULTFONT(13);
+    _indicateLabel.textColor = FUNCTCOLOR(102, 102, 102);
+    _indicateLabel.text = @"24小时";
+    [headView addSubview:_indicateLabel];
+    
+    __weak UIPickerView*  wpicker  = _picker;
+    __weak DatePickerView* wself = self;
+    _sw = [[TSwitch alloc]initWithFrame:CGRectMake( SCREENWIDTH -50, 8, 45  , 25) didChangeHandler:^(BOOL isOn) {
+        if (isOn) {
+            
+            [wself setStartTime:@"00:00"];
+            [wself setEndTime:@"23:59"];
+            wpicker.userInteractionEnabled = NO;
+        }
+        else
+        {
+            wpicker.userInteractionEnabled = YES;
+        }
+    }];
+    _sw.onTintColor = DEFAULTNAVCOLOR;
+    [headView addSubview:_sw];
+    
     
     
     UIButton* selectBt = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -81,13 +127,24 @@
     [selectBt addTarget:self action:@selector(removeView) forControlEvents:UIControlEventTouchUpInside];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[selectBt]-15-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(selectBt)]];
     
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[selectBt(35)]-5-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(selectBt)]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[selectBt(35)]-10-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_picker,selectBt)]];
     
     [selectBt setTitle:@"确定" forState:UIControlStateNormal];
     
     [selectBt addTarget:self action:@selector(dateSelectComplete) forControlEvents:UIControlEventTouchUpInside];
     
     return self;
+}
+
+
+-(void)setSwithStatus:(BOOL)status
+{
+   [_sw setOn:status];
+    if (status)
+    {
+        [self setStartTime:@"00:00"];
+        [self setEndTime:@"23:59"];
+    }
 }
 
 -(void)dateSelectComplete
@@ -128,9 +185,15 @@
     return 35;
 }
 
+-(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+{
+    return 40;
+}
+
+
 -(NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return [NSString stringWithFormat:@"%d",row];
+    return [NSString stringWithFormat:@"%d",(int)row];
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -145,6 +208,31 @@
         return 24;
     }
     return 60;
+}
+
+
+
+#pragma mark-DataParse
+
+-(void)setStartTime:(NSString *)startTime
+{
+    NSArray* arr = [startTime componentsSeparatedByString:@":"];
+    [self setPickerTimeInComponent:0 SelectRow:[arr[0] integerValue]];
+    [self setPickerTimeInComponent:1 SelectRow:[arr[1] integerValue]];
+}
+
+-(void)setEndTime:(NSString *)endTime
+{
+    NSArray* arr = [endTime componentsSeparatedByString:@":"];
+    [self setPickerTimeInComponent:2 SelectRow:[arr[0] integerValue]];
+    [self setPickerTimeInComponent:3 SelectRow:[arr[1] integerValue]];
+
+}
+
+
+-(void)setPickerTimeInComponent:(NSInteger)component SelectRow:(NSInteger)row
+{
+    [_picker selectRow:row inComponent:component animated:NO];
 }
 
 

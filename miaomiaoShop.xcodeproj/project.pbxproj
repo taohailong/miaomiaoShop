@@ -132,6 +132,8 @@
 		C775ECBC1B5F8764000AEDAD /* ShopNameChangeController.m in Sources */ = {isa = PBXBuildFile; fileRef = C775ECBA1B5F8764000AEDAD /* ShopNameChangeController.m */; };
 		C775ECBF1B5F8E74000AEDAD /* RootIndicateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C775ECBE1B5F8E74000AEDAD /* RootIndicateCell.m */; };
 		C775ECC01B5F8E74000AEDAD /* RootIndicateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C775ECBE1B5F8E74000AEDAD /* RootIndicateCell.m */; };
+		C777517A1B60B71F007ED6AC /* TSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = C77751791B60B71F007ED6AC /* TSwitch.m */; };
+		C777517B1B60B71F007ED6AC /* TSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = C77751791B60B71F007ED6AC /* TSwitch.m */; };
 		C7777CD31AEA657000A9BDC3 /* AddProductController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7777CD21AEA657000A9BDC3 /* AddProductController.m */; };
 		C784433C1AF9E3A0009B4C2D /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = C753C16A1AE78E4E00562EF6 /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C784433D1AF9E3A0009B4C2D /* ShopBusinessController.m in Sources */ = {isa = PBXBuildFile; fileRef = C75680C91AF762F900F0A990 /* ShopBusinessController.m */; };
@@ -466,6 +468,8 @@
 		C775ECBA1B5F8764000AEDAD /* ShopNameChangeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopNameChangeController.m; sourceTree = "<group>"; };
 		C775ECBD1B5F8E74000AEDAD /* RootIndicateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootIndicateCell.h; sourceTree = "<group>"; };
 		C775ECBE1B5F8E74000AEDAD /* RootIndicateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootIndicateCell.m; sourceTree = "<group>"; };
+		C77751781B60B71F007ED6AC /* TSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSwitch.h; sourceTree = "<group>"; };
+		C77751791B60B71F007ED6AC /* TSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSwitch.m; sourceTree = "<group>"; };
 		C7777CD11AEA657000A9BDC3 /* AddProductController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProductController.h; sourceTree = "<group>"; };
 		C7777CD21AEA657000A9BDC3 /* AddProductController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProductController.m; sourceTree = "<group>"; };
 		C78443921AF9E3A0009B4C2D /* miaomiaoShop copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "miaomiaoShop copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -826,6 +830,8 @@
 		C753C1641AE78E3700562EF6 /* ThirdPart */ = {
 			isa = PBXGroup;
 			children = (
+				C77751781B60B71F007ED6AC /* TSwitch.h */,
+				C77751791B60B71F007ED6AC /* TSwitch.m */,
 				C784440E1AFA1DD8009B4C2D /* UIImageView-PlayGIF */,
 				C7A7E51D1AF8D1C900D9420A /* UMessage_Sdk */,
 				C7B86CD41AF8B4C500FCF5BE /* UMAnalytics_Sdk */,
@@ -1306,6 +1312,7 @@
 				C7428BDE1B019C5A00F63ADB /* ShopSelectController.m in Sources */,
 				C753C1841AE78E4E00562EF6 /* Reachability.m in Sources */,
 				C753C1BC1AE7992F00562EF6 /* NetWorkRequest.m in Sources */,
+				C777517A1B60B71F007ED6AC /* TSwitch.m in Sources */,
 				C7D4AD9B1B58FA4C00F46561 /* AboutController.m in Sources */,
 				C725BB451AEBBB1A00F344CB /* UIImage+ZoomImage.m in Sources */,
 				C753C17F1AE78E4E00562EF6 /* ASIDownloadCache.m in Sources */,
@@ -1417,6 +1424,7 @@
 				C78443781AF9E3A0009B4C2D /* NetWorkRequest.m in Sources */,
 				C78443791AF9E3A0009B4C2D /* UIImage+ZoomImage.m in Sources */,
 				C72FFA381B155C2C007C9C3D /* CashDebitData.m in Sources */,
+				C777517B1B60B71F007ED6AC /* TSwitch.m in Sources */,
 				C7D4AD9C1B58FA4C00F46561 /* AboutController.m in Sources */,
 				C72FFA3C1B15647C007C9C3D /* CashDebitCell.m in Sources */,
 				C784437A1AF9E3A0009B4C2D /* ASIDownloadCache.m in Sources */,
@@ -1572,7 +1580,7 @@
 					"$(PROJECT_DIR)/UMessage_Sdk",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3bd4bb3d-942c-4eb4-b6ac-30cccf0974ef";
+				PROVISIONING_PROFILE = "41cfbe30-1dea-45c0-b7d3-0436d8518956";
 			};
 			name = Debug;
 		};

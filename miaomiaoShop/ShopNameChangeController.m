@@ -51,6 +51,7 @@
     }
     if ([self.delegate respondsToSelector:@selector(shopNameChanged:)]) {
         [self.delegate shopNameChanged:_contentField.text];
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 

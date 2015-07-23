@@ -38,18 +38,10 @@
     return self;
 }
 
-//-(UIView*)creatTabelHeadView
-//{
-//    UIView* head = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_table.frame), 55)];
-//    
-//    
-//    
-//    return  head;
-//}
 
 -(void)creatBackView
 {
-    _backView = [[UIView alloc]initWithFrame:CGRectMake(-255, 0, 255, CGRectGetHeight(self.frame))];
+    _backView = [[UIView alloc]initWithFrame:CGRectMake(-SCREENWIDTH+200, 0, SCREENWIDTH-100, CGRectGetHeight(self.frame))];
     _backViewWidth = 255;
     _backView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_backView];
@@ -61,7 +53,7 @@
     
     
     
-    _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 20, 255, CGRectGetHeight(_backView.frame)-70)];
+    _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 20, CGRectGetWidth(_backView.frame), CGRectGetHeight(_backView.frame)-70)];
     _table.separatorColor = FUNCTCOLOR(221, 221, 221);
     [_table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     _table.dataSource = self;
@@ -308,11 +300,12 @@
 
 -(void)hidFloatView
 {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [UIView animateWithDuration:0.2 animations:^{
-        [self layoutCurrentViewWithOffset:-255];
+        [self layoutCurrentViewWithOffset:-CGRectGetWidth(_backView.frame)];
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        
     }];
 
     

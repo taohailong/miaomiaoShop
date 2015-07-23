@@ -19,9 +19,9 @@ typedef void (^LoadErrorBk)(void);
 }
 -(id)initActivityView;
 -(id)initWithString:(NSString*)str;
--(id)initWithFailView;
 -(void)show;
 -(id)initActivityViewWithSuperView:(UIView*)superView;
+
 
 -(id)initViewOnWindow;
 -(void)loadViewAddOnWindow;
@@ -34,5 +34,14 @@ typedef void (^LoadErrorBk)(void);
 
 
 -(id)initFullViewTransparentWithSuperView:(UIView*)superView;
-- (void)popOutsideWithDuration:(NSTimeInterval)duration;
+//- (void)popOutsideWithDuration:(NSTimeInterval)duration;
+
+
+//数据为空提示页
+
+-(void)addBtWithTitle:(NSString*)btTitle WithBk:(void(^)(void))actionBk;
+
+-(id)initEmptyDataWarnViewWithString:(NSString*)str WithImage:(NSString*)imageStr WithSuperView:(UIView*)superView
+;
+
 @end

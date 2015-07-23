@@ -15,10 +15,17 @@
 //    self.textLabel.text = @"条形码:";
     self.textLabel.font = [UIFont systemFontOfSize:14];
     //
-    //
-    _contentSwitch = [[UISwitch alloc]initWithFrame:CGRectMake(0, 0, 45, 30)];
+    _contentSwitch = [[TSwitch alloc]initWithFrame:CGRectMake(SCREENWIDTH-60, 10, 45, 25)];
+//    _contentSwitch = [[UISwitch alloc]initWithFrame:CGRectMake(0, 0, 45, 30)];
+//    _contentSwitch.onImage = [UIImage imageNamed:@"float_about"];
+    _contentSwitch.onTintColor = DEFAULTNAVCOLOR;
+//    _contentSwitch.thumbTintColor = [UIColor redColor];
+//    _contentSwitch.tintColor = [UIColor redColor];
     [_contentSwitch addTarget:self action:@selector(switchAction) forControlEvents:UIControlEventValueChanged];
-    self.accessoryView = _contentSwitch;
+//    self.accessoryView = _contentSwitch;
+    
+    [self.contentView addSubview:_contentSwitch];
+    
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 
        return self;
