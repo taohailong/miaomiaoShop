@@ -11,6 +11,7 @@
 {
     UILabel* _textLabel;
     UILabel* _detailLabel;
+    UIImageView* imageView;
 }
 @end
 @implementation NavigationTitleView
@@ -44,7 +45,7 @@
     
 
     
-    UIImageView* imageView = [[UIImageView alloc]init];
+    imageView = [[UIImageView alloc]init];
     imageView.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:imageView];
 
@@ -81,6 +82,10 @@
     return self;
 }
 
+-(void)setHidden:(BOOL)hidden
+{
+    imageView.hidden = hidden;
+}
 
 -(UILabel*)getTextLabel
 {

@@ -146,6 +146,12 @@
     }
     
     
+    if (indexPath.row == 1) {
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"敬请期待" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+        return;
+    }
+    
     if ([self.delegate respondsToSelector:@selector(floatViewSelectStyle:)]) {
         
         int  action =0;
@@ -153,7 +159,8 @@
         switch (indexPath.row) {
             case 1:
                 action = FloatActionSuggestion;
-                break;
+                
+              break;
             case 3:
                 action = FloatActionAbout;
                 break;
@@ -189,10 +196,8 @@
     }
     else
     {
-        NSString* url = [NSString stringWithFormat:@"tel://%@",@"123"];
+        NSString* url = [NSString stringWithFormat:@"tel://%@",@"4008816807"];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
-
-    
     }
 
 }

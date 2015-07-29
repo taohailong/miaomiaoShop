@@ -10,6 +10,7 @@
 #import "NetWorkRequest.h"
 #import "NSString+Md5.h"
 //#define PUSHOK @"isPush"
+#define ONLYONESHOP @"onlyOneShop"
 @interface UserManager()
 {
     NSString* _token;
@@ -143,6 +144,14 @@
 {
     return self.shopName!=nil;
 }
+
+-(BOOL)onlyOneShop
+{
+    NSUserDefaults* def = [NSUserDefaults standardUserDefaults];
+    BOOL only = [[def objectForKey:ONLYONESHOP] boolValue];
+    return only;
+}
+
 -(void)logInWithPhone:(NSString *)phone Pass:(NSString *)ps logBack:(logCallBack) blockBack
 {
     __weak UserManager* bSelf = self;
@@ -222,6 +231,16 @@
                                stringByAppendingFormat:@"/Documents/%@",@"shopArr"];
     
     [arr writeToFile:shopDirectory atomically:YES];
+    
+    NSUserDefaults* def = [NSUserDefaults standardUserDefaults];
+    if (arr.count > 1) {
+        [def setObject:[NSNumber numberWithBool:NO]  forKey:ONLYONESHOP];
+    }
+    else
+    {
+      [def setObject:[NSNumber numberWithBool:YES]  forKey:ONLYONESHOP];
+    }
+    
 }
 
 @end

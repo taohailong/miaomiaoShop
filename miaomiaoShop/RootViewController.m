@@ -69,10 +69,6 @@
 
 -(void)setNavigationBarAttribute:(BOOL)flag
 {
-    //    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    //
-    //    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    
     UIColor * color = nil;
     if (flag)
     {
@@ -158,7 +154,7 @@
     UIView* titleView = [self  navgationTitleView];
     self.navigationItem.titleView = titleView;
     
-    [self setAttributeOfNavigationBar];
+//    [self setAttributeOfNavigationBar];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopInfo) name:SHOPROOTCHANGE object:nil];
 //    
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notiShowLogView) name:PNEEDLOG object:nil];
@@ -192,13 +188,25 @@
 {
     NavigationTitleView* title = (NavigationTitleView*)self.navigationItem.titleView;
     
+    UserManager* manager = [UserManager shareUserManager];
+    if ([manager onlyOneShop]==YES) {
+        [title setHidden:YES];
+    }
+    else
+    {
+        [title setHidden:NO];
+    }
     UILabel* textLabel = [title getTextLabel];
-//    UserManager* manager = [UserManager shareUserManager];
+
     textLabel.text = _shop.shopName;
 }
 
 -(void)navigationTitleViewDidTouchWithView:(NavigationTitleView *)titleView
 {
+    UserManager* manager = [UserManager shareUserManager];
+    if ([manager onlyOneShop]==YES) {
+        return;
+    }
     ShopSelectController* shopSelect = [[ShopSelectController alloc]init];
     [self.navigationController pushViewController:shopSelect animated:YES];
 }

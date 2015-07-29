@@ -53,7 +53,7 @@
     
     if ([_table respondsToSelector:@selector(setLayoutMargins:)]) {
         [_table setLayoutMargins:UIEdgeInsetsMake(0, 0, 0, 0)];
-        _table.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0);
+        _table.contentInset = UIEdgeInsetsMake(-35, 0, -20, 0);
     }
 
     [_table registerClass:[AddProductSwithCell class] forCellReuseIdentifier:@"AddProductSwithCell"];
@@ -306,7 +306,15 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 10;
+//    if(section==0||section==1)
+//    {
+      return 10;
+//    }
+//    else
+//    {
+//        return 0.5;
+//    }
+   
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -422,8 +430,8 @@
 {
     UIView* footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50)];
     
-
-    UILabel* titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 0, 200, 20)];
+    footView.backgroundColor = [UIColor whiteColor];
+    UILabel* titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 200, 20)];
     titleLabel.text = @"服务范围";
     titleLabel.font = DEFAULTFONT(16);
     titleLabel.textColor = FUNCTCOLOR(153, 153, 153);
@@ -449,7 +457,7 @@
         UILabel* lable = [[UILabel alloc]initWithFrame:frame];
         lable.textColor = FUNCTCOLOR(246, 246, 246);
         lable.textAlignment = NSTextAlignmentCenter;
-        lable.backgroundColor = FUNCTCOLOR(219, 219, 219);
+        lable.backgroundColor = FUNCTCOLOR(227, 227, 227);
         
         frame.origin.x += size.width +15;
         [footView addSubview:lable];

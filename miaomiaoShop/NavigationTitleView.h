@@ -17,4 +17,5 @@
 @property(nonatomic,weak)id<NavigationTieleViewProtocol>delegate;
 -(UILabel*)getTextLabel;
 -(UILabel*)getDetailLabel;
+-(void)setImageHidden:(BOOL)hid;
 @end

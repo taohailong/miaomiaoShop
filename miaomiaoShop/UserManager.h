@@ -31,6 +31,8 @@ typedef void (^logCallBack)(BOOL success,id respond) ;
 
 -(NSString*)getUserAccount;
 -(BOOL)isLogin;
+-(BOOL)onlyOneShop;
+
 //@property(nonatomic,assign)
 //-(void)logInWithPhone:(NSString*)phone Pass:(NSString*)ps;
 -(void)logInWithPhone:(NSString *)phone Pass:(NSString *)ps logBack:(logCallBack) blockBack;
