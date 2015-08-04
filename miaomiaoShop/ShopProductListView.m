@@ -132,6 +132,10 @@
         if (status == NetWorkStatusSuccess) {
             [wSelf addDataArr:backDic];
         }
+        else if (status == NetWorkStatusErrorTokenInvalid)
+        {
+            
+        }
         else
         {
             THActivityView* messageShow = [[THActivityView alloc]initWithString:backDic];

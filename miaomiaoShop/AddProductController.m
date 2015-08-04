@@ -439,6 +439,7 @@
             str = @"添加成功！";
             [wSelf commitCompleteBack];
         }
+        
         else
         {
             str = @"添加失败！";
@@ -491,6 +492,7 @@
     NetWorkRequest* requ = [[NetWorkRequest alloc]init];
     [requ shopScanProductWithSerial:string WithBk:^(ShopProductData* backDic, NetWorkStatus status) {
         
+        [alert removeFromSuperview];
         if (status == NetWorkStatusSuccess) {
             _productData.pName = backDic.pName;
             _productData.pID = backDic.pID;
@@ -504,7 +506,7 @@
 //            _productData = backDic;
             [_table reloadData];
         }
-        [alert removeFromSuperview];
+        
     }];
     [requ startAsynchronous];
 }

@@ -94,20 +94,21 @@
     self.deadTime = [formate formateDateToString:date];
 }
 
--(float)calculateAddressHeightWithFont:(UIFont *)font WithSize:(CGSize)size
+-(CGSize)calculateAddressHeightWithFont:(UIFont *)font WithSize:(CGSize)size
 {
-    if (font==nil) {
-        return _addressHeight;
+    if (font.pointSize == _addressFont.pointSize) {
+        return _addressSize;
     }
-    
-    CGRect frame = [self.orderAddress boundingRectWithSize:size options:0 attributes:@{NSFontAttributeName:font} context:nil];
-    _addressHeight = CGRectGetHeight(frame);
-    return _addressHeight;
+    _addressFont = font;
+    _addressSize = [self.orderAddress sizeWithAttributes:@{NSFontAttributeName:font}];
+    return _addressSize;
 }
+
+
 
 -(float)getAddressHeight
 {
-    return _addressHeight;
+    return _addressSize.height;
 }
 
 @end

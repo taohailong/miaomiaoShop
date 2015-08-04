@@ -250,6 +250,11 @@
             [wtable reloadData];
             str = @"修改成功！";
         }
+        else if (status == NetWorkStatusErrorTokenInvalid)
+        {
+            
+        }
+
         else
         {
             str = backDic;

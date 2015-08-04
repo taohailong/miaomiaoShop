@@ -128,7 +128,9 @@
             _shopData =backDic;
             [_table reloadData];
         }
-        else{
+
+        else if(status == NetWorkStatusErrorCanntConnect)
+        {
             THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wSelf.view];
             wSelf.errView = loadView;
             [loadView setErrorBk:^{

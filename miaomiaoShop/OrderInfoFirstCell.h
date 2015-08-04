@@ -13,7 +13,12 @@
 
 -(void)setAddressText:(NSString*)str
 ;
--(void)setPayWayText:(NSString*)str
-;
 -(void)setOrderMessage:(NSString*)str;
+
+
+
+
+-(void)setFirstLabelAtt:(NSAttributedString*)att;
+-(void)setSecondLabelAtt:(NSAttributedString*)att;
+-(void)setThirdLabelAtt:(NSAttributedString*)att;
 @end

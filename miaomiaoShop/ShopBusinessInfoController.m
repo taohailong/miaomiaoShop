@@ -66,6 +66,11 @@
         if (status == NetWorkStatusSuccess) {
             [wSelf reloadTableWithData:backDic];
         }
+        else if (status == NetWorkStatusErrorTokenInvalid)
+        {
+            
+        }
+
         else
         {
             THActivityView* loadView = [[THActivityView alloc]initWithString:backDic];
@@ -90,6 +95,11 @@
         if (status==NetWorkStatusSuccess) {
             [wSelf addDataArr:backDic];
         }
+        else if (status == NetWorkStatusErrorTokenInvalid)
+        {
+            
+        }
+
         else
         {
             THActivityView* showStr = [[THActivityView alloc]initWithString:backDic];

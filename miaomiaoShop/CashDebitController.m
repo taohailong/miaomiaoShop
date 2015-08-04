@@ -86,6 +86,10 @@
         {
           [wSelf loadMoreDataReloadTable:backDic];
         }
+        else if (status == NetWorkStatusErrorTokenInvalid)
+        {
+         
+        }
         else
         {
             THActivityView* messageShow = [[THActivityView alloc]initWithString:backDic];
@@ -165,6 +169,10 @@
             [alert show];
             _cash = 0;
             [wself reloadTableWithData:backDic];
+        }
+        else if (status == NetWorkStatusErrorTokenInvalid)
+        {
+           
         }
         else
         {

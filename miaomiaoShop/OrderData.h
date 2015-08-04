@@ -34,7 +34,7 @@
 
 //calculate address Height
 -(float)getAddressHeight;
--(float)calculateAddressHeightWithFont:(UIFont*)font WithSize:(CGSize)size;
+-(CGSize)calculateAddressHeightWithFont:(UIFont*)font WithSize:(CGSize)size;
 
 
 

@@ -104,7 +104,7 @@
     [categoryReq shopGetCategoryWithCallBack:^(NSMutableArray* backDic, NetWorkStatus status) {
         
         [loadV removeFromSuperview];
-        if (status != NetWorkStatusSuccess) {
+        if (status == NetWorkStatusErrorCanntConnect) {
             THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wself.view];
             
             [loadView setErrorBk:^{
@@ -115,7 +115,7 @@
         
         [_categoryView setDataArrAndSelectOneRow :backDic];
         
-        if (backDic.count) {
+        if (status == NetWorkStatusSuccess) {
             ShopCategoryData* firstData = backDic[0];
             _currentCateName = firstData.categoryName;
             _currentCategoryID = firstData.categoryID;

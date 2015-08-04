@@ -102,6 +102,8 @@
 		C75680CD1AF769D200F0A990 /* BusinessCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C75680CC1AF769D200F0A990 /* BusinessCell.m */; };
 		C75680D01AF77BFC00F0A990 /* ShopBusinessInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = C75680CF1AF77BFC00F0A990 /* ShopBusinessInfoController.m */; };
 		C75680D31AF7807300F0A990 /* BusinessInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C75680D21AF7807300F0A990 /* BusinessInfoCell.m */; };
+		C76366D81B70652100301A17 /* OrderInfoTwoLCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C76366D71B70652100301A17 /* OrderInfoTwoLCell.m */; };
+		C76366D91B70652100301A17 /* OrderInfoTwoLCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C76366D71B70652100301A17 /* OrderInfoTwoLCell.m */; };
 		C76ADB711AFCAA73008DF9A4 /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C76ADB701AFCAA73008DF9A4 /* line@2x.png */; };
 		C76ADB721AFCAA73008DF9A4 /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C76ADB701AFCAA73008DF9A4 /* line@2x.png */; };
 		C76ADB741AFCAA77008DF9A4 /* pick_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C76ADB731AFCAA77008DF9A4 /* pick_bg@2x.png */; };
@@ -135,6 +137,14 @@
 		C777517A1B60B71F007ED6AC /* TSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = C77751791B60B71F007ED6AC /* TSwitch.m */; };
 		C777517B1B60B71F007ED6AC /* TSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = C77751791B60B71F007ED6AC /* TSwitch.m */; };
 		C7777CD31AEA657000A9BDC3 /* AddProductController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7777CD21AEA657000A9BDC3 /* AddProductController.m */; };
+		C780FAB91B6F137F009AC6A2 /* TSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C780FAB81B6F137F009AC6A2 /* TSegmentedControl.m */; };
+		C780FABA1B6F137F009AC6A2 /* TSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C780FAB81B6F137F009AC6A2 /* TSegmentedControl.m */; };
+		C780FABD1B6F2246009AC6A2 /* OrderListHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = C780FABC1B6F2246009AC6A2 /* OrderListHeadView.m */; };
+		C780FABE1B6F2246009AC6A2 /* OrderListHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = C780FABC1B6F2246009AC6A2 /* OrderListHeadView.m */; };
+		C780FAC31B6F3C29009AC6A2 /* OrderListBtCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C780FAC01B6F3C29009AC6A2 /* OrderListBtCell.m */; };
+		C780FAC41B6F3C29009AC6A2 /* OrderListBtCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C780FAC01B6F3C29009AC6A2 /* OrderListBtCell.m */; };
+		C780FAC51B6F3C29009AC6A2 /* OrderHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C780FAC21B6F3C29009AC6A2 /* OrderHeadCell.m */; };
+		C780FAC61B6F3C29009AC6A2 /* OrderHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C780FAC21B6F3C29009AC6A2 /* OrderHeadCell.m */; };
 		C784433C1AF9E3A0009B4C2D /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = C753C16A1AE78E4E00562EF6 /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C784433D1AF9E3A0009B4C2D /* ShopBusinessController.m in Sources */ = {isa = PBXBuildFile; fileRef = C75680C91AF762F900F0A990 /* ShopBusinessController.m */; };
 		C784433E1AF9E3A0009B4C2D /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C71842DC1AF20CFA00140237 /* ScanViewController.m */; };
@@ -440,6 +450,8 @@
 		C75680CF1AF77BFC00F0A990 /* ShopBusinessInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopBusinessInfoController.m; sourceTree = "<group>"; };
 		C75680D11AF7807300F0A990 /* BusinessInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessInfoCell.h; sourceTree = "<group>"; };
 		C75680D21AF7807300F0A990 /* BusinessInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessInfoCell.m; sourceTree = "<group>"; };
+		C76366D61B70652100301A17 /* OrderInfoTwoLCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderInfoTwoLCell.h; sourceTree = "<group>"; };
+		C76366D71B70652100301A17 /* OrderInfoTwoLCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderInfoTwoLCell.m; sourceTree = "<group>"; };
 		C76ADB701AFCAA73008DF9A4 /* line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line@2x.png"; sourceTree = "<group>"; };
 		C76ADB731AFCAA77008DF9A4 /* pick_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pick_bg@2x.png"; sourceTree = "<group>"; };
 		C76D062A1B5751EA0025515F /* RootDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootDetailCell.h; sourceTree = "<group>"; };
@@ -472,6 +484,14 @@
 		C77751791B60B71F007ED6AC /* TSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSwitch.m; sourceTree = "<group>"; };
 		C7777CD11AEA657000A9BDC3 /* AddProductController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProductController.h; sourceTree = "<group>"; };
 		C7777CD21AEA657000A9BDC3 /* AddProductController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProductController.m; sourceTree = "<group>"; };
+		C780FAB71B6F137F009AC6A2 /* TSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSegmentedControl.h; sourceTree = "<group>"; };
+		C780FAB81B6F137F009AC6A2 /* TSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSegmentedControl.m; sourceTree = "<group>"; };
+		C780FABB1B6F2246009AC6A2 /* OrderListHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderListHeadView.h; sourceTree = "<group>"; };
+		C780FABC1B6F2246009AC6A2 /* OrderListHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderListHeadView.m; sourceTree = "<group>"; };
+		C780FABF1B6F3C29009AC6A2 /* OrderListBtCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderListBtCell.h; sourceTree = "<group>"; };
+		C780FAC01B6F3C29009AC6A2 /* OrderListBtCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderListBtCell.m; sourceTree = "<group>"; };
+		C780FAC11B6F3C29009AC6A2 /* OrderHeadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderHeadCell.h; sourceTree = "<group>"; };
+		C780FAC21B6F3C29009AC6A2 /* OrderHeadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderHeadCell.m; sourceTree = "<group>"; };
 		C78443921AF9E3A0009B4C2D /* miaomiaoShop copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "miaomiaoShop copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C78443931AF9E3A0009B4C2D /* miaomiaoShop copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "miaomiaoShop copy-Info.plist"; path = "/Users/taohailong/Desktop/miaomiaoShop/miaomiaoShop copy-Info.plist"; sourceTree = "<absolute>"; };
 		C784440F1AFA1DD8009B4C2D /* UIImageView+PlayGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+PlayGIF.h"; sourceTree = "<group>"; };
@@ -653,10 +673,16 @@
 		C74837C31B005CD20090A679 /* Order */ = {
 			isa = PBXGroup;
 			children = (
+				C780FABF1B6F3C29009AC6A2 /* OrderListBtCell.h */,
+				C780FAC01B6F3C29009AC6A2 /* OrderListBtCell.m */,
+				C780FAC11B6F3C29009AC6A2 /* OrderHeadCell.h */,
+				C780FAC21B6F3C29009AC6A2 /* OrderHeadCell.m */,
 				C717DFE81AF3A41B0057DD72 /* OrderData.h */,
 				C717DFE91AF3A41B0057DD72 /* OrderData.m */,
 				C717DFEC1AF3B61D0057DD72 /* OrderListViewController.h */,
 				C717DFED1AF3B61D0057DD72 /* OrderListViewController.m */,
+				C780FABB1B6F2246009AC6A2 /* OrderListHeadView.h */,
+				C780FABC1B6F2246009AC6A2 /* OrderListHeadView.m */,
 				C713A2391AF45F63000EC646 /* OrderListCell.h */,
 				C713A23A1AF45F64000EC646 /* OrderListCell.m */,
 				C713A2501AF48E57000EC646 /* OrderInfoController.h */,
@@ -665,6 +691,8 @@
 				C713A2541AF4A48C000EC646 /* OrderInfoSecondCell.m */,
 				C713A2561AF4A4A5000EC646 /* OrderInfoFirstCell.h */,
 				C713A2571AF4A4A5000EC646 /* OrderInfoFirstCell.m */,
+				C76366D61B70652100301A17 /* OrderInfoTwoLCell.h */,
+				C76366D71B70652100301A17 /* OrderInfoTwoLCell.m */,
 			);
 			name = Order;
 			sourceTree = "<group>";
@@ -830,6 +858,8 @@
 		C753C1641AE78E3700562EF6 /* ThirdPart */ = {
 			isa = PBXGroup;
 			children = (
+				C780FAB71B6F137F009AC6A2 /* TSegmentedControl.h */,
+				C780FAB81B6F137F009AC6A2 /* TSegmentedControl.m */,
 				C77751781B60B71F007ED6AC /* TSwitch.h */,
 				C77751791B60B71F007ED6AC /* TSwitch.m */,
 				C784440E1AFA1DD8009B4C2D /* UIImageView-PlayGIF */,
@@ -1228,6 +1258,7 @@
 				C749AED11B10434200F82FF2 /* NSString+ZhengZe.m in Sources */,
 				C753BEB11AE7460800562EF6 /* ViewController.m in Sources */,
 				C78444151AFA1DD8009B4C2D /* YFGIFImageView.m in Sources */,
+				C780FAC31B6F3C29009AC6A2 /* OrderListBtCell.m in Sources */,
 				C74136AA1AE8F48E00B08CBD /* ProductCell.m in Sources */,
 				C75680D31AF7807300F0A990 /* BusinessInfoCell.m in Sources */,
 				C7749F521B3A698F0090BBC4 /* SpreadData.m in Sources */,
@@ -1236,6 +1267,7 @@
 				C713A23B1AF45F64000EC646 /* OrderListCell.m in Sources */,
 				C753C1811AE78E4E00562EF6 /* ASIHTTPRequest.m in Sources */,
 				C717DFE71AF3973C0057DD72 /* DateFormateManager.m in Sources */,
+				C780FABD1B6F2246009AC6A2 /* OrderListHeadView.m in Sources */,
 				C74278901AF27181008E17BA /* CategorySelectController.m in Sources */,
 				C75680D01AF77BFC00F0A990 /* ShopBusinessInfoController.m in Sources */,
 				C753C1AC1AE78E5800562EF6 /* UIButton+WebCache.m in Sources */,
@@ -1251,6 +1283,7 @@
 				C725BB391AEB6E7800F344CB /* AddProductFirstCell.m in Sources */,
 				C775ECB71B5F4BBA000AEDAD /* ShopInfoTimeSetCell.m in Sources */,
 				C753C1801AE78E4E00562EF6 /* ASIFormDataRequest.m in Sources */,
+				C780FAC51B6F3C29009AC6A2 /* OrderHeadCell.m in Sources */,
 				C775ECAB1B5F3866000AEDAD /* ShopInfoHeadCell.m in Sources */,
 				C753BEAE1AE7460800562EF6 /* AppDelegate.m in Sources */,
 				C753C1B91AE7952600562EF6 /* UserManager.m in Sources */,
@@ -1283,8 +1316,10 @@
 				C725BB421AEBAA3E00F344CB /* AddProductPictureCell.m in Sources */,
 				C725BB3F1AEB6FAA00F344CB /* AddProductSwithCell.m in Sources */,
 				C7463FDC1B3958FA00169FF6 /* BusinessSummaryCell.m in Sources */,
+				C76366D81B70652100301A17 /* OrderInfoTwoLCell.m in Sources */,
 				C753C1AD1AE78E5800562EF6 /* UIImage+GIF.m in Sources */,
 				C717DFEE1AF3B61D0057DD72 /* OrderListViewController.m in Sources */,
+				C780FAB91B6F137F009AC6A2 /* TSegmentedControl.m in Sources */,
 				C71F470F1AF592EF00D14972 /* DatePickerView.m in Sources */,
 				C753C1AE1AE78E5800562EF6 /* UIImage+MultiFormat.m in Sources */,
 				C753C17E1AE78E4E00562EF6 /* ASIDataDecompressor.m in Sources */,
@@ -1340,6 +1375,7 @@
 				C784433E1AF9E3A0009B4C2D /* ScanViewController.m in Sources */,
 				C749AED21B10434200F82FF2 /* NSString+ZhengZe.m in Sources */,
 				C784433F1AF9E3A0009B4C2D /* ViewController.m in Sources */,
+				C780FAC41B6F3C29009AC6A2 /* OrderListBtCell.m in Sources */,
 				C78444161AFA1DD8009B4C2D /* YFGIFImageView.m in Sources */,
 				C78443401AF9E3A0009B4C2D /* ProductCell.m in Sources */,
 				C7749F531B3A698F0090BBC4 /* SpreadData.m in Sources */,
@@ -1348,6 +1384,7 @@
 				C78443431AF9E3A0009B4C2D /* OrderListCell.m in Sources */,
 				C78443441AF9E3A0009B4C2D /* ASIHTTPRequest.m in Sources */,
 				C78443451AF9E3A0009B4C2D /* DateFormateManager.m in Sources */,
+				C780FABE1B6F2246009AC6A2 /* OrderListHeadView.m in Sources */,
 				C78443461AF9E3A0009B4C2D /* CategorySelectController.m in Sources */,
 				C78443471AF9E3A0009B4C2D /* ShopBusinessInfoController.m in Sources */,
 				C78443481AF9E3A0009B4C2D /* UIButton+WebCache.m in Sources */,
@@ -1363,6 +1400,7 @@
 				C784434F1AF9E3A0009B4C2D /* AddProductFirstCell.m in Sources */,
 				C775ECB81B5F4BBA000AEDAD /* ShopInfoTimeSetCell.m in Sources */,
 				C78443501AF9E3A0009B4C2D /* ASIFormDataRequest.m in Sources */,
+				C780FAC61B6F3C29009AC6A2 /* OrderHeadCell.m in Sources */,
 				C775ECAC1B5F3866000AEDAD /* ShopInfoHeadCell.m in Sources */,
 				C78443511AF9E3A0009B4C2D /* AppDelegate.m in Sources */,
 				C78443521AF9E3A0009B4C2D /* UserManager.m in Sources */,
@@ -1395,8 +1433,10 @@
 				C78443621AF9E3A0009B4C2D /* AddProductPictureCell.m in Sources */,
 				C78443631AF9E3A0009B4C2D /* AddProductSwithCell.m in Sources */,
 				C7463FDD1B3958FA00169FF6 /* BusinessSummaryCell.m in Sources */,
+				C76366D91B70652100301A17 /* OrderInfoTwoLCell.m in Sources */,
 				C78443641AF9E3A0009B4C2D /* UIImage+GIF.m in Sources */,
 				C78443651AF9E3A0009B4C2D /* OrderListViewController.m in Sources */,
+				C780FABA1B6F137F009AC6A2 /* TSegmentedControl.m in Sources */,
 				C78443661AF9E3A0009B4C2D /* DatePickerView.m in Sources */,
 				C78443671AF9E3A0009B4C2D /* UIImage+MultiFormat.m in Sources */,
 				C78443681AF9E3A0009B4C2D /* ASIDataDecompressor.m in Sources */,

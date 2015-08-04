@@ -11,7 +11,7 @@
 
 
 #define SHOPIDCHANGED @"shopIdChanged"
-
+#define TOKENINVALID @"token_invalid"
 #define DEFAULTIMAGE [UIImage imageNamed:@"DefaultImage"]
 
 #define DEFAULTNAVCOLOR [UIColor colorWithRed:255.0/225.0f green:111.0/255.0f blue:108.0/255.0f alpha:1.0]  

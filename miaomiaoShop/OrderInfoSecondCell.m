@@ -12,7 +12,8 @@
 {
     UIImageView* _productImageV;
     UILabel* _titleLabel;
-    UILabel* _totalMoneyL;
+    UILabel* _moneyL;
+    UILabel* _nuL;
 }
 @end
 @implementation OrderInfoSecondCell
@@ -28,31 +29,59 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-3-[_productImageV]-3-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productImageV)]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-14-[_productImageV]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productImageV)]];
-     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_productImageV attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_productImageV   attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_productImageV attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_productImageV   attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0]];
+    
+   
+    
     
     _titleLabel = [[UILabel alloc]init];
-    _titleLabel.font = [UIFont systemFontOfSize:15];
+    _titleLabel.font = DEFAULTFONT(14);
+    _titleLabel.textColor = FUNCTCOLOR(153, 153, 153);
     _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_titleLabel];
-    
+    [_titleLabel setContentCompressionResistancePriority:UILayoutPriorityFittingSizeLevel forAxis:UILayoutConstraintAxisHorizontal];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_productImageV]-5-[_titleLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productImageV,_titleLabel)]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_titleLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_titleLabel)]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_titleLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
 
     
-    _totalMoneyL = [[UILabel alloc]init];
-    _totalMoneyL.font = _titleLabel.font;
-    _totalMoneyL.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addSubview:_totalMoneyL];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_productImageV]-5-[_totalMoneyL]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productImageV,_totalMoneyL)]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_totalMoneyL]-5-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_totalMoneyL)]];
+
+    
+    _moneyL = [[UILabel alloc]init];
+    _moneyL.font = _titleLabel.font;
+    _moneyL.textColor = _titleLabel.textColor;
+    _moneyL.translatesAutoresizingMaskIntoConstraints = NO;
+    [_moneyL setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
+    [self.contentView addSubview:_moneyL];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_titleLabel]-[_moneyL]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_titleLabel,_moneyL)]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_moneyL attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+
+    
+    
+    
+    
+    _nuL = [[UILabel alloc]init];
+    _nuL.font = _titleLabel.font;
+    _nuL.textColor = _titleLabel.textColor;
+    _nuL.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:_nuL];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_moneyL]-10-[_nuL]-15-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_nuL,_moneyL)]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_nuL attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+
     return self;
 }
 
 
 -(void)setTotalMoney:(NSString*)str
 {
-    _totalMoneyL.text = str;
+    _moneyL.text = str;
+}
+
+-(void)setNuStr:(NSString*)nu
+{
+    _nuL.text = nu;
 }
 
 

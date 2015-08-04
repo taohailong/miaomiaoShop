@@ -12,6 +12,8 @@
 #import "ShopProductData.h"
 #import "THActivityView.h"
 #import "NetWorkRequest.h"
+#import "OrderInfoTwoLCell.h"
+
 @interface OrderInfoController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView* _table;
@@ -38,23 +40,42 @@
     
     self.title = @"订单详情";
     _table = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    //    _table
-    [self.view addSubview:_table];
     _table.delegate = self;
     _table.dataSource = self;
-//    _table.rowHeight = UITableViewAutomaticDimension;
     _table.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
+    [_table registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:@"UITableViewHeaderFooterView"];
+    [_table registerClass:[OrderInfoFirstCell class] forCellReuseIdentifier:@"OrderInfoFirstCell"];
+    [_table registerClass:[OrderInfoSecondCell class] forCellReuseIdentifier:@"OrderInfoSecondCell"];
     
+    [_table registerClass:[OrderInfoTwoLCell class] forCellReuseIdentifier:@"OrderInfoTwoLCell"];
+    [self.view addSubview:_table];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
     
     if ([_orderData.orderStatue isEqualToString:@"订单确认"]) {
+        
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_table]-55-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
         [self setTableViewFootWithConfirmDeliver:YES];
     }
     else
     {
-      [self setTableViewFootWithConfirmDeliver:NO];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
+
+        [self setTableViewFootWithConfirmDeliver:NO];
     }
+
+    
+    
+    UIButton* bt = [UIButton buttonWithType:UIButtonTypeCustom];
+    [bt setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+    bt.frame = CGRectMake(0, 0, 25, 35);
+    [bt setImage:[UIImage imageNamed:@"orderinfo_tel_on"] forState:UIControlStateNormal];
+    [bt setImage:[UIImage imageNamed:@"orderinfo_tel"] forState:UIControlStateHighlighted];
+    [bt addTarget:self action:@selector(makeTelphoneCall) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem* rightBar = [[UIBarButtonItem alloc]initWithCustomView:bt];
+    self.navigationItem.rightBarButtonItem = rightBar;
+    
+    
     // Do any additional setup after loading the view.
 }
 
@@ -62,11 +83,17 @@
 {
     if(flag)
     {
-        _table.tableFooterView = [self creatOrderConfirmFootView];
+        UIView* footView = [self creatOrderConfirmFootView];
+        footView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.view addSubview:footView];
+        
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[footView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(footView)]];
+        
+         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[footView(55)]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(footView)]];
     }
     else
     {
-        _table.tableFooterView = [self setExtraCellLineHidden];
+//        _table.tableFooterView = [self setExtraCellLineHidden];
     }
    
 }
@@ -75,49 +102,48 @@
 {
     UIView* footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 55)];
     
-    UIButton* cancelBt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    UIButton* cancelBt = [UIButton buttonWithType:UIButtonTypeCustom];
     cancelBt.tag = 0;
-    cancelBt.layer.borderWidth = 1;
-    cancelBt.layer.borderColor= DEFAULTNAVCOLOR.CGColor;
-    cancelBt.layer.masksToBounds = YES;
-    cancelBt.layer.cornerRadius = 6;
-    
-    
-    [cancelBt setTitle:@"取消配送" forState:UIControlStateNormal];
+    cancelBt.titleLabel.font = DEFAULTFONT(16);
+    [cancelBt setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 0)];
+
+    [cancelBt setImage:[UIImage imageNamed:@"orderInfo_canntDeliver"] forState:UIControlStateNormal];
+    [cancelBt setTitle:@"无法配送" forState:UIControlStateNormal];
+    cancelBt.backgroundColor = FUNCTCOLOR(255, 192, 192);
     cancelBt.translatesAutoresizingMaskIntoConstraints = NO;
     [footView addSubview:cancelBt];
     [cancelBt addTarget:self action:@selector(performOrderConfirmAction:) forControlEvents:UIControlEventTouchUpInside];
     
-    [footView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[cancelBt(80)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(cancelBt)]];
+    [footView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[cancelBt]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(cancelBt)]];
     
-    [footView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[cancelBt(40)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(cancelBt)]];
-    
-    [footView addConstraint:[NSLayoutConstraint constraintWithItem:cancelBt attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:footView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-    
-    [footView addConstraint:[NSLayoutConstraint constraintWithItem:cancelBt attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:footView attribute:NSLayoutAttributeCenterX multiplier:1.5 constant:0]];
+    [footView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[cancelBt]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(cancelBt)]];
     
     
-    UIButton * confirmBt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    
+    UIButton * confirmBt = [UIButton buttonWithType:UIButtonTypeCustom];
+    confirmBt.backgroundColor = DEFAULTNAVCOLOR;
     confirmBt.tag = 1;
+    confirmBt.titleLabel.font = DEFAULTFONT(16);
     confirmBt.translatesAutoresizingMaskIntoConstraints  = NO;
-    confirmBt.layer.borderWidth = 1;
-    confirmBt.layer.borderColor= DEFAULTNAVCOLOR.CGColor;
-    confirmBt.layer.masksToBounds = YES;
-    confirmBt.layer.cornerRadius = 6;
     
+    [confirmBt setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 0)];
+    [confirmBt setImage:[UIImage imageNamed:@"orderInfo_confirmDeliver"] forState:UIControlStateNormal];
     [confirmBt setTitle:@"确认配送" forState:UIControlStateNormal];
     [footView addSubview:confirmBt];
     [confirmBt addTarget:self action:@selector(performOrderConfirmAction:) forControlEvents:UIControlEventTouchUpInside];
     
-    [footView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[confirmBt(80)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(confirmBt)]];
-    [footView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[confirmBt(40)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(confirmBt)]];
-    
-    [footView addConstraint:[NSLayoutConstraint constraintWithItem:confirmBt attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:footView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-    
-    [footView addConstraint:[NSLayoutConstraint constraintWithItem:confirmBt attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:footView attribute:NSLayoutAttributeCenterX multiplier:.5 constant:0]];
+    [footView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[cancelBt]-0-[confirmBt(cancelBt)]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(confirmBt,cancelBt)]];
+    [footView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[confirmBt(cancelBt)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(confirmBt,cancelBt)]];
     
     return footView;
     
+}
+
+
+-(void)makeTelphoneCall
+{
+    NSString* url = [NSString stringWithFormat:@"tel://%@",_orderData.telPhone];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
 }
 
 
@@ -161,6 +187,11 @@
                 [showStr show];
                 [wself manualBack];
             }
+            else if (status == NetWorkStatusErrorTokenInvalid)
+            {
+                
+            }
+
             else
             {
                 THActivityView* showStr = [[THActivityView alloc]initWithString:@"提交失败！"];
@@ -202,75 +233,124 @@
 }
 
 
--(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [NSString stringWithFormat:@"订单时间：%@",_orderData.orderTime];
+    return 3;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 35;
+}
+
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+   UITableViewHeaderFooterView* head = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"UITableViewHeaderFooterView"];
+    head.textLabel.font = DEFAULTFONT(16);
+    head.textLabel.textColor = FUNCTCOLOR(102, 102, 102);
+    head.contentView.backgroundColor = FUNCTCOLOR(243, 243, 243);
+    if (section == 0) {
+        head.textLabel.text = @"用户信息";
+    }
+    else if (section == 1)
+    {
+       head.textLabel.text = @"商品信息";
+    }
+    else
+    {
+       head.textLabel.text = @"订单信息";
+    }
+   
+    return head;
 
 }
+
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2+_orderData.productArr.count;
-   
+    if (section == 1)
+    {
+        return _orderData.productArr.count+1;
+    }
+    else
+    {
+        return 1;
+    }
 }
 
 
-//-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if (indexPath.row==0) {
-//        return 110;
-//    }
-//    return 50;
-//}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row==0) {
-          return 120;
+    if (indexPath.section==1) {
+        return 50;
     }
-    return 50;
+    else
+    {
+        return 90;
+    }
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row==0) {
+    if (indexPath.section==0) {
         
-        OrderInfoFirstCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell0"];
-        if (cell==nil) {
-            cell = [[OrderInfoFirstCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell0"];
-        }
-        [cell setTelPhoneText:_orderData.telPhone];
+        OrderInfoFirstCell* cell = [tableView dequeueReusableCellWithIdentifier:@"OrderInfoFirstCell"];
+            [cell setTelPhoneText:_orderData.telPhone];
         [cell setAddressText:_orderData.orderAddress];
-        
-        [cell setPayWayText:[_orderData getPayMethod]];
         [cell setOrderMessage:_orderData.messageStr];
         return cell;
 
     }
-    else if (indexPath.row == 1+_orderData.productArr.count)
+    else if (indexPath.section == 1)
     {
-        UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
-        if (cell==nil) {
-            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
-            cell.textLabel.font = [UIFont systemFontOfSize:15];
+        if (indexPath.row == _orderData.productArr.count)
+        {
+            OrderInfoTwoLCell* cell = [tableView dequeueReusableCellWithIdentifier:@"OrderInfoTwoLCell"];
+            
+            [cell setFirstLabelText:[NSString stringWithFormat:@"总计：%d个",_orderData.countOfProduct]];
+            [cell setSecondLabelText:[NSString stringWithFormat:@"总价：¥%@",_orderData.totalMoney]];
+            return cell;
         }
-        cell.textLabel.text = [NSString stringWithFormat:@"共%d个 ¥ %@",_orderData.countOfProduct,_orderData.totalMoney];
-        return cell;
+        else
+        {
+            ShopProductData* product = _orderData.productArr[indexPath.row];
+            OrderInfoSecondCell* cell = [tableView dequeueReusableCellWithIdentifier:@"OrderInfoSecondCell"];
+            [cell setTitleText:product.pName];
+            [cell setProductUrl:product.pUrl];
+            [cell setTotalMoney:[NSString stringWithFormat:@"¥%.1f",product.price]];
+            [cell setNuStr:[NSString stringWithFormat:@"X%d",product.count]];
+            return cell;
+        }
     }
     else
     {
+        OrderInfoFirstCell* cell = [tableView dequeueReusableCellWithIdentifier:@"OrderInfoFirstCell"];
+        NSAttributedString* status = [self setFormateStrHead:@"支付方式：" withEndStr:[_orderData getPayMethod] withColor:DEFAULTNAVCOLOR];
+        [cell setFirstLabelAtt:status];
         
-        ShopProductData* product = _orderData.productArr[indexPath.row-1];
-        OrderInfoSecondCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell2"];
-        if (cell==nil) {
-            cell = [[OrderInfoSecondCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
-        }
         
-        [cell setTitleText:product.pName];
-        [cell setProductUrl:product.pUrl];
-        [cell setTotalMoney:[NSString stringWithFormat:@"%d个 X ¥ %.2f",product.count,product.price]];
+         NSAttributedString* time = [self setFormateStrHead:@"订单时间：" withEndStr:_orderData.orderTime withColor:FUNCTCOLOR(153, 153, 153)];
+        [cell setSecondLabelAtt:time];
+        
+        
+         NSAttributedString* orderNu = [self setFormateStrHead:@"订单编号：" withEndStr:_orderData.orderNu withColor:FUNCTCOLOR(153, 153, 153)];
+        [cell setThirdLabelAtt:orderNu];
         return cell;
-
     }
+}
+
+
+-(NSAttributedString*)setFormateStrHead:(NSString*)head withEndStr:(NSString*)endStr withColor:(UIColor*)color
+{
+    NSMutableAttributedString* status = [[NSMutableAttributedString alloc]initWithString:head attributes:@{NSForegroundColorAttributeName:FUNCTCOLOR(102, 102, 102),NSFontAttributeName:DEFAULTFONT(14)}];
+    NSAttributedString* statusStr = [[NSAttributedString alloc]initWithString:endStr attributes:@{NSForegroundColorAttributeName:color}];
+    [status appendAttributedString:statusStr];
+
+    return status;
 }
 
 

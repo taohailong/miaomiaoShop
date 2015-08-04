@@ -12,4 +12,5 @@
 -(void)setProductUrl:(NSString*)url;
 -(void)setTitleText:(NSString*)str;
 -(void)setTotalMoney:(NSString*)str;
+-(void)setNuStr:(NSString*)nu;
 @end

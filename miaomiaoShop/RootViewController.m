@@ -155,7 +155,7 @@
     self.navigationItem.titleView = titleView;
     
 //    [self setAttributeOfNavigationBar];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getShopInfo) name:SHOPROOTCHANGE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLogView) name:TOKENINVALID object:nil];
 //    
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notiShowLogView) name:PNEEDLOG object:nil];
 //    
@@ -190,11 +190,11 @@
     
     UserManager* manager = [UserManager shareUserManager];
     if ([manager onlyOneShop]==YES) {
-        [title setHidden:YES];
+        [title setImageHidden:YES];
     }
     else
     {
-        [title setHidden:NO];
+        [title setImageHidden:NO];
     }
     UILabel* textLabel = [title getTextLabel];
 
@@ -454,7 +454,12 @@
         if (status == NetWorkStatusSuccess) {
             [wSelf getShopInfo:backDic];
         }
-        else
+        else if (status == NetWorkStatusErrorTokenInvalid)
+        {
+            
+        }
+
+        else if (status == NetWorkStatusErrorCanntConnect)
         {
             THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wSelf.view];
             wSelf.errView = loadView;
@@ -494,7 +499,9 @@
 
 -(void)showOrderManageController
 {
-     OrderListViewController* order = [self.storyboard instantiateViewControllerWithIdentifier:@"OrderListViewController"];
+//    OrderListViewController* order = [self.storyboard instantiateViewControllerWithIdentifier:@"OrderListViewController"];
+    
+    OrderListViewController* order = [[OrderListViewController alloc]init];
     order.title = @"订单管理";
     [self.navigationController pushViewController:order animated:YES];
 }

@@ -71,10 +71,7 @@
 //    
 //    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_textLabel]-3-[_detailLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_textLabel,_detailLabel)]];
 //    
-    
-   
-    
-    
+
     UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(gestureAction)];
     
     [self addGestureRecognizer:gesture];
@@ -82,9 +79,9 @@
     return self;
 }
 
--(void)setHidden:(BOOL)hidden
+-(void)setImageHidden:(BOOL)hid
 {
-    imageView.hidden = hidden;
+    imageView.hidden = hid;
 }
 
 -(UILabel*)getTextLabel

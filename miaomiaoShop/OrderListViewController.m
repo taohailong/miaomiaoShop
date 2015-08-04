@@ -14,16 +14,21 @@
 #import "LastViewOnTable.h"
 #import "EGORefreshTableHeaderView.h"
 #import "OrderInfoController.h"
+#import "TSegmentedControl.h"
+#import "OrderListHeadView.h"
+//#import "OrderHeadCell.h"
+#import "OrderListBtCell.h"
 
-@interface OrderListViewController ()<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate>
+@interface OrderListViewController ()<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate,UIAlertViewDelegate>
 {
-    IBOutlet UISegmentedControl* _seg;
-    IBOutlet UITableView* _table;
-    
+    TSegmentedControl* _seg;
+    UITableView* _table;
+    __weak OrderData* _selectData;
+    __weak THActivityView* _emptyWarnView;
     NSString* _currentStatue;
     NSMutableArray* _todayArr;
     NSMutableArray* _notTodayArr;
-//    BOOL _isLoading;
+    
     EGORefreshTableHeaderView* refreshView;
 }
 @end
@@ -40,21 +45,34 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+   }
+
+- (void)viewDidLoad {
+    
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    _seg = [[TSegmentedControl alloc]initWithSectionTitles:@[@"新订单",@"配送中",@"已完成",@"已取消"]];
+    [_seg setFont:DEFAULTFONT(15)];
+    _seg.frame = CGRectMake(0, 64, SCREENWIDTH, 40);
+    [self.view addSubview:_seg];
+    _seg.selectionIndicatorColor = DEFAULTNAVCOLOR;
+    [_seg addTarget:self action:@selector(segViewChange:) forControlEvents:UIControlEventValueChanged];
+    
+    
+    _table = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_seg.frame), SCREENWIDTH, self.view.frame.size.height - CGRectGetMaxY(_seg.frame)) style:UITableViewStylePlain];
+    [_table registerClass:[OrderListHeadView class] forHeaderFooterViewReuseIdentifier:@"OrderListHeadView"];
+    [_table registerClass:[OrderListCell class] forCellReuseIdentifier:@"OrderListCell"];
+    [_table registerClass:[OrderListBtCell class] forCellReuseIdentifier:@"OrderListBtCell"];
+    _table.dataSource = self;
+    _table.delegate = self;
+    [self.view addSubview:_table];
+    [self addRefreshTableHead];
     [self segViewChange:_seg];
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-
-    _table.dataSource = self;
-    _table.delegate = self;
-    [self addRefreshTableHead];
-   
-}
-
--(IBAction)segViewChange:(UISegmentedControl*)seg
+-(IBAction)segViewChange:(TSegmentedControl*)seg
 {
-    switch (seg.selectedSegmentIndex) {
+    switch (seg.selectedIndex) {
         case 0:
             _currentStatue = @"0";
             break;
@@ -74,6 +92,68 @@
    [self getDataFromNetWithStatue:_currentStatue];
 }
 
+#pragma mark-NetApi
+
+-(void)cannotDeliverOrder:(OrderData*)data
+{
+    THActivityView* fullView = [[THActivityView alloc]initViewOnWindow];
+    [fullView loadViewAddOnWindow];
+    
+    __weak OrderListViewController* wself = self;
+    __weak TSegmentedControl* wsegment = _seg;
+    NetWorkRequest* request = [[NetWorkRequest alloc]init];
+
+     [request shopOrderCancelDeliverWithOrderID:data.orderNu WithBk:^(id backDic, NetWorkStatus status) {
+            
+        [fullView removeFromSuperview];
+            
+        if (status == NetWorkStatusSuccess) {
+            THActivityView* showStr = [[THActivityView alloc]initWithString:@"提交成功！"];
+            [showStr show];
+            [wself segViewChange:wsegment];
+        }
+        else
+        {
+            THActivityView* showStr = [[THActivityView alloc]initWithString:@"提交失败！"];
+            [showStr show];
+        }
+            
+    }];
+    [request startAsynchronous];
+    
+}
+
+
+-(void)comfirmDeliverOrder:(OrderData*)data
+{
+    THActivityView* fullView = [[THActivityView alloc]initViewOnWindow];
+    [fullView loadViewAddOnWindow];
+    
+    __weak OrderListViewController* wself = self;
+     __weak TSegmentedControl* wsegment = _seg;
+    
+    NetWorkRequest* request = [[NetWorkRequest alloc]init];
+    [request shopOrderConfirmDeliverWithOrderID:data.orderNu WithBk:^(id backDic, NetWorkStatus status) {
+            
+        [fullView removeFromSuperview];
+        
+        if (status==NetWorkStatusSuccess) {
+            
+            THActivityView* showStr = [[THActivityView alloc]initWithString:@"提交成功！"];
+            [showStr show];
+            [wself segViewChange:wsegment];
+        }
+        else
+        {
+            THActivityView* showStr = [[THActivityView alloc]initWithString:@"提交失败！"];
+            [showStr show];
+        }
+            
+    }];
+    [request startAsynchronous];
+
+}
+
 
 -(void)getDataFromNetWithStatue:(NSString*)statue
 {
@@ -81,7 +161,7 @@
     THActivityView* loadView = [[THActivityView alloc]initFullViewTransparentWithSuperView:self.view];
     __weak OrderListViewController* wSelf = self;
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
-    [req shopGetOrderWithStatue:statue WithIndex:0 WithBk:^(id backDic, NetWorkStatus status) {
+    [req shopGetOrderWithStatue:@"2" WithIndex:0 WithBk:^(id backDic, NetWorkStatus status) {
         
         [loadView removeFromSuperview];
         if (status == NetWorkStatusErrorCanntConnect) {
@@ -91,16 +171,14 @@
             return ;
         }
 
-        if (backDic) {
+        if (status == NetWorkStatusSuccess) {
             _notTodayArr = backDic[1];
             _todayArr = backDic[0];
+//            _todayArr = [_notTodayArr mutableCopy];
             [_table reloadData];
             [wSelf addLoadMoreViewWithCount:_todayArr.count+_notTodayArr.count];
         }
-        if ([statue isEqualToString:@"0"]) {
-            [wSelf setTabBarBadge:nil];
-        }
-        [wSelf refreshTableOver];
+         [wSelf refreshTableOver];
     }];
     [req startAsynchronous];
 }
@@ -133,9 +211,6 @@
 {
 
     if (count<20) {
-//        UIView *view =[ [UIView alloc]init];
-//        view.backgroundColor = [UIColor clearColor];
-//        _table.tableFooterView = view;
         _table.tableFooterView = nil;
     }
     else
@@ -148,6 +223,39 @@
 {
     [refreshView egoRefreshScrollViewDataSourceDidFinishedLoading:_table];
 }
+
+-(void)performOrderConfirmAction:(OrderBtSelect)type
+{
+    if (type == OrderBtFirst) {
+        
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确认要配送吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        alert.tag = 1;
+        [alert show];
+    }
+    else
+    {
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确认无法配送吗" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        alert.tag = 0;
+        [alert show];
+        
+    }
+    
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.cancelButtonIndex==buttonIndex) {
+        return;
+    }
+    if (alertView.tag == 1) {
+        [self comfirmDeliverOrder:_selectData];
+    }
+    else
+    {
+        [self cannotDeliverOrder:_selectData];
+    }
+}
+
 
 
 #pragma mark---------------Refresh------------------
@@ -224,21 +332,55 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 215;
+    OrderData* data ;
+    if (indexPath.section==0)
+    {
+        if (_todayArr.count) {
+            data = _todayArr[indexPath.row] ;
+        }
+        else
+        {
+            data =  _notTodayArr[indexPath.row];
+        }
+    }
+    else
+    {
+        data =  _notTodayArr[indexPath.row];
+    }
+    
+    CGSize size = [data calculateAddressHeightWithFont:DEFAULTFONT(14) WithSize:CGSizeMake(1000, 1000)];
+    
+    if ([_currentStatue isEqualToString:@"0"]&&indexPath.section == 0)
+    {
+        if (size.width>SCREENWIDTH-80) {
+            return 202;
+        }
+        return 185 ;
+    }
+    
+    if (size.width>SCREENWIDTH-80) {
+        return 150;
+    }
+    return 130;
+}
+
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 25;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.1;
 }
 
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView* headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 30)];
-    headView.backgroundColor = [UIColor colorWithRed:51.0/255.0 green:205.0/255.0 blue:95.0/255.0 alpha:1.0];
-    UILabel* label = [[UILabel alloc]init];
-    label.translatesAutoresizingMaskIntoConstraints = NO;
-    [headView addSubview:label];
-    [headView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[label]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(label)]];
-    
-    [headView addConstraint:[NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:headView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-
+    UITableViewHeaderFooterView* headView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"OrderListHeadView"];
+    headView.contentView.backgroundColor = FUNCTCOLOR(243, 243, 243);
+   
     NSString* title = nil;
     if (section==0)
     {
@@ -256,7 +398,7 @@
         title =  @"往日订单";
     }
     
-    label.text = title;
+    headView.textLabel.text = title;
     return headView;
 }
 
@@ -278,24 +420,41 @@
         data =  _notTodayArr[indexPath.row];
     }
     
-    OrderListCell* cell = [tableView dequeueReusableCellWithIdentifier:@"orderList"];
-//    if (cell==nil) {
-//        cell = [[OrderListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-//    }
-    NSLog(@"data.orderTime %@",data);
-    [cell setTitleText:[NSString stringWithFormat:@"%@        共%d个 ¥%@",data.orderTime,data.countOfProduct ,data.totalMoney]];
-    [cell setAddress:data.orderAddress];
-    [cell setTephone:data.telPhone];
-    [cell setPayWay:[data getPayMethod]];
-    [cell setPayNu:data.orderNu];
-    [cell setOrderStatue:data.orderStatue];
-    [cell setOrderMessage:data.messageStr];
-    return cell;
+    if (indexPath.section == 0&& [_currentStatue isEqualToString:@"0"])
+    {
+        __weak OrderListViewController* wself = self;
+        _selectData = data;
+        OrderListBtCell* cell = [tableView dequeueReusableCellWithIdentifier:@"OrderListBtCell"];
+        [cell setOrderBk:^(OrderBtSelect status) {
+            [wself performOrderConfirmAction:status];
+        }];
+        [cell setAddress:data.orderAddress];
+        [cell setTephone:data.telPhone];
+        [cell setOrderTime:data.orderTime];
+        [cell setOrderStatus:data.orderStatue];
+        [cell setTotalNu:[NSString stringWithFormat:@"%d",data.countOfProduct]];
+        [cell setTotalMoney:data.totalMoney];
+
+        return cell;
+    }
+    
+    else
+    {
+        OrderListCell* cell = [tableView dequeueReusableCellWithIdentifier:@"OrderListCell"];
+        [cell setAddress:data.orderAddress];
+        [cell setTephone:data.telPhone];
+        [cell setOrderTime:data.orderTime];
+        [cell setOrderStatus:data.orderStatue];
+        [cell setTotalNu:[NSString stringWithFormat:@"%d",data.countOfProduct]];
+        [cell setTotalMoney:data.totalMoney];
+        return cell;
+    }
 }
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     OrderData* data ;
     if (indexPath.section==0)
     {
@@ -315,7 +474,6 @@
     OrderInfoController* orderInfo = [[OrderInfoController alloc]initWithOrderData: data];
     orderInfo.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:orderInfo animated:YES];
- 
 }
 
 -(void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView

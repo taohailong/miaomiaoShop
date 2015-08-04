@@ -61,7 +61,7 @@
     [request getDailyOrderFromIndex:0 WithBk:^(NSDictionary* backDic, NetWorkStatus status) {
         
         [loadView removeFromSuperview];
-        if (status!=NetWorkStatusSuccess) {
+        if (status == NetWorkStatusErrorCanntConnect) {
             THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wSelf.view];
             
             [loadView setErrorBk:^{
@@ -70,7 +70,7 @@
             return ;
         }
         
-        if (backDic) {
+        if (status == NetWorkStatusSuccess) {
             [wSelf fillDataToViewWith:backDic];
         }
         

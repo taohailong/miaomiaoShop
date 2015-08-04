@@ -27,7 +27,7 @@ typedef void (^logCallBack)(BOOL success,id respond) ;
 -(void)savePushToken:(NSString*)push;
 -(void)registePushKey;
 -(void)removeUserAccountWithBk:(logCallBack)complete;
-
+-(void)removeUserData;
 
 -(NSString*)getUserAccount;
 -(BOOL)isLogin;

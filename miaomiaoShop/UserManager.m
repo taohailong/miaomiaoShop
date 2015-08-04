@@ -104,6 +104,7 @@
     [def removeObjectForKey:USHOPID];
 //    [def removeObjectForKey:PUSHOK];
     [def removeObjectForKey:UACCOUNT];
+    [def removeObjectForKey:PWMD5];
     [def synchronize];
     self.token = nil;
     self.shopID = nil;
@@ -163,7 +164,7 @@
              return ;
          }
          
-        if (backDic) {
+        if (status == NetWorkStatusSuccess) {
             
             NSArray* shopArr = backDic[@"data"][@"shop"];
             [self saveAllShopArr:shopArr];

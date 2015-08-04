@@ -101,7 +101,7 @@
     
         [wSelf.errorView removeFromSuperview];
         [loadView removeFromSuperview];
-        if (status!=NetWorkStatusSuccess) {
+        if (status == NetWorkStatusErrorCanntConnect) {
             THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wSelf.view];
             wSelf.errorView = loadView;
             [loadView setErrorBk:^{
@@ -110,7 +110,7 @@
             return ;
         }
 
-        if (backDic) {
+        if (status == NetWorkStatusSuccess) {
             [wSelf fillDataToViewWith:backDic];
         }
         

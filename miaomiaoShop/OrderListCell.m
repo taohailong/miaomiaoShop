@@ -9,110 +9,205 @@
 #import "OrderListCell.h"
 @interface OrderListCell()
 {
-    IBOutlet UILabel* _titleLabel;
-   IBOutlet UILabel* _statueLabel;
-   IBOutlet UILabel* _addressLabel;
-   IBOutlet UILabel* _timeLabel;
-   IBOutlet UILabel* _telLabel;
-   IBOutlet UILabel* _payWayLabel;
-   IBOutlet UILabel*_payNuLabel;
-   IBOutlet UILabel* _messageLabel;
+ //   UILabel* _payWayLabel;
+//   UILabel*_payNuLabel;
+//   UILabel* _messageLabel;
 
 }
 
 @end
 @implementation OrderListCell
 
--(void)setTitleText:(NSString*)text
+
+-(void)setOrderStatus:(NSString *)status
 {
-    _timeLabel.text = text;
+    _statusLabel.text = status;
+}
+
+-(void)setOrderTime:(NSString *)time
+{
+    _titleLabel.text = time;
 }
 
 -(void)setAddress:(NSString*)address
 {
-    _addressLabel.adjustsFontSizeToFitWidth = YES;
-    _addressLabel.text = [NSString stringWithFormat:@"收货地址:%@",address];
+    NSMutableAttributedString* att = [[NSMutableAttributedString alloc]initWithString:@"收货地址:" attributes:@{NSFontAttributeName:DEFAULTFONT(14),NSForegroundColorAttributeName:FUNCTCOLOR(102, 102, 102)}];
+    
+    
+    NSMutableAttributedString* addAtt = [[NSMutableAttributedString alloc]initWithString:address attributes:@{NSFontAttributeName:DEFAULTFONT(14),NSForegroundColorAttributeName:FUNCTCOLOR(153  , 153, 153)}];
+    [att appendAttributedString:addAtt];
+    
+    _addressLabel.attributedText = att;
+//    _addressLabel.text = [NSString stringWithFormat:@"收货地址:%@",address];
 }
 
 -(void)setTephone:(NSString*)tel
 {
-    _telLabel.text = [NSString stringWithFormat:@"联系电话:%@",tel];
-;
+    NSMutableAttributedString* att = [[NSMutableAttributedString alloc]initWithString:@"联系电话:" attributes:@{NSFontAttributeName:DEFAULTFONT(14),NSForegroundColorAttributeName:FUNCTCOLOR(102, 102, 102)}];
+    
+    NSMutableAttributedString* addAtt = [[NSMutableAttributedString alloc]initWithString:tel attributes:@{NSFontAttributeName:DEFAULTFONT(14),NSForegroundColorAttributeName:FUNCTCOLOR(153  , 153, 153)}];
+    [att appendAttributedString:addAtt];
+    
+    _telLabel.attributedText = att;
 }
 
--(void)setPayWay:(NSString*)payWay
+-(void)setTotalNu:(NSString*)nu
 {
-    _payWayLabel.text = [NSString stringWithFormat:@"支付方式:%@",payWay];
+    NSMutableAttributedString* att = [[NSMutableAttributedString alloc]initWithString:@"总   计:" attributes:@{NSFontAttributeName:DEFAULTFONT(14),NSForegroundColorAttributeName:FUNCTCOLOR(102, 102, 102)}];
+    
+    NSMutableAttributedString* addAtt = [[NSMutableAttributedString alloc]initWithString:nu attributes:@{NSFontAttributeName:DEFAULTFONT(14),NSForegroundColorAttributeName:FUNCTCOLOR(153  , 153, 153)}];
+    [att appendAttributedString:addAtt];
+
+    _nuLabel.attributedText = att;
 }
 
--(void)setPayNu:(NSString*)nu
+-(void)setTotalMoney:(NSString*)money
 {
-    _payNuLabel.text = [NSString stringWithFormat:@"订单编号:%@",nu];
-}
--(void)setOrderStatue:(NSString*)statue
-{
-    _statueLabel.text = [NSString stringWithFormat:@"订单状态:%@",statue];
-
+    _moneyLabel.text = [NSString stringWithFormat:@"总价:¥%@",money];
 }
 
--(void)setOrderMessage:(NSString*)message
-{
-
-    _messageLabel.text = [NSString stringWithFormat:@"卖家留言:%@",message];
-}
-
-//-(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+//-(void)setTitleText:(NSString*)text
 //{
-//    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-//    
-//    UIImageView* _timeImageV = [[UIImageView alloc]init];
-//    _timeImageV.translatesAutoresizingMaskIntoConstraints = NO;
-//    [self.contentView addSubview:_timeImageV];
-//    
-//    [self.contentView addConstraints :[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[_timeImageV]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_timeImageV)]];
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_timeImageV]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_timeImageV)]];
-////    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_timeImageV attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1/7 constant:0]];
-//    _timeImageV.image = [UIImage imageNamed:@"order_RedTime"];
-//    
-//    
-//    UIImageView* _telImageV = [[UIImageView alloc]init];
-//    _telImageV.translatesAutoresizingMaskIntoConstraints = NO;
-//    [self.contentView addSubview:_telImageV];
-//    _telImageV.image = [UIImage imageNamed:@"order_tel"];
-////    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_telImageV attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_timeImageV]-10-[_telImageV]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_timeImageV,_telImageV)]];
-//    
-//    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_telImageV attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_timeImageV attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0 ]];
-//    
-//    
-//    UIImageView* _payWayImageV=[[UIImageView alloc]init];
-//    _payWayImageV.translatesAutoresizingMaskIntoConstraints = NO;
-//    [self.contentView addSubview:_payWayImageV];
-//    _payWayImageV.image = [UIImage imageNamed:@"order_pawWay"];
-////    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_payWayImageV attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_telImageV]-10-[_payWayImageV]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_telImageV,_payWayImageV)]];
-//    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_payWayImageV attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_timeImageV attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0 ]];
-//    
-//    UIImageView*_payNuImageV=[[UIImageView alloc]init];
-//    _payNuImageV.translatesAutoresizingMaskIntoConstraints = NO;
-//    [self.contentView addSubview:_payNuImageV];
-//    _payNuImageV.image = [UIImage imageNamed:@"order_Nu"];
-////    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_payNuImageV attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_payWayImageV]-10-[_payNuImageV]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_payNuImageV,_payWayImageV)]];
-//    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_payNuImageV attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_timeImageV attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0 ]];
-//    
-//    
-//    UIImageView* _messageImageV=[[UIImageView alloc]init];
-//    _messageImageV.translatesAutoresizingMaskIntoConstraints = NO;
-//    [self.contentView addSubview:_messageImageV];
-//    _messageImageV.image = [UIImage imageNamed:@"order_message"];
-//    
-////    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_messageImageV attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_payNuImageV]-10-[_messageImageV]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_payNuImageV,_messageImageV)]];
-//    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_messageImageV attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_timeImageV attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0 ]];
-//    return self;
+//    _timeLabel.text = text;
+//}
+
+//-(void)setPayWay:(NSString*)payWay
+//{
+//    _payWayLabel.text = [NSString stringWithFormat:@"支付方式:%@",payWay];
+//}
+//
+//-(void)setPayNu:(NSString*)nu
+//{
+//    _payNuLabel.text = [NSString stringWithFormat:@"订单编号:%@",nu];
+//}
+//-(void)setOrderStatue:(NSString*)statue
+//{
+//    _statueLabel.text = [NSString stringWithFormat:@"订单状态:%@",statue];
 //
 //}
+//
+//-(void)setOrderMessage:(NSString*)message
+//{
+//
+//    _messageLabel.text = [NSString stringWithFormat:@"卖家留言:%@",message];
+//}
+
+-(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    
+    UIView* back = [[UIView alloc]init];
+    back.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:back];
+    back.backgroundColor = FUNCTCOLOR(243, 243, 243);
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[back]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(back)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[back(10)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(back)]];
+    
+    
+    _titleImage = [[UIImageView alloc]init];
+    _titleImage.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:_titleImage];
+    _titleImage.image = [UIImage imageNamed:@"order_time"];
+    
+//    [_titleImage setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[_titleImage]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_titleImage)]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[back]-10-[_titleImage]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(back,_titleImage)]];
+    
+    
+    
+    _titleLabel = [[UILabel alloc]init];
+    _titleLabel.font = DEFAULTFONT(16);
+    _titleLabel.textColor = FUNCTCOLOR(153, 153, 153);
+    _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+//    [_titleLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
+    [self.contentView addSubview:_titleLabel];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_titleImage]-6-[_titleLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_titleImage,_titleLabel)]];
+    
+    
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_titleLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_titleImage attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    
+    
+    
+    _statusLabel = [[UILabel alloc]init];
+    _statusLabel.font = DEFAULTFONT(16);
+    _statusLabel.textColor = DEFAULTNAVCOLOR;
+    _statusLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:_statusLabel];
+    
+    
+//    [_statusLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_statusLabel]-15-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_statusLabel)]];
+    
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_statusLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_titleLabel attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    
+    UIView* separate1V = [[UIView alloc]init];
+    separate1V.backgroundColor = FUNCTCOLOR(243, 243, 243);
+    separate1V.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:separate1V];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[separate1V]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separate1V)]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_titleLabel]-7-[separate1V(1)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_titleLabel,separate1V)]];
+    
+    
+    
+    
+    _addressLabel = [[UILabel alloc]init];
+    _addressLabel.numberOfLines = 0;
+    _addressLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:_addressLabel];
+    
+    [_addressLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[_addressLabel]-1-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_addressLabel)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separate1V]-10-[_addressLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separate1V,_addressLabel)]];
+
+    
+    
+    
+    _telLabel = [[UILabel alloc]init];
+    _telLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:_telLabel];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_telLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_addressLabel attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_addressLabel]-10-[_telLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_addressLabel,_telLabel)]];
+    
+    
+    
+    
+    
+    _nuLabel = [[UILabel alloc]init];
+    _nuLabel.font = DEFAULTFONT(14);
+//    _nuLabel.backgroundColor = [UIColor redColor];
+    _nuLabel.translatesAutoresizingMaskIntoConstraints= NO;
+    [self.contentView addSubview:_nuLabel];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_nuLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_addressLabel attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_telLabel]-10-[_nuLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_telLabel,_nuLabel)]];
+
+    
+    _moneyLabel = [[UILabel alloc]init];
+    _moneyLabel.textColor = DEFAULTNAVCOLOR;
+    _moneyLabel.font = DEFAULTFONT(14);
+    _moneyLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:_moneyLabel];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_moneyLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_nuLabel attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_moneyLabel]-10-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_moneyLabel)]];
+
+//    [self setLayout];
+    
+    return self;
+}
+
+
+-(void)setLayout
+{
+    
+}
+
 - (void)awakeFromNib {
     // Initialization code
 }

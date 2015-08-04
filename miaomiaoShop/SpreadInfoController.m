@@ -63,7 +63,7 @@
     [request getSpreadInfoWithDate:_currentDate WithIndex:0 WithBk:^(id backDic, NetWorkStatus status) {
         
         [loadView removeFromSuperview];
-        if (status!=NetWorkStatusSuccess) {
+        if (status==NetWorkStatusErrorCanntConnect) {
             THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wSelf.view];
             
             [loadView setErrorBk:^{
@@ -71,8 +71,11 @@
             }];
             return ;
         }
+        else if (status == NetWorkStatusSuccess)
+        {
+           [wSelf fillDataToViewWith:backDic];
+        }
         
-        [wSelf fillDataToViewWith:backDic];
     }];
     [request startAsynchronous];
 }
