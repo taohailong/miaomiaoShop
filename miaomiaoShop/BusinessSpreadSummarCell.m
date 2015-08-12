@@ -19,12 +19,13 @@
 
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
-    self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//    self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
 
     _firstLabel = [[UILabel alloc]init];
     _firstLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _firstLabel.font = [UIFont systemFontOfSize:15];
+    _firstLabel.textColor = FUNCTCOLOR(153, 153, 153);
     [self.contentView addSubview:_firstLabel];
     
 
@@ -33,6 +34,7 @@
     
     _secondLabel = [[UILabel alloc]init];
     _secondLabel.font = [UIFont systemFontOfSize:15];
+    _secondLabel.textColor = _firstLabel.textColor;
     _secondLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_secondLabel];
     
@@ -40,10 +42,11 @@
     
     _thirdLabel = [[UILabel alloc]init];
     _thirdLabel.font = [UIFont systemFontOfSize:15];
+    _thirdLabel.textColor = _firstLabel.textColor;
     _thirdLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_thirdLabel];
     
- 
+    [self setLayout];
     return self;
 }
 

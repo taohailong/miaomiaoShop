@@ -25,7 +25,7 @@
 -(void)setTotalMoney:(NSString*)money;
 -(void)setOrderTime:(NSString*)time;
 -(void)setOrderStatus:(NSString*)status;
-
+-(void)setSeparateHeight:(float)height;
 //-(void)setPayWay:(NSString*)payWay;
 //-(void)setPayNu:(NSString*)nu;
 //-(void)setOrderStatue:(NSString*)statue;

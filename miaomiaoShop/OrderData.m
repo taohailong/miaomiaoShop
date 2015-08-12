@@ -18,13 +18,7 @@
     
     if (![self.payWay isEqualToString:@""])
     {
-        if (self.discountMoney) {
-            return [NSString stringWithFormat:@"在线支付(代金券%.2f)",self.discountMoney/100];
-        }
-        else
-        {
-           return @"在线支付";
-        }
+        return @"在线支付";
     }
     
     else
@@ -90,8 +84,8 @@
     [formate setDateStyleString:@"YY-MM-dd HH:mm"];
     NSDate* date = [formate getDateFromString:self.orderTime];
     date = [date dateByAddingTimeInterval:86400.0];
-    
-    self.deadTime = [formate formateDateToString:date];
+     self.orderTakeOver = [formate formateDateToString:date];
+//    self.deadTime = [formate formateDateToString:date];
 }
 
 -(CGSize)calculateAddressHeightWithFont:(UIFont *)font WithSize:(CGSize)size

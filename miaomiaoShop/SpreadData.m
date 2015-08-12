@@ -10,7 +10,7 @@
 
 @implementation SpreadData
 @synthesize shopID,userID,platform,confirmTime,codeTime,month,date,appUserNu,wxUserNu,totalUserNu;
-
+@synthesize currentMonthMoney,currentMonthNu,telPhone;
 //-(void)setSpreadMonth:(float)months
 //{
 //    self.month = [NSNumber numberWithFloat:months];

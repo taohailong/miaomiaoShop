@@ -7,10 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+typedef enum _ProductCellAction{
+    ProductCellDelect,
+    ProductCellUp
+}ProductCellAction;
+typedef void (^ProductAction)(ProductCellAction type);
+
 
 @interface ProductCell : UITableViewCell
 -(void)setPicUrl:(NSString*)url;
 -(void)setTitleStr:(NSString*)title;
 -(void)setPriceStr:(NSString*)price;
 -(void)setProductOnOff:(BOOL)flag;
+-(void)setProductBk:(ProductAction)bk;
 @end

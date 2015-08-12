@@ -7,8 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
+typedef void (^BusinessSummaryBk)(BOOL isLeft);
 @interface BusinessSummaryCell : UITableViewCell
--(void)setCountOrderStr:(NSString*)str;
--(void)setTotalMoney:(NSString*)str;
+{
+    BusinessSummaryBk _bk;
+}
+-(void)setFourthText:(NSString*)text;
+-(void)setThirdLText:(NSString*)text;
+-(void)setSecondLText:(NSString*)str;
+-(void)setFirstLStr:(NSString*)str;
+-(void)setBk:(BusinessSummaryBk)bk;
 @end

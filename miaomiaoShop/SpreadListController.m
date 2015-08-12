@@ -12,13 +12,16 @@
 #import "THActivityView.h"
 #import "LastViewOnTable.h"
 #import "SpreadListCell.h"
+#import "OrderConfirmSummerHeadView.h"
+#import "SpreadListNoSeparateCell.h"
+
 #import "SpreadInfoController.h"
 
 @interface SpreadListController()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView* _table;
     NSMutableDictionary* _dataDic;
-    NSArray* _monthArr;
+    NSMutableArray* _monthArr;
     int _dataCount;
     BOOL _isLoading;
 }
@@ -34,6 +37,7 @@
     _monthArr = [[NSMutableArray alloc]init];
     
     _table = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     _table.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_table];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
@@ -41,8 +45,13 @@
     
     _table.delegate = self;
     _table.dataSource = self;
+    _table.backgroundColor = FUNCTCOLOR(237, 237, 237);
+
+    [_table registerClass:[OrderConfirmSummerHeadView class] forHeaderFooterViewReuseIdentifier:@"OrderConfirmSummerHeadView"];
+     [_table registerClass:[SpreadListNoSeparateCell class] forCellReuseIdentifier:@"SpreadListNoSeparateCell"];
+    
     [_table registerClass:[SpreadListCell class] forCellReuseIdentifier:@"SpreadListCell"];
-    [_table registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:@"table_headView"];
+    
     
     [self getSpreadSummary];
 }
@@ -103,29 +112,50 @@
     _isLoading = NO;
 }
 
--(void)fillDataToViewWith:(NSDictionary*)souceDic
+-(void)fillDataToViewWith:(NSArray*)arrDic
 {
-    int count = 0;
-    for (NSString* key in souceDic.allKeys) {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        NSArray* arr = souceDic[key];
-        _dataCount += arr.count;
-        count += arr.count;
-        NSMutableArray* keyArr = _dataDic[key];
-        if (keyArr==nil) {
-            [_dataDic setObject:arr forKey:key];
-        }
-        else
+        for (NSDictionary * dic in arrDic)
         {
-            [keyArr addObjectsFromArray:arr];
+            _dataCount++;
+            
+            SpreadData* element = [[SpreadData alloc]init];
+            element.month = dic[@"month"];
+            element.date = dic[@"date"];
+            element.currentMonthNu = [dic[@"monthTotalUser"] stringValue];
+            
+            float money = [dic[@"monthTotalPrice"] floatValue];
+            element.currentMonthMoney = [NSString stringWithFormat:@"¥%.1f",money/100];
+            element.wxUserNu = [dic[@"wxUser"] intValue];
+            element.appUserNu = [dic[@"appUser"] intValue];
+            element.totalUserNu = [dic[@"totalUser"] intValue];
+            
+            NSString* month = dic[@"month"];
+            if (_dataDic[month] == nil)
+            {
+                NSMutableArray* arr = [[NSMutableArray alloc]init];
+                [arr addObject:element];
+                [_dataDic setObject:arr forKey:month];
+                
+                
+                 NSString* totalMoney = [NSString stringWithFormat:@"%.1f",[dic[@"monthTotalPrice"] floatValue]/100];
+                [_monthArr addObject:@{@"month":dic[@"month"],@"totalNu":dic[@"monthTotalUser"],@"totalMoney":totalMoney}];
+            }
+            else
+            {
+                NSMutableArray* arr = _dataDic[month];
+                [arr addObject:element];
+            }
         }
-    }
+        
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self addLoadMoreViewWithCount:arrDic.count];
+            [_table reloadData];
+        });
+    });
 
-    NSSortDescriptor *sd1 = [NSSortDescriptor sortDescriptorWithKey:nil ascending:NO];
-    _monthArr = [_dataDic.allKeys sortedArrayUsingDescriptors:@[sd1]];
-    
-    [self addLoadMoreViewWithCount:count];
-    [_table reloadData];
 }
 
 
@@ -160,19 +190,31 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    if (indexPath.row==0) {
+        return 135;
+    }
+    else
+    {
+        return 145;
+    }
+    
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 30;
+    return 35;
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UITableViewHeaderFooterView* headView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"table_headView"];
-    headView.backgroundColor = [UIColor lightGrayColor];
-    headView.textLabel.text = _monthArr[section];
+    OrderConfirmSummerHeadView* headView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"OrderConfirmSummerHeadView"];
+
+    NSDictionary* dic = _monthArr[section];
+    
+    [headView  setFirstLabelText:[NSString stringWithFormat:@"%@月明细",dic[@"month"]]];
+    [headView setSecondLabelText:[NSString stringWithFormat:@"当月共计：%@个",dic[@"totalNu"]]];
+    [headView setThirdLabelText:[NSString stringWithFormat:@"¥%@",dic[@"totalMoney"]]];
+
     return headView;
 }
 
@@ -184,31 +226,46 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSString* key = _monthArr[section];
-    NSArray* arr = _dataDic[key];
+    NSDictionary* key = _monthArr[section];
+    NSArray* arr = _dataDic[key[@"month"]];
     return arr.count;
 }
 
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SpreadListCell* cell = [tableView dequeueReusableCellWithIdentifier:@"SpreadListCell"];
-    [cell setLayout];
     
-    NSString*key = _monthArr[indexPath.section];
-    SpreadData* temp = _dataDic[key][indexPath.row];
+    SpreadListCell* cell ;
+    if (indexPath.row == 0)
+    {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"SpreadListNoSeparateCell"];
+    }
+    else
+    {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"SpreadListCell"];
+    }
+    [cell setImageViewImageName:@"order_time"];
+
+    NSDictionary*key = _monthArr[indexPath.section];
+    SpreadData* temp = _dataDic[key[@"month"]][indexPath.row];
     
-    UILabel* first = [cell getFirstLabel];
-    first.text = temp.date;
-    first.textColor = DEFAULTNAVCOLOR;
+    [cell setTitleLabelText:temp.date];
+   
     UILabel* second = [cell getSecondLabel];
+    second.textColor = FUNCTCOLOR(153, 153, 153);
+    second.font = DEFAULTFONT(14);
     second.text = [NSString stringWithFormat:@"微信用户推广数量：%d",temp.wxUserNu];
     
+    
+    
     UILabel* third = [cell getThirdLabel];
-    third.text = [NSString stringWithFormat:@"app用户推广数量：%d",temp.appUserNu];
+    third.textColor = FUNCTCOLOR(153, 153, 153);
+    third.font = DEFAULTFONT(14);
+    third.text = [NSString stringWithFormat:@"APP用户推广数量：%d",temp.appUserNu];
     
     UILabel* fourth = [cell getFourthLabel];
-    fourth.text = [NSString stringWithFormat:@"用户推广总数量：%d",temp.totalUserNu];
+    NSAttributedString* str = [self setFormateStrHead:@"用户推广总数量：" withEndStr:[NSString stringWithFormat:@"%d",temp.totalUserNu] withColor:FUNCTCOLOR(153, 153, 153)];
+    fourth.attributedText = str;
     return cell;
 }
 
@@ -223,7 +280,7 @@
     float h = size.height;
     
     NSLog(@"h-offset is %lf",h-offset.y-y);
-    if(h - offset.y-y <50 && _table.tableFooterView)
+    if(h - offset.y-y <50 && _table.tableFooterView.frame.size.height>10)
     {
         [self loadMoreData];
     }
@@ -236,13 +293,23 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    NSString*key = _monthArr[indexPath.section];
-    SpreadData* temp = _dataDic[key][indexPath.row];
+    NSDictionary*key = _monthArr[indexPath.section];
+    SpreadData* temp = _dataDic[key[@"month"]][indexPath.row];
 
     SpreadInfoController* infoController = [[SpreadInfoController alloc]initWithDate:temp.date];
     [self.navigationController pushViewController:infoController animated:YES];
-//    NSDictionary* temp = _settleOrderS[indexPath.row];
-//    [self showDetailInfoViewWithDate:temp[@"date"] Type:@"settled"];
 }
+
+
+-(NSAttributedString*)setFormateStrHead:(NSString*)head withEndStr:(NSString*)endStr withColor:(UIColor*)color
+{
+    NSMutableAttributedString* status = [[NSMutableAttributedString alloc]initWithString:head attributes:@{NSForegroundColorAttributeName:FUNCTCOLOR(102, 102, 102),NSFontAttributeName:DEFAULTFONT(14)}];
+    NSAttributedString* statusStr = [[NSAttributedString alloc]initWithString:endStr attributes:@{NSForegroundColorAttributeName:color}];
+    [status appendAttributedString:statusStr];
+    
+    return status;
+}
+
+
 
 @end

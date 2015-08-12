@@ -8,14 +8,16 @@
 
 #import "ShopBusinessController.h"
 #import "NetWorkRequest.h"
-//#import "BusinessCell.h"
+#import "ShopBusinHeadCell.h"
 #import "THActivityView.h"
-#import "ShopBusinessInfoController.h"
+#import "OrderConfirmOrNotListController.h"
 #import "SpreadListController.h"
 #import "CashDebitController.h"
 #import "BusinessSpreadSummarCell.h"
 #import "BusinessSummaryCell.h"
-#import "ShopDailyDataController.h"
+#import "OrderConfirmSummerControl.h"
+#import "CashListController.h"
+#import "OneLabelTableHeadView.h"
 
 @interface ShopBusinessController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -41,7 +43,7 @@
     NSString* _spread_wx;
     NSString* _spread_app;
     NSString* _spreadTotal;
-    
+    NSString* _spreadUser;
     
     NSMutableArray* _settleOrderS;
     
@@ -64,12 +66,15 @@
     _table = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     _table.delegate = self;
     _table.dataSource = self;
+    _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     _table.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_table];
     
-    [_table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"defaultCell"];
+    [_table registerClass:[OneLabelTableHeadView class] forHeaderFooterViewReuseIdentifier:@"OneLabelTableHeadView"];
     
-    [_table registerClass:[BusinessSpreadSummarCell class] forCellReuseIdentifier:@"SpreadSummarCell"];
+    [_table registerClass:[ShopBusinHeadCell class] forCellReuseIdentifier:@"ShopBusinHeadCell"];
+    
+    [_table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
     
     [_table registerClass:[BusinessSummaryCell class] forCellReuseIdentifier:@"BusinessSummaryCell"];
     
@@ -78,14 +83,6 @@
     
     
     
-//    _topLabel.textColor = DEFAULTNAVCOLOR;
-//      
-//    UITapGestureRecognizer* tap  = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapViewToInfo)];
-//    [_backView addGestureRecognizer:tap];
-//    
-//    UITapGestureRecognizer* tapTop = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapViewToCashTrade)];
-//    [_topBackView addGestureRecognizer:tapTop];
-    // Do any additional setup after loading the view.
 }
 
 
@@ -129,18 +126,20 @@
     
     _nosettleCountOrder = [NSString stringWithFormat:@"%@单",nosetDic[@"orderCount"]];
     
-    _nosettleTotalMoney = [NSString stringWithFormat:@"¥%.2f",[nosetDic[@"orderPrice"] floatValue]/100];
+    _nosettleTotalMoney = [NSString stringWithFormat:@"¥%.1f",[nosetDic[@"orderPrice"] floatValue]/100];
     
     
-    _settleCountOrder = [souceDic[@"data"][@"summary"][@"settleOder"][@"count"] stringValue];
-    _settleTotalMoney = [NSString stringWithFormat:@"¥%.2f",[souceDic[@"data"][@"summary"][@"settleOder"][@"price"] floatValue]/100];
+    _settleCountOrder = [NSString stringWithFormat:@"%@单",souceDic[@"data"][@"summary"][@"settleOder"][@"count"]];
+    _settleTotalMoney = [NSString stringWithFormat:@"¥%.1f",[souceDic[@"data"][@"summary"][@"settleOder"][@"price"] floatValue]/100];
     
     
-    _spread_app = [souceDic[@"data"][@"summary"][@"inviteUser"][@"appUser"] stringValue];
+    _spreadUser =  [souceDic[@"data"][@"summary"][@"totalInvite"] stringValue];
+    _spreadUser = [NSString stringWithFormat:@"累计推广用户：%@人",_spreadUser];
     
-    _spread_wx = [souceDic[@"data"][@"summary"][@"inviteUser"][@"wxUser"] stringValue];
     
-    _spreadTotal = [souceDic[@"data"][@"summary"][@"inviteUser"][@"totalUser"] stringValue];
+    float money = [souceDic[@"data"][@"summary"][@"totalCashOut"] floatValue];
+    
+    _spreadTotal = [NSString stringWithFormat:@"累计提现：¥%.1f",money/100];
     [_table reloadData];
 }
 
@@ -151,10 +150,16 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section==0) {
-        return 30;
+        return 0.1;
     }
-    return 20;
+    return 27;
 }
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 5;
+}
+
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -169,70 +174,95 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section==3) {
-        return 80;
+    if (indexPath.section==0) {
+        return 90;
     }
-    return 60;
+    else if (indexPath.section == 1)
+    {
+        return 60;
+    }
+    else
+    {
+        return 35;
+    }
+   
 }
 
 
--(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    switch (section) {
-        case 0:
-            return @"我的钱包";
-           
-        case 1:
-            return @"用户未确认收货订单";
-        case 2:
-            return @"用户已确认收货订单";
-        case 3:
-            return @"当前月推广用户信息";
-        default:
-            break;
+    
+    OneLabelTableHeadView* head = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"OneLabelTableHeadView"];
+    UILabel* title = [head getFirstLabel];
+    title.font = DEFAULTFONT(14);
+   
+    if (section==0) {
+        return nil;
     }
-     return @"";
+    
+    if (section == 1) {
+        title.text = @"在线支付订单明细";
+    }
+    else if (section == 2)
+    {
+       title.text = @"推广用户明细";
+    }
+    else
+    {
+        title.text = @"提现纪录明细";
+    }
+    
+    return head;
 }
+
+
 
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==0)
     {
-        UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"defaultCell"];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.textLabel.textColor = DEFAULTNAVCOLOR;
-        cell.textLabel.text = [NSString stringWithFormat:@"可提现金额：%.2f 元",_currentCash];
+        ShopBusinHeadCell* cell = [tableView dequeueReusableCellWithIdentifier:@"ShopBusinHeadCell"];
+        [cell setSecondLabelText:[NSString stringWithFormat:@"¥%.2f",_currentCash]];
         return cell;
     }
     else if (indexPath.section == 1)
     {
+        __weak ShopBusinessController* wself = self;
         BusinessSummaryCell* cell = [tableView dequeueReusableCellWithIdentifier:@"BusinessSummaryCell"];
-        [cell setCountOrderStr:_nosettleCountOrder];
-        [cell setTotalMoney:_nosettleTotalMoney];
-        
+        [cell setBk:^(BOOL isLeft) {
+            
+            if (isLeft) {
+                [wself showNoSettleBusinessDataController];
+            }
+            else
+            {
+                [wself showSettleBusinessController];
+            }
+        }];
+        [cell setFirstLStr:_nosettleCountOrder];
+        [cell setSecondLText:_nosettleTotalMoney];
+        [cell setThirdLText:_settleCountOrder];
+        [cell setFourthText:_settleTotalMoney];
         return cell;
     }
     else if (indexPath.section == 2)
     {
-        BusinessSummaryCell* cell = [tableView dequeueReusableCellWithIdentifier:@"BusinessSummaryCell"];
-        [cell setCountOrderStr:_settleCountOrder];
-        [cell setTotalMoney:_settleTotalMoney];
+        UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.textLabel.font = DEFAULTFONT(16);
+        cell.textLabel.textColor = FUNCTCOLOR(102, 102, 102);
+        cell.textLabel.text = _spreadUser;
         return cell;
     }
     else
     {
-        BusinessSpreadSummarCell* cell = [tableView dequeueReusableCellWithIdentifier:@"SpreadSummarCell"];
-        [cell setLayout];
-        UILabel* first = [cell getFirstLabel];
-        first.text = [NSString stringWithFormat:@"微信用户推广数量：%@",_spread_wx];
-        
-        UILabel* second = [cell getSecondLabel];
-        second.text = [NSString stringWithFormat:@"app用户推广数量：%@",_spread_app];
-        
-        
-        UILabel* third = [cell getThirdLabel];
-        third.text = [NSString stringWithFormat:@"用户推广总数量：%@",_spreadTotal];
+        UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
+         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.textLabel.font = DEFAULTFONT(16);
+        cell.textLabel.textColor = FUNCTCOLOR(102, 102, 102);
+        cell.textLabel.text = _spreadTotal;
         return cell;
     }
 }
@@ -246,16 +276,17 @@
     }
     else if (indexPath.section == 1)
     {
-        [self showNoSettleBusinessDataController];
+//        [self showNoSettleBusinessDataController];
     }
     
     else if (indexPath.section == 2)
     {
-        [self showSettleBusinessController];
+        [self showSpreadListController];
+        
     }
     else
     {
-        [self showSpreadListController];
+        [self showCashListController];
     }
 }
 
@@ -264,7 +295,6 @@
 -(void)tapViewToCashTrade
 {
     CashDebitController* cashView = [[CashDebitController alloc]initWithCash:_currentCash WithSpread:_spreadMoney];
-    cashView.hidesBottomBarWhenPushed = YES;
     cashView.canTake = _canTake;
     [self.navigationController pushViewController:cashView animated:YES];
 }
@@ -273,28 +303,34 @@
 
 -(void)showNoSettleBusinessDataController
 {
-    ShopBusinessInfoController* buiness = [[ShopBusinessInfoController alloc]init];
+    OrderConfirmOrNotListController* buiness = [[OrderConfirmOrNotListController alloc]init];
     buiness.title = @"未确认收货订单";
     [buiness setOrdeDate:nil];
     [buiness setOrderType:@"nosettle"];
-    buiness.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:buiness animated:YES];
 
 }
 
 -(void)showSettleBusinessController
 {
-    ShopDailyDataController* dailyC = [[ShopDailyDataController alloc]init];
-    dailyC.hidesBottomBarWhenPushed = YES;
+    OrderConfirmSummerControl* dailyC = [[OrderConfirmSummerControl alloc]init];
+//    dailyC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:dailyC animated:YES];
 }
 
 -(void)showSpreadListController
 {
     SpreadListController* spreadList = [[SpreadListController alloc]init];
-    spreadList.hidesBottomBarWhenPushed = YES;
+//    spreadList.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:spreadList animated:YES];
 }
+
+-(void)showCashListController
+{
+    CashListController* cashList = [[CashListController alloc]init];
+    [self.navigationController pushViewController:cashList animated:YES];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

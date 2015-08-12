@@ -104,7 +104,9 @@
 -(void)shopInfoUpdateWithShopInfoData:(ShopInfoData*)data WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shop/updateShopInfo?shop_id=%@&name=%@&tel=%@&shop_address=%@&owner_phone=%@&base_price=%d&shopInfo=%@&status=%d&ver=%@",HTTPHOST,manager.shopID,data.shopName,data.telPhoneNu,data.shopAddress,data.mobilePhoneNu,(int)(data.minPrice*100),data.serveArea,data.shopStatue,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shop/updateShopInfo?shop_id=%@&name=%@&tel=%@&shop_address=%@&owner_phone=%@&base_price=%d&shopInfo=%@&status=%d",HTTPHOST,manager.shopID,data.shopName,data.telPhoneNu,data.shopAddress,data.mobilePhoneNu,(int)(data.minPrice*100),data.serveArea,data.shopStatue];
+    HTTPADD(url);
+    
     if (data.openTime) {
         url = [NSString stringWithFormat:@"%@&open_time=%@&close_time=%@",url,data.openTime,data.closeTime];
     }
@@ -123,7 +125,7 @@
 -(void)getCashTradeListWithIndex:(int)index WithBK:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/wallet/show?shop_id=%@&ver=%@&from=%d&offset=7",HTTPHOST,manager.shopID,VERSION,index];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/wallet/show?shop_id=%@&from=%d&offset=7",HTTPHOST,manager.shopID,index];
     HTTPADD(url);
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
         
@@ -175,11 +177,61 @@
     }];
 }
 
+//提现明细
+
+-(void)getCashSummaryListWithIndex:(int)index WithBk:(NetCallback)completeBk
+{
+    UserManager* manager = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shop/cashout/list?shop_id=%@&from=0&offset=7",HTTPHOST,manager.shopID];
+    HTTPADD(url);
+    
+    [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
+        
+        if (status == NetWorkStatusSuccess)
+        {
+            DateFormateManager* dateManager = [DateFormateManager shareDateFormateManager];
+            
+            NSArray* arr = sourceDic[@"data"][@"list"];
+            NSMutableArray* backArr = [[NSMutableArray alloc]init];
+            
+            for (NSDictionary* dic in arr)
+            {
+                CashDebitData* cashData = [[CashDebitData alloc]init];
+                cashData.month = dic[@"month"];
+                cashData.outTimes = [NSString stringWithFormat:@"%d",[dic[@"monthTotalCashout"] intValue]];
+                cashData.monthMoneyOut = [NSString stringWithFormat:@"%.1f",[dic[@"monthTotalPrice"] floatValue]/100];
+                cashData.debitMoney = [NSString stringWithFormat:@"%.1f",[dic[@"price"] floatValue]/100];
+                
+                cashData.debitStatus = [dic[@"status"] intValue]?CashComplete:CashProcess;
+                cashData.debitType = [dic[@"cash_type"] intValue]?CashIncome:CashExpend;
+                
+                [dateManager setDateStyleString:@"YY-MM-dd HH:mm"];
+            
+                double time = [dic[@"create_time"] doubleValue]/1000;
+                cashData.debitTime = [dateManager formateFloatTimeValueToString:time];
+                [backArr addObject:cashData];
+            }
+            completeBk(backArr,status);
+        }
+        
+        else
+        {
+            completeBk(sourceDic,status);
+        }
+        
+    }];
+
+}
+
+
+
 
 -(void)getCashWithRequestMoney:(NSString*)money WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/wallet/getCash?shop_id=%@&from=0&offset=7&price=%@&ver=%@",HTTPHOST,manager.shopID,money,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/wallet/getCash?shop_id=%@&from=0&offset=7&price=%@",HTTPHOST,manager.shopID,money];
+    
+    HTTPADD(url);
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
     
         if (status == NetWorkStatusSuccess)
@@ -228,7 +280,8 @@
 -(void)getDailyOrderSummaryDataWithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/dailySummaryNew?shop_id=%@&ver=%@",HTTPHOST,manager.shopID,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/dailySummaryNew?shop_id=%@",HTTPHOST,manager.shopID];
+    HTTPADD(url);
     
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
         completeBk(sourceDic,status);
@@ -237,22 +290,29 @@
 }
 
 
+
+//已结算订单列表
 -(void)getDailyOrderFromIndex:(int)index WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/settleOrderList?shop_id=%@&from=%d&offset=7&ver=%@",HTTPHOST,manager.shopID,index,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/settleOrderList?shop_id=%@&from=%d&offset=7",HTTPHOST,manager.shopID,index];
+    HTTPADD(url);
     
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
+        
+//        NSMutableDictionary* dic 
          completeBk(sourceDic,status);
     }];
 }
 
 
-
+// type nosettle(未结算订单) settle（以结算的订单详情传入日期）
 -(void)getBusinessOrderInfoWithDate:(NSString*)date WithType:(NSString*)type  withIndex:(int)index WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/dailySummaryDetail?shop_id=%@&from=%d&offset=20&date=%@&type=%@&ver=%@",HTTPHOST,manager.shopID,index,date,type,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/dailySummaryDetail?shop_id=%@&from=%d&offset=20&date=%@&type=%@",HTTPHOST,manager.shopID,index,date,type];
+    
+    HTTPADD(url);
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
         
         if (status == NetWorkStatusSuccess)
@@ -310,31 +370,15 @@
 -(void)getSpreadSummaryDataWithIndex:(int)index WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/inviteSummary?shop_id=%@&from=%d&offset=30&ver=%@",HTTPHOST,manager.shopID,index,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/inviteSummary?shop_id=%@&from=%d&offset=30",HTTPHOST,manager.shopID,index];
+    HTTPADD(url);
     [self getMethodRequestStrUrl:url complete:^(id sourceDic, NetWorkStatus status) {
         
         if (status == NetWorkStatusSuccess)
         {
             NSArray* dataArr = sourceDic[@"data"][@"list"];
-            NSMutableDictionary* returnDic = [[NSMutableDictionary alloc]init];
-            for (NSDictionary* dic in dataArr) {
-                
-                SpreadData* element = [[SpreadData alloc]init];
-                element.month = dic[@"month"];
-                element.date = dic[@"date"];
-                element.wxUserNu = [dic[@"wxUser"] intValue];
-                element.appUserNu = [dic[@"appUser"] intValue];
-                element.totalUserNu = [dic[@"totalUser"] intValue];
-                
-                 NSMutableArray* dicMothArr = returnDic[element.month];
-                if (dicMothArr == nil) {
-                    dicMothArr = [[NSMutableArray alloc]init];
-                    [returnDic setValue:dicMothArr forKey:element.month];
-                }
-                [dicMothArr addObject:element];
-                
-            }
-            completeBk(returnDic,status);
+//            NSMutableDictionary* returnDic = [[NSMutableDictionary alloc]init];
+            completeBk(dataArr,status);
         }
         else
         {
@@ -347,8 +391,8 @@
 -(void)getSpreadInfoWithDate:(NSString*)date WithIndex:(int)index WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/inviteDetail?shop_id=%@&date=%@&from=%d&offset=30&ver=%@",HTTPHOST,manager.shopID,date,index,VERSION];
-    
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/inviteDetail?shop_id=%@&date=%@&from=%d&offset=30",HTTPHOST,manager.shopID,date,index];
+    HTTPADD(url);
     [self getMethodRequestStrUrl:url complete:^(id sourceDic, NetWorkStatus status) {
         if (status == NetWorkStatusSuccess)
         {
@@ -363,6 +407,7 @@
                 element.userID = dic[@"userId"];
                 element.codeTime = dic[@"ccodeTime"] ;
                 element.platform = dic[@"plat"];
+                element.telPhone = dic[@"userPhone"];
                 [returnArr addObject:element];
             }
             completeBk(returnArr,status);
@@ -381,7 +426,7 @@
 -(void)shopGetOrderWithStatue:(NSString *)statue WithIndex:(int)index WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/listbyType?shop_id=%@&from=%d&offset=20&order_status=%@&ver=%@",HTTPHOST,manager.shopID,index,statue,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/listbyType?shop_id=%@&from=%d&offset=20&order_status=%@",HTTPHOST,manager.shopID,index,statue];
     HTTPADD(url);
     
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
@@ -448,7 +493,7 @@
 -(void)shopCateDeleteWithCategoryID:(NSString *)cateID WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/cate/del?category_id=%@&shop_id=%@&ver=%@",HTTPHOST,cateID,manager.shopID,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/cate/del?category_id=%@&shop_id=%@",HTTPHOST,cateID,manager.shopID];
     
     HTTPADD(url);
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
@@ -461,7 +506,7 @@
 -(void)shopCategoryAddWithName:(NSString *)name WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/cate/add?categoryId=0&shopId=%@&scorce=0&categoryName=%@&ver=%@",HTTPHOST,manager.shopID,name,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/cate/add?categoryId=0&shopId=%@&scorce=0&categoryName=%@",HTTPHOST,manager.shopID,name];
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     HTTPADD(url);
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
@@ -479,7 +524,7 @@
 -(void)shopProductDeleteProductWithProductID:(NSString *)pID WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/del?itemId=%@&shop_id=%@&ver=%@",HTTPHOST,pID,manager.shopID,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/del?itemId=%@&shop_id=%@",HTTPHOST,pID,manager.shopID];
     
     HTTPADD(url);
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
@@ -497,7 +542,7 @@
     data.price += 0.0001;
 
     
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/update?itemId=%@&itemName=%@&serialNo=%@&category_id=%@&count=1000&price=%d&saleStatus=%d&shop_id=%@&pic_url=%@&score=%@&ver=%@",HTTPHOST,data.pID,data.pName,data.scanNu,data.categoryID,(int)(data.price*100),data.status,manager.shopID,data.pUrl,data.score,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/update?itemId=%@&itemName=%@&serialNo=%@&category_id=%@&count=1000&price=%d&saleStatus=%d&shop_id=%@&pic_url=%@&score=%@",HTTPHOST,data.pID,data.pName,data.scanNu,data.categoryID,(int)(data.price*100),data.status,manager.shopID,data.pUrl,data.score];
     
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
@@ -556,7 +601,7 @@
     
     data.price += 0.0001;
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/addItem?serialNo=%@&name=%@&categoryId=%@&count=100&score=0&price=%d&saleStatus=%d&shop_id=%@&pic_url=%@&ver=%@",HTTPHOST,data.scanNu,data.pName,data.categoryID,(int)(data.price*100),data.status,manager.shopID,data.pUrl,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shopItem/addItem?serialNo=%@&name=%@&categoryId=%@&count=100&score=0&price=%d&saleStatus=%d&shop_id=%@&pic_url=%@",HTTPHOST,data.scanNu,data.pName,data.categoryID,(int)(data.price*100),data.status,manager.shopID,data.pUrl];
     
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
@@ -583,7 +628,7 @@
 -(void)shopScanProductWithSerial:(NSString*)serialNu WithBk:(NetCallback)completeBk
 {
 
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/product/get?serialNo=%@&ver=%@",HTTPHOST,serialNu,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/product/get?serialNo=%@",HTTPHOST,serialNu];
     
     HTTPADD(url);
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
@@ -612,7 +657,7 @@
 -(void)shopGetCategoryWithCallBack:(NetCallback)back
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shop/category/get?shop_id=%@&ver=%@",HTTPHOST,manager.shopID,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shop/category/get?shop_id=%@",HTTPHOST,manager.shopID];
     HTTPADD(url);
     
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
@@ -644,7 +689,7 @@
 
 -(void)shopGetProductWithShopID:(NSString*)shopID withCategory:(NSString*)category fromIndex:(int)nu WithCallBack:(NetCallback)back
 {
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shop/getitems?shop_id=%@&category_id=%@&from=%d&offset=20&ver=%@",HTTPHOST,shopID,category,nu,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/shop/getitems?shop_id=%@&category_id=%@&from=%d&offset=20",HTTPHOST,shopID,category,nu];
     
     HTTPADD(url);
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
@@ -681,7 +726,7 @@
 -(void)shopOrderConfirmDeliverWithOrderID:(NSString*)orderID WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/order_confirm?shop_id=%@&order_id=%@&confirm=done&ver=%@",HTTPHOST,manager.shopID,orderID,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/order_confirm?shop_id=%@&order_id=%@&confirm=done",HTTPHOST,manager.shopID,orderID];
     HTTPADD(url);
     
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
@@ -694,7 +739,7 @@
 -(void)shopOrderCancelDeliverWithOrderID:(NSString*)orderID WithBk:(NetCallback)completeBk
 {
     UserManager* manager = [UserManager shareUserManager];
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/order_cancel?shop_id=%@&order_id=%@&confirm=done&ver=%@",HTTPHOST,manager.shopID,orderID,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/order/order_cancel?shop_id=%@&order_id=%@&confirm=done",HTTPHOST,manager.shopID,orderID];
     
     HTTPADD(url);
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {
@@ -711,7 +756,7 @@
 
 -(void)verifyTokenToServer:(NSString *)token WithCallBack:(NetCallback)back
 {
-    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/login/islogin?token=%@&ver=%@",HTTPHOST,token,VERSION];
+    NSString* url = [NSString stringWithFormat:@"http://%@/console/api/login/islogin?token=%@",HTTPHOST,token];
     
     HTTPADD(url);
     [self getMethodRequestStrUrl:url complete:^(NSDictionary *sourceDic, NetWorkStatus status) {

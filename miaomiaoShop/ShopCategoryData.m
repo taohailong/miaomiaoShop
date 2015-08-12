@@ -10,4 +10,6 @@
 
 @implementation ShopCategoryData
 @synthesize products,categoryID,categoryName;
+@synthesize subClass,type;
+@synthesize select;
 @end

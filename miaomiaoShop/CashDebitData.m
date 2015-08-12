@@ -15,12 +15,13 @@
 @end
 @implementation CashDebitData
 @synthesize debitMoney,debitType,debitStatus,debitTime;
-@synthesize spreadMoney;
+@synthesize spreadMoney,outTimes,monthMoneyOut;
+@synthesize month;
 #pragma mark----------cashDebitController--------
 
 -(NSString*)cashCellContentStr
 {
-   return [NSString stringWithFormat:@"%@%@元",self.debitType==CashIncome?@"订单收入 +":@"提现 -", self.debitMoney];
+   return [NSString stringWithFormat:@"%@¥%@",self.debitType==CashIncome?@"订单收入：":@"提现金额：", self.debitMoney];
 }
 
 -(NSAttributedString*)cashCellDetailStr
@@ -28,7 +29,7 @@
     if(self.debitType==CashIncome)
     {
 
-        NSAttributedString* str = [[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"推广收入：%.1f元",self.spreadMoney] attributes:@{NSForegroundColorAttributeName:DEFAULTNAVCOLOR}];
+        NSAttributedString* str = [[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"推广收入：%.1f元",self.spreadMoney] attributes:@{NSForegroundColorAttributeName:FUNCTCOLOR(102, 102, 102)}];
         
         return str;
 
@@ -37,11 +38,11 @@
     else
     {
         if (self.debitStatus==CashComplete) {
-            return [[NSAttributedString alloc]initWithString:@"打款状态：打款完成"] ;
+            return [[NSAttributedString alloc]initWithString:@"打款完成"] ;
         }
         else
         {
-            NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"打款状态：打款中"];
+            NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"打款中"];
     
             [str addAttribute:NSForegroundColorAttributeName value:DEFAULTNAVCOLOR range:NSMakeRange(5, 3)];
             

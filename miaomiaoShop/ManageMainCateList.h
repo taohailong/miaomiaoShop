@@ -1,0 +1,24 @@
+//
+//  ManageMainCateList.h
+//  miaomiaoShop
+//
+//  Created by 陶海龙 on 15/8/12.
+//  Copyright (c) 2015年 miaomiao. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+@class ManageMainCateList;
+@protocol ManageMainCateListProtocol <NSObject>
+
+-(void)selectMainCateReturnSubClass:(NSMutableArray*)arr;
+
+@end
+@interface ManageMainCateList : UIView<UITableViewDataSource,UITableViewDelegate>
+{
+    UITableView* _table;
+    NSMutableArray *_dataArr;
+}
+@property(nonatomic,weak)id<ManageMainCateListProtocol> delegate;
+-(void)initNetData;
+-(void)setProductEditStyle:(BOOL)flag;
+@end

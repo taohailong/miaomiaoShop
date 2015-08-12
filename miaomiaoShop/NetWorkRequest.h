@@ -30,8 +30,12 @@ typedef void (^NetCallback)(id backDic,NetWorkStatus status);
 -(void)getDailyOrderSummaryDataWithBk:(NetCallback)completeBk;
 -(void)getDailyOrderFromIndex:(int)index WithBk:(NetCallback)completeBk;
 -(void)getBusinessOrderInfoWithDate:(NSString*)date WithType:(NSString*)type  withIndex:(int)index WithBk:(NetCallback)completeBk;
+
+
+-(void)getCashSummaryListWithIndex:(int)index WithBk:(NetCallback)completeBk;
 -(void)getCashWithRequestMoney:(NSString*)money WithBk:(NetCallback)completeBk;
 -(void)getCashTradeListWithIndex:(int)index WithBK:(NetCallback)completeBk;
+
 
 -(void)getSpreadInfoWithDate:(NSString*)date WithIndex:(int)index WithBk:(NetCallback)completeBk;
 -(void)getSpreadSummaryDataWithIndex:(int)index WithBk:(NetCallback)completeBk;

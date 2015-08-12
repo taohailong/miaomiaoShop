@@ -19,7 +19,7 @@
     NSString* _currentCategoryID;
     NSString* _currentCateName;
 //    ShopCategoryData* _currentCategory;
-    
+    NSLayoutConstraint* _btSpaceLayout;
 }
 @end
 @implementation ShopObjectController
@@ -44,10 +44,10 @@
     
     if (IOS_VERSION(7.0)) {
         
-       [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-64-[_productView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productView)]];    }
+       [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-64-[_productView]-55-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productView)]];    }
     else
     {
-       [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_productView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productView)]];
+       [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_productView]-55-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productView)]];
     }
     
     
@@ -60,40 +60,85 @@
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_categoryView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_categoryView)]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_categoryView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.3 constant:0]];
     
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_categoryView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_productView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
+   
+     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_categoryView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_productView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
     
-    if (IOS_VERSION(7.0)) {
-        
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-64-[_categoryView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_categoryView)]];    }
-    else
-    {
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_categoryView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_categoryView)]];
-    }
+    
+    
+    UIButton* rightBt = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightBt setTitle:@"添加商品" forState:UIControlStateNormal];
+    [rightBt addTarget:self action:@selector(addProductAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    rightBt.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:rightBt];
+    
+    _btSpaceLayout = [NSLayoutConstraint constraintWithItem:rightBt attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0 constant:CGRectGetWidth(self.view.frame)/2];
+    [self.view addConstraint:_btSpaceLayout];
 
     
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:rightBt attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_productView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
     
     
-    [self initNetData];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[rightBt]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(rightBt)]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[rightBt]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(rightBt)]];
     
-    UIBarButtonItem* rightBar = [[UIBarButtonItem alloc]initWithTitle:@"添加商品" style:UIBarButtonItemStylePlain target:self action:@selector(addProductAction)];
-    self.navigationItem.rightBarButtonItem = rightBar;
+    [rightBt setBackgroundImage:[UIImage imageNamed:@"ButtonRedBack"] forState:UIControlStateNormal];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initNetData) name:SHOPIDCHANGED object:nil];
+    
+    
+    
+    
+    UIButton* leftBt = [UIButton buttonWithType:UIButtonTypeCustom];
+    [leftBt setTitle:@"编辑商品" forState:UIControlStateNormal];
+    [leftBt addTarget:self action:@selector(editProductInfo:) forControlEvents:UIControlEventTouchUpInside];
+    
+    leftBt.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:leftBt];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:leftBt attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_productView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[leftBt]-0-[rightBt]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(leftBt,rightBt)]];
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[leftBt]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(leftBt)]];
+    
+    [leftBt setBackgroundImage:[UIImage imageNamed:@"ButtonRedLight"] forState:UIControlStateNormal];
 }
 
 -(void)addProductAction
 {
     __weak ShopProductListView* wProductV = _productView;
     __weak NSString* wCategoryID = _currentCategoryID;
-
+     __weak NSString* wCateName = _currentCateName;
     AddProductController* addProduct = [[AddProductController alloc]init];
     [addProduct setCompleteBk:^{
-        [wProductV  setCategoryIDToGetData:wCategoryID];
+        [wProductV  setCategoryIDToGetData:wCategoryID categoryName:wCateName];
     }];
     addProduct.hidesBottomBarWhenPushed = YES;
     
     
     [self.navigationController pushViewController:addProduct animated:YES];
 }
+
+
+-(void)editProductInfo:(UIButton*)bt
+{
+    bt.tag = !bt.tag;
+    if (bt.tag == 1) {
+        _btSpaceLayout.constant = 0;
+       [_productView setProductEditStyle:YES];
+       [bt setTitle:@"完成" forState:UIControlStateNormal];
+    }
+    else
+    {
+        [bt setTitle:@"编辑产品" forState:UIControlStateNormal];
+        _btSpaceLayout.constant = CGRectGetWidth(self.view.frame)/2;
+       [_productView setProductEditStyle:NO];
+    }
+   
+}
+
+
+
 
 
 -(void)initNetData
@@ -116,10 +161,11 @@
         [_categoryView setDataArrAndSelectOneRow :backDic];
         
         if (status == NetWorkStatusSuccess) {
+            
             ShopCategoryData* firstData = backDic[0];
             _currentCateName = firstData.categoryName;
             _currentCategoryID = firstData.categoryID;
-            [_productView setCategoryIDToGetData:firstData.categoryID];
+            [_productView setCategoryIDToGetData:firstData.categoryID categoryName:_currentCateName];
         }
     }];
     [categoryReq startAsynchronous];
@@ -131,7 +177,7 @@
 {
     _currentCategoryID = categoryID;
     _currentCateName = name;
-    [_productView setCategoryIDToGetData:categoryID];
+    [_productView setCategoryIDToGetData:categoryID categoryName:_currentCateName];
 }
 
 -(void)didSelectProductIndex:(ShopProductData*)product

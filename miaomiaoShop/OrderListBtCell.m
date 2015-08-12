@@ -22,7 +22,7 @@
     [self.contentView addSubview:separate2V];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[separate2V]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separate2V)]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_nuLabel]-10-[separate2V(1)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_nuLabel,separate2V)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_nuLabel]-8-[separate2V(1)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_nuLabel,separate2V)]];
 
     
     
@@ -43,8 +43,8 @@
     [_firstBt addTarget:self action:@selector(allBtAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_firstBt];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_firstBt(75)]-10-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_firstBt)]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separate2V]-10-[_firstBt(30)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separate2V,_firstBt)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_firstBt(70)]-10-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_firstBt)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separate2V]-8-[_firstBt(30)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separate2V,_firstBt)]];
     
 //    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_firstBt attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
     
@@ -67,7 +67,7 @@
     [_secondBt addTarget:self action:@selector(allBtAction:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.contentView addSubview:_secondBt];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_secondBt(_firstBt)]-10-[_firstBt]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_firstBt,_secondBt)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_secondBt(_firstBt)]-18-[_firstBt]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_firstBt,_secondBt)]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_secondBt(30)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_secondBt)]];
 
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_secondBt attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_firstBt attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];

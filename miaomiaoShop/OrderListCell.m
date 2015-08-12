@@ -12,7 +12,7 @@
  //   UILabel* _payWayLabel;
 //   UILabel*_payNuLabel;
 //   UILabel* _messageLabel;
-
+    NSLayoutConstraint* _heightLayout;
 }
 
 @end
@@ -102,7 +102,10 @@
     back.backgroundColor = FUNCTCOLOR(243, 243, 243);
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[back]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(back)]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[back(10)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(back)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[back]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(back)]];
+    
+    _heightLayout = [NSLayoutConstraint constraintWithItem:back attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeHeight multiplier:0 constant:10];
+    [self.contentView addConstraint:_heightLayout];
     
     
     _titleImage = [[UIImageView alloc]init];
@@ -113,7 +116,7 @@
 //    [_titleImage setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[_titleImage]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_titleImage)]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[back]-10-[_titleImage]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(back,_titleImage)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[back]-8-[_titleImage]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(back,_titleImage)]];
     
     
     
@@ -162,7 +165,7 @@
     [_addressLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[_addressLabel]-1-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_addressLabel)]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separate1V]-10-[_addressLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separate1V,_addressLabel)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separate1V]-8-[_addressLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separate1V,_addressLabel)]];
 
     
     
@@ -172,7 +175,7 @@
     [self.contentView addSubview:_telLabel];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_telLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_addressLabel attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_addressLabel]-10-[_telLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_addressLabel,_telLabel)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_addressLabel]-8-[_telLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_addressLabel,_telLabel)]];
     
     
     
@@ -185,7 +188,7 @@
     [self.contentView addSubview:_nuLabel];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_nuLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_addressLabel attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_telLabel]-10-[_nuLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_telLabel,_nuLabel)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_telLabel]-8-[_nuLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_telLabel,_nuLabel)]];
 
     
     _moneyLabel = [[UILabel alloc]init];
@@ -202,6 +205,15 @@
     return self;
 }
 
+
+-(void)setSeparateHeight:(float)height
+{
+    if (_heightLayout.constant == height) {
+        return;
+    }
+     _heightLayout.constant = height;
+//    [self.contentView setNeedsUpdateConstraints];
+}
 
 -(void)setLayout
 {

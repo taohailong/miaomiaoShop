@@ -14,6 +14,9 @@
     UILabel* _titleL;
     UILabel* _priceL;
     UILabel* _statueLabel;
+    UIButton* _delectBt;
+    UIButton* _upBt;
+    ProductAction _bk;
 }
 
 @end
@@ -46,16 +49,21 @@
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_productImageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_productImageView attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0]];
     
     _titleL = [[UILabel alloc]init];
-    _titleL.font = [UIFont systemFontOfSize:15];
+    _titleL.font = DEFAULTFONT(14);
+    _titleL.textColor = FUNCTCOLOR(153, 153, 153);
     _titleL.translatesAutoresizingMaskIntoConstraints = NO;
 
     _titleL.numberOfLines = 0;
     _titleL.lineBreakMode = NSLineBreakByCharWrapping;
     [self.contentView addSubview:_titleL];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_productImageView]-5-[_titleL]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productImageView,_titleL)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_productImageView]-5-[_titleL]-3-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productImageView,_titleL)]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_titleL(<=50)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_titleL)]];
+    
+    
+    
     _priceL = [[UILabel alloc]init];
-    _priceL.font = [UIFont systemFontOfSize:14];
+    _priceL.font = _titleL.font;
+    _priceL.textColor = _titleL.textColor;
     _priceL.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_priceL];
     
@@ -72,8 +80,32 @@
     _statueLabel.transform = CGAffineTransformMakeRotation(M_PI_4);
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_statueLabel(25)]-(-31)-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_statueLabel)]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-6-[_statueLabel(15)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_statueLabel)]];
+   
     
-
+    _delectBt = [UIButton buttonWithType:UIButtonTypeCustom];
+    _delectBt.hidden = YES;
+    [_delectBt setImage:[UIImage imageNamed:@"product_delect"] forState:UIControlStateNormal];
+    [_delectBt addTarget:self action:@selector(productAction:) forControlEvents:UIControlEventTouchUpInside];
+    _delectBt.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:_delectBt];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_delectBt]-15-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_delectBt)]];
+    
+     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_delectBt]-15-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_delectBt)]];
+    
+    
+    _upBt = [UIButton buttonWithType:UIButtonTypeCustom];
+    _upBt.tag = 1;
+    _upBt.hidden = YES;
+    [_upBt setImage:[UIImage imageNamed:@"product_up"] forState:UIControlStateNormal];
+    [_upBt addTarget:self action:@selector(productAction:) forControlEvents:UIControlEventTouchUpInside];
+    _upBt.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:_upBt];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_upBt]-15-[_delectBt]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_upBt,_delectBt)]];
+    
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_upBt attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_delectBt attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    
  }
 
 -(void)setProductOnOff:(BOOL)flag
@@ -94,6 +126,45 @@
 -(void)setPriceStr:(NSString *)price
 {
     _priceL.text = [NSString stringWithFormat:@"¥%@",price];
+}
+
+-(void)setProductBk:(ProductAction)bk
+{
+    _bk = bk;
+}
+
+-(void)productAction:(UIButton*)bt
+{
+    if (bt.tag == 0) {
+        if (_bk) {
+            _bk(ProductCellDelect);
+        }
+    }
+    else
+    {
+        if (_bk) {
+            _bk(ProductCellUp);
+        }
+    }
+    
+}
+
+
+-(void)willTransitionToState:(UITableViewCellStateMask)state
+{
+    [super willTransitionToState:state];
+
+    if ((state&UITableViewCellStateShowingEditControlMask) == 1)
+    {
+        _delectBt.hidden = NO;
+        _upBt.hidden = NO;
+    }
+    else
+    {
+        _delectBt.hidden = YES;
+        _upBt.hidden = YES;
+    }
+    
 }
 
 

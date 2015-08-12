@@ -7,9 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-
+typedef enum _CategoryType{
+     CategoryMainClass,
+     CategorySubClass,
+}CategoryType;
 @interface ShopCategoryData : NSObject
+@property(nonatomic,assign)CategoryType type;
+@property(nonatomic,strong)NSMutableArray* subClass;
 @property(nonatomic,strong)NSString* categoryID;
 @property(nonatomic,strong)NSString* categoryName;
 @property(nonatomic,strong)NSArray* products;
+@property(nonatomic,assign)BOOL select;
 @end

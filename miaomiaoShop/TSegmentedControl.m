@@ -61,9 +61,18 @@
     [self.backgroundColor set];
     UIRectFill([self bounds]);
     
-    [self.textColor set];
+
     
     [self.sectionTitles enumerateObjectsUsingBlock:^(id titleString, NSUInteger idx, BOOL *stop) {
+       
+        if (_selectedIndex == idx ) {
+            [[UIColor redColor] set];
+        }
+        else
+        {
+           [self.textColor set];
+        }
+        
         CGFloat stringHeight = [titleString sizeWithFont:self.font].height;
         CGFloat y = ((self.height - self.selectionIndicatorHeight) / 2) + (self.selectionIndicatorHeight - stringHeight / 2);
         CGRect rect = CGRectMake(self.segmentWidth * idx, y, self.segmentWidth, stringHeight);
@@ -74,6 +83,7 @@
                   lineBreakMode:UILineBreakModeClip
                       alignment:UITextAlignmentCenter];
 #else
+//        [titleString drawInRect:rect withAttributes:@{NSFontAttributeName: self.font,NSForegroundColorAttributeName:self.textColor}];
         [titleString drawInRect:rect
                        withFont:self.font
                   lineBreakMode:NSLineBreakByClipping
@@ -149,7 +159,7 @@
 
 - (void)setSelectedIndex:(NSUInteger)index animated:(BOOL)animated {
     _selectedIndex = index;
-
+    [self setNeedsDisplay];
     if (animated) {
         // Restore CALayer animations
         self.selectedSegmentLayer.actions = nil;

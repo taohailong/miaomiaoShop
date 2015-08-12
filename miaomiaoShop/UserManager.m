@@ -50,7 +50,6 @@
     [def setObject:t  forKey:UTOKEN];
     [def setObject:shopId forKey:USHOPID];
     [def setObject:account forKey:UACCOUNT];
-     NSLog(@"self.token %@",self.token);
     [def synchronize];
     [[NSNotificationCenter defaultCenter] postNotificationName:SHOPIDCHANGED object:nil];
 }
@@ -210,6 +209,7 @@
             bSelf.token = backDic[@"token"];
             bSelf.shopName = backDic[@"data"][@"shop"][0][@"name"];
             bSelf.shopID = backDic[@"data"][@"shop"][0][@"id"];
+//            bSelf.shopID = @"10044";
             bSelf.shopAddress = backDic[@"data"][@"shop"][0][@"shop_address"];
             bSelf.phoneNumber = backDic[@"data"][@"shop"][0][@"tel"];
             

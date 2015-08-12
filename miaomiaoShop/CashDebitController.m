@@ -16,6 +16,9 @@
 #import "DateFormateManager.h"
 #import "CommonWebController.h"
 #import "UserManager.h"
+#import "OneLabelTableHeadView.h"
+#import "CashListCell.h"
+#import "CashDebitCell.h"
 
 @interface CashDebitController()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -47,7 +50,7 @@
     [super viewDidLoad];
     self.title = @"我的钱包";
 //    self.automaticallyAdjustsScrollViewInsets = NO;
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = FUNCTCOLOR(237, 237, 237);
     [self creatSubView];
     [self netWorkStart];
 }
@@ -162,7 +165,7 @@
     [req getCashWithRequestMoney:[NSString stringWithFormat:@"%d",(int)(_cash*100)] WithBk:^(id backDic, NetWorkStatus status) {
         [loadView removeFromSuperview];
         [fullView removeFromSuperview];
-        
+         
         if (status == NetWorkStatusSuccess)
         {
             UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:[NSString stringWithFormat:@"提现成功！金额：￥%.2f",_cash] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -188,8 +191,8 @@
 
 -(void)reloadTableWithData:(NSMutableArray*)arr
 {
-    _cashLabel.text = [NSString stringWithFormat:@"可提金额：%.1f 元",_cash];
-    _detailLabel.text = [NSString stringWithFormat:@"＝%.1f(订单金额)＋%.1f(推广金额)",_cash-_spreadMoney,_spreadMoney];
+    _cashLabel.text = [NSString stringWithFormat:@"¥%.1f",_cash];
+    _detailLabel.text = [NSString stringWithFormat:@"可提金额＝¥%.1f(订单金额)＋¥%.1f(推广金额)",_cash-_spreadMoney,_spreadMoney];
     _dataArr = arr;
     [_table reloadData];
     [self addLoadMoreViewWithCount:arr.count];
@@ -208,33 +211,37 @@
     
     if (IOS_VERSION(7.0))
     {
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-60-[headBack(90)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(headBack)]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-74-[headBack(115)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(headBack)]];
     }
     else
     {
-      [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[headBack(90)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(headBack)]];
+      [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[headBack(115)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(headBack)]];
     }
    
-    _cashLabel = [[UILabel alloc]init];
-    _cashLabel.adjustsFontSizeToFitWidth = YES;
-    _cashLabel.text = [NSString stringWithFormat:@"可提金额：%.1f 元",_cash];
-    _cashLabel.font = [UIFont boldSystemFontOfSize:24];
-    _cashLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [headBack addSubview:_cashLabel];
-    
-    [headBack addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_cashLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_cashLabel)]];
-    
-    [headBack addConstraint:[NSLayoutConstraint constraintWithItem:_cashLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:headBack attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-    
     
     _detailLabel = [[UILabel alloc]init];
     _detailLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    _detailLabel.textColor = FUNCTCOLOR(102, 102, 102);
+    _detailLabel.font = DEFAULTFONT(12);
+    _detailLabel.text = [NSString stringWithFormat:@"可提金额＝订单收入(%.1f)＋推广收入(%.1f)",_cash-_spreadMoney,_spreadMoney];
+
     [headBack addSubview:_detailLabel];
-    [headBack addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_cashLabel]-5-[_detailLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_cashLabel,_detailLabel)]];
-    [headBack addConstraint:[NSLayoutConstraint constraintWithItem:_detailLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_cashLabel attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
+    [headBack addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_detailLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_detailLabel)]];
+     [headBack addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[_detailLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_detailLabel)]];
     
-    _detailLabel.font = [UIFont systemFontOfSize:15];
-    _detailLabel.text = [NSString stringWithFormat:@"订单收入(%.1f)＋推广收入(%.1f)",_cash-_spreadMoney,_spreadMoney];
+    
+    _cashLabel = [[UILabel alloc]init];
+    _cashLabel.adjustsFontSizeToFitWidth = YES;
+    _cashLabel.text = [NSString stringWithFormat:@"¥%.1f",_cash];
+    _cashLabel.textColor = FUNCTCOLOR(64, 64, 64);
+    _cashLabel.font = DEFAULTFONT(28);
+    _cashLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [headBack addSubview:_cashLabel];
+    
+    [headBack addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[_cashLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_cashLabel)]];
+    
+   [headBack addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_detailLabel]-5-[_cashLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_detailLabel,_cashLabel)]];
+    
     
     
     _cashBt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -251,14 +258,14 @@
     }
    
     _cashBt.layer.masksToBounds = YES;
-    _cashBt.layer.cornerRadius = 5;
+    _cashBt.layer.cornerRadius = 4;
 
     
     [headBack addSubview:_cashBt];
     [_cashBt addTarget:self action:@selector(cashDebitThroughNet) forControlEvents:UIControlEventTouchUpInside];
     
-    [headBack addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_cashLabel]-25-[_cashBt(>=60)]-10-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_cashLabel,_cashBt)]];
-    [headBack addConstraint:[NSLayoutConstraint constraintWithItem:_cashBt attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:headBack attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    [headBack addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[_cashBt]-15-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_cashBt)]];
+    [headBack addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_cashLabel(30)]-15-[_cashBt]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_cashLabel,_cashBt)]];
     
     
     UIBarButtonItem* rightBar = [[UIBarButtonItem alloc]initWithTitle:@"提现规则" style:UIBarButtonItemStyleDone target:self action:@selector(detailView)];
@@ -268,8 +275,14 @@
     _table = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     _table.delegate = self;
     _table.dataSource = self;
+    _table.separatorColor = FUNCTCOLOR(221, 221, 221);
     [self.view addSubview:_table];
     _table.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [_table registerClass:[CashListCell class] forCellReuseIdentifier:@"CashListCell"];
+    [_table registerClass:[OneLabelTableHeadView class] forHeaderFooterViewReuseIdentifier:@"OneLabelTableHeadView"];
+    [_table registerClass:[CashDebitCell class] forCellReuseIdentifier:@"CashDebitCell"];
+    
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[headBack]-0-[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(headBack,_table)]];
@@ -296,14 +309,18 @@
     return 33;
 }
 
--(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-   return @"收支明细";
+    OneLabelTableHeadView* head = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"OneLabelTableHeadView"];
+    UILabel* title = [head getFirstLabel];
+    title.font = DEFAULTFONT(14);
+    title.text = @"收支明细";
+    return head;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70;
+    return 58;
 }
 
 
@@ -314,17 +331,31 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString* str = @"d";
-    CashDebitCell* cell = [tableView dequeueReusableCellWithIdentifier:str];
-    if (cell==nil) {
-        cell = [[CashDebitCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:str];
-    }
-    
     CashDebitData* dic = _dataArr[indexPath.row];
+    CashDebitCell* cell = [tableView dequeueReusableCellWithIdentifier:@"CashDebitCell"];
+   
     cell.titleLabel.text = dic.debitTime;
     cell.contentLabel.text = [dic cashCellContentStr];
-    cell.detailLabel.attributedText = [dic cashCellDetailStr];
+    if (dic.debitType == CashIncome)
+    {
+         cell.detailLabel.attributedText = [dic cashCellDetailStr];
+        cell.subLabel.text = @"";
+    }
+    else
+    {
+         cell.detailLabel.attributedText = nil;
+        if (dic.debitStatus == CashComplete)
+        {
+            cell.subLabel.textColor = FUNCTCOLOR(102,102,102);
+            cell.subLabel.text = @"打款完成";
+        } else
+        {
+            cell.subLabel.textColor = DEFAULTNAVCOLOR;
+            cell.subLabel.text = @"打款中";
+        }
+    }
     
+   
     return cell;
 }
 
@@ -338,7 +369,7 @@
     float h = size.height;
     
     NSLog(@"h-offset is %lf",h-offset.y-y);
-    if(h - offset.y-y <50 && _table.tableFooterView)
+    if(h - offset.y-y <50 && _table.tableFooterView.frame.size.height>10)
     {
         [self loadMoreData];
     }

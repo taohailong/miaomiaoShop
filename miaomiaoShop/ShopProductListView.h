@@ -16,10 +16,12 @@
 @end
 @interface ShopProductListView : UIView<UITableViewDelegate,UITableViewDataSource>
 {
+    NSString* _cateName;
     UITableView* _table;
 }
 @property(nonatomic,weak)IBOutlet id<ShopProductListProtocol>delegate;
--(void)setCategoryIDToGetData:(NSString*)categoryID;
+-(void)setCategoryIDToGetData:(NSString*)categoryID categoryName:(NSString*)cateName;
+-(void)setProductEditStyle:(BOOL)flag;
 -(void)reloadTable;
 //-(void)setDataArrReloadTable:(NSMutableArray *)dataArr;
 //-(void)addDataArr:(NSMutableArray*)da;

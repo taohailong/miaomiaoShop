@@ -16,7 +16,7 @@
 #import "OrderInfoController.h"
 #import "TSegmentedControl.h"
 #import "OrderListHeadView.h"
-//#import "OrderHeadCell.h"
+#import "OneLabelTableHeadView.h"
 #import "OrderListBtCell.h"
 
 @interface OrderListViewController ()<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate,UIAlertViewDelegate>
@@ -52,15 +52,20 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     _seg = [[TSegmentedControl alloc]initWithSectionTitles:@[@"新订单",@"配送中",@"已完成",@"已取消"]];
+    _seg.selectionIndicatorHeight = 3;
     [_seg setFont:DEFAULTFONT(15)];
+    [_seg setSelectionIndicatorColor:DEFAULTNAVCOLOR];
     _seg.frame = CGRectMake(0, 64, SCREENWIDTH, 40);
     [self.view addSubview:_seg];
-    _seg.selectionIndicatorColor = DEFAULTNAVCOLOR;
+    
     [_seg addTarget:self action:@selector(segViewChange:) forControlEvents:UIControlEventValueChanged];
     
     
     _table = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_seg.frame), SCREENWIDTH, self.view.frame.size.height - CGRectGetMaxY(_seg.frame)) style:UITableViewStylePlain];
-    [_table registerClass:[OrderListHeadView class] forHeaderFooterViewReuseIdentifier:@"OrderListHeadView"];
+     _table.backgroundColor = FUNCTCOLOR(243, 243, 243);
+    _table.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [_table registerClass:[OneLabelTableHeadView class] forHeaderFooterViewReuseIdentifier:@"OneLabelTableHeadView"];
+//    [_table registerClass:[OrderListHeadView class] forHeaderFooterViewReuseIdentifier:@"OrderListHeadView"];
     [_table registerClass:[OrderListCell class] forCellReuseIdentifier:@"OrderListCell"];
     [_table registerClass:[OrderListBtCell class] forCellReuseIdentifier:@"OrderListBtCell"];
     _table.dataSource = self;
@@ -161,7 +166,7 @@
     THActivityView* loadView = [[THActivityView alloc]initFullViewTransparentWithSuperView:self.view];
     __weak OrderListViewController* wSelf = self;
     NetWorkRequest* req = [[NetWorkRequest alloc]init];
-    [req shopGetOrderWithStatue:@"2" WithIndex:0 WithBk:^(id backDic, NetWorkStatus status) {
+    [req shopGetOrderWithStatue:statue WithIndex:0 WithBk:^(id backDic, NetWorkStatus status) {
         
         [loadView removeFromSuperview];
         if (status == NetWorkStatusErrorCanntConnect) {
@@ -299,12 +304,6 @@
     [refreshView egoRefreshScrollViewDidScroll:scrollView];
 }
 
-//-(BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView *)view
-//{
-//    return _isLoading;
-//}
-
-
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -352,13 +351,13 @@
     
     if ([_currentStatue isEqualToString:@"0"]&&indexPath.section == 0)
     {
-        if (size.width>SCREENWIDTH-80) {
-            return 202;
+        if (size.width>SCREENWIDTH-78) {
+            return 190;
         }
-        return 185 ;
+        return 170 ;
     }
     
-    if (size.width>SCREENWIDTH-80) {
+    if (size.width>SCREENWIDTH-78) {
         return 150;
     }
     return 130;
@@ -368,7 +367,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 25;
+    return 35;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
@@ -378,9 +377,11 @@
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UITableViewHeaderFooterView* headView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"OrderListHeadView"];
+    OneLabelTableHeadView* headView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"OneLabelTableHeadView"];
     headView.contentView.backgroundColor = FUNCTCOLOR(243, 243, 243);
    
+    UILabel* titleL = [headView getFirstLabel];
+    titleL.font = DEFAULTFONT(14);
     NSString* title = nil;
     if (section==0)
     {
@@ -398,7 +399,7 @@
         title =  @"往日订单";
     }
     
-    headView.textLabel.text = title;
+    titleL.text = title;
     return headView;
 }
 
@@ -425,6 +426,14 @@
         __weak OrderListViewController* wself = self;
         _selectData = data;
         OrderListBtCell* cell = [tableView dequeueReusableCellWithIdentifier:@"OrderListBtCell"];
+        if (indexPath.row==0) {
+            [cell setSeparateHeight:0];
+        }
+        else
+        {
+            [cell setSeparateHeight:10];
+        }
+        
         [cell setOrderBk:^(OrderBtSelect status) {
             [wself performOrderConfirmAction:status];
         }];
@@ -441,6 +450,13 @@
     else
     {
         OrderListCell* cell = [tableView dequeueReusableCellWithIdentifier:@"OrderListCell"];
+        if (indexPath.row==0) {
+            [cell setSeparateHeight:0];
+        }
+        else
+        {
+            [cell setSeparateHeight:10];
+        }
         [cell setAddress:data.orderAddress];
         [cell setTephone:data.telPhone];
         [cell setOrderTime:data.orderTime];
@@ -487,7 +503,7 @@
     
     
     NSLog(@"h-offset is %lf",h-offset.y-y);
-    if(h - offset.y-y <50 && _table.tableFooterView)
+    if(h - offset.y-y <50 &&_table.tableFooterView.frame.size.height>10)
     {
         [self loadMoreData];
     }

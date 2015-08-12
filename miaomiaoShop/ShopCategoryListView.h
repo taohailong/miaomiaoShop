@@ -16,6 +16,8 @@
 @end
 @interface ShopCategoryListView : UIView<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
+    int* _flag;
+    NSInteger _currentSection;
     UITableView* _table;
     NSMutableArray* _dataArr;
 }

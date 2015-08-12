@@ -25,7 +25,7 @@
 #import "AboutController.h"
 #import "CommonWebController.h"
 #import "RootIndicateCell.h"
-
+#import "ManageCategoryController.h"
 @interface RootViewController()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,PosterProtocol,FloatProtocol,NavigationTieleViewProtocol>
 {
     UICollectionView* _collectionView;
@@ -119,7 +119,6 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
     
     
     UICollectionViewFlowLayout* flow = [[UICollectionViewFlowLayout alloc]init];
@@ -523,9 +522,9 @@
 
 -(void)showCategoryManageController
 {
-    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"敬请期待" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-    [alert show];
-
+    ManageCategoryController* manager = [[ManageCategoryController alloc]init];
+    manager.title = @"分类管理";
+    [self.navigationController pushViewController:manager animated:YES];
 }
 
 -(void)showMoreController

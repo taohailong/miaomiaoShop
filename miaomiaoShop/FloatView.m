@@ -39,6 +39,14 @@
 }
 
 
+
+-(void)reloadUserData
+{
+    [_table reloadData];
+}
+
+
+
 -(void)creatBackView
 {
     _backView = [[UIView alloc]initWithFrame:CGRectMake(-SCREENWIDTH+200, 0, SCREENWIDTH-100, CGRectGetHeight(self.frame))];
@@ -295,6 +303,7 @@
 
 -(void)showFloatView
 {
+    [self reloadUserData];
     [UIView animateWithDuration:0.2 animations:^{
        [self layoutCurrentViewWithOffset:0];
     } completion:^(BOOL finished) {

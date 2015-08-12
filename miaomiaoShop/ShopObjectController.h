@@ -13,6 +13,5 @@
 {
      ShopCategoryListView* _categoryView;
      ShopProductListView* _productView;
-    
 }
 @end

@@ -13,6 +13,8 @@
 #import "NetWorkRequest.h"
 #import "UserManager.h"
 #import "THActivityView.h"
+#import "OneLabelTableHeadView.h"
+
 @interface ShopProductListView()
 {
     NSMutableArray* _dataArr;
@@ -46,7 +48,7 @@
 -(void)creatTableView
 {
     _table = [[UITableView alloc]initWithFrame:self.bounds style:UITableViewStylePlain];
-    //    _table
+    [_table registerClass:[OneLabelTableHeadView class] forHeaderFooterViewReuseIdentifier:@"OneLabelTableHeadView"];
     [self addSubview:_table];
     _table.delegate = self;
     _table.dataSource = self;
@@ -72,8 +74,9 @@
     [_table reloadData];
 }
 
--(void)setCategoryIDToGetData:(NSString *)categoryID
+-(void)setCategoryIDToGetData:(NSString *)categoryID categoryName:(NSString *)cateName
 {
+    _cateName = cateName;
     __weak ShopProductListView* wSelf = self;
     self.isLoading = NO;
     
@@ -92,7 +95,7 @@
             THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wSelf.superview];
             
             [loadView setErrorBk:^{
-                [wSelf setCategoryIDToGetData:categoryID];
+                [wSelf setCategoryIDToGetData:categoryID categoryName:cateName];
             }];
             return ;
         }
@@ -173,10 +176,9 @@
 {
     
     if (count<20) {
-//        UIView *view =[ [UIView alloc]init];
-//        view.backgroundColor = [UIColor clearColor];
-//        _table.tableFooterView = view;
-        _table.tableFooterView = nil;
+        UIView *view =[ [UIView alloc]init];
+        _table.tableFooterView = view;
+//        _table.tableFooterView = nil;
     }
     else
     {
@@ -184,6 +186,34 @@
     }
  }
 
+
+-(void)setProductEditStyle:(BOOL)flag
+{
+    [_table setEditing:flag animated:YES];
+}
+
+#pragma mark-table
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 35;
+}
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    OneLabelTableHeadView* head = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"OneLabelTableHeadView"];
+    head.contentView.backgroundColor = FUNCTCOLOR(237, 237, 237);
+    UILabel* title = [head getFirstLabel];
+    title.textColor = FUNCTCOLOR(180, 180, 180);
+    title.font = DEFAULTFONT(14);
+    title.text = _cateName;
+    return head;
+}
 
 
 
@@ -204,8 +234,19 @@
     ProductCell* cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
         cell = [[ProductCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
+    NSInteger row = indexPath.row;
+    __weak ShopProductListView * wself = self;
+    [cell setProductBk:^(ProductCellAction type) {
+        if (type == ProductCellDelect) {
+            [wself delectProductThroughNetAtIndex:row];
+        }
+        else
+        {
+            [wself moveCellAtIndex:row ToIndex:0];
+        }
+        
+    }];
     ShopProductData* data = _dataArr[indexPath.row];
     [cell setProductOnOff:data.status?YES:NO];
     [cell setPriceStr:[NSString stringWithFormat:@"%.2f", data.price]];
@@ -222,43 +263,97 @@
     }
 }
 
--(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+
+#pragma mark-tableCell-Edit
+
+-(BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    return NO;
+}
+
+
+//-(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return YES;
+//}
+
+-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleNone;
+}
+
+-(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
+{
+  
+}
+
+//-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    
+//    if (editingStyle == UITableViewCellEditingStyleDelete)
+//    {
+//        THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.superview];
+//        __weak ShopProductListView* wSelf = self;
+//        ShopProductData* data = _dataArr[indexPath.row];
+//        NetWorkRequest* request = [[NetWorkRequest alloc]init];
+//        [request shopProductDeleteProductWithProductID:data.pID WithBk:^(id backDic, NetWorkStatus status) {
+//            
+//            NSString* str = nil;
+//            if (status == NetWorkStatusSuccess) {
+//                str = @"删除成功！";
+//                [wSelf deleteCategoryReloadTableWithIndex:indexPath];
+//            }
+//            else
+//            {
+//                str = backDic;
+//            }
+//            THActivityView* show = [[THActivityView alloc]initWithString:str];
+//            [show show];
+//            [activeV removeFromSuperview];
+//            
+//        }];
+//        [request startAsynchronous];
+//    }
+//}
+
+-(void)delectProductThroughNetAtIndex:(NSInteger)row
+{
+    THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.superview];
+    __weak ShopProductListView* wSelf = self;
+    ShopProductData* data = _dataArr[row];
+    NetWorkRequest* request = [[NetWorkRequest alloc]init];
+    [request shopProductDeleteProductWithProductID:data.pID WithBk:^(id backDic, NetWorkStatus status) {
     
-    if (editingStyle == UITableViewCellEditingStyleDelete)
-    {
-        THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.superview];
-        __weak ShopProductListView* wSelf = self;
-        ShopProductData* data = _dataArr[indexPath.row];
-        NetWorkRequest* request = [[NetWorkRequest alloc]init];
-        [request shopProductDeleteProductWithProductID:data.pID WithBk:^(id backDic, NetWorkStatus status) {
-            
-            NSString* str = nil;
-            if (status == NetWorkStatusSuccess) {
-                str = @"删除成功！";
-                [wSelf deleteCategoryReloadTableWithIndex:indexPath];
-            }
-            else
-            {
-                str = backDic;
-            }
-            THActivityView* show = [[THActivityView alloc]initWithString:str];
-            [show show];
-            [activeV removeFromSuperview];
-            
-        }];
-        [request startAsynchronous];
-    }
+        NSString* str = nil;
+        if (status == NetWorkStatusSuccess) {
+            str = @"删除成功！";
+            [wSelf deleteCategoryReloadTableWithIndex:row];
+        }
+        else
+        {
+            str = backDic;
+        }
+        THActivityView* show = [[THActivityView alloc]initWithString:str];
+        [show show];
+        [activeV removeFromSuperview];
+                
+    }];
+    [request startAsynchronous];
+
 }
 
-
--(void)deleteCategoryReloadTableWithIndex:(NSIndexPath*)path
+-(void)deleteCategoryReloadTableWithIndex:(NSInteger)row
 {
-    [_dataArr removeObjectAtIndex:[path row]];
-    NSLog(@"path %d %d",path.row,path.section);
-    [_table deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [_dataArr removeObjectAtIndex:row];
+    [_table deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:[NSIndexPath indexPathForRow:row inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
+
+-(void)moveCellAtIndex:(NSInteger) fromRow ToIndex:(NSInteger) toRow
+{
+
+
+}
 
 
 
@@ -274,7 +369,7 @@
     
     
     NSLog(@"h-offset is %lf",h-offset.y-y);
-    if(h - offset.y-y <50 && _table.tableFooterView)
+    if(h - offset.y-y <50 && _table.tableFooterView.frame.size.height>10)
     {
         [self loadMoreDataFromNet];
     }

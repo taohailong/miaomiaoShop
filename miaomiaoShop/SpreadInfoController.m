@@ -34,11 +34,12 @@
 {
     [super viewDidLoad];
     
-    self.title = @"推广订单";
+    self.title =_currentDate;
     
     _dataArr = [[NSMutableArray alloc]init];
     
     _table = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    _table.separatorColor = FUNCTCOLOR(221, 221, 221);
     _table.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_table];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
@@ -46,7 +47,21 @@
     
     _table.delegate = self;
     _table.dataSource = self;
+    
+    if ([_table respondsToSelector:@selector(setSeparatorInset:)])
+    {
+        [_table setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([_table respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_table setLayoutMargins:UIEdgeInsetsZero];
+    }
+
+    _table.backgroundColor = FUNCTCOLOR(237, 237, 237);
+    
     [_table registerClass:[BusinessSpreadSummarCell class] forCellReuseIdentifier:@"BusinessSpreadSummarCell"];
+    [_table registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:@"UITableViewHeaderFooterView"];
+    [_table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
     [_table registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:@"table_headView"];
     
     [self getSpreadSummary];
@@ -137,33 +152,60 @@
 
 #pragma mark----tableviewDelegate----------------
 
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return _dataArr.count;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 10;
+}
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UITableViewHeaderFooterView* head = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"UITableViewHeaderFooterView"];
+    head.contentView.backgroundColor = FUNCTCOLOR(237, 237, 237);
+    return head;
+}
+
+
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80;
+         return 82;
 }
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _dataArr.count;
+        return 1;
 }
 
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     BusinessSpreadSummarCell* cell = [tableView dequeueReusableCellWithIdentifier:@"BusinessSpreadSummarCell"];
-    [cell setLayout];
-    cell.accessoryType = UITableViewCellAccessoryNone;
-    SpreadData* temp = _dataArr[indexPath.row];
+    
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
+    SpreadData* temp = _dataArr[indexPath.section];
     
     UILabel* first = [cell getFirstLabel];
-    first.text = [NSString stringWithFormat:@"邀请码验证时间：%@",temp.codeTime];
+    first.text = [NSString stringWithFormat:@"邀请码验证平台：%@",temp.platform];
     
     UILabel* second = [cell getSecondLabel];
-    second.text = [NSString stringWithFormat:@"邀请码验证平台：%@",temp.platform];
+    second.text = [NSString stringWithFormat:@"用户手机号码：%@",temp.telPhone];
     
     UILabel* third = [cell getThirdLabel];
-    third.text = [NSString stringWithFormat:@"订单确认收货时间：%@",temp.confirmTime];
+    third.text = [NSString stringWithFormat:@"推广时间：%@",temp.confirmTime];
     
     return cell;
 }
@@ -178,7 +220,7 @@
     float y =  bounds.size.height - inset.bottom;
     float h = size.height;
     
-    if(h - offset.y-y <50 && _table.tableFooterView)
+    if(h - offset.y-y <50 && _table.tableFooterView.frame.size.height>10)
     {
         [self loadMoreData];
     }

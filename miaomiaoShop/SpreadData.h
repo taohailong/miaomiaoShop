@@ -14,7 +14,11 @@
 @property(nonatomic,assign)int wxUserNu;
 @property(nonatomic,assign)int appUserNu;
 @property(nonatomic,assign)int totalUserNu;
+@property(nonatomic,strong)NSString* currentMonthNu;
+@property(nonatomic,strong)NSString* currentMonthMoney;
 
+
+@property(nonatomic,strong)NSString* telPhone;
 @property(nonatomic,strong)NSString* shopID;
 @property(nonatomic,strong)NSString* userID;
 @property(nonatomic,strong)NSString* platform;

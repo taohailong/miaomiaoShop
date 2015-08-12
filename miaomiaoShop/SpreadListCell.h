@@ -6,17 +6,14 @@
 //  Copyright (c) 2015年 miaomiao. All rights reserved.
 //
 
-#import "BusinessSpreadSummarCell.h"
+#import "OrderConfirmCell.h"
 
-//@interface SpreadTableHeadView : UITableViewHeaderFooterView
-//{
-//    UILabel* _label;
-//}
-//@end
 
-@interface SpreadListCell : BusinessSpreadSummarCell
+@interface SpreadListCell : OrderConfirmCell
 {
-    UILabel* _fourthLabel;
+    UIView* _bottomSeparate;
 }
 -(UILabel*)getFourthLabel;
+-(UILabel*)getSecondLabel;
+-(UILabel*)getThirdLabel;
 @end

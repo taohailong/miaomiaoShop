@@ -25,4 +25,7 @@ typedef  enum _FloatActionStyle{
 @property(nonatomic,weak)id<FloatProtocol>delegate;
 -(void)hidFloatView;
 -(void)showFloatView;
+-(void)reloadUserData;
+
+
 @end

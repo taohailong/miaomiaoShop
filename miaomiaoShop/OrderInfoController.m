@@ -13,7 +13,7 @@
 #import "THActivityView.h"
 #import "NetWorkRequest.h"
 #import "OrderInfoTwoLCell.h"
-
+#import "OneLabelTableHeadView.h"
 @interface OrderInfoController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView* _table;
@@ -42,8 +42,10 @@
     _table = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _table.delegate = self;
     _table.dataSource = self;
+    _table.backgroundColor = FUNCTCOLOR(237, 237, 237);
     _table.translatesAutoresizingMaskIntoConstraints = NO;
-    [_table registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:@"UITableViewHeaderFooterView"];
+    
+    [_table registerClass:[OneLabelTableHeadView class] forHeaderFooterViewReuseIdentifier:@"OneLabelTableHeadView"];
     [_table registerClass:[OrderInfoFirstCell class] forCellReuseIdentifier:@"OrderInfoFirstCell"];
     [_table registerClass:[OrderInfoSecondCell class] forCellReuseIdentifier:@"OrderInfoSecondCell"];
     
@@ -93,7 +95,7 @@
     }
     else
     {
-//        _table.tableFooterView = [self setExtraCellLineHidden];
+        _table.tableFooterView = [self setExtraCellLineHidden];
     }
    
 }
@@ -248,20 +250,20 @@
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-   UITableViewHeaderFooterView* head = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"UITableViewHeaderFooterView"];
-    head.textLabel.font = DEFAULTFONT(16);
-    head.textLabel.textColor = FUNCTCOLOR(102, 102, 102);
-    head.contentView.backgroundColor = FUNCTCOLOR(243, 243, 243);
+   OneLabelTableHeadView* head = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"OneLabelTableHeadView"];
+    UILabel* titleL = [head getFirstLabel];
+    titleL.font = DEFAULTFONT(14);
+    head.contentView.backgroundColor = FUNCTCOLOR(237, 237, 237);
     if (section == 0) {
-        head.textLabel.text = @"用户信息";
+        titleL.text = @"用户信息";
     }
     else if (section == 1)
     {
-       head.textLabel.text = @"商品信息";
+       titleL.text = @"商品信息";
     }
     else
     {
-       head.textLabel.text = @"订单信息";
+       titleL.text = @"订单信息";
     }
    
     return head;
@@ -286,7 +288,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==1) {
-        return 50;
+        return 40;
     }
     else
     {

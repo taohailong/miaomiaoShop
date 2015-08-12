@@ -10,7 +10,6 @@
 @interface AddProductCommonCell()
 {
     UILabel* _textLabel;
-
 }
 @end
 @implementation AddProductCommonCell
@@ -56,7 +55,6 @@
 }
 -(NSString*)getTextFieldString
 {
-    NSLog(@"text %@",_contentField.text);
     return _contentField.text;
 }
 

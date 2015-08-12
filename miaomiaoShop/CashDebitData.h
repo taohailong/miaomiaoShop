@@ -24,6 +24,9 @@ typedef enum _CashDebitStatus{
 @property(nonatomic,assign)CashDebitStatus debitStatus;
 @property(nonatomic,assign)CashDebitStatus debitType;
 @property(nonatomic,assign)float spreadMoney;
+@property(nonatomic,strong)NSString* outTimes;
+@property(nonatomic,strong)NSString* monthMoneyOut;
+@property(nonatomic,strong)NSString*month;
 -(NSString*)cashCellContentStr;
 -(NSAttributedString*)cashCellDetailStr;
 //view data

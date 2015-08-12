@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="13F1077" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -13,18 +13,21 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchTop" translatesAutoresizingMaskIntoConstraints="NO" id="LM3-30-Jgu">
-                    <rect key="frame" x="197" y="120" width="85" height="80"/>
+                    <rect key="frame" x="164" y="76" width="152" height="188"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchBottom" translatesAutoresizingMaskIntoConstraints="NO" id="OqE-W3-t7c">
-                    <rect key="frame" x="180" y="440" width="120" height="20"/>
-                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="无锡栗子网络科技有限公司" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DGH-M6-YaX">
+                    <rect key="frame" x="162" y="434" width="156" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
-            <color key="backgroundColor" red="0.90980392156862744" green="0.18431372549019609" blue="0.1764705882352941" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="LM3-30-Jgu" secondAttribute="centerX" id="2v4-xu-sie"/>
-                <constraint firstAttribute="bottom" secondItem="OqE-W3-t7c" secondAttribute="bottom" constant="20" id="KqX-Ip-nUE"/>
-                <constraint firstAttribute="centerY" secondItem="LM3-30-Jgu" secondAttribute="centerY" multiplier="3/2" id="Wge-Ul-kHD"/>
-                <constraint firstAttribute="centerX" secondItem="OqE-W3-t7c" secondAttribute="centerX" id="cv9-oM-Itx"/>
+                <constraint firstAttribute="bottom" secondItem="DGH-M6-YaX" secondAttribute="bottom" constant="30" id="9Hy-Ie-lr7"/>
+                <constraint firstAttribute="centerY" secondItem="LM3-30-Jgu" secondAttribute="centerY" multiplier="3/2" constant="-15" id="Wge-Ul-kHD"/>
+                <constraint firstAttribute="centerX" secondItem="DGH-M6-YaX" secondAttribute="centerX" id="kgH-mU-2mi"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -32,7 +35,6 @@
         </view>
     </objects>
     <resources>
-        <image name="LaunchBottom" width="120" height="20"/>
-        <image name="LaunchTop" width="85" height="80"/>
+        <image name="LaunchTop" width="152" height="188"/>
     </resources>
 </document>

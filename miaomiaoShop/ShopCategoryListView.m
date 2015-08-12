@@ -8,9 +8,10 @@
 
 #import "ShopCategoryListView.h"
 #import "ShopCategoryData.h"
-#import "NetWorkRequest.h"
+//#import "NetWorkRequest.h"
+#import "ShopObjectApi.h"
 #import "THActivityView.h"
-
+#import "CateTableHeadView.h"
 @implementation ShopCategoryListView
 @synthesize delegate;
 -(id)initWithCoder:(NSCoder *)aDecoder
@@ -32,13 +33,12 @@
 {
     
     _table = [[UITableView alloc]initWithFrame:self.bounds style:UITableViewStylePlain];
-    
+    [_table registerClass:[CateTableHeadView class] forHeaderFooterViewReuseIdentifier:@"CateTableHeadView"];
     [self addSubview:_table];
     _table.delegate = self;
     _table.dataSource = self;
     
     UIView *view =[ [UIView alloc]init];
-    view.backgroundColor = [UIColor clearColor];
     _table.tableFooterView = view;
 
     
@@ -53,9 +53,32 @@
     _table.translatesAutoresizingMaskIntoConstraints = NO;
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
-
+    [self initNetData];
 }
 
+-(void)getNetData
+{
+    THActivityView* loadV = [[THActivityView alloc]initActivityViewWithSuperView:self.superview];
+    
+    ShopObjectApi* req = [[ShopObjectApi alloc]init];
+    [req  getShopAllCategorysWithReturnBk:^(NSArray* returnValue) {
+        [loadV removeFromSuperview];
+        
+        
+        
+    } errBk:^(NetApiErrType errCode, NSString* errMes) {
+        [loadV removeFromSuperview];
+        
+        THActivityView* showV = [[THActivityView alloc]initWithString:errMes];
+        [showV show];
+        
+    } failureBk:^(NSString *mes) {
+        [loadV removeFromSuperview];
+        THActivityView* showV = [[THActivityView alloc]initWithString:mes];
+        [showV show];
+    }];
+
+}
 
 -(void)setDataArrAndSelectOneRow:(NSMutableArray *)dataArr
 {
@@ -69,8 +92,54 @@
         return;
     }
     _dataArr = dataArr;
+    
+    _flag = calloc(dataArr.count, sizeof(int));
+    _flag[0] = 1;
     [_table reloadData];
 }
+
+
+#pragma mark-table
+
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return _dataArr.count;
+}
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 40;
+}
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    ShopCategoryData* cate = _dataArr[section];
+    CateTableHeadView* head = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"CateTableHeadView"];
+    UILabel* title = [head getFirstLabel];
+    title.textColor = FUNCTCOLOR(102, 102, 102);
+    title.font = DEFAULTFONT(16);
+    title.highlightedTextColor = DEFAULTNAVCOLOR;
+    title.text = cate.categoryName;
+    
+    [head setAccessImage:@"navBar_narrow" selectImage:@"narrow_down"];
+    
+    if (_flag[section] ==1) {
+        [head setSelectView];
+    }
+    else
+    {
+        [head disSelectView];
+    }
+   
+    __weak ShopCategoryListView* wself = self;
+    [head setSelectBk:^{
+        [wself tableViewHeadSelectAtSection:section];
+    }];
+    return head;
+}
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 40;
@@ -78,7 +147,11 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _dataArr.count;
+    if (_flag[section]==1) {
+        ShopCategoryData* data  = _dataArr[section];
+        return data.subClass.count;
+    }
+    return 0;
 }
 
 
@@ -88,31 +161,44 @@
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-        cell.backgroundColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];
+         cell.textLabel.font = DEFAULTFONT(14);
+        cell.textLabel.textColor = FUNCTCOLOR(153, 153, 153);
+        cell.textLabel.highlightedTextColor = DEFAULTNAVCOLOR;
+        cell.backgroundColor = FUNCTCOLOR(243, 243, 243);
+        
         cell.selectedBackgroundView = [self  tableSelectView];
     }
-    ShopCategoryData* data = _dataArr[indexPath.row];
-    cell.textLabel.text = data.categoryName;
-    cell.textLabel.font = [UIFont systemFontOfSize:14.5];
+    ShopCategoryData* data = _dataArr[indexPath.section];
+    
+    ShopCategoryData* subData = data.subClass[indexPath.row];
+    cell.textLabel.text = subData.categoryName;
+   
     return cell;
 
 }
 
+
+-(void)tableViewHeadSelectAtSection:(NSInteger)section
+{
+//    _flag[_currentSection] = 0;
+    _flag[section] = !_flag[section];
+    _currentSection = section;
+    
+    NSIndexSet* index = [NSIndexSet indexSetWithIndex:_currentSection];
+//    [_table reloadData];
+    [_table reloadSections:index withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (indexPath.row == _dataArr.count) {
-//        
-//        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"添加分类" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-//        alert.alertViewStyle =UIAlertViewStylePlainTextInput;
-//        [alert show];
-//        
-//        return;
-//    }
    
-    ShopCategoryData* data = _dataArr[indexPath.row];
-    
+    ShopCategoryData* data = _dataArr[indexPath.section];
+    ShopCategoryData* subData = data.subClass[indexPath.row];
+    NSString* categoryID = subData == nil ? data.categoryID:subData.categoryID;
     if ([self.delegate respondsToSelector:@selector(didSelectCategoryIndexWith:WithName:)]) {
-        [self.delegate didSelectCategoryIndexWith: data.categoryID WithName:data.categoryName];
+        
+        [self.delegate didSelectCategoryIndexWith: categoryID WithName: data.categoryName];
     }
 }
 
@@ -131,28 +217,24 @@
     
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.superview];
-        
-        __weak ShopCategoryListView* wSelf = self;
-        ShopCategoryData* data = _dataArr[indexPath.row];
-        NetWorkRequest* request = [[NetWorkRequest alloc]init];
-        [request shopCateDeleteWithCategoryID:data.categoryID WithBk:^(id backDic, NetWorkStatus status) {
-            
-            NSString* str = nil;
-            if (status == NetWorkStatusSuccess) {
-                str = @"删除成功！";
-              [wSelf deleteCategoryReloadTableWithIndex:indexPath];
-            }
-            else
-            {
-                str = @"删除失败！";
-            }
-            THActivityView* show = [[THActivityView alloc]initWithString:str];
-            [show show];
-            [activeV removeFromSuperview];
-
-        }];
-        [request startAsynchronous];
+//        NetWorkRequest* request = [[NetWorkRequest alloc]init];
+//        [request shopCateDeleteWithCategoryID:data.categoryID WithBk:^(id backDic, NetWorkStatus status) {
+//            
+//            NSString* str = nil;
+//            if (status == NetWorkStatusSuccess) {
+//                str = @"删除成功！";
+//              [wSelf deleteCategoryReloadTableWithIndex:indexPath];
+//            }
+//            else
+//            {
+//                str = @"删除失败！";
+//            }
+//            THActivityView* show = [[THActivityView alloc]initWithString:str];
+//            [show show];
+//            [activeV removeFromSuperview];
+//
+//        }];
+//        [request startAsynchronous];
     }
 }
 
@@ -174,38 +256,52 @@
         return;
     }
     
-    THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.superview];
-    
-    UITextField* field =  [alertView textFieldAtIndex:0];
-    NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request shopCategoryAddWithName:field.text WithBk:^(id backDic, NetWorkStatus status) {
-        
-        NSString* str = nil;
-        if (status == NetWorkStatusSuccess) {
-           str = @"添加成功！";
-            [self initNetData];
-        }
-        else
-        {
-            str = @"添加失败！";
-        }
-        THActivityView* show = [[THActivityView alloc]initWithString:str];
-        [show show];
-        [activeV removeFromSuperview];
-    }];
-    [request startAsynchronous];
+//    THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.superview];
+//    
+//    UITextField* field =  [alertView textFieldAtIndex:0];
+//    NetWorkRequest* request = [[NetWorkRequest alloc]init];
+//    [request shopCategoryAddWithName:field.text WithBk:^(id backDic, NetWorkStatus status) {
+//        
+//        NSString* str = nil;
+//        if (status == NetWorkStatusSuccess) {
+//           str = @"添加成功！";
+//            [self initNetData];
+//        }
+//        else
+//        {
+//            str = @"添加失败！";
+//        }
+//        THActivityView* show = [[THActivityView alloc]initWithString:str];
+//        [show show];
+//        [activeV removeFromSuperview];
+//    }];
+//    [request startAsynchronous];
 }
 
 -(void)initNetData
 {
-    NetWorkRequest* categoryReq = [[NetWorkRequest alloc]init];
-    [categoryReq shopGetCategoryWithCallBack:^(id backDic, NetWorkStatus status) {
+    __weak ShopCategoryListView *wself = self;
+    THActivityView* loadV = [[THActivityView alloc]initActivityViewWithSuperView:self.superview];
     
-        if (status == NetWorkStatusSuccess) {
-           [self setDataArr:backDic];
-        }
-     }];
-    [categoryReq startAsynchronous];
+    ShopObjectApi* req = [[ShopObjectApi alloc]init];
+    [req  getShopAllCategorysWithReturnBk:^(NSMutableArray* returnValue) {
+        [loadV removeFromSuperview];
+        
+        [wself setDataArrAndSelectOneRow:returnValue];
+        
+    } errBk:^(NetApiErrType errCode, NSString* errMes) {
+        [loadV removeFromSuperview];
+        
+        THActivityView* showV = [[THActivityView alloc]initWithString:errMes];
+        [showV show];
+        
+    } failureBk:^(NSString *mes) {
+        [loadV removeFromSuperview];
+        THActivityView* showV = [[THActivityView alloc]initWithString:mes];
+        [showV show];
+        
+    }];
+    
     
 }
 
@@ -213,14 +309,14 @@
 {
     UIView* selectView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
     selectView.backgroundColor = [UIColor whiteColor];
-    UIView* colorView = [[UIView alloc]init];
-    colorView.backgroundColor = [UIColor redColor];
-    colorView.translatesAutoresizingMaskIntoConstraints = NO;
-    [selectView addSubview:colorView];
-    
-    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-1-[colorView(7)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(colorView)]];
-    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-2-[colorView]-2-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(colorView)]];
     return selectView;
+}
+
+
+
+-(void)dealloc
+{
+    free(_flag);
 }
 
 @end
