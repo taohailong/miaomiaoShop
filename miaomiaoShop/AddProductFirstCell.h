@@ -11,13 +11,16 @@ typedef void  (^CellBtBlock)();
 typedef void (^TextFieldBk)(NSString*text);
 @interface AddProductFirstCell : UITableViewCell
 {
-    IBOutlet UILabel* _titleL;
-    IBOutlet UITextField* _contentField;
-    IBOutlet UIButton* _scanBt;
+    UITextField* _contentField;
+    UIButton* _scanBt;
     TextFieldBk _fieldBk;
     CellBtBlock _bk;
 }
+-(UITextField*)getTextField;
+-(UILabel*)getTitleLabel;
+-(void)setTextFieldBk:(TextFieldBk)bk;
+-(void)setCellBtBk:(CellBtBlock)bk;
 
--(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier WithBlock:(CellBtBlock)bk WithFieldBk:(TextFieldBk)bk;
+//-(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier WithBlock:(CellBtBlock)bk WithFieldBk:(TextFieldBk)bk;
 -(void)setTextField:(NSString*)fieldStr;
 @end

@@ -22,6 +22,8 @@ typedef void (^AddEditProduct)(void);
 }
 
 @property(nonatomic,assign)BOOL infoChange;
+
+
 -(void)commitProductInfo;
 -(void)setCompleteBk:(AddEditProduct)bk;
 -(void)commitCompleteBack;

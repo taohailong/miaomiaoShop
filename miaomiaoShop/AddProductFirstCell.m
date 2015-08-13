@@ -9,41 +9,77 @@
 #import "AddProductFirstCell.h"
 @interface AddProductFirstCell()<UITextFieldDelegate>
 {
-
+    UILabel* _titleLabel;
 }
 @end
 @implementation AddProductFirstCell
--(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier WithBlock:(CellBtBlock)bk WithFieldBk:(TextFieldBk)fieldBk
+-(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    self.textLabel.text = @"条形码:";
-    self.textLabel.font = [UIFont systemFontOfSize:14];
+   
+    _titleLabel = [[UILabel alloc]init];
+//    _titleLabel.backgroundColor = [UIColor redColor];
+    _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:_titleLabel];
+    [_titleLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_titleLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[_titleLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_titleLabel)]];
 
-    _bk =bk;
-    _fieldBk = fieldBk;
     
-    _scanBt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    _scanBt.frame = CGRectMake(0, 0, 45, 45) ;
-    [_scanBt setTitle:@"查一查" forState:UIControlStateNormal];
-//    [_scanBt setImage:[UIImage imageNamed:@"ProductEditScan"] forState:UIControlStateNormal];
-//    _scanBt.backgroundColor = [UIColor redColor];
-    _scanBt.titleLabel.font = [UIFont systemFontOfSize:14];
+    
+    _scanBt = [UIButton buttonWithType:UIButtonTypeCustom];
+    _scanBt.translatesAutoresizingMaskIntoConstraints = NO ;
+    [self.contentView addSubview:_scanBt];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_scanBt attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_scanBt]-15-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_scanBt)]];
+
+    [_scanBt setImage:[UIImage imageNamed:@"addProduct_scan"] forState:UIControlStateNormal];
     [_scanBt addTarget:self action:@selector(btAction) forControlEvents:UIControlEventTouchUpInside];
-    self.accessoryView = _scanBt;
+   
 
-    _contentField = [[UITextField alloc]initWithFrame:CGRectMake(63, 15, 190, 30)];
-    _contentField.delegate= self;
+    _contentField = [[UITextField alloc]init];
+    _contentField.textColor = FUNCTCOLOR(153, 153, 153);
+    _contentField.font = [UIFont systemFontOfSize:15.0];
 
-    _contentField.font = [UIFont systemFontOfSize:15];
-     _contentField.center = CGPointMake(SCREENWIDTH/2, 30);
-    _contentField.keyboardType = UIKeyboardTypeNumberPad;
-//    _contentField.keyboardType = UIKeyboardTypeDecimalPad;
-    _contentField.returnKeyType = UIReturnKeyDone;
-    _contentField.borderStyle = UITextBorderStyleRoundedRect;
+    _contentField.textAlignment = NSTextAlignmentRight;
+    _contentField.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_contentField];
+    _contentField.delegate= self;
+    
+     [_contentField setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+    
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_titleLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_contentField]-5-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_contentField)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_titleLabel]-5-[_contentField]-45-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_titleLabel,_contentField,_scanBt)]];
+    
+    _contentField.font = [UIFont systemFontOfSize:14];
+    _contentField.returnKeyType = UIReturnKeyDone;
+    _contentField.borderStyle = UITextBorderStyleNone;
+
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     return self;
 }
+
+-(UITextField*)getTextField
+{
+    return _contentField;
+
+}
+
+-(UILabel*)getTitleLabel
+{
+    return _titleLabel;
+}
+-(void)setTextFieldBk:(TextFieldBk)bk
+{
+    _fieldBk = bk;
+}
+
+-(void)setCellBtBk:(CellBtBlock)bk
+{
+    _bk = bk;
+}
+
 
 -(void)setTextField:(NSString*)fieldStr
 {

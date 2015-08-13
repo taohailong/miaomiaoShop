@@ -22,6 +22,9 @@
 -(void)creatTableView
 {
     _table = [[UITableView alloc]initWithFrame:self.bounds style:UITableViewStylePlain];
+    _table.backgroundColor = FUNCTCOLOR(243, 243, 243);
+    _table.separatorColor = FUNCTCOLOR(221,221, 221);
+
     [_table registerClass:[OneLabelTableHeadView class] forHeaderFooterViewReuseIdentifier:@"OneLabelTableHeadView"];
     [self addSubview:_table];
     _table.delegate = self;
@@ -79,7 +82,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 35;
+    return 25;
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -112,7 +115,15 @@
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-        cell.contentView.backgroundColor = FUNCTCOLOR(249, 249, 249);
+        if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+            [cell setSeparatorInset:UIEdgeInsetsZero];
+        }
+        
+        if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+            [cell setLayoutMargins:UIEdgeInsetsZero];
+        }
+
+        cell.backgroundColor = FUNCTCOLOR(249, 249, 249);
         cell.textLabel.font = DEFAULTFONT(15);
         cell.textLabel.textColor = FUNCTCOLOR(153, 153, 153);
     }

@@ -48,6 +48,7 @@
 -(void)creatTableView
 {
     _table = [[UITableView alloc]initWithFrame:self.bounds style:UITableViewStylePlain];
+    _table.separatorColor = FUNCTCOLOR(221, 221, 221);
     [_table registerClass:[OneLabelTableHeadView class] forHeaderFooterViewReuseIdentifier:@"OneLabelTableHeadView"];
     [self addSubview:_table];
     _table.delegate = self;
@@ -234,6 +235,13 @@
     ProductCell* cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
         cell = [[ProductCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+        if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+            [cell setSeparatorInset:UIEdgeInsetsZero];
+        }
+        
+        if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+            [cell setLayoutMargins:UIEdgeInsetsZero];
+        }
     }
     NSInteger row = indexPath.row;
     __weak ShopProductListView * wself = self;

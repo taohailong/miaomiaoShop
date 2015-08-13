@@ -7,7 +7,8 @@
 //
 
 #import "ManageCategoryController.h"
-
+#import "AddMainCategoryController.h"
+#import "AddSubCategoryController.h"
 @implementation ManageCategoryController
 -(void)viewDidLoad
 {
@@ -23,7 +24,7 @@
 //    _subCate.delegate = self;
     [self.view addSubview:_subCate];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_subCate]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_subCate)]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_subCate attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.7 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_subCate attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.6 constant:0]];
     
     
     if (IOS_VERSION(7.0)) {
@@ -42,7 +43,7 @@
     [self.view addSubview:_mainCate];
     [_mainCate  initNetData];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_mainCate]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mainCate)]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_mainCate attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.3 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_mainCate attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.4 constant:0]];
     
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_mainCate attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_subCate attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
     
@@ -74,60 +75,78 @@
     
     
     
-    UIButton* leftBt = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftBt setTitle:@"编辑一级分类" forState:UIControlStateNormal];
-    [leftBt addTarget:self action:@selector(editMainCategory) forControlEvents:UIControlEventTouchUpInside];
+    _leftBt = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_leftBt setTitle:@"编辑一级分类" forState:UIControlStateNormal];
+    [_leftBt addTarget:self action:@selector(editMainCategory:) forControlEvents:UIControlEventTouchUpInside];
     
-    leftBt.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:leftBt];
+    _leftBt.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_leftBt];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:leftBt attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_subCate attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[leftBt]-0-[_rightBt]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(leftBt,_rightBt)]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_leftBt attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_subCate attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_leftBt]-0-[_rightBt]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_leftBt,_rightBt)]];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[leftBt]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(leftBt)]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_leftBt]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_leftBt)]];
     
-    [leftBt setBackgroundImage:[UIImage imageNamed:@"ButtonRedLight"] forState:UIControlStateNormal];
+    [_leftBt setBackgroundImage:[UIImage imageNamed:@"ButtonRedLight"] forState:UIControlStateNormal];
     
-    
+    [self creatRightBarItem];
+}
+
+
+-(void)creatRightBarItem
+{
     UIBarButtonItem* rightBar = [[UIBarButtonItem alloc]initWithTitle:@"排序" style:UIBarButtonItemStyleBordered target:self action:@selector(editOrder:)];
     self.navigationItem.rightBarButtonItem = rightBar;
-    
 }
+
+
 
 -(void)editOrder:(UIBarButtonItem*)bt
 {
-    bt.tag = !bt.tag;
-    if (bt.tag == 1) {
-        _btSpaceLayout.constant = CGRectGetWidth(self.view.frame);
-        [_subCate setProductEditStyle:YES];
-        [_mainCate setProductEditStyle:YES];
-        [_rightBt setTitle:@"完成" forState:UIControlStateNormal];
-    }
-    else
-    {
-        [_subCate setProductEditStyle:NO];
-        [_mainCate setProductEditStyle:NO];
-        [_rightBt setTitle:@"编辑二级分类" forState:UIControlStateNormal];
-        _btSpaceLayout.constant = CGRectGetWidth(self.view.frame)/2;
-        [self editSubCategory];
-    }
-    
+    _btSpaceLayout.constant = 0;
+    [_subCate setProductEditStyle:YES];
+    [_mainCate setProductEditStyle:YES];
+    [_leftBt setTitle:@"完成" forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = nil;
 }
 
--(void)editMainCategory
+-(void)editMainCategory:(UIButton*)sender
 {
+    if ([sender.currentTitle isEqualToString:@"完成"]) {
+        
+        [sender setTitle:@"编辑一级分类" forState:UIControlStateNormal];
+        [self creatRightBarItem];
+        [_subCate setProductEditStyle:NO];
+        [_mainCate setProductEditStyle:NO];
+        _btSpaceLayout.constant = CGRectGetWidth(self.view.frame)/2;
+        return;
+    }
+    
+    AddMainCategoryController* main = [[AddMainCategoryController alloc]initWithCategory:nil title:@"选择一级分类"];
+    main.delegate = self;
+    [self.navigationController pushViewController:main animated:YES];
     
 }
 -(void)editSubCategory
 {
-
+    AddSubCategoryController* sub = [[AddSubCategoryController alloc]initWithCategory:_selectID title:@"选择二级分类"];
+    sub.delegate = self;
+    [self.navigationController pushViewController:sub animated:YES];
 }
 
 
-#pragma mark-MainCategoryDelegate
+#pragma mark-MainCategoryListDelegate
 
--(void)selectMainCateReturnSubClass:(NSMutableArray *)arr
+-(void)selectMainCateReturnSubClass:(NSMutableArray *)arr cateGoryID:(NSString *)str
 {
+    _selectID = str;
     [_subCate setDataArrReloadTable:arr];
+}
+
+
+#pragma mark-AddCategoryDelegate
+-(void)modifyCategoryComplete:(CategoryType)type
+{
+    [_mainCate initNetData];
 }
 @end

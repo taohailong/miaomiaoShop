@@ -7,7 +7,7 @@
 //
 
 #import "AddProductPictureCell.h"
-#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
 @implementation AddProductPictureCell
 
 -(void)setPhotoBlock:(setUpPhotoGraph)photoGraphBlock
@@ -17,22 +17,20 @@
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    self.textLabel.text = @"照片:";
-    self.textLabel.font = [UIFont systemFontOfSize:14];
-    
     
     _pBt = [UIButton buttonWithType:UIButtonTypeCustom];
-    _pBt.frame = CGRectMake(0, 0, 45, 60);
-//    [_pBt setTitle:@"拍照" forState:UIControlStateNormal];
-    [_pBt setImage:[UIImage imageNamed:@"ProductEditPhoto"] forState:UIControlStateNormal];
-
-    [_pBt addTarget:self action:@selector(setUpPhoto:) forControlEvents:UIControlEventTouchUpInside];
-    self.accessoryView = _pBt;
+    _pBt.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:_pBt];
     
-    _pImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
-    [self.contentView addSubview:_pImageView];
-    _pImageView.center = CGPointMake(SCREENWIDTH/2, 60);
-//    _pImageView.backgroundColor = [UIColor redColor];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_pBt]-15-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_pBt)]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_pBt]-5-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_pBt)]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_pBt attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_pBt attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
+    
+    
+    [_pBt setImage:[UIImage imageNamed:@"addProduct_pic"] forState:UIControlStateNormal];
+    [_pBt addTarget:self action:@selector(setUpPhoto:) forControlEvents:UIControlEventTouchUpInside];
+   
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 
@@ -42,22 +40,24 @@
 
 -(void)setProductImage:(UIImage *)image
 {
-    _pImageView.image = image;
+//    _pBt.image = image;
 
 }
 
 -(UIImage*)getProductImage
 {
-    return _pImageView.image;
+    return _pBt.currentImage;
 }
 -(void)setUpPhoto:(UIButton*)bt
 {
-    _photoGraphBlock();
+    if (_photoGraphBlock) {
+        _photoGraphBlock();
+    }
 }
 
 -(void)setProductImageWithUrl:(NSString *)url
 {
-    [_pImageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:DEFAULTIMAGE];
+    [_pBt setImageWithURL:[NSURL URLWithString:url] forState:UIControlStateNormal];
 }
 
 @end

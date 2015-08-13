@@ -16,10 +16,25 @@
 }
 -(void)getMainCategroyWithReturnBk:(NetApiReturnBlock)returnBk errBk:(NetApiErrorBlock)errBk failureBk:(NetApiFailureBlock)failureBk;
 
--(void)getSubCategoryWithReturnBk:(NetApiReturnBlock)returnBk errBk:(NetApiErrorBlock)errBk failureBk:(NetApiFailureBlock)failureBk;
+//-(void)getSubCategoryWithReturnBk:(NetApiReturnBlock)returnBk errBk:(NetApiErrorBlock)errBk failureBk:(NetApiFailureBlock)failureBk;
 
 
 -(void)getShopAllCategorysWithReturnBk:(NetApiReturnBlock)returnBk errBk:(NetApiErrorBlock)errBk failureBk:(NetApiFailureBlock)failureBk;
+
+
+
+
+
+-(void)getAllMainCategoryCompareToShopWithReturnBk:(NetApiReturnBlock)returnBk errBk:(NetApiErrorBlock)errBk failureBk:(NetApiFailureBlock)failureBk;
+
+
+-(void)getAllSubCategoryCompareToShopWithFatherID:(NSString*)fatherID  returnBk:(NetApiReturnBlock)returnBk errBk:(NetApiErrorBlock)errBk failureBk:(NetApiFailureBlock)failureBk;
+
+
+
+-(void)updateShopAllMainCategory:(NSArray*)categorys returnBk:(NetApiReturnBlock)returnBk errBk:(NetApiErrorBlock)errBk failureBk:(NetApiFailureBlock)failureBk;
+
+-(void)updateShopAllSubCategory:(NSArray *)categorys fatherID:(NSString*)fatherID returnBk:(NetApiReturnBlock)returnBk errBk:(NetApiErrorBlock)errBk failureBk:(NetApiFailureBlock)failureBk;
 
 
 

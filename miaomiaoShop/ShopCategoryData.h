@@ -12,7 +12,10 @@ typedef enum _CategoryType{
      CategorySubClass,
 }CategoryType;
 @interface ShopCategoryData : NSObject
+
+//@property(nonatomic,assign)int selected;
 @property(nonatomic,assign)CategoryType type;
+@property(nonatomic,strong)NSString* fatherID;
 @property(nonatomic,strong)NSMutableArray* subClass;
 @property(nonatomic,strong)NSString* categoryID;
 @property(nonatomic,strong)NSString* categoryName;

@@ -10,7 +10,7 @@
 @class ManageMainCateList;
 @protocol ManageMainCateListProtocol <NSObject>
 
--(void)selectMainCateReturnSubClass:(NSMutableArray*)arr;
+-(void)selectMainCateReturnSubClass:(NSMutableArray*)arr cateGoryID:(NSString*)str;
 
 @end
 @interface ManageMainCateList : UIView<UITableViewDataSource,UITableViewDelegate>

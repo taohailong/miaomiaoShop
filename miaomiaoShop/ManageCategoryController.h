@@ -9,12 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "ManageSubCateList.h"
 #import "ManageMainCateList.h"
-
-@interface ManageCategoryController : UIViewController<ManageMainCateListProtocol>
+#import "AddCategoryController.h"
+@interface ManageCategoryController : UIViewController<ManageMainCateListProtocol,AddCategoryProtocol>
 {
     NSLayoutConstraint* _btSpaceLayout;
     ManageMainCateList* _mainCate;
     ManageSubCateList* _subCate;
     UIButton* _rightBt;
+    UIButton* _leftBt;
+    
+    NSString* _selectID;
 }
 @end

@@ -104,6 +104,14 @@
 		C75680D31AF7807300F0A990 /* OrderConfirmCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C75680D21AF7807300F0A990 /* OrderConfirmCell.m */; };
 		C76366D81B70652100301A17 /* OrderInfoTwoLCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C76366D71B70652100301A17 /* OrderInfoTwoLCell.m */; };
 		C76366D91B70652100301A17 /* OrderInfoTwoLCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C76366D71B70652100301A17 /* OrderInfoTwoLCell.m */; };
+		C767B4BC1B7C3FC300EA67D6 /* AddCategoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = C767B4BB1B7C3FC300EA67D6 /* AddCategoryController.m */; };
+		C767B4BD1B7C3FC300EA67D6 /* AddCategoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = C767B4BB1B7C3FC300EA67D6 /* AddCategoryController.m */; };
+		C767B4C01B7C640900EA67D6 /* AddMainCategoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = C767B4BF1B7C640900EA67D6 /* AddMainCategoryController.m */; };
+		C767B4C11B7C640900EA67D6 /* AddMainCategoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = C767B4BF1B7C640900EA67D6 /* AddMainCategoryController.m */; };
+		C767B4C41B7C65D800EA67D6 /* AddSubCategoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = C767B4C31B7C65D800EA67D6 /* AddSubCategoryController.m */; };
+		C767B4C51B7C65D800EA67D6 /* AddSubCategoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = C767B4C31B7C65D800EA67D6 /* AddSubCategoryController.m */; };
+		C767B4C81B7C8B7000EA67D6 /* AddProductTwoLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C767B4C71B7C8B7000EA67D6 /* AddProductTwoLabelCell.m */; };
+		C767B4C91B7C8B7000EA67D6 /* AddProductTwoLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C767B4C71B7C8B7000EA67D6 /* AddProductTwoLabelCell.m */; };
 		C76ADB711AFCAA73008DF9A4 /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C76ADB701AFCAA73008DF9A4 /* line@2x.png */; };
 		C76ADB721AFCAA73008DF9A4 /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C76ADB701AFCAA73008DF9A4 /* line@2x.png */; };
 		C76ADB741AFCAA77008DF9A4 /* pick_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C76ADB731AFCAA77008DF9A4 /* pick_bg@2x.png */; };
@@ -496,6 +504,14 @@
 		C75680D21AF7807300F0A990 /* OrderConfirmCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderConfirmCell.m; sourceTree = "<group>"; };
 		C76366D61B70652100301A17 /* OrderInfoTwoLCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderInfoTwoLCell.h; sourceTree = "<group>"; };
 		C76366D71B70652100301A17 /* OrderInfoTwoLCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderInfoTwoLCell.m; sourceTree = "<group>"; };
+		C767B4BA1B7C3FC300EA67D6 /* AddCategoryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCategoryController.h; sourceTree = "<group>"; };
+		C767B4BB1B7C3FC300EA67D6 /* AddCategoryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCategoryController.m; sourceTree = "<group>"; };
+		C767B4BE1B7C640900EA67D6 /* AddMainCategoryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddMainCategoryController.h; sourceTree = "<group>"; };
+		C767B4BF1B7C640900EA67D6 /* AddMainCategoryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddMainCategoryController.m; sourceTree = "<group>"; };
+		C767B4C21B7C65D800EA67D6 /* AddSubCategoryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddSubCategoryController.h; sourceTree = "<group>"; };
+		C767B4C31B7C65D800EA67D6 /* AddSubCategoryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddSubCategoryController.m; sourceTree = "<group>"; };
+		C767B4C61B7C8B7000EA67D6 /* AddProductTwoLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProductTwoLabelCell.h; sourceTree = "<group>"; };
+		C767B4C71B7C8B7000EA67D6 /* AddProductTwoLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProductTwoLabelCell.m; sourceTree = "<group>"; };
 		C76ADB701AFCAA73008DF9A4 /* line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line@2x.png"; sourceTree = "<group>"; };
 		C76ADB731AFCAA77008DF9A4 /* pick_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pick_bg@2x.png"; sourceTree = "<group>"; };
 		C76D062A1B5751EA0025515F /* RootDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootDetailCell.h; sourceTree = "<group>"; };
@@ -709,6 +725,12 @@
 				C77564541B7B48BC00B1E884 /* ManageMainCateList.m */,
 				C77564571B7B4DAD00B1E884 /* ManageSubCateList.h */,
 				C77564581B7B4DAD00B1E884 /* ManageSubCateList.m */,
+				C767B4BA1B7C3FC300EA67D6 /* AddCategoryController.h */,
+				C767B4BB1B7C3FC300EA67D6 /* AddCategoryController.m */,
+				C767B4BE1B7C640900EA67D6 /* AddMainCategoryController.h */,
+				C767B4BF1B7C640900EA67D6 /* AddMainCategoryController.m */,
+				C767B4C21B7C65D800EA67D6 /* AddSubCategoryController.h */,
+				C767B4C31B7C65D800EA67D6 /* AddSubCategoryController.m */,
 				C742788E1AF27181008E17BA /* CategorySelectController.h */,
 				C742788F1AF27181008E17BA /* CategorySelectController.m */,
 				C7777CD11AEA657000A9BDC3 /* AddProductController.h */,
@@ -717,6 +739,8 @@
 				C74278921AF27BDB008E17BA /* ProductEditController.m */,
 				C725BB371AEB6E7800F344CB /* AddProductFirstCell.h */,
 				C725BB381AEB6E7800F344CB /* AddProductFirstCell.m */,
+				C767B4C61B7C8B7000EA67D6 /* AddProductTwoLabelCell.h */,
+				C767B4C71B7C8B7000EA67D6 /* AddProductTwoLabelCell.m */,
 				C725BB3A1AEB6F4200F344CB /* AddProductCommonCell.h */,
 				C725BB3B1AEB6F4200F344CB /* AddProductCommonCell.m */,
 				C725BB3D1AEB6FAA00F344CB /* AddProductSwithCell.h */,
@@ -1414,6 +1438,7 @@
 				C713A2551AF4A48C000EC646 /* OrderInfoSecondCell.m in Sources */,
 				C7BCDA731B5607A0003460F8 /* AdvertiseCollectionCell.m in Sources */,
 				C75680C61AF72EF200F0A990 /* EGORefreshTableHeaderView.m in Sources */,
+				C767B4C41B7C65D800EA67D6 /* AddSubCategoryController.m in Sources */,
 				C72FFA431B15C78E007C9C3D /* CommonWebController.m in Sources */,
 				C753C1A91AE78E5800562EF6 /* SDWebImageDownloaderOperation.m in Sources */,
 				C78406641B72FB8B009386F5 /* OneImageOneLabelCell.m in Sources */,
@@ -1438,6 +1463,7 @@
 				C753C1BF1AE7A25400562EF6 /* LogViewController.m in Sources */,
 				C74136951AE8C00300B08CBD /* ShopObjectController.m in Sources */,
 				C753BEAB1AE7460800562EF6 /* main.m in Sources */,
+				C767B4C81B7C8B7000EA67D6 /* AddProductTwoLabelCell.m in Sources */,
 				C7BCDA6B1B56062C003460F8 /* RootViewController.m in Sources */,
 				C753C1A81AE78E5800562EF6 /* SDWebImageDownloader.m in Sources */,
 				C753C1B01AE78E5800562EF6 /* UIImageView+WebCache.m in Sources */,
@@ -1471,6 +1497,7 @@
 				C71F470F1AF592EF00D14972 /* DatePickerView.m in Sources */,
 				C753C1AE1AE78E5800562EF6 /* UIImage+MultiFormat.m in Sources */,
 				C753C17E1AE78E4E00562EF6 /* ASIDataDecompressor.m in Sources */,
+				C767B4BC1B7C3FC300EA67D6 /* AddCategoryController.m in Sources */,
 				C713A2521AF48E57000EC646 /* OrderInfoController.m in Sources */,
 				C77341D91B747FCA00BBB6F2 /* OneLabelTableHeadView.m in Sources */,
 				C77341D11B7453BF00BBB6F2 /* CashListController.m in Sources */,
@@ -1501,6 +1528,7 @@
 				C7428BDE1B019C5A00F63ADB /* ShopSelectController.m in Sources */,
 				C753C1841AE78E4E00562EF6 /* Reachability.m in Sources */,
 				C753C1BC1AE7992F00562EF6 /* NetWorkRequest.m in Sources */,
+				C767B4C01B7C640900EA67D6 /* AddMainCategoryController.m in Sources */,
 				C777517A1B60B71F007ED6AC /* TSwitch.m in Sources */,
 				C7D4AD9B1B58FA4C00F46561 /* AboutController.m in Sources */,
 				C725BB451AEBBB1A00F344CB /* UIImage+ZoomImage.m in Sources */,
@@ -1553,6 +1581,7 @@
 				C784434A1AF9E3A0009B4C2D /* OrderInfoSecondCell.m in Sources */,
 				C7BCDA741B5607A0003460F8 /* AdvertiseCollectionCell.m in Sources */,
 				C784434B1AF9E3A0009B4C2D /* EGORefreshTableHeaderView.m in Sources */,
+				C767B4C51B7C65D800EA67D6 /* AddSubCategoryController.m in Sources */,
 				C72FFA441B15C78E007C9C3D /* CommonWebController.m in Sources */,
 				C784434C1AF9E3A0009B4C2D /* SDWebImageDownloaderOperation.m in Sources */,
 				C78406651B72FB8B009386F5 /* OneImageOneLabelCell.m in Sources */,
@@ -1577,6 +1606,7 @@
 				C78443561AF9E3A0009B4C2D /* LogViewController.m in Sources */,
 				C78443571AF9E3A0009B4C2D /* ShopObjectController.m in Sources */,
 				C78443581AF9E3A0009B4C2D /* main.m in Sources */,
+				C767B4C91B7C8B7000EA67D6 /* AddProductTwoLabelCell.m in Sources */,
 				C7BCDA6C1B56062C003460F8 /* RootViewController.m in Sources */,
 				C78443591AF9E3A0009B4C2D /* SDWebImageDownloader.m in Sources */,
 				C784435A1AF9E3A0009B4C2D /* UIImageView+WebCache.m in Sources */,
@@ -1610,6 +1640,7 @@
 				C78443661AF9E3A0009B4C2D /* DatePickerView.m in Sources */,
 				C78443671AF9E3A0009B4C2D /* UIImage+MultiFormat.m in Sources */,
 				C78443681AF9E3A0009B4C2D /* ASIDataDecompressor.m in Sources */,
+				C767B4BD1B7C3FC300EA67D6 /* AddCategoryController.m in Sources */,
 				C78443691AF9E3A0009B4C2D /* OrderInfoController.m in Sources */,
 				C77341DA1B747FCA00BBB6F2 /* OneLabelTableHeadView.m in Sources */,
 				C77341D21B7453BF00BBB6F2 /* CashListController.m in Sources */,
@@ -1640,6 +1671,7 @@
 				C78443781AF9E3A0009B4C2D /* NetWorkRequest.m in Sources */,
 				C78443791AF9E3A0009B4C2D /* UIImage+ZoomImage.m in Sources */,
 				C72FFA381B155C2C007C9C3D /* CashDebitData.m in Sources */,
+				C767B4C11B7C640900EA67D6 /* AddMainCategoryController.m in Sources */,
 				C777517B1B60B71F007ED6AC /* TSwitch.m in Sources */,
 				C7D4AD9C1B58FA4C00F46561 /* AboutController.m in Sources */,
 				C72FFA3C1B15647C007C9C3D /* CashDebitCell.m in Sources */,

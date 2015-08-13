@@ -55,7 +55,7 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_headAccessView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_headAccessView)]];
     
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-5-[_horizeSeparate]-1-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_horizeSeparate)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_horizeSeparate]-1-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_horizeSeparate)]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_horizeSeparate(0.5)]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_horizeSeparate)]];
     

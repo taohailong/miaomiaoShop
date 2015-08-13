@@ -28,6 +28,7 @@
     _table = [[UITableView alloc]initWithFrame:self.bounds style:UITableViewStylePlain];
     [_table registerClass:[OneLabelTableHeadView class] forHeaderFooterViewReuseIdentifier:@"OneLabelTableHeadView"];
     [self addSubview:_table];
+    _table.separatorColor = FUNCTCOLOR(221,221, 221);
     _table.delegate = self;
     _table.dataSource = self;
     
@@ -77,12 +78,13 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 40;
+    return 25;
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     OneLabelTableHeadView* head = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"OneLabelTableHeadView"];
+    head.contentView.backgroundColor = FUNCTCOLOR(237, 237, 237);
     UILabel* title = [head getFirstLabel];
     title.textColor = FUNCTCOLOR(180, 180, 180);
     title.font = DEFAULTFONT(14);
@@ -92,8 +94,10 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 25;
+    return 40;
 }
+
+
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -106,12 +110,19 @@
     NSString* cellID = @"ids";
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
+        
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-        cell.textLabel.font = DEFAULTFONT(14);
+        if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+            [cell setSeparatorInset:UIEdgeInsetsZero];
+        }
+        
+        if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+            [cell setLayoutMargins:UIEdgeInsetsZero];
+        }
+
+        cell.textLabel.font = DEFAULTFONT(16);
         cell.textLabel.textColor = FUNCTCOLOR(102, 102, 102);
         cell.textLabel.highlightedTextColor = DEFAULTNAVCOLOR;
-        cell.backgroundColor = FUNCTCOLOR(243, 243, 243);
-        
         cell.selectedBackgroundView = [self  tableSelectView];
     }
     ShopCategoryData* data = _dataArr[indexPath.row];
@@ -128,8 +139,8 @@
     ShopCategoryData* data = _dataArr[indexPath.row];
     NSMutableArray* subArr = data.subClass;
 
-    if ([self.delegate respondsToSelector:@selector(selectMainCateReturnSubClass:)]) {
-        [self.delegate selectMainCateReturnSubClass:subArr];
+    if ([self.delegate respondsToSelector:@selector(selectMainCateReturnSubClass:cateGoryID:)]) {
+        [self.delegate selectMainCateReturnSubClass:subArr cateGoryID:data.categoryID];
     }
 }
 
@@ -196,6 +207,23 @@
 {
     UIView* selectView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
     selectView.backgroundColor = [UIColor whiteColor];
+    
+    UIView* separateUp = [[UIView alloc]init];
+    separateUp.translatesAutoresizingMaskIntoConstraints = NO;
+    separateUp.backgroundColor = FUNCTCOLOR(221, 221, 221);
+    [selectView addSubview:separateUp];
+    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-5-[separateUp]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separateUp)]];
+     [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[separateUp(0.5)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separateUp)]];
+    
+    
+    UIView* separateDown = [[UIView alloc]init];
+    separateDown.translatesAutoresizingMaskIntoConstraints = NO;
+    separateDown.backgroundColor = separateUp.backgroundColor;
+    [selectView addSubview:separateDown];
+    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-5-[separateDown]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separateDown)]];
+    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separateDown(0.5)]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separateDown)]];
+    
+    
     UIView* colorView = [[UIView alloc]init];
     colorView.backgroundColor = DEFAULTNAVCOLOR;
     colorView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -203,6 +231,7 @@
     
     [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[colorView(5)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(colorView)]];
     [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[colorView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(colorView)]];
+    
     return selectView;
 }
 

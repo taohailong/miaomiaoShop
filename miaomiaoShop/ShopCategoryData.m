@@ -12,4 +12,5 @@
 @synthesize products,categoryID,categoryName;
 @synthesize subClass,type;
 @synthesize select;
+@synthesize fatherID;
 @end

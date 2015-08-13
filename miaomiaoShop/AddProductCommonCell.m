@@ -13,18 +13,16 @@
 }
 @end
 @implementation AddProductCommonCell
--(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier WithFieldBk:(TextFieldBk)bk
+-(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-
-    _fieldBk = bk;
-
     
     _textLabel = [[UILabel alloc]init];
+    _textLabel.textColor = FUNCTCOLOR(102, 102, 102);
     _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_textLabel];
-    _textLabel.font= [UIFont systemFontOfSize:14];
+    _textLabel.font= DEFAULTFONT(16);
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-14-[_textLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_textLabel)]];
 
@@ -35,17 +33,18 @@
     
     
     _contentField = [[UITextField alloc]init];
-    _contentField.font = [UIFont systemFontOfSize:14.0];
+    _contentField.textColor = FUNCTCOLOR(153, 153, 153);
+    _contentField.font = [UIFont systemFontOfSize:15.0];
     _contentField.translatesAutoresizingMaskIntoConstraints = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextFieldTextDidChangeNotification object:_contentField];
     
-    _contentField.borderStyle = UITextBorderStyleRoundedRect;
+    _contentField.borderStyle = UITextBorderStyleNone;
     _contentField.returnKeyType = UIReturnKeyDone;
     
     [self.contentView addSubview:_contentField];
     //
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_textLabel]-5-[_contentField]-20-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_textLabel,_contentField)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_textLabel]-5-[_contentField]-15-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_textLabel,_contentField)]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_contentField attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
     [_contentField setContentCompressionResistancePriority:UILayoutPriorityFittingSizeLevel forAxis:UILayoutConstraintAxisHorizontal];
 
@@ -100,9 +99,14 @@
         
         _fieldBk(_contentField.text);
     }
-
-   NSLog(@"field is %@ ",_contentField.text);
 }
+
+
+-(void)setTextFieldBk:(TextFieldBk)bk
+{
+    _fieldBk = bk;
+}
+
 
 -(void)dealloc
 {

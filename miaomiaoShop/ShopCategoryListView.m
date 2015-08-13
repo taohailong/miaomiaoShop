@@ -33,6 +33,7 @@
 {
     
     _table = [[UITableView alloc]initWithFrame:self.bounds style:UITableViewStylePlain];
+    _table.separatorColor = FUNCTCOLOR(221, 221, 221);
     [_table registerClass:[CateTableHeadView class] forHeaderFooterViewReuseIdentifier:@"CateTableHeadView"];
     [self addSubview:_table];
     _table.delegate = self;
@@ -161,11 +162,19 @@
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+        
+        if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+            [cell setSeparatorInset:UIEdgeInsetsZero];
+        }
+        
+        if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+            [cell setLayoutMargins:UIEdgeInsetsZero];
+        }
+
          cell.textLabel.font = DEFAULTFONT(14);
         cell.textLabel.textColor = FUNCTCOLOR(153, 153, 153);
         cell.textLabel.highlightedTextColor = DEFAULTNAVCOLOR;
         cell.backgroundColor = FUNCTCOLOR(243, 243, 243);
-        
         cell.selectedBackgroundView = [self  tableSelectView];
     }
     ShopCategoryData* data = _dataArr[indexPath.section];

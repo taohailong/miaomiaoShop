@@ -76,7 +76,111 @@
 }
 
 
+-(void)getAllMainCategoryCompareToShopWithReturnBk:(NetApiReturnBlock)returnBk errBk:(NetApiErrorBlock)errBk failureBk:(NetApiFailureBlock)failureBk
+{
+    UserManager* user = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"console/api/category/all?shop_id=%@",user.shopID];
+    url = [self setUrlFormate:url];
+    
+    NetRequestApi* req = [[NetRequestApi alloc]init];
+    [req getMethodRequestStrUrl:url returnBlock:^(id returnValue) {
+        
+        NSMutableArray* backArr = [[NSMutableArray alloc]init];
+        NSArray* cateArr = returnValue[@"data"][@"categories"];
+        for (NSDictionary* dic in cateArr)
+        {
+            ShopCategoryData* cateData = [[ShopCategoryData alloc]init];
+            cateData.categoryID = dic[@"category_id"];
+            cateData.categoryName = dic[@"name"];
+            cateData.select = [dic[@"checked"] boolValue];
+            cateData.type = CategoryMainClass;
+            
+            [backArr addObject:cateData];
+        }
+        returnBk(backArr);
+        
+    } errorBlock:errBk failureBlock:failureBk];
+    [req startAsynchronous];
+
+}
+
+-(void)getAllSubCategoryCompareToShopWithFatherID:(NSString*)fatherID  returnBk:(NetApiReturnBlock)returnBk errBk:(NetApiErrorBlock)errBk failureBk:(NetApiFailureBlock)failureBk
+{
+    UserManager* user = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"console/api/category/all?shop_id=%@&category_id=%@",user.shopID,fatherID];
+    url = [self setUrlFormate:url];
+    
+    NetRequestApi* req = [[NetRequestApi alloc]init];
+    [req getMethodRequestStrUrl:url returnBlock:^(id returnValue) {
+        
+        NSMutableArray* backArr = [[NSMutableArray alloc]init];
+        NSArray* cateArr = returnValue[@"data"][@"categories"];
+        for (NSDictionary* dic in cateArr)
+        {
+            ShopCategoryData* cateData = [[ShopCategoryData alloc]init];
+            cateData.categoryID = dic[@"category_id"];
+            cateData.categoryName = dic[@"name"];
+            cateData.select = [dic[@"checked"] boolValue];
+            cateData.fatherID = [dic[@"parent_id"] stringValue];
+            cateData.type = CategorySubClass;
+            [backArr addObject:cateData];
+        }
+        returnBk(backArr);
+        
+    } errorBlock:errBk failureBlock:failureBk];
+    [req startAsynchronous];
+}
 
 
+-(void)updateShopAllMainCategory:(NSArray *)categorys returnBk:(NetApiReturnBlock)returnBk errBk:(NetApiErrorBlock)errBk failureBk:(NetApiFailureBlock)failureBk
+{
+    UserManager* user = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"console/api/category/update?shop_id=%@&category_ids=",user.shopID];
+    
+    
+    for (int i=0;i<categorys.count;i++) {
+        ShopCategoryData* data = categorys[i];
+        if (data.select == NO) {
+            continue;
+        }
+        
+        url = [NSString stringWithFormat:@"%@%@,",url,data.categoryID];
+    }
+    
+    if ([url hasSuffix:@","]) {
+        url = [url substringWithRange:NSMakeRange(0, url.length -1)];
+    }
+    url = [self setUrlFormate:url];
+    
+    NetRequestApi* req = [[NetRequestApi alloc]init];
+    [req getMethodRequestStrUrl:url returnBlock:returnBk errorBlock:errBk failureBlock:failureBk];
+    [req startAsynchronous];
+}
+
+
+
+-(void)updateShopAllSubCategory:(NSArray *)categorys fatherID:(NSString*)fatherID returnBk:(NetApiReturnBlock)returnBk errBk:(NetApiErrorBlock)errBk failureBk:(NetApiFailureBlock)failureBk
+{
+    UserManager* user = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"console/api/category/update?parent_id=%@&shop_id=%@&category_ids=",fatherID,user.shopID];
+    
+    for (int i=0;i<categorys.count;i++) {
+        ShopCategoryData* data = categorys[i];
+        if (data.select == NO) {
+            continue;
+        }
+        url = [NSString stringWithFormat:@"%@%@,",url,data.categoryID];
+    }
+    
+    if ([url hasSuffix:@","]) {
+        url = [url substringWithRange:NSMakeRange(0, url.length -1)];
+    }
+
+    url = [self setUrlFormate:url];
+    
+    NetRequestApi* req = [[NetRequestApi alloc]init];
+    [req getMethodRequestStrUrl:url returnBlock:returnBk errorBlock:errBk failureBlock:failureBk];
+    [req startAsynchronous];
+}
 
 @end

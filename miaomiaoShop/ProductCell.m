@@ -68,7 +68,7 @@
     [self.contentView addSubview:_priceL];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_productImageView]-5-[_priceL]-5-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productImageView,_priceL)]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_priceL]-3-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_priceL)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_priceL]-7-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_priceL)]];
     
     _statueLabel = [[UILabel alloc]init];
     _statueLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -91,7 +91,7 @@
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_delectBt]-15-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_delectBt)]];
     
-     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_delectBt]-15-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_delectBt)]];
+      [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_delectBt attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_priceL attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
     
     
     _upBt = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -102,7 +102,7 @@
     _upBt.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_upBt];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_upBt]-15-[_delectBt]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_upBt,_delectBt)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_upBt]-10-[_delectBt]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_upBt,_delectBt)]];
     
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_upBt attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_delectBt attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
     
