@@ -41,10 +41,64 @@
    
 }
 
--(void)commitProductInfo
+//-(void)commitProductInfo
+//{
+//    [super commitProductInfo];
+//}
+-(void)creatBottomBt
 {
-    [super commitProductInfo];
+    UIButton* rightBt = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightBt setTitle:@"保存" forState:UIControlStateNormal];
+    [rightBt addTarget:self action:@selector(cancelAction) forControlEvents:UIControlEventTouchUpInside];
+    rightBt.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:rightBt];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:rightBt attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_table attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
+    
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[rightBt]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(rightBt)]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[rightBt]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(rightBt)]];
+    
+    [rightBt setBackgroundImage:[UIImage imageNamed:@"ButtonRedBack"] forState:UIControlStateNormal];
+    
+    
+    UIButton* middleBt = [UIButton buttonWithType:UIButtonTypeCustom];
+    middleBt.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:middleBt];
+    [middleBt setTitle:@"下架" forState:UIControlStateNormal];
+    [middleBt addTarget:self action:@selector(takeDownProduct) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:middleBt attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_table attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[middleBt(rightBt)]-0-[rightBt]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(middleBt,rightBt)]];
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[middleBt]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(middleBt)]];
+    
+    [middleBt setBackgroundImage:[UIImage imageNamed:@"ButtonRedLight"] forState:UIControlStateNormal];
+
+    
+    
+    UIButton* leftBt = [UIButton buttonWithType:UIButtonTypeCustom];
+    leftBt.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:leftBt];
+    [leftBt setTitle:@"取消" forState:UIControlStateNormal];
+    [leftBt addTarget:self action:@selector(saveAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:leftBt attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_table attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[leftBt(rightBt)]-0-[middleBt]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(leftBt,middleBt,rightBt)]];
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[leftBt]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(leftBt)]];
+    
+    [leftBt setBackgroundImage:[UIImage imageNamed:@"ButtonRedLighter"] forState:UIControlStateNormal];
 }
+
+-(void)takeDownProduct
+{
+    _productData.status = 0;
+    [self commitProductInfo];
+}
+
+
 
 //-(void)checkDifference
 //{
@@ -188,24 +242,15 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row ==3) {
+    if (indexPath.row ==2) {
         
         __weak ProductEditController* wSelf = self;
-        CategorySelectController* cateView = [[CategorySelectController alloc]initWithCompleteBk:^(NSString *categoryID, NSString *categoryName) {
-            [wSelf  setCategoryWithID:categoryID WithName:categoryName];
+        CategorySelectController* cateView = [[CategorySelectController alloc]initWithCompleteBk:^(ShopProductData* product) {
+            [wSelf  setSelectCategory:product];
         }];
+        
         [self.navigationController pushViewController:cateView animated:YES];
     }
-}
-
--(void)setCategoryWithID:(NSString*)cateID WithName:(NSString*)name
-{
-    self.infoChange = YES;
-    NSIndexPath* path = [NSIndexPath indexPathForRow:3 inSection:0];
-    UITableViewCell* cell = [_table cellForRowAtIndexPath:path];
-    cell.textLabel.text = [NSString stringWithFormat:@"分类：%@",name];
-    _productData.categoryID = cateID;
-    _productData.categoryName = name;
 }
 
 

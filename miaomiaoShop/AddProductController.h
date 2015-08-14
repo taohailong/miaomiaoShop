@@ -22,8 +22,9 @@ typedef void (^AddEditProduct)(void);
 }
 
 @property(nonatomic,assign)BOOL infoChange;
-
-
+-(void)cancelAction;
+-(void)saveAction;
+-(void)setSelectCategory:(ShopProductData*)product;
 -(void)commitProductInfo;
 -(void)setCompleteBk:(AddEditProduct)bk;
 -(void)commitCompleteBack;

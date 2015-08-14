@@ -108,10 +108,11 @@
 {
     __weak ShopProductListView* wProductV = _productView;
     __weak NSString* wCategoryID = _currentCategoryID;
-     __weak NSString* wCateName = _currentCateName;
+//     __weak NSString* wCateName = _currentCateName;
     AddProductController* addProduct = [[AddProductController alloc]init];
     [addProduct setCompleteBk:^{
-        [wProductV  setCategoryIDToGetData:wCategoryID categoryName:wCateName];
+//        [wProductV setMainCategoryName:wCateName];
+        [wProductV  setCategoryIDToGetData:wCategoryID];
     }];
     addProduct.hidesBottomBarWhenPushed = YES;
     
@@ -141,44 +142,23 @@
 
 
 
--(void)initNetData
-{
-    __weak ShopObjectController* wself = self;
-    THActivityView* loadV = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
-    NetWorkRequest* categoryReq = [[NetWorkRequest alloc]init];
-    [categoryReq shopGetCategoryWithCallBack:^(NSMutableArray* backDic, NetWorkStatus status) {
-        
-        [loadV removeFromSuperview];
-        if (status == NetWorkStatusErrorCanntConnect) {
-            THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wself.view];
-            
-            [loadView setErrorBk:^{
-                [wself initNetData];
-            }];
-            return ;
-        }
-        
-        [_categoryView setDataArrAndSelectOneRow :backDic];
-        
-        if (status == NetWorkStatusSuccess) {
-            
-            ShopCategoryData* firstData = backDic[0];
-            _currentCateName = firstData.categoryName;
-            _currentCategoryID = firstData.categoryID;
-            [_productView setCategoryIDToGetData:firstData.categoryID categoryName:_currentCateName];
-        }
-    }];
-    [categoryReq startAsynchronous];
-    
-}
 
+#pragma mark -mainCategoryDelegate
 
--(void)didSelectCategoryIndexWith:(NSString *)categoryID WithName:(NSString *)name
+-(void)didSelectSubCategory:(NSString *)categoryID WithName:(NSString *)name
 {
     _currentCategoryID = categoryID;
-    _currentCateName = name;
-    [_productView setCategoryIDToGetData:categoryID categoryName:_currentCateName];
+    [_productView setCategoryIDToGetData:categoryID];
 }
+
+-(void)didSelectMainCategory:(NSString *)categoryID WithName:(NSString *)name
+{
+    _currentCateName = name;
+    [_productView setMainCategoryName:name];
+}
+
+
+#pragma mark-ProductSelectDelegate
 
 -(void)didSelectProductIndex:(ShopProductData*)product
 {
@@ -189,7 +169,6 @@
     editController.hidesBottomBarWhenPushed = YES;
     [editController setCompleteBk:^{
         [wProductV  reloadTable];
-
     }];
     [self.navigationController pushViewController:editController animated:YES];
 }

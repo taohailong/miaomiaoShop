@@ -124,7 +124,7 @@
     title.highlightedTextColor = DEFAULTNAVCOLOR;
     title.text = cate.categoryName;
     
-    [head setAccessImage:@"navBar_narrow" selectImage:@"narrow_down"];
+    [head setAccessImage:@"navBar_narrow" selectImage:@"narrow_down_red"];
     
     if (_flag[section] ==1) {
         [head setSelectView];
@@ -189,13 +189,19 @@
 
 -(void)tableViewHeadSelectAtSection:(NSInteger)section
 {
-//    _flag[_currentSection] = 0;
     _flag[section] = !_flag[section];
     _currentSection = section;
     
     NSIndexSet* index = [NSIndexSet indexSetWithIndex:_currentSection];
-//    [_table reloadData];
     [_table reloadSections:index withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+//    ShopCategoryData* data = _dataArr[_currentSection];
+//    
+//    if ([self.delegate respondsToSelector:@selector(didSelectMainCategory:WithName:)]) {
+//        
+//        [self.delegate didSelectMainCategory:data.categoryID WithName:data.categoryName];
+//    }
+
 }
 
 
@@ -204,11 +210,17 @@
    
     ShopCategoryData* data = _dataArr[indexPath.section];
     ShopCategoryData* subData = data.subClass[indexPath.row];
-    NSString* categoryID = subData == nil ? data.categoryID:subData.categoryID;
-    if ([self.delegate respondsToSelector:@selector(didSelectCategoryIndexWith:WithName:)]) {
+    if ([self.delegate respondsToSelector:@selector(didSelectSubCategory:WithName:)]) {
         
-        [self.delegate didSelectCategoryIndexWith: categoryID WithName: data.categoryName];
+        [self.delegate didSelectSubCategory: subData.categoryID WithName: subData.categoryName];
     }
+    
+    
+    if ([self.delegate respondsToSelector:@selector(didSelectMainCategory:WithName:)]) {
+        
+        [self.delegate didSelectMainCategory:data.categoryID WithName:data.categoryName];
+    }
+
 }
 
 
@@ -320,7 +332,6 @@
     selectView.backgroundColor = [UIColor whiteColor];
     return selectView;
 }
-
 
 
 -(void)dealloc

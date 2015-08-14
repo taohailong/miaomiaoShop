@@ -70,6 +70,12 @@
 {
     return _titleLabel;
 }
+
+-(void)setSearchBk:(TextFieldSearchBk)bk
+{
+    _searchBk = bk;
+
+}
 -(void)setTextFieldBk:(TextFieldBk)bk
 {
     _fieldBk = bk;
@@ -86,6 +92,19 @@
     _contentField.text  = fieldStr;
 }
 
+#pragma mark- textFieldDelegate
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    if (textField.text.length==0) {
+        return YES;
+    }
+    
+    if (_searchBk) {
+        _searchBk(textField.text);
+    }
+    return YES;
+}
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {

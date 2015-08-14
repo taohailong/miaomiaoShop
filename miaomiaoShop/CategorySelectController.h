@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-typedef void (^CategorySelectBk)(NSString* categoryID,NSString*categoryName);
-@interface CategorySelectController : UIViewController
+#import "ManageCategoryController.h"
+#import "ShopCategoryData.h"
+typedef void (^CategorySelectBk)(ShopProductData* product);
+@interface CategorySelectController : ManageCategoryController
 {
+    ShopProductData* _product;
     CategorySelectBk _completeBk;
 }
 -(id)initWithCompleteBk:(CategorySelectBk)bk

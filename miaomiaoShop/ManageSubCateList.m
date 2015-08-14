@@ -8,7 +8,7 @@
 
 #import "ManageSubCateList.h"
 #import "OneLabelTableHeadView.h"
-#import "ShopCategoryData.h"
+
 @implementation ManageSubCateList
 
 -(id)init
@@ -21,6 +21,17 @@
 
 -(void)creatTableView
 {
+    
+    UIView* verticalSeparate = [[UIView alloc]init];
+    verticalSeparate.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:verticalSeparate];
+    
+    verticalSeparate.backgroundColor = FUNCTCOLOR(221, 221, 221);
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[verticalSeparate]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(verticalSeparate)]];
+    
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[verticalSeparate(0.5)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(verticalSeparate)]];
+
+    
     _table = [[UITableView alloc]initWithFrame:self.bounds style:UITableViewStylePlain];
     _table.backgroundColor = FUNCTCOLOR(243, 243, 243);
     _table.separatorColor = FUNCTCOLOR(221,221, 221);
@@ -41,7 +52,7 @@
     
     
     _table.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0.5-[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
     
 }
@@ -57,13 +68,25 @@
     _dataArr = dataArr;
     [_table reloadData];
     
-    if (_dataArr.count) {
-        [_table scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:YES];
+    if (dataArr.count==0) {
+        return;
     }
+    if (_dataArr.count -1<_currentIndex) {
+        _currentIndex = 0;
+    }
+
+    [_table scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:YES];
     [self addLoadMoreViewWithCount:dataArr.count];
 }
 
-
+-(ShopCategoryData*)getCurrentCategory
+{
+    if (_dataArr.count ==0) {
+        return nil;
+    }
+    ShopCategoryData* data = _dataArr[_currentIndex];
+    return data;
+}
 
 -(void)addLoadMoreViewWithCount:(int)count
 {
@@ -135,6 +158,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    _currentIndex = indexPath.row;
 //    if ([self.delegate respondsToSelector:@selector(didSelectProductIndex:)]) {
 //        ShopProductData* data = _dataArr[indexPath.row];
 //        [self.delegate didSelectProductIndex:data];

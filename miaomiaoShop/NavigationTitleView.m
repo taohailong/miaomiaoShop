@@ -55,7 +55,7 @@
     [self addConstraint:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_textLabel attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
     
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_textLabel]-[imageView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_textLabel,imageView)]];
-    imageView.image = [UIImage imageNamed:@"navBar_narrow"];
+    imageView.image = [UIImage imageNamed:@"narrow_down"];
     
 
     

@@ -40,7 +40,7 @@
 
 -(void)setProductImage:(UIImage *)image
 {
-//    _pBt.image = image;
+    [_pBt setImage:image forState:UIControlStateNormal];
 
 }
 

@@ -17,6 +17,8 @@
 @property(nonatomic,strong)NSString* pID;
 @property(nonatomic,strong)NSString* categoryName;
 @property(nonatomic,strong)NSString* categoryID;
+@property(nonatomic,strong)NSString* subCateID;
+@property(nonatomic,strong)NSString* subCateName;
 @property(nonatomic,strong)NSString* scanNu;
 @property(nonatomic,strong)NSString* score;
 @end

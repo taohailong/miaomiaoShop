@@ -49,9 +49,13 @@
     
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_mainCate attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_subCate attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
     
-    
-    
-    
+    [self creatBottomBt];
+ }
+
+
+
+-(void)creatBottomBt
+{
     _rightBt = [UIButton buttonWithType:UIButtonTypeCustom];
     [_rightBt setTitle:@"编辑二级分类" forState:UIControlStateNormal];
     [_rightBt addTarget:self action:@selector(editSubCategory) forControlEvents:UIControlEventTouchUpInside];

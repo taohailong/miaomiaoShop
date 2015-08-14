@@ -129,12 +129,17 @@
 
 -(UIButton*)creatBtWithName:(NSString*)name
 {
-    CGSize size = [name sizeWithAttributes:@{NSFontAttributeName:DEFAULTFONT(16)}];
+    CGSize size = [name sizeWithAttributes:@{NSFontAttributeName:DEFAULTFONT(15)}];
+    
+    UIButton* bt = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    [bt setTitleEdgeInsets:UIEdgeInsetsMake(0, -15, 0, 25)];
+    
+    [bt setImageEdgeInsets:UIEdgeInsetsMake(0, size.width+10, 0, 0)];
+
     
     size.width += 33;
     size.height += 10;
-    UIButton* bt = [UIButton buttonWithType:UIButtonTypeCustom];
-    
     bt.layer.masksToBounds = YES;
     bt.layer.borderColor = DEFAULTNAVCOLOR.CGColor;
     bt.layer.borderWidth = 1;

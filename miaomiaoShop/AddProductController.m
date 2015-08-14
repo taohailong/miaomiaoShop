@@ -128,6 +128,13 @@
 
 -(void)saveAction
 {
+    if (_productData.categoryID==nil) {
+        
+        THActivityView* loadView = [[THActivityView alloc]initWithString:@"请选择分类"];
+        [loadView show];
+        return;
+    }
+    
     [self networkRequestApi];
 }
 
@@ -286,15 +293,15 @@
     if (indexPath.row==0)
     {
       AddProductFirstCell* cell1 = [tableView dequeueReusableCellWithIdentifier:@"AddProductFirstCell"];
-       [cell1 setTextFieldBk:^(NSString *text) {
-            wData.scanNu = text;
-       }];
+        [cell1 setSearchBk:^(NSString *text) {
+            [wSelf getProductDataThroughScanNu:text];
+        }];
        [cell1 setCellBtBk:^{
            [wSelf setUpScanViewController];
        }];
         UITextField* field = [cell1  getTextField];
         field.placeholder = @"请输入或扫描条形码";
-        
+        field.returnKeyType = UIReturnKeySearch;
     
         UILabel* title = [cell1 getTitleLabel];
         title.textColor = FUNCTCOLOR(102, 102, 102);
@@ -309,7 +316,9 @@
         [cell2 setTextFieldBk:^(NSString *text) {
             wData.pName = text;
         }];
-        
+        UITextField* field = [cell2  getTextField];
+        field.placeholder = @"请输入商品名称";
+
         [cell2 setTextField:_productData.pName];
         [cell2 setTextTitleLabel:@"商品名称"]  ;
         return cell2;
@@ -321,11 +330,14 @@
        [cell3 setTextFieldBk:^(NSString *text) {
            wData.price = [text floatValue];
        }];
-//       UITextField* field = [cell3 gestureRecognizer:<#(UIGestureRecognizer *)#> shouldRecognizeSimultaneouslyWithGestureRecognizer:<#(UIGestureRecognizer *)#>]
+       UITextField* field = [cell3  getTextField];
+       field.placeholder = @"请输入价格";
 
        [cell3 setFieldKeyboardStyle:UIKeyboardTypeDecimalPad];
-       [cell3 setTextTitleLabel:@"商品售价"]  ;
-       [cell3 setTextField:[NSString stringWithFormat:@"%.1f", _productData.price]];
+       [cell3 setTextTitleLabel:@"商品售价"];
+       if (_productData.price) {
+          [cell3 setTextField:[NSString stringWithFormat:@"%.1f", _productData.price]];
+       }
        return cell3;
     }
     else
@@ -336,7 +348,7 @@
         UILabel* second = [cell getSecondLabel];
         first.text = @"商品分类";
         if (_productData.categoryName) {
-            second.text = [NSString stringWithFormat:@"%@-%@",_productData.categoryName,_productData.categoryName];
+            second.text = [NSString stringWithFormat:@"%@-%@",_productData.categoryName,_productData.subCateName];
         }
         
         return cell ;
@@ -346,12 +358,11 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row ==4) {
+    if (indexPath.row ==2) {
         
         __weak AddProductController* wSelf = self;
-        CategorySelectController* cateView = [[CategorySelectController alloc]initWithCompleteBk:^(NSString *categoryID, NSString *categoryName) {
-            
-            [wSelf  setCategoryWithID:categoryID WithName:categoryName];
+        CategorySelectController* cateView = [[CategorySelectController alloc]initWithCompleteBk:^(ShopProductData* product) {
+            [wSelf  setSelectCategory:product];
         }];
         [self.navigationController pushViewController:cateView animated:YES];
     }
@@ -368,16 +379,33 @@
 
 
 
--(void)setCategoryWithID:(NSString*)cateID WithName:(NSString*)name
+-(void)setSelectCategory:(ShopProductData*)product
 {
-    self.infoChange = YES;
-    NSIndexPath* path = [NSIndexPath indexPathForRow:4 inSection:0];
-    UITableViewCell* cell = [_table cellForRowAtIndexPath:path];
-    cell.textLabel.text = [NSString stringWithFormat:@"分类：%@",name];
-    _productData.categoryID = cateID;
-    _productData.categoryName = name;
+    NSIndexPath* path = [NSIndexPath indexPathForRow:2 inSection:0];
+    AddProductTwoLabelCell* cell = (AddProductTwoLabelCell*)[_table cellForRowAtIndexPath:path];
+    
+    NSString* cateName = nil;
+    if (product.subCateName&&product.categoryName)
+    {
+        cateName = [NSString stringWithFormat:@"%@-%@",product.categoryName,product.subCateName];
+        _productData.categoryID = _productData.subCateID;
+    }
+    else if (product.categoryName) {
+        cateName = product.categoryName;
+        _productData.categoryID = _productData.categoryID;
+    }
+    
+    else
+    {   _productData.categoryID = _productData.subCateID;
+        cateName = product.subCateName;
+    }
+    
+    UILabel* second = [cell getSecondLabel];
+    second.text = cateName;
 }
 
+
+#pragma mark-ImagePicker
 
 -(void)setUpPhoto
 {
@@ -396,7 +424,6 @@
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
-    self.infoChange = YES;
 
     UIImage* image=[info objectForKey:UIImagePickerControllerOriginalImage];
     
@@ -404,7 +431,7 @@
         _thumbImage = [UIImage imageByScalingAndCroppingForSize:CGSizeMake(200, 200) and:image];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSIndexPath* path = [NSIndexPath indexPathForRow:5 inSection:0];
+            NSIndexPath* path = [NSIndexPath indexPathForRow:0 inSection:1];
             AddProductPictureCell* cell = (AddProductPictureCell*)[_table cellForRowAtIndexPath:path];
             
             [cell setProductImage:_thumbImage];
@@ -413,6 +440,9 @@
     
 }
 
+
+#pragma mark------------scanDelegate---------------
+
 -(void)setUpScanViewController
 {
     if (!IOS_VERSION_5_OR_ABOVE) {
@@ -420,20 +450,47 @@
         [alert show];
         return;
     }
+
     ScanViewController* scan = [[ScanViewController alloc]init];
     scan.delegate = self;
-    [self presentViewController:scan animated:YES completion:^{
-        
-    }];
-
+    [self presentViewController:scan animated:YES completion:^{}];
 }
 
-#pragma mark------------scanDelegate---------------
+
 -(void)scanActionCompleteWithResult:(NSString *)string
 {
     [self getProductDataThroughScanNu:string];
 
 }
+
+-(void)getProductDataThroughScanNu:(NSString*)string
+{
+    THActivityView* alert = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
+    
+    NetWorkRequest* requ = [[NetWorkRequest alloc]init];
+    [requ shopScanProductWithSerial:string WithBk:^(ShopProductData* backDic, NetWorkStatus status) {
+        
+        [alert removeFromSuperview];
+        if (status == NetWorkStatusSuccess) {
+            _productData.pName = backDic.pName;
+            _productData.pID = backDic.pID;
+            //            _productData.categoryID = backDic.categoryID;
+            //            _productData.categoryName = backDic.categoryName;
+            _productData.pUrl = backDic.pUrl;
+            _productData.count = backDic.count;
+            _productData.price = backDic.price;
+            //            _productData.status = backDic.status;
+            _productData.scanNu = backDic.scanNu;
+            //            _productData = backDic;
+            [_table reloadData];
+        }
+        
+    }];
+    [requ startAsynchronous];
+}
+
+
+
 
 
 -(void)commitProductInfo
@@ -524,31 +581,6 @@
 }
 
 
--(void)getProductDataThroughScanNu:(NSString*)string
-{
-    THActivityView* alert = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
-
-    NetWorkRequest* requ = [[NetWorkRequest alloc]init];
-    [requ shopScanProductWithSerial:string WithBk:^(ShopProductData* backDic, NetWorkStatus status) {
-        
-        [alert removeFromSuperview];
-        if (status == NetWorkStatusSuccess) {
-            _productData.pName = backDic.pName;
-            _productData.pID = backDic.pID;
-//            _productData.categoryID = backDic.categoryID;
-//            _productData.categoryName = backDic.categoryName;
-            _productData.pUrl = backDic.pUrl;
-            _productData.count = backDic.count;
-            _productData.price = backDic.price;
-//            _productData.status = backDic.status;
-            _productData.scanNu = backDic.scanNu;
-//            _productData = backDic;
-            [_table reloadData];
-        }
-        
-    }];
-    [requ startAsynchronous];
-}
 
 
 - (void)setExtraCellLineHidden: (UITableView *)tableView

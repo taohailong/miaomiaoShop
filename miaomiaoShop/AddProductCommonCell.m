@@ -33,6 +33,7 @@
     
     
     _contentField = [[UITextField alloc]init];
+    _contentField.textAlignment = NSTextAlignmentRight;
     _contentField.textColor = FUNCTCOLOR(153, 153, 153);
     _contentField.font = [UIFont systemFontOfSize:15.0];
     _contentField.translatesAutoresizingMaskIntoConstraints = NO;
@@ -52,6 +53,13 @@
 
     return self;
 }
+
+
+-(UITextField*)getTextField
+{
+    return _contentField;
+}
+
 -(NSString*)getTextFieldString
 {
     return _contentField.text;

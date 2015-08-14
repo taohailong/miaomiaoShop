@@ -9,7 +9,7 @@
 #import "ManageMainCateList.h"
 #import "OneLabelTableHeadView.h"
 #import "THActivityView.h"
-#import "ShopCategoryData.h"
+
 #import "ShopObjectApi.h"
 
 @implementation ManageMainCateList
@@ -53,7 +53,14 @@
 -(void)setDataArrAndSelectOneRow:(NSMutableArray *)dataArr
 {
     [self setDataArr:dataArr];
-    [_table selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
+//     _currentIndex = 0;
+    if (dataArr.count==0) {
+        return;
+    }
+    if (_dataArr.count -1<_currentIndex) {
+        _currentIndex = 0;
+    }
+    [_table selectRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
 }
 
 -(void)setDataArr:(NSMutableArray *)dataArr
@@ -66,6 +73,17 @@
     [_table reloadData];
 }
 
+
+-(ShopCategoryData*)getSelectCategory
+{
+    if (_dataArr.count ==0) {
+        return nil;
+    }
+
+    ShopCategoryData* data = _dataArr[_currentIndex];
+    
+    return data;
+}
 
 #pragma mark-table
 
@@ -137,6 +155,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ShopCategoryData* data = _dataArr[indexPath.row];
+    _currentIndex = indexPath.row;
     NSMutableArray* subArr = data.subClass;
 
     if ([self.delegate respondsToSelector:@selector(selectMainCateReturnSubClass:cateGoryID:)]) {

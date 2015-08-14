@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ShopCategoryData.h"
+
 @class ManageMainCateList;
 @protocol ManageMainCateListProtocol <NSObject>
 
@@ -15,10 +17,12 @@
 @end
 @interface ManageMainCateList : UIView<UITableViewDataSource,UITableViewDelegate>
 {
+    NSInteger _currentIndex;
     UITableView* _table;
     NSMutableArray *_dataArr;
 }
 @property(nonatomic,weak)id<ManageMainCateListProtocol> delegate;
 -(void)initNetData;
 -(void)setProductEditStyle:(BOOL)flag;
+-(ShopCategoryData*)getSelectCategory;
 @end

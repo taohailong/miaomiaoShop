@@ -14,7 +14,7 @@
 #import "UserManager.h"
 #import "THActivityView.h"
 #import "OneLabelTableHeadView.h"
-
+#import "ShopObjectApi.h"
 @interface ShopProductListView()
 {
     NSMutableArray* _dataArr;
@@ -47,6 +47,18 @@
 
 -(void)creatTableView
 {
+    UIView* verticalSeparate = [[UIView alloc]init];
+    verticalSeparate.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:verticalSeparate];
+    
+    verticalSeparate.backgroundColor = FUNCTCOLOR(221, 221, 221);
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[verticalSeparate]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(verticalSeparate)]];
+    
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[verticalSeparate(0.5)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(verticalSeparate)]];
+    
+    
+    
+    
     _table = [[UITableView alloc]initWithFrame:self.bounds style:UITableViewStylePlain];
     _table.separatorColor = FUNCTCOLOR(221, 221, 221);
     [_table registerClass:[OneLabelTableHeadView class] forHeaderFooterViewReuseIdentifier:@"OneLabelTableHeadView"];
@@ -65,7 +77,7 @@
     
     
     _table.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0.5-[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_table]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_table)]];
 
 }
@@ -75,9 +87,16 @@
     [_table reloadData];
 }
 
--(void)setCategoryIDToGetData:(NSString *)categoryID categoryName:(NSString *)cateName
+-(void)setMainCategoryName:(NSString*)name
 {
-    _cateName = cateName;
+    _cateName = name;
+    [_table reloadData];
+}
+
+
+-(void)setCategoryIDToGetData:(NSString *)categoryID
+{
+   
     __weak ShopProductListView* wSelf = self;
     self.isLoading = NO;
     
@@ -96,7 +115,7 @@
             THActivityView* loadView = [[THActivityView alloc]initWithNetErrorWithSuperView:wSelf.superview];
             
             [loadView setErrorBk:^{
-                [wSelf setCategoryIDToGetData:categoryID categoryName:cateName];
+                [wSelf setCategoryIDToGetData:categoryID];
             }];
             return ;
         }
@@ -251,7 +270,7 @@
         }
         else
         {
-            [wself moveCellAtIndex:row ToIndex:0];
+            [wself moveCellToTopAtIndex:row];
         }
         
     }];
@@ -279,12 +298,6 @@
     return NO;
 }
 
-
-//-(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    return YES;
-//}
-
 -(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return UITableViewCellEditingStyleNone;
@@ -292,37 +305,57 @@
 
 -(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
 {
-  
+    ShopProductData* sourceData = _dataArr[sourceIndexPath.row];
+    
+    ShopProductData* destinationData = _dataArr[destinationIndexPath.row];
+
+    
+    THActivityView* loadView = [[THActivityView alloc]initActivityViewWithSuperView:self.superview];
+
+    __weak UITableView* wtable = _table;
+    __weak ShopProductListView* wSelf = self;
+    
+    NSInteger sIndex = sourceIndexPath.row;
+    NSInteger dIndex = destinationIndexPath.row;
+    
+    ShopObjectApi* req = [[ShopObjectApi alloc]init];
+    [req sortProductIndex:sourceData toIndex:destinationData.score returnBk:^(id returnValue) {
+        
+        [loadView removeFromSuperview];
+        [wSelf moveDataFromIndex:sIndex toDestinationIndex:dIndex];
+        
+    } errBk:^(NetApiErrType errCode, NSString* errMes) {
+        
+        [loadView removeFromSuperview];
+        [wtable reloadData];
+        THActivityView* messageShow = [[THActivityView alloc]initWithString:errMes];
+        [messageShow show];
+
+    } failureBk:^(NSString *mes) {
+        
+        [loadView removeFromSuperview];
+        THActivityView* messageShow = [[THActivityView alloc]initWithString:mes];
+        [messageShow show];
+        [wtable reloadData];
+    }];
+        
+ }
+
+
+-(void)moveDataFromIndex:(NSInteger)sourceIndex toDestinationIndex:(NSInteger)destination
+{
+    if (destination==0) {
+        ShopProductData* data = _dataArr[sourceIndex];
+        [_dataArr removeObjectAtIndex:sourceIndex];
+        [_dataArr insertObject:data atIndex:0];
+        [_table reloadData];
+        return;
+    }
+    [_dataArr exchangeObjectAtIndex:sourceIndex withObjectAtIndex:destination];
 }
 
-//-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    
-//    if (editingStyle == UITableViewCellEditingStyleDelete)
-//    {
-//        THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.superview];
-//        __weak ShopProductListView* wSelf = self;
-//        ShopProductData* data = _dataArr[indexPath.row];
-//        NetWorkRequest* request = [[NetWorkRequest alloc]init];
-//        [request shopProductDeleteProductWithProductID:data.pID WithBk:^(id backDic, NetWorkStatus status) {
-//            
-//            NSString* str = nil;
-//            if (status == NetWorkStatusSuccess) {
-//                str = @"删除成功！";
-//                [wSelf deleteCategoryReloadTableWithIndex:indexPath];
-//            }
-//            else
-//            {
-//                str = backDic;
-//            }
-//            THActivityView* show = [[THActivityView alloc]initWithString:str];
-//            [show show];
-//            [activeV removeFromSuperview];
-//            
-//        }];
-//        [request startAsynchronous];
-//    }
-//}
+
+
 
 -(void)delectProductThroughNetAtIndex:(NSInteger)row
 {
@@ -357,9 +390,33 @@
 }
 
 
--(void)moveCellAtIndex:(NSInteger) fromRow ToIndex:(NSInteger) toRow
+-(void)moveCellToTopAtIndex:(NSInteger) fromRow
 {
-
+    ShopProductData* data = _dataArr[fromRow];
+    
+    THActivityView* loadView = [[THActivityView alloc]initActivityViewWithSuperView:self.superview];
+    
+    __weak ShopProductListView* wSelf = self;
+    
+    ShopObjectApi* req = [[ShopObjectApi alloc]init];
+    [req sortProductToTop:data returnBk:^(id returnValue) {
+        
+        [loadView removeFromSuperview];
+        [wSelf moveDataFromIndex:fromRow toDestinationIndex:0];
+        
+    } errBk:^(NetApiErrType errCode, NSString* errMes) {
+        
+        [loadView removeFromSuperview];
+        THActivityView* messageShow = [[THActivityView alloc]initWithString:errMes];
+        [messageShow show];
+        
+    } failureBk:^(NSString *mes) {
+        
+        [loadView removeFromSuperview];
+        THActivityView* messageShow = [[THActivityView alloc]initWithString:mes];
+        [messageShow show];
+    }];
+    
 
 }
 

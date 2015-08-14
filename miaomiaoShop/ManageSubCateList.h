@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "ShopCategoryData.h"
 @interface ManageSubCateList : UIView<UITableViewDelegate,UITableViewDataSource>
 {
+    NSInteger _currentIndex;
     NSMutableArray* _dataArr;
     UITableView* _table;
 }
 -(void)setDataArrReloadTable:(NSMutableArray *)dataArr;
 -(void)setProductEditStyle:(BOOL)flag;
+-(ShopCategoryData*)getCurrentCategory;
 @end

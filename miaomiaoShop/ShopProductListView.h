@@ -20,7 +20,9 @@
     UITableView* _table;
 }
 @property(nonatomic,weak)IBOutlet id<ShopProductListProtocol>delegate;
--(void)setCategoryIDToGetData:(NSString*)categoryID categoryName:(NSString*)cateName;
+
+-(void)setMainCategoryName:(NSString*)name;
+-(void)setCategoryIDToGetData:(NSString*)categoryID;
 -(void)setProductEditStyle:(BOOL)flag;
 -(void)reloadTable;
 //-(void)setDataArrReloadTable:(NSMutableArray *)dataArr;

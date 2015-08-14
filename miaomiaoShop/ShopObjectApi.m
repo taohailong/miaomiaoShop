@@ -183,4 +183,30 @@
     [req startAsynchronous];
 }
 
+
+
+#pragma mark-sort
+
+-(void)sortProductIndex:(ShopProductData *)product toIndex:(NSString *)destinationIndex returnBk:(NetApiReturnBlock)returnBk errBk:(NetApiErrorBlock)errBk failureBk:(NetApiFailureBlock)failureBk
+{
+    UserManager* user = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"console/api/items/mv?shop_id=%@&item_id=%@&to_score=%@",user.shopID,product.pID,destinationIndex];
+    url = [self setUrlFormate:url];
+    
+    NetRequestApi* req = [[NetRequestApi alloc]init];
+    [req getMethodRequestStrUrl:url returnBlock:returnBk errorBlock:errBk failureBlock:failureBk];
+    [req startAsynchronous];
+}
+
+-(void)sortProductToTop:(ShopProductData *)product returnBk:(NetApiReturnBlock)returnBk errBk:(NetApiErrorBlock)errBk failureBk:(NetApiFailureBlock)failureBk
+{
+    UserManager* user = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"console/api/shopItem/sticky?shop_id=%@&itemId=%@&category_id=%@",user.shopID,product.pID,product.categoryID];
+    url = [self setUrlFormate:url];
+    
+    NetRequestApi* req = [[NetRequestApi alloc]init];
+    [req getMethodRequestStrUrl:url returnBlock:returnBk errorBlock:errBk failureBlock:failureBk];
+    [req startAsynchronous];
+
+}
 @end

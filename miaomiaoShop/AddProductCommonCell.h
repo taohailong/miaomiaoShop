@@ -15,7 +15,7 @@ typedef void (^TextFieldBk)(NSString*text);
     TextFieldBk _fieldBk;
 }
 -(void)setTextFieldBk:(TextFieldBk)bk;
-
+-(UITextField*)getTextField;
 -(void)registeFirstRespond;
 -(void)setTextField:(NSString*)fieldStr;
 -(void)setFieldKeyboardStyle:(UIKeyboardType)style;

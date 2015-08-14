@@ -11,4 +11,5 @@
 
 @implementation ShopProductData
 @synthesize pName,price,pUrl,count,status,pID,scanNu,categoryName,categoryID,score;
+@synthesize subCateID,subCateName;
 @end
