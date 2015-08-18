@@ -94,8 +94,9 @@
     }
     _dataArr = dataArr;
     
+    free(_flag);
     _flag = calloc(dataArr.count, sizeof(int));
-    _flag[0] = 1;
+//    _flag[0] = 1;
     [_table reloadData];
 }
 
@@ -175,7 +176,7 @@
         cell.textLabel.textColor = FUNCTCOLOR(153, 153, 153);
         cell.textLabel.highlightedTextColor = DEFAULTNAVCOLOR;
         cell.backgroundColor = FUNCTCOLOR(243, 243, 243);
-        cell.selectedBackgroundView = [self  tableSelectView];
+        cell.selectedBackgroundView = [self  tableCellSelectView];
     }
     ShopCategoryData* data = _dataArr[indexPath.section];
     
@@ -189,19 +190,30 @@
 
 -(void)tableViewHeadSelectAtSection:(NSInteger)section
 {
-    _flag[section] = !_flag[section];
+   
+    ShopCategoryData* data = _dataArr[section];
+    if (data.subClass.count==0)
+    {
+        if ([self.delegate respondsToSelector:@selector(didSelectSubCategory:WithName:)]) {
+            
+            [self.delegate didSelectSubCategory: data.categoryID WithName: data.categoryName];
+        }
+        
+        if ([self.delegate respondsToSelector:@selector(didSelectMainCategory:WithName:)]) {
+            
+            [self.delegate didSelectMainCategory:data.categoryID WithName:data.categoryName];
+        }
+    }
+     _flag[section] = !_flag[section];
+    
+     NSMutableIndexSet* index = [[NSMutableIndexSet alloc]initWithIndex:section];
+    if (_currentSection != section) {
+         _flag[_currentSection] = 0;
+        [index addIndex:_currentSection];
+    }
     _currentSection = section;
     
-    NSIndexSet* index = [NSIndexSet indexSetWithIndex:_currentSection];
     [_table reloadSections:index withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-//    ShopCategoryData* data = _dataArr[_currentSection];
-//    
-//    if ([self.delegate respondsToSelector:@selector(didSelectMainCategory:WithName:)]) {
-//        
-//        [self.delegate didSelectMainCategory:data.categoryID WithName:data.categoryName];
-//    }
-
 }
 
 
@@ -326,10 +338,60 @@
     
 }
 
+
+
+-(UIView*)tableCellSelectView
+{
+    UIView* selectView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
+    selectView.backgroundColor = [UIColor whiteColor];
+        
+//    UIView* separateUp = [[UIView alloc]init];
+//    separateUp.translatesAutoresizingMaskIntoConstraints = NO;
+//    separateUp.backgroundColor = FUNCTCOLOR(221, 221, 221);
+//    [selectView addSubview:separateUp];
+//    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-5-[separateUp]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separateUp)]];
+//        [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[separateUp(0.5)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separateUp)]];
+    
+        
+    UIView* separateDown = [[UIView alloc]init];
+    separateDown.translatesAutoresizingMaskIntoConstraints = NO;
+    separateDown.backgroundColor = FUNCTCOLOR(221, 221, 221);;
+    [selectView addSubview:separateDown];
+    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[separateDown]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separateDown)]];
+    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separateDown(0.5)]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separateDown)]];
+    
+    return selectView;
+}
+
+
 -(UIView*)tableSelectView
 {
     UIView* selectView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
     selectView.backgroundColor = [UIColor whiteColor];
+    
+    UIView* separateUp = [[UIView alloc]init];
+    separateUp.translatesAutoresizingMaskIntoConstraints = NO;
+    separateUp.backgroundColor = FUNCTCOLOR(221, 221, 221);
+    [selectView addSubview:separateUp];
+    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-5-[separateUp]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separateUp)]];
+    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[separateUp(0.5)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separateUp)]];
+    
+    
+    UIView* separateDown = [[UIView alloc]init];
+    separateDown.translatesAutoresizingMaskIntoConstraints = NO;
+    separateDown.backgroundColor = separateUp.backgroundColor;
+    [selectView addSubview:separateDown];
+    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-5-[separateDown]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separateDown)]];
+    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separateDown(0.5)]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separateDown)]];
+    
+    
+    UIView* colorView = [[UIView alloc]init];
+    colorView.backgroundColor = DEFAULTNAVCOLOR;
+    colorView.translatesAutoresizingMaskIntoConstraints = NO;
+    [selectView addSubview:colorView];
+    
+    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[colorView(5)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(colorView)]];
+    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[colorView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(colorView)]];
     return selectView;
 }
 

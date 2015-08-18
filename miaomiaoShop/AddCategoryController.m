@@ -133,16 +133,16 @@
     
     UIButton* bt = [UIButton buttonWithType:UIButtonTypeCustom];
     
-    [bt setTitleEdgeInsets:UIEdgeInsetsMake(0, -15, 0, 25)];
+    [bt setTitleEdgeInsets:UIEdgeInsetsMake(0, -21, 0, 25)];
     
-    [bt setImageEdgeInsets:UIEdgeInsetsMake(0, size.width+10, 0, 0)];
+    [bt setImageEdgeInsets:UIEdgeInsetsMake(0, size.width+9, 0, 0)];
 
     
-    size.width += 33;
+    size.width += 35;
     size.height += 10;
     bt.layer.masksToBounds = YES;
     bt.layer.borderColor = DEFAULTNAVCOLOR.CGColor;
-    bt.layer.borderWidth = 1;
+    bt.layer.borderWidth = 0.5;
     bt.layer.cornerRadius = 4;
     [bt setTitle:name forState:UIControlStateNormal];
     bt.titleLabel.font = DEFAULTFONT(15);

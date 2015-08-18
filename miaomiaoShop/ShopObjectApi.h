@@ -44,4 +44,7 @@
 
 -(void)sortProductToTop:(ShopProductData*)product returnBk:(NetApiReturnBlock)returnBk errBk:(NetApiErrorBlock)errBk failureBk:(NetApiFailureBlock)failureBk;;
 
+
+-(void)sortCategoryIndex:(ShopCategoryData*)category toIndex:(NSString*)destinationIndex returnBk:(NetApiReturnBlock)returnBk errBk:(NetApiErrorBlock)errBk failureBk:(NetApiFailureBlock)failureBk;
+
 @end

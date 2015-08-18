@@ -8,7 +8,8 @@
 
 #import "ManageSubCateList.h"
 #import "OneLabelTableHeadView.h"
-
+#import "THActivityView.h"
+#import "ShopObjectApi.h"
 @implementation ManageSubCateList
 
 -(id)init
@@ -33,7 +34,7 @@
 
     
     _table = [[UITableView alloc]initWithFrame:self.bounds style:UITableViewStylePlain];
-    _table.backgroundColor = FUNCTCOLOR(243, 243, 243);
+    _table.backgroundColor = FUNCTCOLOR(249, 249, 249);
     _table.separatorColor = FUNCTCOLOR(221,221, 221);
 
     [_table registerClass:[OneLabelTableHeadView class] forHeaderFooterViewReuseIdentifier:@"OneLabelTableHeadView"];
@@ -145,7 +146,9 @@
         if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
             [cell setLayoutMargins:UIEdgeInsetsZero];
         }
-
+        
+        cell.selectedBackgroundView = [self cellBackeView];
+        cell.textLabel.highlightedTextColor = DEFAULTNAVCOLOR;
         cell.backgroundColor = FUNCTCOLOR(249, 249, 249);
         cell.textLabel.font = DEFAULTFONT(15);
         cell.textLabel.textColor = FUNCTCOLOR(153, 153, 153);
@@ -165,6 +168,29 @@
 //    }
 }
 
+-(UIView*)cellBackeView
+{
+    UIView* selectView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
+    selectView.backgroundColor = [UIColor whiteColor];
+    
+    UIView* separateUp = [[UIView alloc]init];
+    separateUp.translatesAutoresizingMaskIntoConstraints = NO;
+    separateUp.backgroundColor = FUNCTCOLOR(221, 221, 221);
+    [selectView addSubview:separateUp];
+    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[separateUp]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separateUp)]];
+    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[separateUp(0.5)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separateUp)]];
+    
+    
+    UIView* separateDown = [[UIView alloc]init];
+    separateDown.translatesAutoresizingMaskIntoConstraints = NO;
+    separateDown.backgroundColor = separateUp.backgroundColor;
+    [selectView addSubview:separateDown];
+    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[separateDown]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separateDown)]];
+    [selectView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separateDown(0.5)]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separateDown)]];
+    
+    
+    return selectView;
+}
 
 #pragma mark-tableCell-Edit
 
@@ -187,45 +213,46 @@
 
 -(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
 {
+    ShopCategoryData* sourceData = _dataArr[sourceIndexPath.row];
     
+    ShopCategoryData* destinationData = _dataArr[destinationIndexPath.row];
+    
+    
+    THActivityView* loadView = [[THActivityView alloc]initActivityViewWithSuperView:self.superview];
+    
+    __weak UITableView* wtable = _table;
+    __weak ManageSubCateList* wSelf = self;
+    
+    NSInteger sIndex = sourceIndexPath.row;
+    NSInteger dIndex = destinationIndexPath.row;
+    
+    ShopObjectApi* req = [[ShopObjectApi alloc]init];
+    [req sortCategoryIndex:sourceData toIndex:destinationData.score returnBk:^(id returnValue) {
+        [loadView removeFromSuperview];
+        [wSelf moveDataFromIndex:sIndex toDestinationIndex:dIndex];
+        
+    } errBk:^(NetApiErrType errCode, NSString* errMes) {
+        
+        [loadView removeFromSuperview];
+        [wtable reloadData];
+        THActivityView* messageShow = [[THActivityView alloc]initWithString:errMes];
+        [messageShow show];
+        
+    } failureBk:^(NSString *mes) {
+        
+        [loadView removeFromSuperview];
+        THActivityView* messageShow = [[THActivityView alloc]initWithString:mes];
+        [messageShow show];
+        [wtable reloadData];
+    }];
 }
 
-//-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//
-//    if (editingStyle == UITableViewCellEditingStyleDelete)
-//    {
-//        THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.superview];
-//        __weak ShopProductListView* wSelf = self;
-//        ShopProductData* data = _dataArr[indexPath.row];
-//        NetWorkRequest* request = [[NetWorkRequest alloc]init];
-//        [request shopProductDeleteProductWithProductID:data.pID WithBk:^(id backDic, NetWorkStatus status) {
-//
-//            NSString* str = nil;
-//            if (status == NetWorkStatusSuccess) {
-//                str = @"删除成功！";
-//                [wSelf deleteCategoryReloadTableWithIndex:indexPath];
-//            }
-//            else
-//            {
-//                str = backDic;
-//            }
-//            THActivityView* show = [[THActivityView alloc]initWithString:str];
-//            [show show];
-//            [activeV removeFromSuperview];
-//
-//        }];
-//        [request startAsynchronous];
-//    }
-//}
 
-
-
-
--(void)moveCellAtIndex:(NSInteger) fromRow ToIndex:(NSInteger) toRow
+-(void)moveDataFromIndex:(NSInteger)sourceIndex toDestinationIndex:(NSInteger)destination
 {
-    
-    
+    [_dataArr exchangeObjectAtIndex:sourceIndex withObjectAtIndex:destination];
 }
+
+
 
 @end

@@ -191,10 +191,45 @@
 
 -(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
 {
+    ShopCategoryData* sourceData = _dataArr[sourceIndexPath.row];
     
+    ShopCategoryData* destinationData = _dataArr[destinationIndexPath.row];
+    
+    
+    THActivityView* loadView = [[THActivityView alloc]initActivityViewWithSuperView:self.superview];
+    
+    __weak UITableView* wtable = _table;
+    __weak ManageMainCateList* wSelf = self;
+    
+    NSInteger sIndex = sourceIndexPath.row;
+    NSInteger dIndex = destinationIndexPath.row;
+    
+    ShopObjectApi* req = [[ShopObjectApi alloc]init];
+    [req sortCategoryIndex:sourceData toIndex:destinationData.score returnBk:^(id returnValue) {
+        [loadView removeFromSuperview];
+        [wSelf moveDataFromIndex:sIndex toDestinationIndex:dIndex];
+        
+    } errBk:^(NetApiErrType errCode, NSString* errMes) {
+        
+        [loadView removeFromSuperview];
+        [wtable reloadData];
+        THActivityView* messageShow = [[THActivityView alloc]initWithString:errMes];
+        [messageShow show];
+        
+    } failureBk:^(NSString *mes) {
+        
+        [loadView removeFromSuperview];
+        THActivityView* messageShow = [[THActivityView alloc]initWithString:mes];
+        [messageShow show];
+        [wtable reloadData];
+    }];
 }
 
 
+-(void)moveDataFromIndex:(NSInteger)sourceIndex toDestinationIndex:(NSInteger)destination
+{
+    [_dataArr exchangeObjectAtIndex:sourceIndex withObjectAtIndex:destination];
+}
 
 
 -(void)initNetData

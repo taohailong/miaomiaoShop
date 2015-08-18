@@ -13,7 +13,7 @@ typedef enum _CategoryType{
 }CategoryType;
 @interface ShopCategoryData : NSObject
 
-//@property(nonatomic,assign)int selected;
+@property(nonatomic,strong)NSString* score;//排序权重
 @property(nonatomic,assign)CategoryType type;
 @property(nonatomic,strong)NSString* fatherID;
 @property(nonatomic,strong)NSMutableArray* subClass;

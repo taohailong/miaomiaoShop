@@ -273,9 +273,9 @@
     self = [super initWithFrame:CGRectMake(0, 0, size.width+10, 24)];
     if (self)
     {
-        self.backgroundColor = [UIColor blackColor];
+        self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.8];
         
-        self.layer.cornerRadius = 12;
+        self.layer.cornerRadius = 10;
         self.layer.masksToBounds = YES;
         
         UILabel* label = [[UILabel alloc]initWithFrame:self.bounds];

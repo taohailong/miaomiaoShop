@@ -13,7 +13,8 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
 //    self.textLabel.text = @"条形码:";
-    self.textLabel.font = [UIFont systemFontOfSize:14];
+    self.textLabel.font = [UIFont systemFontOfSize:16];
+    self.textLabel.textColor = FUNCTCOLOR(102, 102, 102);
     //
     _contentSwitch = [[TSwitch alloc]initWithFrame:CGRectMake(SCREENWIDTH-60, 10, 45, 25)];
 //    _contentSwitch = [[UISwitch alloc]initWithFrame:CGRectMake(0, 0, 45, 30)];

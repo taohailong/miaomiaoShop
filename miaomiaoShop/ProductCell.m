@@ -13,7 +13,7 @@
     UIImageView* _productImageView;
     UILabel* _titleL;
     UILabel* _priceL;
-    UILabel* _statueLabel;
+    UIImageView* _statueView;
     UIButton* _delectBt;
     UIButton* _upBt;
     ProductAction _bk;
@@ -70,16 +70,12 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_productImageView]-5-[_priceL]-5-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_productImageView,_priceL)]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_priceL]-7-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_priceL)]];
     
-    _statueLabel = [[UILabel alloc]init];
-    _statueLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addSubview:_statueLabel];
-    _statueLabel.backgroundColor = DEFAULTNAVCOLOR;
-    _statueLabel.textColor = [UIColor whiteColor];
-    _statueLabel.text = @"下架";
-    _statueLabel.font = [UIFont boldSystemFontOfSize:10.0];
-    _statueLabel.transform = CGAffineTransformMakeRotation(M_PI_4);
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_statueLabel(25)]-(-31)-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_statueLabel)]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-6-[_statueLabel(15)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_statueLabel)]];
+    _statueView = [[UIImageView alloc]init];
+    _statueView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:_statueView];
+    _statueView.image = [UIImage imageNamed:@"productcell_down"];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_statueView]-(0)-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_statueView)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_statueView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_statueView)]];
    
     
     _delectBt = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -110,7 +106,7 @@
 
 -(void)setProductOnOff:(BOOL)flag
 {
-    _statueLabel.hidden = flag;
+    _statueView.hidden = flag;
 }
 
 -(void)setPicUrl:(NSString *)url

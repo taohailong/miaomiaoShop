@@ -12,5 +12,6 @@
 @synthesize products,categoryID,categoryName;
 @synthesize subClass,type;
 @synthesize select;
+@synthesize score;
 @synthesize fatherID;
 @end

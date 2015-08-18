@@ -11,6 +11,14 @@
 #import "AddProductSwithCell.h"
 #import "AddProductCommonCell.h"
 #import "AddProductPictureCell.h"
+#import "AddProductTwoLabelCell.h"
+#import "UIImage+ZoomImage.h"
+#import "ScanViewController.h"
+#import "NetWorkRequest.h"
+#import "ShopProductData.h"
+#import "THActivityView.h"
+#import "CategorySelectController.h"
+
 @class ShopProductData;
 typedef void (^AddEditProduct)(void);
 @interface AddProductController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
@@ -22,6 +30,11 @@ typedef void (^AddEditProduct)(void);
 }
 
 @property(nonatomic,assign)BOOL infoChange;
+@property(nonatomic,readwrite)UIView* accessView;
+
+
+
+
 -(void)cancelAction;
 -(void)saveAction;
 -(void)setSelectCategory:(ShopProductData*)product;
@@ -30,5 +43,9 @@ typedef void (^AddEditProduct)(void);
 -(void)commitCompleteBack;
 -(void)setUpPhoto;
 -(void)postUpImageWithImage:(UIImage*)image WithBk:(void(^)(NSString * url))complete;
-//-(void)checkDifference;
+
+
+-(void)showSelectSheetView;
+-(void)setUpScanViewController;
+-(void)getProductDataThroughScanNu:(NSString*)string;
 @end

@@ -13,6 +13,7 @@
 #import "AddProductController.h"
 #import "ProductEditController.h"
 #import "THActivityView.h"
+#import "ProductInfoController.h"
 @interface ShopObjectController ()<ShopCategoryProtocol,ShopProductListProtocol>
 {
     NSMutableDictionary* _allProductDic;
@@ -155,6 +156,7 @@
 {
     _currentCateName = name;
     [_productView setMainCategoryName:name];
+    
 }
 
 
@@ -165,10 +167,10 @@
     __weak ShopProductListView* wProductV = _productView;
     
     product.categoryName = _currentCateName;
-    ProductEditController* editController = [[ProductEditController alloc]initWithProductData:product];
+    ProductInfoController* editController = [[ProductInfoController alloc]initWithProductData:product];
     editController.hidesBottomBarWhenPushed = YES;
     [editController setCompleteBk:^{
-        [wProductV  reloadTable];
+        [wProductV  reloadTableThroughNet];
     }];
     [self.navigationController pushViewController:editController animated:YES];
 }

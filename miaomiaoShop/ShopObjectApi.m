@@ -23,7 +23,7 @@
         for (NSDictionary* dic in cateArr)
         {
             ShopCategoryData* cateData = [[ShopCategoryData alloc]init];
-            cateData.categoryID = dic[@"category_id"];
+            cateData.categoryID = [dic[@"category_id"] stringValue];
             cateData.categoryName = dic[@"name"];
             cateData.type = CategoryMainClass;
             [backArr addObject:cateData];
@@ -50,10 +50,10 @@
         for (NSDictionary* dic in cateArr)
         {
             ShopCategoryData* cateData = [[ShopCategoryData alloc]init];
-            cateData.categoryID = dic[@"category_id"];
+            cateData.categoryID = [dic[@"category_id"] stringValue];
             cateData.categoryName = dic[@"name"];
             cateData.type = CategoryMainClass;
-            
+            cateData.score = [dic[@"score"] stringValue];
             [backArr addObject:cateData];
 
             
@@ -62,9 +62,10 @@
             for (NSDictionary* subDic in subCategory) {
                 
                 ShopCategoryData* cateSub = [[ShopCategoryData alloc]init];
-                cateSub.categoryID = subDic[@"category_id"];
+                cateSub.categoryID = [subDic[@"category_id"] stringValue];
                 cateSub.categoryName = subDic[@"name"];
                 cateSub.type = CategorySubClass;
+                cateSub.score = [subDic[@"score"] stringValue];
                 [back_sub addObject:cateSub];
             }
             cateData.subClass = back_sub;
@@ -90,7 +91,7 @@
         for (NSDictionary* dic in cateArr)
         {
             ShopCategoryData* cateData = [[ShopCategoryData alloc]init];
-            cateData.categoryID = dic[@"category_id"];
+            cateData.categoryID = [dic[@"category_id"] stringValue];
             cateData.categoryName = dic[@"name"];
             cateData.select = [dic[@"checked"] boolValue];
             cateData.type = CategoryMainClass;
@@ -118,10 +119,10 @@
         for (NSDictionary* dic in cateArr)
         {
             ShopCategoryData* cateData = [[ShopCategoryData alloc]init];
-            cateData.categoryID = dic[@"category_id"];
+            cateData.categoryID = [dic[@"category_id"] stringValue];
             cateData.categoryName = dic[@"name"];
             cateData.select = [dic[@"checked"] boolValue];
-            cateData.fatherID = [dic[@"parent_id"] stringValue];
+            cateData.fatherID = [dic[@"parent_id"]  stringValue];
             cateData.type = CategorySubClass;
             [backArr addObject:cateData];
         }
@@ -185,7 +186,7 @@
 
 
 
-#pragma mark-sort
+#pragma mark-sortProduct
 
 -(void)sortProductIndex:(ShopProductData *)product toIndex:(NSString *)destinationIndex returnBk:(NetApiReturnBlock)returnBk errBk:(NetApiErrorBlock)errBk failureBk:(NetApiFailureBlock)failureBk
 {
@@ -209,4 +210,22 @@
     [req startAsynchronous];
 
 }
+
+
+
+#pragma mark-sort Category
+
+-(void)sortCategoryIndex:(ShopCategoryData *)category toIndex:(NSString *)destinationIndex returnBk:(NetApiReturnBlock)returnBk errBk:(NetApiErrorBlock)errBk failureBk:(NetApiFailureBlock)failureBk
+{
+    UserManager* user = [UserManager shareUserManager];
+    NSString* url = [NSString stringWithFormat:@"console/api/category/mv?shop_id=%@&category_id=%@&to_score=%@",user.shopID,category.categoryID,destinationIndex];
+    url = [self setUrlFormate:url];
+    
+    NetRequestApi* req = [[NetRequestApi alloc]init];
+    [req getMethodRequestStrUrl:url returnBlock:returnBk errorBlock:errBk failureBlock:failureBk];
+    [req startAsynchronous];
+
+}
+
+
 @end

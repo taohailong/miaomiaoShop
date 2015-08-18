@@ -55,7 +55,7 @@
         [_table setLayoutMargins:UIEdgeInsetsMake(0, 0, 0, 0)];
         _table.contentInset = UIEdgeInsetsMake(-35, 0, -20, 0);
     }
-
+    _table.separatorColor = FUNCTCOLOR(221, 221, 221);
     [_table registerClass:[AddProductSwithCell class] forCellReuseIdentifier:@"AddProductSwithCell"];
     [_table registerClass:[ShopInfoHeadCell class] forCellReuseIdentifier:@"ShopInfoHeadCell"];
     

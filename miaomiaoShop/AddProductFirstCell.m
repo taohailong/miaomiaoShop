@@ -50,7 +50,7 @@
     
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_titleLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
      [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_contentField]-5-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_contentField)]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_titleLabel]-5-[_contentField]-45-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_titleLabel,_contentField,_scanBt)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_titleLabel]-5-[_contentField]-48-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_titleLabel,_contentField,_scanBt)]];
     
     _contentField.font = [UIFont systemFontOfSize:14];
     _contentField.returnKeyType = UIReturnKeyDone;

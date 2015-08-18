@@ -25,6 +25,7 @@
 -(void)setCategoryIDToGetData:(NSString*)categoryID;
 -(void)setProductEditStyle:(BOOL)flag;
 -(void)reloadTable;
+-(void)reloadTableThroughNet;
 //-(void)setDataArrReloadTable:(NSMutableArray *)dataArr;
 //-(void)addDataArr:(NSMutableArray*)da;
 @end

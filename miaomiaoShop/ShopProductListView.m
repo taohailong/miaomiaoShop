@@ -82,6 +82,13 @@
 
 }
 
+
+
+-(void)reloadTableThroughNet
+{
+    [self setCategoryIDToGetData:_currentCategoryID];
+}
+
 -(void)reloadTable
 {
     [_table reloadData];
@@ -276,7 +283,7 @@
     }];
     ShopProductData* data = _dataArr[indexPath.row];
     [cell setProductOnOff:data.status?YES:NO];
-    [cell setPriceStr:[NSString stringWithFormat:@"%.2f", data.price]];
+    [cell setPriceStr:[NSString stringWithFormat:@"%.1f", data.price]];
     [cell setTitleStr:data.pName];
     [cell setPicUrl:data.pUrl];
     return cell;
@@ -284,6 +291,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if ([self.delegate respondsToSelector:@selector(didSelectProductIndex:)]) {
          ShopProductData* data = _dataArr[indexPath.row];
         [self.delegate didSelectProductIndex:data];

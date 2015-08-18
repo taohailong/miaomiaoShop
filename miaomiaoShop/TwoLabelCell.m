@@ -21,6 +21,13 @@
     _secondLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_secondLabel];
     
+    _firstLabel.textColor = FUNCTCOLOR(102, 102, 102);
+    _firstLabel.font = DEFAULTFONT(16);
+    
+    _secondLabel.textColor = FUNCTCOLOR(153, 153, 153);
+    _secondLabel.font = DEFAULTFONT(15);
+
+    
     [self setLayout];
     return self;
 }

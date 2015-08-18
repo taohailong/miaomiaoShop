@@ -16,7 +16,7 @@
 
 @interface ProductEditController ()
 {
-//    ShopProductData* _productData;
+    ShopProductData* _editData;
 //    UITableView* _table;
 }
 @end
@@ -28,14 +28,27 @@
     self = [super init];
     
     _productData = data;
+    _editData = [[ShopProductData alloc]init];
+    _editData.categoryName =_productData.categoryName;
+    _editData.subCateName = _productData.subCateName;
+
+    _editData.pID = _productData.pID;
+    _editData.scanNu = _productData.scanNu;
+    _editData.subCateID = _productData.subCateID ;
+    _editData.categoryID = _productData.categoryID;
+    _editData.price = _productData.price;
+    _editData.status = _productData.status ;
+    _editData.pName =  _productData.pName;
+    _editData.pUrl = _productData.pUrl;
+    _editData.score = _productData.score;
+    
     return self;
 }
 
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"商品详情";
-    
+    self.title = @"编辑商品";
     
     [_table reloadData];
    
@@ -49,9 +62,10 @@
 {
     UIButton* rightBt = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBt setTitle:@"保存" forState:UIControlStateNormal];
-    [rightBt addTarget:self action:@selector(cancelAction) forControlEvents:UIControlEventTouchUpInside];
+    [rightBt addTarget:self action:@selector(saveAction) forControlEvents:UIControlEventTouchUpInside];
     rightBt.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:rightBt];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:rightBt attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0 constant:CGRectGetWidth(self.view.frame)/2]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:rightBt attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_table attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
     
     
@@ -61,44 +75,59 @@
     [rightBt setBackgroundImage:[UIImage imageNamed:@"ButtonRedBack"] forState:UIControlStateNormal];
     
     
-    UIButton* middleBt = [UIButton buttonWithType:UIButtonTypeCustom];
-    middleBt.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:middleBt];
-    [middleBt setTitle:@"下架" forState:UIControlStateNormal];
-    [middleBt addTarget:self action:@selector(takeDownProduct) forControlEvents:UIControlEventTouchUpInside];
     
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:middleBt attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_table attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[middleBt(rightBt)]-0-[rightBt]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(middleBt,rightBt)]];
-    
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[middleBt]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(middleBt)]];
-    
-    [middleBt setBackgroundImage:[UIImage imageNamed:@"ButtonRedLight"] forState:UIControlStateNormal];
-
     
     
     UIButton* leftBt = [UIButton buttonWithType:UIButtonTypeCustom];
     leftBt.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:leftBt];
     [leftBt setTitle:@"取消" forState:UIControlStateNormal];
-    [leftBt addTarget:self action:@selector(saveAction) forControlEvents:UIControlEventTouchUpInside];
+    [leftBt addTarget:self action:@selector(cancelAction) forControlEvents:UIControlEventTouchUpInside];
     
     
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:leftBt attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_table attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[leftBt(rightBt)]-0-[middleBt]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(leftBt,middleBt,rightBt)]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[leftBt]-0-[rightBt]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(leftBt,rightBt)]];
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[leftBt]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(leftBt)]];
     
     [leftBt setBackgroundImage:[UIImage imageNamed:@"ButtonRedLighter"] forState:UIControlStateNormal];
 }
 
--(void)takeDownProduct
+
+-(void)saveAction
 {
-    _productData.status = 0;
-    [self commitProductInfo];
+    if (_editData.categoryID ==nil)
+    {
+        THActivityView* loadView = [[THActivityView alloc]initWithString:@"请选择分类"];
+        [loadView show];
+        return;
+    }
+    
+     [self commitProductInfo];
 }
 
+-(void)cancelAction
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
+-(void)commitCompleteBack
+{
+    _productData.scanNu = _editData.scanNu;
+    _productData.price = _editData.price;
+    _productData.categoryID = _editData.categoryID;
+    _productData.pUrl = _editData.pUrl;
+    _productData.categoryName = _editData.categoryName;
+    _productData.subCateName = _editData.subCateName;
+    _productData.subCateID = _editData.subCateID;
+    _productData.pName = _editData.pName;
+    _productData.status = _editData.status;
+
+    if (_completeBk) {
+        _completeBk();
+    }
+     [self.navigationController popViewControllerAnimated:YES];
+}
 
 //-(void)checkDifference
 //{
@@ -116,20 +145,19 @@
 
 -(void)networkRequestApi
 {
-    
     __weak AddProductController* wSelf = self;
     THActivityView* activeV = [[THActivityView alloc]initActivityViewWithSuperView:self.view];
     NetWorkRequest* request = [[NetWorkRequest alloc]init];
-    [request shopProductUpdateWithProduct:_productData WithBk:^(id backDic, NetWorkStatus status) {
+    [request shopProductUpdateWithProduct:_editData WithBk:^(id backDic, NetWorkStatus status) {
         
         NSString* str = nil;
         if (status == NetWorkStatusSuccess) {
-            str = @"添加成功！";
+            str = @"修改成功";
             [wSelf commitCompleteBack];
         }
         else
         {
-            str = @"添加失败！";
+            str = @"修改失败";
         }
         THActivityView* show = [[THActivityView alloc]initWithString:str];
         [show show];
@@ -142,106 +170,153 @@
 
 
 
-//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if (indexPath.row==4) {
-//        return 120;
-//    }
-//    return 60;
-//}
-//
-//-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-//{
-//    return 5;
-//    
-//}
-//
-//
-//
-//-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    
-//    UITableViewCell* cell = nil;
-//    __weak AddProductController* wSelf = self;
-//    __weak ShopProductData* wData = _productData;
-//      if(indexPath.row==0)
-//    {
-//        AddProductCommonCell* cell2= [tableView dequeueReusableCellWithIdentifier:@"2"];
-//        if (cell2==nil) {
-//            cell2 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"2" WithFieldBk:^(NSString *text) {
-//                wData.pName = text;
-//                wSelf.infoChange = YES;
-//            }];
-//        }
-//        [cell2 setTextField:_productData.pName];
-//        [cell2 setTextTitleLabel:@"名称:"]  ;
-//        cell = cell2;
-//    }
-//    else if(indexPath.row ==1)
-//    {
-//        AddProductCommonCell* cell3 = [tableView dequeueReusableCellWithIdentifier:@"3"];
-//        if (cell3==nil) {
-//            cell3 = [[AddProductCommonCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"3" WithFieldBk:^(NSString *text) {
-//                 wSelf.infoChange = YES;
-//                float p = [text floatValue];
-//                
-//                 wData.price = p;
-//            }];
-//        }
-//        [cell3 setTextTitleLabel:@"价格:"]  ;
-//        [cell3 setTextField:[NSString stringWithFormat:@"%.2f", _productData.price]];
-//        cell = cell3;
-//    }
-//    else if (indexPath.row==2)
-//    {
-//        AddProductSwithCell* cell4 = [tableView dequeueReusableCellWithIdentifier:@"4"];
-//        if (cell4==nil) {
-//            cell4 = [[AddProductSwithCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"4"];
-//            
-//            [cell4 setSwitchBlock:^(BOOL statue) {
-//                wData.status = statue;
-//                 wSelf.infoChange = YES;
-//            }];
-//        }
-//        [cell4 setSWitchStatue:_productData.status];
-//        cell4.textLabel.text = @"销售状态:";
-//        cell = cell4;
-//    }
-//    else if (indexPath.row==3)
-//    {
-//        cell= [tableView dequeueReusableCellWithIdentifier:@"5"];
-//        if (cell==nil) {
-//            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"5"];
-//        }
-//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//        if (_productData.categoryName) {
-//            cell.textLabel.text = [NSString stringWithFormat:@"分类:%@",_productData.categoryName];
-//        }
-//        else
-//        {
-//            cell.textLabel.text = @"分类:";
-//        }
-//    }
-//    else
-//    {
-//        AddProductPictureCell* cell6 = [tableView dequeueReusableCellWithIdentifier:@"6"];
-//        if (cell6==nil) {
-//            cell6 = [[AddProductPictureCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"6"];
-//            [cell6 setPhotoBlock:^{
-//                [wSelf setUpPhoto];
-//            }];
-//            
-//        }
-//        [cell6 setProductImageWithUrl:_productData.pUrl];
-//        cell = cell6;
-//    }
-//    cell.textLabel.font = [UIFont systemFontOfSize:14];
-//    return cell;
-//}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 5;
+    }
+    return 1;
+}
+
+
+
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    UITableViewCell* cell = nil;
+    __weak ProductEditController* wSelf = self;
+    __weak ShopProductData* wData = _editData;
+    
+    if (indexPath.section == 1) {
+        AddProductPictureCell* cell = [tableView dequeueReusableCellWithIdentifier:@"AddProductPictureCell"];
+        if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+            [cell setSeparatorInset:UIEdgeInsetsZero];
+        }
+        
+        if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+            [cell setLayoutMargins:UIEdgeInsetsZero];
+        }
+        
+        
+        [cell setPhotoBlock:^{
+            [wSelf showSelectSheetView];
+        }];
+        if (_productData.pUrl) {
+            [cell setProductImageWithUrl:_productData.pUrl];
+        }
+        
+        cell.textLabel.textColor = FUNCTCOLOR(102, 102, 102);
+        cell.textLabel.font = DEFAULTFONT(16);
+        cell.textLabel.text = @"相关图片";
+        return cell;
+    }
+    
+    
+    if (indexPath.row==0)
+    {
+        AddProductFirstCell* cell1 = [tableView dequeueReusableCellWithIdentifier:@"AddProductFirstCell"];
+        [cell1 setSearchBk:^(NSString *text) {
+            [wSelf getProductDataThroughScanNu:text];
+        }];
+        [cell1 setCellBtBk:^{
+            [wSelf setUpScanViewController];
+        }];
+        UITextField* field = [cell1  getTextField];
+        field.placeholder = @"请输入或扫描条形码";
+        field.keyboardType = UIKeyboardTypeNumberPad;
+        field.returnKeyType = UIReturnKeySearch;
+        field.textColor = FUNCTCOLOR(180, 180, 180);
+        UILabel* title = [cell1 getTitleLabel];
+        title.textColor = FUNCTCOLOR(102, 102, 102);
+        title.font = DEFAULTFONT(16);
+        title.text = @"条形码";
+        [cell1 setTextField:_productData.scanNu];
+        return cell1;
+    }
+    else if(indexPath.row==1)
+    {
+        AddProductCommonCell* cell2= [tableView dequeueReusableCellWithIdentifier:@"AddProductCommonCell"];
+        [cell2 setTextFieldBk:^(NSString *text) {
+            wData.pName = text;
+        }];
+        UITextField* field = [cell2  getTextField];
+        field.placeholder = @"请输入商品名称";
+        field.textColor = FUNCTCOLOR(180, 180, 180);
+        [cell2 setTextField:_productData.pName];
+        [cell2 setTextTitleLabel:@"商品名称"]  ;
+        return cell2;
+    }
+    else if(indexPath.row ==3)
+    {
+        AddProductCommonCell* cell3 = [tableView dequeueReusableCellWithIdentifier:@"AddProductCommonCell"];
+        
+        [cell3 setTextFieldBk:^(NSString *text) {
+            
+            if ([text hasPrefix:@"¥"]) {
+                text = [text substringFromIndex:1];
+            }
+            wData.price = [text floatValue];
+        }];
+        UITextField* field = [cell3  getTextField];
+        field.placeholder = @"请输入价格";
+        field.textColor = FUNCTCOLOR(180, 180, 180);
+        [cell3 setFieldKeyboardStyle:UIKeyboardTypeDecimalPad];
+        [cell3 setTextTitleLabel:@"商品售价"];
+        if (_productData.price) {
+            [cell3 setTextField:[NSString stringWithFormat:@"¥%.1f", _productData.price]];
+        }
+        return cell3;
+    }
+    else if(indexPath.row == 2)
+    {
+        AddProductTwoLabelCell* cell = [tableView dequeueReusableCellWithIdentifier:@"AddProductTwoLabelCell"];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        UILabel* first = [cell getFirstLabel];
+        UILabel* second = [cell getSecondLabel];
+        second.textColor = FUNCTCOLOR(180, 180, 180);
+        first.text = @"商品分类";
+        
+        NSString* cateName = nil;
+        if (_productData.subCateName&&_productData.categoryName)
+        {
+            cateName = [NSString stringWithFormat:@"%@-%@",_productData.categoryName,_productData.subCateName];
+        }
+        else if (_productData.categoryName) {
+            cateName = _productData.categoryName;
+        }
+        
+        else
+        {
+            cateName = _productData.subCateName;
+        }
+
+        second.text = cateName;
+
+        return cell ;
+    }
+    else
+    {
+    
+        AddProductSwithCell* cell = [tableView dequeueReusableCellWithIdentifier:@"AddProductSwithCell"];
+        [cell setSwitchBlock:^(BOOL statue) {
+            wData.status = statue;
+        }];
+        
+        [cell setSWitchStatue:_productData.status];
+        cell.textLabel.text = @"销售状态";
+       
+        return cell ;
+
+    }
+    
+    return cell;
+}
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row ==2) {
         
         __weak ProductEditController* wSelf = self;
@@ -252,6 +327,34 @@
         [self.navigationController pushViewController:cateView animated:YES];
     }
 }
+
+
+
+-(void)setSelectCategory:(ShopProductData*)product
+{
+    NSIndexPath* path = [NSIndexPath indexPathForRow:2 inSection:0];
+    AddProductTwoLabelCell* cell = (AddProductTwoLabelCell*)[_table cellForRowAtIndexPath:path];
+    
+    NSString* cateName = nil;
+    if (product.subCateName&&product.categoryName)
+    {
+        cateName = [NSString stringWithFormat:@"%@-%@",product.categoryName,product.subCateName];
+        _editData.categoryID = product.subCateID;
+    }
+    else if (product.categoryName) {
+        cateName = product.categoryName;
+        _editData.categoryID = product.categoryID;
+    }
+    
+    else
+    {   _editData.categoryID = product.subCateID;
+        cateName = product.subCateName;
+    }
+    
+    UILabel* second = [cell getSecondLabel];
+    second.text = cateName;
+}
+
 
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
@@ -284,6 +387,11 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)dealloc
+{
+
 }
 
 /*
